@@ -1,0 +1,34 @@
+﻿@model Login
+@{
+    ViewData["Title"] = "Log in";
+}
+<!DOCTYPE html>
+<html lang="en">
+<body> 
+    <section class="login-section">
+        <form asp-action="Login" asp-controller="Login" method="post" class="login-form">
+            <div class="title-img">
+                <i class="fa-solid fa-gas-pump fa-2xl"></i>
+            </div>
+            <div class="div-username">
+                <input asp-for="Input.UserName" class ="input-username" placeholder="Username"></input>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="div-password">
+                <input asp-for="Input.Password" class="input-password" placeholder="Password"></input>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="input-button">
+                <button id="login-button" type="submit">Login</button>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        </form>
+    </section>
+    <button id="theme-toggle" class="theme-toggle">
+        <i class="fa-solid fa-adjust"></i>
+    </button>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

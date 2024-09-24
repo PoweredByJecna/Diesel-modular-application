@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewData["Title"] - Da_Modular_Application</title>
+        <script src="https://kit.fontawesome.com/cd832cb986.js"></script>
+        <link rel="stylesheet" href="~/css/home.css"/>
+        <link rel="stylesheet" href="~/css/Login.css"/>
+        <link rel="stylesheet" href="~/css/_layout.css"/>
+        <link rel="stylesheet" href="~/css/lokality.css">
+
+    </head>
+
+    <body>
+        @if(User.Identity?.IsAuthenticated==true)   
+        {
+            <header>
+                <nav id="navbar">
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Lokality" asp-action="Index">Lokality</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="odstavkyDropdown" role="button">Odstávky</a>
+                            <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="odstavkyCaret"></i>
+                            <ul class="dropdown-menu" aria-labelledby="odstavkyCaret">
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Přidat
+                                    </a>
+                                </li>
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #fc74e3;"></i>Dohledat
+                                    </a>
+                                </li>
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Upravit
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <section class="section-input-user">
+                        <i id="toggle-icon" class="fa-solid fa-bars fa-2xl"></i>
+                        <section class="section-wrap">
+                            <input id="wrapinput" type="text" placeholder="Search...">
+                            <div class="user-icon wrap">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <ul class="list-wrapdropdown">
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Profil
+                                    </a>
+                                </li>
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #cafc74;"></i>Nastavení
+                                    </a>
+                                </li>
+                                <li class="dropdown-item list">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item list">
+
+                                    <a asp-action="Logout" asp-controller="LogOut">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </section>
+
+                        <input type="text" placeholder="Search...">
+                        <div class="user-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="userCaret"></i>
+                        <ul class="dropdown-menu user" aria-labelledby="userCaret">
+                            <li class="dropdown-item list">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Profil
+                                </a>
+                            </li>
+                            <li class="dropdown-item list">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa-solid fa-circle fa-2xs" style="color: #cafc74;"></i>Nastavení
+                                </a>
+                            </li>
+                            <li class="dropdown-item list">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
+                                </a>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li class="dropdown-item list">
+                                <a class="dropdown-item" href="#">
+                                   
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
+                                    
+                                </a>
+                            </li>
+                        </ul>
+
+                    </section>
+                </nav>
+            </header>
+        }
+         @RenderBody()
+      
+
+        @await RenderSectionAsync("Scripts", required: false)
+
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+
+            <footer>
+                <ul class="ul-footer">
+                    <li class="nav-footer"><a class="a-text" href="#" >Home</a></li>
+                    <li class="nav-footer"><a class="a-text" href="#" >Lokality</a></li>
+                    <li class="nav-footer"><a class="a-text" href="#" >Odstávky</a></li>
+                    <li class="nav-footer"><a class="a-text" href="#" >Kontaky</a></li>
+                    <li class="nav-footer"><a class="a-text" href="#" >About</a></li>
+                </ul>
+                <p >© 2024 Company, Inc</p>
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fa-solid fa-adjust"></i>
+                </button>
+            </footer>
+        }
+    <script src="~/js/home.js"></script>
+    </body>
+
+</html>

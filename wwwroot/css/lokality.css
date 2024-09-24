@@ -1,0 +1,114 @@
+@media(max-width:1700px) {
+    .div-all-lokality{
+        height: 520px !important;
+    }
+    
+}
+
+.section-lokality{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+.div-add{
+    display: flex;
+    align-items: center;
+    width: 5%;
+    justify-content: center;
+}
+.fa-solid.fa-plus.fa-2xl{
+    cursor: pointer;
+    margin-top: 15px;
+}
+.div-all-lokality{
+    display: flex;
+    justify-content: center;
+    width: 85%;
+    margin-left: 15px;
+    margin-right: 15px;
+    overflow-y: auto;
+    height: 700px;
+    border-radius: 15px;
+
+}
+.fa-solid.fa-id-badge, .fa-solid.fa-tower-broadcast, .fa-solid.fa-star{
+    margin-left: 3px;
+}
+::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track{
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgb(0,0, 0);
+}
+::-webkit-scrollbar-thumb{
+ border-radius: 10px;
+ background-color: rgb(180, 187, 187);
+}
+.table-lokality{
+ 
+   border-radius: 10px;  
+   width: 100%;
+   overflow: auto;
+   table-layout: auto;
+}
+tbody{
+    table-layout: auto;
+
+
+}
+thead{
+    position:sticky;
+    top:0;
+}
+tr,th,td{
+    border: none;
+   
+}
+
+tr:hover{
+    background-color: rgb(138, 138, 182);
+}
+.div-lokality-menu{
+    margin-right: 10px;
+    
+}
+.lokality-class-menu{
+    list-style: none;
+    background-color: rgba(0, 0, 0, .1);
+    border-radius:10px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    
+}
+.div-import{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.h1-import{
+    margin-top: 0;
+}
+.form-class{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-control{
+    width: 95%;
+}
+
+.btn{
+    color: white;
+    background-color: blue;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}

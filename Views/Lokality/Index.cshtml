@@ -1,0 +1,102 @@
+@model IEnumerable<Diesel_modular_application.Models.Lokality>
+<body>
+<section class="section-lokality">
+    <div class="div-add">
+        <i class="fa-solid fa-plus fa-2xl" id="add-btn" style="color: #2dc838;"></i>
+    </div>
+    <div class="div-all-lokality">
+        @if (Model == null)
+        {
+          <div class="error">
+              <h1>Nelze načíst</h1>
+          </div>
+        }
+        @if (Model != null)
+        {
+            <table class="table-lokality">
+                <thead>
+                    <tr>
+                        <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
+                        <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                        <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
+                        <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
+                        <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
+                        <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
+                        <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lokality in Model)
+                    {
+                        <tr>
+                            <td>@lokality.Id</td>
+                            <td> @lokality.Lokalita</td>
+                            <td>@lokality.Klasifikace
+                                @if(lokality.Klasifikace=="A1")
+                                {
+                                    <span title="Kritická priorita" class="status red"></span>
+                                }
+                                 @if(lokality.Klasifikace=="A2")
+                                {
+                                    <span title="Vysoká priorita" class="status orange"></span>
+                                }
+                                 @if(lokality.Klasifikace=="B1")
+                                {
+                                    <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                }
+                                 @if(lokality.Klasifikace=="B2")
+                                {
+                                    <span title="Středně-nízká priorita" class="status light-green"></span>
+                                }
+                                 @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
+                                {
+                                    <span title="Nízká priorita" class="status green"></span>
+                                }
+                                 @if(lokality.Klasifikace=="D1")
+                                {
+                                    <span title="Velmi-nízká priorita" class="status blue"></span>
+                                }
+                              
+                            </td>
+                            <td>@lokality.Adresa</td>
+                            <td>@lokality.Baterie</td>
+                            <td>
+                                @if(lokality.Zásuvka=="TRUE")
+                                {
+                                    <span class="status green"></span>
+                                }
+                                @if(lokality.Zásuvka=="FALSE")
+                                {
+                                    <span class="status red"></span>
+                                }
+                            </td>
+                            <td>
+                                @if(lokality.DA=="TRUE")
+                                {
+                                    <span class="status green"></span>
+                                }
+                                @if(lokality.DA=="FALSE")
+                                {
+                                    <span class="status red"></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+        <div class="div-lokality-menu">
+        <section class="lokality-class-menu">
+                <div class="div-import">
+                    <h1 class="h1-import">Import lokalit</h1>
+                    <form class="form-class" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input type="file" name="file" class="form-control" />
+                        <button type="submit" name="Upload" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+        </section>
+    </div>
+</section>
+</body>
