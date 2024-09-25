@@ -60,6 +60,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Da-Mod-App'
-          slot-name: 'Production'
-          package: .
+          package: 
           
