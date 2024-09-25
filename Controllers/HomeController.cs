@@ -15,7 +15,7 @@ namespace Diesel_modular_application.Controllers
         }
 
         
-        //[Authorize]
+        [Authorize]
             public IActionResult Index()
         {
             return View();

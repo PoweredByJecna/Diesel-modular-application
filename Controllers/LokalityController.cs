@@ -18,7 +18,7 @@ namespace Diesel_modular_application.Controllers
             _context= context;
         }
 
-        //[Authorize]
+        [Authorize]
            public IActionResult Index()
         {
             var lokality=_context.LokalityS.ToList();
