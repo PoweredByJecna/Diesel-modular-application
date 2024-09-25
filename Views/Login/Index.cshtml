@@ -4,9 +4,13 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-<body> 
+<body>
+   
     <section class="login-section">
-        <form asp-action="Login" asp-controller="Login" method="post" class="login-form">
+        <a asp-action="Index" asp-controller="Register">
+            <button>Register</button>
+        </a>
+        <form asp-action="Index" asp-controller="Login" method="post" class="login-form">
             <div class="title-img">
                 <i class="fa-solid fa-gas-pump fa-2xl"></i>
             </div>
@@ -23,10 +27,14 @@
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         </form>
+   
+
     </section>
     <button id="theme-toggle" class="theme-toggle">
         <i class="fa-solid fa-adjust"></i>
     </button>
+
+ 
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />
     }
