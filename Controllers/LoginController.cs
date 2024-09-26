@@ -42,5 +42,11 @@ namespace Diesel_modular_application.Controllers
             }
             return View("Index", model);
         }
+        public async Task<IActionResult> Logout(Login model)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out");
+             return Redirect("/Home/Index");
+        }
     }
 }
