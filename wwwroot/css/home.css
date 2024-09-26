@@ -49,11 +49,18 @@ h2.dark-mode {
     border-bottom-color: #c0c0c0;
 }
 
+.table-div{
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    background-color: white;
+    border-radius: 10px;
+}
+
 table {
     width: 100%;
     border-spacing: 0;
-    background-color: #e9ecef;
-    transition: background-color 0.5s, color 0.5s;
+    background-color: white;
+    padding: 3px;
+    border-radius: 10px;
 }
 
 table.dark-mode {
@@ -72,8 +79,8 @@ th, td {
 }
 
 tr, th, td{
-    border: 1px solid #f7f8fa;
-    background-color: #f7f8fa;
+    border: 1px solid white;
+    background-color: white;
 }
 
 tr:first-child th:first-child {

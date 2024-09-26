@@ -14,157 +14,163 @@
         <section class="tables-row">
             <div class="section small">
                 <h2>Aktuální dieslování:</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th id="stav">Stav</th>
-                            <th id="lokalita">Lokalita</th>
-                            <th id="klasifikace">Klasifikace</th>
-                            <th id="firma">Firma</th>
-                            <th id="vstup">Vstup</th>
-                            <th id="com"></th>
-                            <th id="arrow"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td title="aktivni vstup"><span class="status green"></span></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td title="komentář">
-                                <i class="fa-regular fa-comment comment-icon"></i>
-                                <div class="comment-box">
-                                    <textarea placeholder="Zadejte komentář..."></textarea>
-                                    <div class="comment-actions">
-                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                <div class="table-div">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="stav">Stav</th>
+                                <th id="lokalita">Lokalita</th>
+                                <th id="klasifikace">Klasifikace</th>
+                                <th id="firma">Firma</th>
+                                <th id="vstup">Vstup</th>
+                                <th id="com"></th>
+                                <th id="arrow"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td title="aktivni vstup"><span class="status green"></span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td title="komentář">
+                                    <i class="fa-regular fa-comment comment-icon"></i>
+                                    <div class="comment-box">
+                                        <textarea placeholder="Zadejte komentář..."></textarea>
+                                        <div class="comment-actions">
+                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td title="Odchod">
-                                <i class="fa-solid fa-arrow-right red-arrow"></i>
-                                <div class="overlay">
-                                    <span id="current-datetime"></span>
-                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                                </td>
+                                <td title="Odchod">
+                                    <i class="fa-solid fa-arrow-right red-arrow"></i>
+                                    <div class="overlay">
+                                        <span id="current-datetime"></span>
+                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="section small">
                 <h2>Dnešní nadcházející:</h2>
-                <table id="upcoming-table">
-                    <thead>
-                        <tr>
-                            <th id="stav">Stav</th>
-                            <th id="lokalita">Lokalita</th>
-                            <th id="klasifikace">Klasifikace</th>
-                            <th id="firma">Firma</th>
-                            <th id="objednano">Objednáno</th>
-                            <th id="com"></th>
-                            <th id="arrow"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td title="čeká se"><span class="status yellow"></span></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td title="komentář">
-                                <i class="fa-regular fa-comment comment-icon"></i>
-                                <div class="comment-box">
-                                    <textarea placeholder="Zadejte komentář..."></textarea>
-                                    <div class="comment-actions">
-                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                <div class="table-div">
+                    <table id="upcoming-table">
+                        <thead>
+                            <tr>
+                                <th id="stav">Stav</th>
+                                <th id="lokalita">Lokalita</th>
+                                <th id="klasifikace">Klasifikace</th>
+                                <th id="firma">Firma</th>
+                                <th id="objednano">Objednáno</th>
+                                <th id="com"></th>
+                                <th id="arrow"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td title="čeká se"><span class="status yellow"></span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td title="komentář">
+                                    <i class="fa-regular fa-comment comment-icon"></i>
+                                    <div class="comment-box">
+                                        <textarea placeholder="Zadejte komentář..."></textarea>
+                                        <div class="comment-actions">
+                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td title="Vstup">
-                                <i class="fa-solid fa-arrow-right green-arrow"></i>
-                                <div class="overlay">
-                                    <span id="current-datetime"></span>
-                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                                </td>
+                                <td title="Vstup">
+                                    <i class="fa-solid fa-arrow-right green-arrow"></i>
+                                    <div class="overlay">
+                                        <span id="current-datetime"></span>
+                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="section small">
                 <h2>Dnešní ukončené:</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th id="stav">Stav</th>
-                            <th id="lokalita">Lokalita</th>
-                            <th id="klasifikace">Klasifikace</th>
-                            <th id="firma">Firma</th>
-                            <th id="odchod">Odchod</th>
-                            <th id="com"></th>
-                            <th id="clock"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td title="neaktivní"><span class="status red"></span></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td title="komentář">
-                                <i class="fa-regular fa-comment comment-icon"></i>
-                                <div class="comment-box">
-                                    <textarea placeholder="Zadejte komentář..."></textarea>
-                                    <div class="comment-actions">
-                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                <div class="table-div">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="stav">Stav</th>
+                                <th id="lokalita">Lokalita</th>
+                                <th id="klasifikace">Klasifikace</th>
+                                <th id="firma">Firma</th>
+                                <th id="odchod">Odchod</th>
+                                <th id="com"></th>
+                                <th id="clock"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td title="neaktivní"><span class="status red"></span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td title="komentář">
+                                    <i class="fa-regular fa-comment comment-icon"></i>
+                                    <div class="comment-box">
+                                        <textarea placeholder="Zadejte komentář..."></textarea>
+                                        <div class="comment-actions">
+                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td title="celkový čas dieslování"><i class="fa-solid fa-clock"></i></td>
-                        </tr>
+                                </td>
+                                <td title="celkový čas dieslování"><i class="fa-solid fa-clock"></i></td>
+                            </tr>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>    
             </div>
         </section>
         <section class="section">
             <h2>Všechny dnešní:</h2>
-            <table id="todayall-table">
-                <thead>
-                    <tr>
-                        <th id="th-stav">Stav</th>
-                        <th id="th-lokalita">Lokalita</th>
-                        <th id="th-klasifikace">Klasifikace</th>
-                        <th id="th-firma">Firma</th>
-                        <th id="th-objednano">Objednáno</th>
-                        <th id="th-vstup">Vstup</th>
-                        <th id="th-odchod">Odchod</th>
-                        <th id="th-poznamka">Poznámka</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="td-stav"><span class="status green"></span></td>
-                        <td id="td-lokalita">Lokalita 4</td>
-                        <td id="td-klasifikace">Klasifikace 4</td>
-                        <td id="td-firma">Firma 4</td>
-                        <td id="td-objednano">01/01/2024 08:30</td>
-                        <td id="td-vstup">01/01/2024 09:00</td>
-                        <td id="td-odchod">01/01/2024 10:00</td>
-                        <td id="td-poznamka"></td>
-                    </tr>
+            <div class="table-div">
+                <table id="todayall-table">
+                    <thead>
+                        <tr>
+                            <th id="th-stav">Stav</th>
+                            <th id="th-lokalita">Lokalita</th>
+                            <th id="th-klasifikace">Klasifikace</th>
+                            <th id="th-firma">Firma</th>
+                            <th id="th-objednano">Objednáno</th>
+                            <th id="th-vstup">Vstup</th>
+                            <th id="th-odchod">Odchod</th>
+                            <th id="th-poznamka">Poznámka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="td-stav"><span class="status green"></span></td>
+                            <td id="td-lokalita">Lokalita 4</td>
+                            <td id="td-klasifikace">Klasifikace 4</td>
+                            <td id="td-firma">Firma 4</td>
+                            <td id="td-objednano">01/01/2024 08:30</td>
+                            <td id="td-vstup">01/01/2024 09:00</td>
+                            <td id="td-odchod">01/01/2024 10:00</td>
+                            <td id="td-poznamka"></td>
+                        </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>    
         </section>
 
     </main>
