@@ -1,12 +1,58 @@
+@model IEnumerable<Diesel_modular_application.Models.Odstavky>
 <html>
     <body>
         <div class="div-odstavka-create">
-        <form asp-action="Creae" asp-asp-controller="Odstavky">
-            <label>Distributor:</label>
-            <input>
-            <label>Lokalita:</label>
-            <input>
+        <form asp-action="Create" asp-asp-controller="Odstavky">
+            <div class="form">
+                <label>Lokalita:</label>
+                <div class="div-form"><input class="input-lokalita"><i class="fa-solid fa-magnifying-glass"></i></div>
+            </div>
+            <div class="form">
+                <label>Od:</label>
+                <input type="datetime-local">
+            </div>
+            <div class="form">
+                <label>Do:</label>
+                <input type="datetime-local">
+            </div>
+            <div class="form">
+                <label>Popis:</label>
+                <input type="text" class="input-text">
+            </div>
+            <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
+
         </form>
    </div>
+    <div class="menu">
+        <ul class="menu-ul">
+            <li class="menu-li"><a class="menu-text">Přidat odstávku</a></li>
+            <li class="menu-li"><a class="menu-text">Odstávky</a></li>
+        </ul>
+    </div>
+    <div class="div-odstavky-table">
+        <div class="div-odstavky">
+            <table class="table-odstavky">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Distributor</th>
+                        <th>Lokalita</th>
+                        <th>Klasifikace</th>
+                        <th>Od</th>
+                        <th>Od</th>
+                        <th>Baterie</th>
+                        <th>Zásuvka</th>
+                        <th>Popis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                       
+                    </tr>
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
     </body>
 </html>

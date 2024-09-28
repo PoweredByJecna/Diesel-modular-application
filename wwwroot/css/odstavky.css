@@ -1,0 +1,130 @@
+.div-odstavka-create{
+    display: flex;
+    justify-content: center;
+
+
+}
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 20%;
+    padding: 15px;
+    align-items: center;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+input:focus{
+    outline: none;
+}
+input{
+    border-radius: 10px;
+    border: none;
+    padding: 5px;       
+    background-color:rgb(247, 245, 245);    
+}
+.div-form{
+    display: flex;
+    background-color:rgb(247, 245, 245);    
+    align-items: baseline;
+    justify-content:flex-end;
+    border-radius: 10px;
+    width: 50%;
+
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    margin-bottom: 15px;
+}
+label{
+    font-size: larger;
+}
+.fa-solid.fa-solid.fa-magnifying-glass{
+    margin-right: 3px;
+    padding: 2px;
+}
+
+.input-lokalita{
+width: 70%;
+}
+
+.input-text{
+    width: 85%;
+    height: 100px;
+}
+.button-odstavka{
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #55c2da;
+    
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+
+.button-odstavka:hover{
+   
+    border-color: transparent;
+    scale: 1.05;
+    transition: 0.3s;
+    
+}
+.text-button{
+    font-style:inherit;
+    font-size: larger;
+}
+.menu{
+    background-color: white;
+    margin-top: 50px;
+    height: 65px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.menu-ul{
+display: flex;
+flex-direction: row;
+justify-content: center;
+list-style: none;
+height: 100%;
+align-items: center;
+}
+.menu-text{
+    font-size: larger;
+    padding: 10px;
+}
+.div-odstavky-table{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.div-odstavky{
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    width:85%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.table-odstavky{
+    width: 100%;
+    border-collapse: collapse;
+}
+tr:nth-child(even) {
+    background-color: #d4d4d444;
+}
+th{
+    padding: 10px;
+    
+}
+tbody{
+    table-layout: auto;
+    max-height: 100px;
+    overflow: auto;
+}

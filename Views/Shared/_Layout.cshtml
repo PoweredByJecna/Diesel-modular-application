@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="~/css/Login.css"/>
         <link rel="stylesheet" href="~/css/_layout.css"/>
         <link rel="stylesheet" href="~/css/lokality.css">
-
+        <link rel="stylesheet" href="~/css/odstavky.css">
     </head>
 
     <body>
@@ -21,7 +21,7 @@
                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Lokality" asp-action="Index">Lokality</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" id="odstavkyDropdown" role="button">Odstávky</a>
+                            <a class="nav-link" id="odstavkyDropdown" role="button" asp-action="Index" asp-controller="Odstavky">Odstávky</a>
                             <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="odstavkyCaret"></i>
                             <ul class="dropdown-menu" aria-labelledby="odstavkyCaret">
                                 <li class="dropdown-item list">

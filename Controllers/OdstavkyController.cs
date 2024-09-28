@@ -2,6 +2,7 @@ using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diesel_modular_application.Controllers
@@ -14,6 +15,8 @@ namespace Diesel_modular_application.Controllers
         {
             _context= context;
         }
+        
+        [Authorize]
         public IActionResult Index()
         {
                 return View();
@@ -24,7 +27,7 @@ namespace Diesel_modular_application.Controllers
             
             if(ModelState.IsValid)
             {
-                
+
             }
 
             return View();

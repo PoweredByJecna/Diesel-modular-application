@@ -8,4 +8,4 @@ namespace Diesel_modular_application.Models
         public required DateTime Do {get; set;}
         public string Popis{get; set;}        
     }       
-}
+}       

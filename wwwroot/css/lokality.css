@@ -55,6 +55,7 @@
    width: 100%;
    overflow: auto;
    table-layout: auto;
+   border-collapse: collapse;
 }
 tbody{
     table-layout: auto;
@@ -66,8 +67,10 @@ thead{
     top:0;
 }
 tr,th,td{
-    border: none;
-   
+    border: none;  
+}
+tr:nth-child(even) {
+    background-color: #d4d4d444;
 }
 
 tr:hover{
