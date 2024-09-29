@@ -1,11 +1,16 @@
-@model IEnumerable<Diesel_modular_application.Models.Odstavky>
+@model Diesel_modular_application.Models.OdstavkyViewModel
 <html>
     <body>
         <div class="div-odstavka-create">
-        <form asp-action="Create" asp-asp-controller="Odstavky" class="form-odstavky">
+        <h2>Vytvořit odstávku:</h2>
+        
+        <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
             <div class="form">
                 <label>Lokalita:</label>
-                <div class="div-form"><input class="input-lokalita"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="div-form">
+                    <input asp-for="NewOdstavka.Lokalita" type="text" class="distributor">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
             </div>
             <div class="form">
                 <label>Od:</label>
@@ -40,17 +45,40 @@
                         <th>Klasifikace</th>
                         <th>Od</th>
                         <th>Od</th>
+                        <th>Adresa</th>
                         <th>Baterie</th>
                         <th>Zásuvka</th>
                         <th>Popis</th>
                     </tr>
                 </thead>
+                @if(Model == null)
+                {
+                <div class="error">
+                    <h1>Nelze načíst</h1>
+                </div>
+                }
                 <tbody>
-                     <tr>
-                       
-                    </tr>
-                  
+                      @if (Model != null)
+                    {
+                        @foreach(var odstavky in Model.OdstavkyList)
+                        {
+                            <tr>
+                                <td>@odstavky.Id</td>
+                                <td>@odstavky.Distributor</td>
+                                <td>@odstavky.Lokalita</td>
+                                <td>@odstavky.Klasifikace</td>
+                                <td>@odstavky.Od</td>
+                                <td>@odstavky.Do</td>
+                                <td>@odstavky.Baterie</td>
+                                <td>@odstavky.Zásuvka</td>
+                                <td>@odstavky.Popis</td>
+                            </tr>
+                        }  
+                    }
                 </tbody>
+             
+                
+                
             </table>
         </div>
     </div>

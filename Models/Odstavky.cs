@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 namespace Diesel_modular_application.Models
 {
     public class Odstavky:Lokality

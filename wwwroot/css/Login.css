@@ -40,9 +40,9 @@
     display: flex;
 }
 
-    .div-username:focus {
-        box-shadow: 10px 5px 5px #e0e0e0;
-    }
+ .div-username:focus {
+    box-shadow: 10px 5px 5px #e0e0e0;
+}
 
 .input-username, .input-password {
     margin: 10px;
