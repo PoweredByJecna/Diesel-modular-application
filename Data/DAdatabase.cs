@@ -51,6 +51,7 @@ namespace Diesel_modular_application.Data
             });
 
         }
-        public DbSet<Lokality> LokalityS{get; set;}
+        public DbSet<Lokality> LokalityS {get; set;}
+        public DbSet<OdstavkyViewModel> OdstavkyS {get;set;}
     }
 }

@@ -4,25 +4,33 @@
         <div class="div-odstavka-create">
         <h2>Vytvořit odstávku:</h2>
         
+       
         <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
+            <div class="form">
+             <label>Distributor:</label>   
+            <select asp-for="NewOdstavka.Distributor">
+                <option value="ČEZ">ČEZ</option>
+                <option value="PRE">PRE</option>
+                <option value="EGD">EGD</option>
+            </select>
+            </div> 
             <div class="form">
                 <label>Lokalita:</label>
                 <div class="div-form">
-                    <input asp-for="NewOdstavka.Lokalita" type="text" class="distributor">
-                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input asp-for="NewOdstavka.Lokalita" type="text">
                 </div>
             </div>
             <div class="form">
                 <label>Od:</label>
-                <input type="datetime-local">
+                <input type="datetime-local" asp-for="NewOdstavka.Od">
             </div>
             <div class="form">
                 <label>Do:</label>
-                <input type="datetime-local">
+                <input type="datetime-local" asp-for="NewOdstavka.Do">
             </div>
             <div class="form">
                 <label>Popis:</label>
-                <input type="text" class="input-text">
+                <input type="text" class="input-text" asp-for="NewOdstavka.Popis">
             </div>
             <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
 
@@ -58,8 +66,9 @@
                 </div>
                 }
                 <tbody>
-                      @if (Model != null)
+                    @if (Model != null)
                     {
+                        /*
                         @foreach(var odstavky in Model.OdstavkyList)
                         {
                             <tr>
@@ -74,6 +83,7 @@
                                 <td>@odstavky.Popis</td>
                             </tr>
                         }  
+                        */
                     }
                 </tbody>
              

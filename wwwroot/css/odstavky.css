@@ -1,6 +1,8 @@
 .div-odstavka-create{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
 
 }
@@ -39,6 +41,7 @@ input{
     width: 90%;
     align-items: center;
     margin-bottom: 15px;
+    align-items: center;
 }
 label{
     font-size: larger;

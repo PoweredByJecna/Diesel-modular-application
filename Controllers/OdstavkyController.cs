@@ -23,27 +23,39 @@ namespace Diesel_modular_application.Controllers
         {
                 return View();
         }
-        public async Task<IActionResult> Create(Odstavky odstavky)
+        public async Task<IActionResult>Create(OdstavkyViewModel odstavky)
         {   
-            if(ModelState.IsValid)
-            {   
-                var NewOdstavka = await _context.LokalityS.FirstOrDefaultAsync(Input => Input.Lokalita==odstavky.Lokalita);
+            //if(ModelState.IsValid)
+           
+
+                var NewOdstavka = await _context.LokalityS.FirstOrDefaultAsync(Input => Input.Lokalita==odstavky.NewOdstavka.Lokalita);
                 if(NewOdstavka==null)
                 {
-                    ModelState.AddModelError(string.Empty, "Zadana lokalita neexistuje");
-                    return View();
+                    ViewBag.Message="Zadaná lokalita neexistuje";
+                  
                 }
-             
-                   NewOdstavka.Klasifikace=odstavky.Klasifikace; 
-                   NewOdstavka.Adresa=odstavky.Adresa;
-                   NewOdstavka.Baterie=odstavky.Baterie;
-                   NewOdstavka.Zásuvka=odstavky.Zásuvka;
-                
+                else
+                {
+                    ViewBag.Message="Lokalita nalezena";
+                    odstavky.NewOdstavka.Distributor=odstavky.NewOdstavka.Distributor;
+                    odstavky.NewOdstavka.Klasifikace=NewOdstavka.Klasifikace;
+                    odstavky.NewOdstavka.Adresa=NewOdstavka.Adresa;
+                    odstavky.NewOdstavka.Od=odstavky.NewOdstavka.Od;
+                    odstavky.NewOdstavka.Do=odstavky.NewOdstavka.Do;
+                    odstavky.NewOdstavka.Baterie=NewOdstavka.Baterie;
+                    odstavky.NewOdstavka.Baterie=NewOdstavka.Zásuvka;
+                    odstavky.NewOdstavka.Popis=odstavky.NewOdstavka.Popis;
 
-
-            }
-           return View();
+                    _context.Add(odstavky);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message="Odstávka byla vytvořena";
+                    
+                }
+            //}
+                return View("Index", odstavky);
         }
+        
+        
     }
 
 }

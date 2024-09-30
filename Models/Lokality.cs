@@ -7,11 +7,12 @@ namespace Diesel_modular_application.Models
         [Key]
 
         public int Id { get; set; }
+        [Required]
         public required string Lokalita { get; set; }
         public required string Klasifikace { get; set; }
         public required string Adresa { get; set; }
         public required string Baterie { get; set; }
-        public required string DA { get; set; }
+        public string DA { get; set; }
         public required string Zásuvka { get; set; }
 
     }
