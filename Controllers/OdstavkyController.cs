@@ -28,8 +28,8 @@ namespace Diesel_modular_application.Controllers
             //if(ModelState.IsValid)
            
 
-                var NewOdstavka = await _context.LokalityS.FirstOrDefaultAsync(Input => Input.Lokalita==odstavky.NewOdstavka.Lokalita);
-                if(NewOdstavka==null)
+                var lokalitaSearch = await _context.LokalityS.FirstOrDefaultAsync(Input => Input.Lokalita==odstavky.AddOstavka.Lokalita);
+                if(lokalitaSearch==null)
                 {
                     ViewBag.Message="Zadaná lokalita neexistuje";
                   
@@ -37,17 +37,18 @@ namespace Diesel_modular_application.Controllers
                 else
                 {
                     ViewBag.Message="Lokalita nalezena";
-                    odstavky.NewOdstavka.Distributor=odstavky.NewOdstavka.Distributor;
-                    odstavky.NewOdstavka.Klasifikace=NewOdstavka.Klasifikace;
-                    odstavky.NewOdstavka.Adresa=NewOdstavka.Adresa;
-                    odstavky.NewOdstavka.Od=odstavky.NewOdstavka.Od;
-                    odstavky.NewOdstavka.Do=odstavky.NewOdstavka.Do;
-                    odstavky.NewOdstavka.Baterie=NewOdstavka.Baterie;
-                    odstavky.NewOdstavka.Baterie=NewOdstavka.Zásuvka;
-                    odstavky.NewOdstavka.Popis=odstavky.NewOdstavka.Popis;
-
-                    _context.Add(odstavky);
+                    /*                     
+                    var NewOdstavka = new OdstavkyViewModel
+                    {
+                        IdOdstavky=odstavky.Id,
+                        LokalitaInfo=lokalitaSearch.Id,
+                        Od=odstavky.AddOstavka.Od,
+                        Do=odstavky.AddOstavka.Do,
+                        Popis=odstavky.AddOstavka.Popis,
+                    };
+                    _context.Add(NewOdstavka);
                     await _context.SaveChangesAsync();
+                    */
                     ViewBag.Message="Odstávka byla vytvořena";
                     
                 }

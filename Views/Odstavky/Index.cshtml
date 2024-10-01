@@ -8,7 +8,7 @@
         <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
             <div class="form">
              <label>Distributor:</label>   
-            <select asp-for="NewOdstavka.Distributor">
+            <select asp-for="AddOstavka.Distributor">
                 <option value="ČEZ">ČEZ</option>
                 <option value="PRE">PRE</option>
                 <option value="EGD">EGD</option>
@@ -17,20 +17,20 @@
             <div class="form">
                 <label>Lokalita:</label>
                 <div class="div-form">
-                    <input asp-for="NewOdstavka.Lokalita" type="text">
+                    <input asp-for="AddOstavka.Lokalita" type="text">
                 </div>
             </div>
             <div class="form">
                 <label>Od:</label>
-                <input type="datetime-local" asp-for="NewOdstavka.Od">
+                <input type="datetime-local" asp-for="AddOstavka.Od">
             </div>
             <div class="form">
                 <label>Do:</label>
-                <input type="datetime-local" asp-for="NewOdstavka.Do">
+                <input type="datetime-local" asp-for="AddOstavka.Do">
             </div>
             <div class="form">
                 <label>Popis:</label>
-                <input type="text" class="input-text" asp-for="NewOdstavka.Popis">
+                <input type="text" class="input-text" asp-for="AddOstavka.Popis">
             </div>
             <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
 

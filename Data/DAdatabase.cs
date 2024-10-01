@@ -49,9 +49,14 @@ namespace Diesel_modular_application.Data
             {
                 entity.ToTable("Lokality", schema: "Data");
             });
+            builder.Entity<Odstavky>(entity =>
+            {
+                entity.ToTable("Odstavky", schema: "Data");
+            });
+
 
         }
         public DbSet<Lokality> LokalityS {get; set;}
-        public DbSet<OdstavkyViewModel> OdstavkyS {get;set;}
+        public DbSet<Odstavky> OdstavkyS {get;set;}
     }
 }
