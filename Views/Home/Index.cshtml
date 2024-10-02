@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Diesel_modular_application.Models.OdstavkyViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,6 +10,9 @@
                 <a class="a-time">Čas:</a>
             </div>
             <div class="clock" id="clock">
+                @{
+                    var todayDate = DateTime.Now.ToString("dd.MM.yyyy");
+                }
             </div>
         </section>
         <section class="tables-row">
@@ -28,30 +32,45 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td title="aktivni vstup"><span class="status green"></span></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td title="komentář">
-                                    <i class="fa-regular fa-comment comment-icon"></i>
-                                    <div class="comment-box">
-                                        <textarea placeholder="Zadejte komentář..."></textarea>
-                                        <div class="comment-actions">
-                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td title="Odchod">
-                                    <i class="fa-solid fa-arrow-right red-arrow"></i>
-                                    <div class="overlay">
-                                        <span id="current-datetime"></span>
-                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                    </div>
-                                </td>
-                            </tr>
+                            @if(Model!=null)
+                            {
+                                @foreach (var odstavky in Model.OdstavkyList)
+                                {
+
+                                    @if (odstavky.Od.Equals(todayDate))
+                                    {
+
+
+                                        <tr>
+                                            <td title="aktivni vstup"><span class="status green"></span>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td title="komentář">
+                                                <i class="fa-regular fa-comment comment-icon"></i>
+                                                <div class="comment-box">
+                                                    <textarea placeholder="Zadejte komentář..."></textarea>
+                                                    <div class="comment-actions">
+                                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td title="Odchod">
+                                                <i class="fa-solid fa-arrow-right red-arrow"></i>
+                                                <div class="overlay">
+                                                    <span id="current-datetime"></span>
+                                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                            
+
                         </tbody>
                     </table>
                 </div>
@@ -72,30 +91,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td title="čeká se"><span class="status yellow"></span></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td title="komentář">
-                                    <i class="fa-regular fa-comment comment-icon"></i>
-                                    <div class="comment-box">
-                                        <textarea placeholder="Zadejte komentář..."></textarea>
-                                        <div class="comment-actions">
-                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td title="Vstup">
-                                    <i class="fa-solid fa-arrow-right green-arrow"></i>
-                                    <div class="overlay">
-                                        <span id="current-datetime"></span>
-                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                    </div>
-                                </td>
-                            </tr>
+                            @if (Model != null)
+                            {
+                                @foreach (var odstavky in Model.OdstavkyList)
+                                {
+                                    @if (odstavky.Od>DateTime.Now)
+                                    {
+
+                                        <tr>
+                                            <td title="čeká se"><span class="status yellow"></span></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td title="komentář">
+                                                <i class="fa-regular fa-comment comment-icon"></i>
+                                                <div class="comment-box">
+                                                    <textarea placeholder="Zadejte komentář..."></textarea>
+                                                    <div class="comment-actions">
+                                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td title="Vstup">
+                                                <i class="fa-solid fa-arrow-right green-arrow"></i>
+                                                <div class="overlay">
+                                                    <span id="current-datetime"></span>
+                                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                    
+                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -116,24 +148,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td title="neaktivní"><span class="status red"></span></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td title="komentář">
-                                    <i class="fa-regular fa-comment comment-icon"></i>
-                                    <div class="comment-box">
-                                        <textarea placeholder="Zadejte komentář..."></textarea>
-                                        <div class="comment-actions">
-                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td title="celkový čas dieslování"><i class="fa-solid fa-clock"></i></td>
-                            </tr>
+                            @if (Model != null)
+                            {
+                                @foreach (var odstavky in Model.OdstavkyList)
+                                {
+                                    @if (odstavky.Od<DateTime.Now)
+                                    {
+                                        <tr>
+                                            <td title="neaktivní"><span class="status red"></span></td>
+                                            <td>@odstavky.Lokality.Lokalita</td>
+                                            <td>@odstavky.Lokality.Klasifikace</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td title="komentář">
+                                                <i class="fa-regular fa-comment comment-icon"></i>
+                                                <div class="comment-box">
+                                                    <textarea placeholder="Zadejte komentář..."></textarea>
+                                                    <div class="comment-actions">
+                                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td title="celkový čas dieslování"><i class="fa-solid fa-clock"></i></td>
+                                        </tr>
+                                    }
+
+                                }
+
+                            }
+
 
                         </tbody>
                     </table>
@@ -157,17 +201,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td id="td-stav"><span class="status green"></span></td>
-                            <td id="td-lokalita">Lokalita 4</td>
-                            <td id="td-klasifikace">Klasifikace 4</td>
-                            <td id="td-firma">Firma 4</td>
-                            <td id="td-objednano">01/01/2024 08:30</td>
-                            <td id="td-vstup">01/01/2024 09:00</td>
-                            <td id="td-odchod">01/01/2024 10:00</td>
-                            <td id="td-poznamka"></td>
-                        </tr>
-
+                        @if (Model != null)
+                        {
+                            @foreach (var odstavky in Model.OdstavkyList)
+                            {
+                                <tr>
+                                    <td id="td-stav">
+                                        @if(odstavky.Od<DateTime.Now)
+                                        {
+                                            <span class="status red"></span>
+                                        }
+                                        @if (odstavky.Od > DateTime.Now)
+                                        {
+                                            <span class="status green"></span>
+                                        }
+                                    </td>
+                                    <td id="td-lokalita">@odstavky.Lokality.Lokalita</td>
+                                    <td id="td-klasifikace">@odstavky.Lokality.Klasifikace</td>
+                                    <td id="td-firma"></td>
+                                    <td id="td-objednano"></td>
+                                    <td id="td-vstup"></td>
+                                    <td id="td-odchod"></td>
+                                    <td id="td-poznamka"></td>
+                                </tr>
+                               
+                            }   
+                        }
                     </tbody>
                 </table>
             </div>    
