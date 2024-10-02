@@ -30,7 +30,7 @@ input{
     display: flex;
     background-color:rgb(247, 245, 245);    
     align-items: baseline;
-    justify-content:flex-end;
+    justify-content:center;
     border-radius: 10px;
     width: 50%;
 

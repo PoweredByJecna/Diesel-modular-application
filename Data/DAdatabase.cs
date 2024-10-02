@@ -49,7 +49,7 @@ namespace Diesel_modular_application.Data
             // Stávající konfigurace pro Lokality a Odstavky
             builder.Entity<LokalityTable>(entity =>
             {
-                entity.ToTable("Lokality", schema: "Data");
+                entity.ToTable("LokalityTable", schema: "Data");
             });
             builder.Entity<OdstavkyTable>(entity =>
             {

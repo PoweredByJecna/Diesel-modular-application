@@ -68,7 +68,10 @@
                 <tbody>
                     @if (Model != null)
                     {
-                        
+                        <div>
+                            @ViewBag.Message
+                        </div>
+
                         @foreach(var odstavky in Model.OdstavkyList)
                         {
                             <tr>
