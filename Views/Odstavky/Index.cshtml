@@ -8,7 +8,7 @@
         <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
             <div class="form">
              <label>Distributor:</label>   
-            <select asp-for="AddOstavka.Distributor">
+            <select asp-for="AddOdstavka.Distributor">
                 <option value="ČEZ">ČEZ</option>
                 <option value="PRE">PRE</option>
                 <option value="EGD">EGD</option>
@@ -17,20 +17,20 @@
             <div class="form">
                 <label>Lokalita:</label>
                 <div class="div-form">
-                    <input asp-for="AddOstavka.Lokalita" type="text">
+                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text">
                 </div>
             </div>
             <div class="form">
                 <label>Od:</label>
-                <input type="datetime-local" asp-for="AddOstavka.Od">
+                <input type="datetime-local" asp-for="AddOdstavka.Od">
             </div>
             <div class="form">
                 <label>Do:</label>
-                <input type="datetime-local" asp-for="AddOstavka.Do">
+                <input type="datetime-local" asp-for="AddOdstavka.Do">
             </div>
             <div class="form">
                 <label>Popis:</label>
-                <input type="text" class="input-text" asp-for="AddOstavka.Popis">
+                <input type="text" class="input-text" asp-for="AddOdstavka.Popis">
             </div>
             <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
 
@@ -68,22 +68,23 @@
                 <tbody>
                     @if (Model != null)
                     {
-                        /*
+                        
                         @foreach(var odstavky in Model.OdstavkyList)
                         {
                             <tr>
-                                <td>@odstavky.Id</td>
+                                <td>@odstavky.IdOdstavky</td>
                                 <td>@odstavky.Distributor</td>
-                                <td>@odstavky.Lokalita</td>
-                                <td>@odstavky.Klasifikace</td>
+                                <td>@odstavky.Lokality.Lokalita</td>
+                                <td>@odstavky.Lokality.Klasifikace</td>
                                 <td>@odstavky.Od</td>
                                 <td>@odstavky.Do</td>
-                                <td>@odstavky.Baterie</td>
-                                <td>@odstavky.Zásuvka</td>
+                                <td>@odstavky.Lokality.Adresa</td>
+                                <td>@odstavky.Lokality.Baterie</td>
+                                <td>@odstavky.Lokality.Zásuvka</td>
                                 <td>@odstavky.Popis</td>
                             </tr>
                         }  
-                        */
+                        
                     }
                 </tbody>
              

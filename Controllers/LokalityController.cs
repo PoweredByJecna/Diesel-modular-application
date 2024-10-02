@@ -21,9 +21,7 @@ namespace Diesel_modular_application.Controllers
         [Authorize]
            public IActionResult Index()
         {
-            var lokality=_context.LokalityS.ToList();
-
-            return View(lokality);
+            return View();
         }
        // [Authorize(Roles ="Admin")]
         public async Task<IActionResult> ImportFromExcel(IFormFile file)

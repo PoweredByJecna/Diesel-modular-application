@@ -7,9 +7,9 @@ using Diesel_modular_application.Models;
 public class ExcelHandling
     {
 
-        public List<Lokality> ParseExcelFile(Stream stream)
+        public List<LokalityTable> ParseExcelFile(Stream stream)
         {
-            var lokalityies = new List<Lokality>();
+            var lokalityies = new List<LokalityTable>();
 
             using (var workbook = new XLWorkbook(stream))
             {
@@ -18,7 +18,7 @@ public class ExcelHandling
 
                 foreach (var row in rows)
                 {
-                    var lokality = new Lokality
+                    var lokality = new LokalityTable
                     {
                         Lokalita = row.Cell(1).GetValue<string>(),
                         Klasifikace = row.Cell(2).GetValue<string>(),

@@ -1,8 +1,13 @@
-namespace Diesel_modular_application.Models
+﻿namespace Diesel_modular_application.Models
 {
-    public class OdstavkyViewModel:Odstavky
+    public class OdstavkyViewModel
     {
-        public IEnumerable<Odstavky> OdstavkyList {get;set;}
-        public Odstavky AddOstavka{get; set;}
+        public IEnumerable<OdstavkyTable> OdstavkyList { get; set; }
+        public OdstavkyTable AddOdstavka { get; set; } = new OdstavkyTable(); 
+
+        public OdstavkyViewModel()
+        {
+            OdstavkyList = new List<OdstavkyTable>(); 
+        }
     }
 }

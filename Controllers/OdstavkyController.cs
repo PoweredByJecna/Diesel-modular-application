@@ -21,42 +21,38 @@ namespace Diesel_modular_application.Controllers
         [Authorize]
         public IActionResult Index()
         {
-                return View();
+         
+            return View();
         }
-        public async Task<IActionResult>Create(OdstavkyViewModel odstavky)
-        {   
-            //if(ModelState.IsValid)
-           
-
-                var lokalitaSearch = await _context.LokalityS.FirstOrDefaultAsync(Input => Input.Lokalita==odstavky.AddOstavka.Lokalita);
-                if(lokalitaSearch==null)
-                {
-                    ViewBag.Message="Zadaná lokalita neexistuje";
-                  
-                }
-                else
-                {
-                    ViewBag.Message="Lokalita nalezena";
-                    /*                     
-                    var NewOdstavka = new OdstavkyViewModel
-                    {
-                        IdOdstavky=odstavky.Id,
-                        LokalitaInfo=lokalitaSearch.Id,
-                        Od=odstavky.AddOstavka.Od,
-                        Do=odstavky.AddOstavka.Do,
-                        Popis=odstavky.AddOstavka.Popis,
-                    };
-                    _context.Add(NewOdstavka);
-                    await _context.SaveChangesAsync();
-                    */
-                    ViewBag.Message="Odstávka byla vytvořena";
-                    
-                }
-            //}
+        public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
+        {
+            var lokalitaSearch = await _context.LokalityS.FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+            if (lokalitaSearch == null)
+            {
+                ViewBag.Message = "Zadaná lokalita neexistuje";
                 return View("Index", odstavky);
+            }
+
+            var newOdstavka = new OdstavkyTable
+            {
+                Distributor = odstavky.AddOdstavka.Distributor,
+                Od = odstavky.AddOdstavka.Od,
+                Do = odstavky.AddOdstavka.Do,
+                Popis = odstavky.AddOdstavka.Popis,
+                LokalitaId = lokalitaSearch.Id // Odkaz na ID existující lokality
+            };
+
+            _context.OdstavkyS.Add(newOdstavka);
+            await _context.SaveChangesAsync();
+
+            ViewBag.Message = "Odstávka byla vytvořena";
+
+            // Načti seznam odstávek pro zobrazení
+            odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync();
+            return View("Index", odstavky);
         }
-        
-        
+
+
     }
 
 }
