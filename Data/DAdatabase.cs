@@ -47,23 +47,23 @@ namespace Diesel_modular_application.Data
             });
 
             // Stávající konfigurace pro Lokality a Odstavky
-            builder.Entity<LokalityTable>(entity =>
+            builder.Entity<TableLokality>(entity =>
             {
                 entity.ToTable("LokalityTable", schema: "Data");
             });
-            builder.Entity<OdstavkyTable>(entity =>
+            builder.Entity<TableOdstavky>(entity =>
             {
                 entity.ToTable("OdstavkyTable", schema: "Data");
             });
 
             // Přidání vztahu mezi Odstavky a Lokality
-            builder.Entity<OdstavkyTable>()
+            builder.Entity<TableOdstavky>()
                 .HasOne(o => o.Lokality) // Navigační vlastnost v Odstavky
                 .WithMany(l => l.OdstavkyList) // Kolekce odstávek v Lokality
                 .HasForeignKey(o => o.LokalitaId); // Cizí klíč v Odstavky
         }
 
-        public DbSet<LokalityTable> LokalityS {get; set;}
-        public DbSet<OdstavkyTable> OdstavkyS {get;set;}
+        public DbSet<TableLokality> LokalityS {get; set;}
+        public DbSet<TableOdstavky> OdstavkyS {get;set;}
     }
 }

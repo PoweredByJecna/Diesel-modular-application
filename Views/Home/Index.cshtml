@@ -28,9 +28,7 @@
                                 <th id="firma">Firma</th>
                                 <th id="vstup">Vstup</th>
                                 <th id="com"></th>
-                                <form asp-action="Vstup" asp-controller="Odstavky">
-                                    <th id="arrow"><input asp-for="AddOdstavka.Vstup" type="datetime-local"></th>
-                                </form>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +37,7 @@
                                 @foreach (var odstavky in Model.OdstavkyList)
                                 {
 
-                                    @if (odstavky.Od.Equals(todayDate))
+                                    @if (odstavky.Vstup==DateTime.Now)
                                     {
 
 
@@ -170,8 +168,8 @@
                                                 <i class="fa-solid fa-arrow-right green-arrow"></i>
                                                 <div class="overlay">
                                                     <form asp-action="Vstup" asp-controller="Odstavky">
-                                                        <input asp-for="AddOdstavka.Vstup" type="current-datetime">
-                                                         <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                        <input asp-for="AddOdstavka.Vstup" type="date">
+                                                        <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
                                                     </form>
                                                 </div>
                                             </td>

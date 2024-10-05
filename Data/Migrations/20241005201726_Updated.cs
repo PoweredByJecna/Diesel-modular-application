@@ -6,15 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Diesel_modular_application.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UPGRADE : Migration
+    public partial class Updated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Zajištění schématu
-            migrationBuilder.EnsureSchema(name: "Data");
+          
 
-            // Vytvoření tabulky Lokality
             migrationBuilder.CreateTable(
                 name: "LokalityTable",
                 schema: "Data",
@@ -23,18 +21,17 @@ namespace Diesel_modular_application.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Lokalita = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Klasifikace = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Baterie = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DA = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Zásuvka = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lokality", x => x.Id);
+                    table.PrimaryKey("PK_LokalityTable", x => x.Id);
                 });
 
-            // Vytvoření tabulky OdstavkyTable
             migrationBuilder.CreateTable(
                 name: "OdstavkyTable",
                 schema: "Data",
@@ -43,9 +40,12 @@ namespace Diesel_modular_application.Data.Migrations
                     IdOdstavky = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Distributor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Firma = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Od = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Do = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Popis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Vstup = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Odchod = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LokalitaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -70,13 +70,7 @@ namespace Diesel_modular_application.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "OdstavkyTable",
-                schema: "Data");
-
-            migrationBuilder.DropTable(
-                name: "LokalityTable",
-                schema: "Data");
+            
         }
     }
 }

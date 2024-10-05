@@ -18,7 +18,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.ConfigureApplicationCookie(Options =>
 {
-    Options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    Options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
 });
 

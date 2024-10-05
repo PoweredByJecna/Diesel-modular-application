@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Data.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    [Migration("20241002144306_UPGRADE")]
-    partial class UPGRADE
+    [Migration("20241005201726_Updated")]
+    partial class Updated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Diesel_modular_application.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Diesel_modular_application.Models.LokalityTable", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableLokality", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,10 +60,10 @@ namespace Diesel_modular_application.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lokality", "Data");
+                    b.ToTable("LokalityTable", "Data");
                 });
 
-            modelBuilder.Entity("Diesel_modular_application.Models.OdstavkyTable", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableOdstavky", b =>
                 {
                     b.Property<int>("IdOdstavky")
                         .ValueGeneratedOnAdd()
@@ -78,15 +78,25 @@ namespace Diesel_modular_application.Data.Migrations
                     b.Property<DateTime>("Do")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Firma")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LokalitaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Od")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Odchod")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Popis")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Vstup")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("IdOdstavky");
 
@@ -297,9 +307,9 @@ namespace Diesel_modular_application.Data.Migrations
                     b.ToTable("UserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("Diesel_modular_application.Models.OdstavkyTable", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableOdstavky", b =>
                 {
-                    b.HasOne("Diesel_modular_application.Models.LokalityTable", "Lokality")
+                    b.HasOne("Diesel_modular_application.Models.TableLokality", "Lokality")
                         .WithMany("OdstavkyList")
                         .HasForeignKey("LokalitaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -359,7 +369,7 @@ namespace Diesel_modular_application.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Diesel_modular_application.Models.LokalityTable", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableLokality", b =>
                 {
                     b.Navigation("OdstavkyList");
                 });

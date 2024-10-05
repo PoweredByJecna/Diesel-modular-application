@@ -33,11 +33,14 @@ namespace Diesel_modular_application.Controllers
                 return View("Index", odstavky);
             }
 
-            var newOdstavka = new OdstavkyTable
+            var newOdstavka = new TableOdstavky
             {
                 Distributor = odstavky.AddOdstavka.Distributor,
+                Firma=odstavky.AddOdstavka.Firma,
                 Od = odstavky.AddOdstavka.Od,
                 Do = odstavky.AddOdstavka.Do,
+                Vstup=odstavky.AddOdstavka.Vstup,
+                Odchod=odstavky.AddOdstavka.Odchod,
                 Popis = odstavky.AddOdstavka.Popis,
                 LokalitaId = lokalitaSearch.Id // Odkaz na ID existující lokality
             };
@@ -53,19 +56,24 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
         {
-            var SetOdstavka=new OdstavkyTable
+            var SetOdstavka=new TableOdstavky
             {   
                 Vstup=odstavky.AddOdstavka.Vstup
 
             };
+            _context.OdstavkyS.Add(SetOdstavka);
+            await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
+
         }
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
         {
-            var SetOdstavka = new OdstavkyTable
+            var SetOdstavka = new TableOdstavky
             {
                 Odchod=odstavky.AddOdstavka.Odchod
             };
+            _context.OdstavkyS.Add(SetOdstavka);
+            await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
         }
 

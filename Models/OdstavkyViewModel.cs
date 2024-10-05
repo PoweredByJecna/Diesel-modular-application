@@ -2,12 +2,12 @@
 {
     public class OdstavkyViewModel
     {
-        public IEnumerable<OdstavkyTable> OdstavkyList { get; set; }
-        public OdstavkyTable AddOdstavka { get; set; } = new OdstavkyTable(); 
+        public IEnumerable<TableOdstavky> OdstavkyList { get; set; }
+        public TableOdstavky AddOdstavka { get; set; } = new TableOdstavky(); 
 
         public OdstavkyViewModel()
         {
-            OdstavkyList = new List<OdstavkyTable>(); 
+            OdstavkyList = new List<TableOdstavky>(); 
         }
     }
 }
