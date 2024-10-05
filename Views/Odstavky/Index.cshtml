@@ -17,20 +17,20 @@
             <div class="form">
                 <label>Lokalita:</label>
                 <div class="div-form">
-                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text">
+                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
                 </div>
             </div>
             <div class="form">
                 <label>Od:</label>
-                <input type="datetime-local" asp-for="AddOdstavka.Od">
+                <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
             </div>
             <div class="form">
                 <label>Do:</label>
-                <input type="datetime-local" asp-for="AddOdstavka.Do">
+                <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
             </div>
             <div class="form">
                 <label>Popis:</label>
-                <input type="text" class="input-text" asp-for="AddOdstavka.Popis">
+                <input type="text" class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky">
             </div>
             <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
 
@@ -43,19 +43,19 @@
         </ul>
     </div>
     <div class="div-odstavky-table">
-        <div class="div-odstavky">
-            <table class="table-odstavky">
+        <div class="table-div odstavky">
+            <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Distributor</th>
-                        <th>Lokalita</th>
-                        <th>Klasifikace</th>
-                        <th>Od</th>
-                        <th>Od</th>
-                        <th>Adresa</th>
-                        <th>Baterie</th>
-                        <th>Zásuvka</th>
+                        <th>Id<i class="fa-solid fa-id-badge"></i></th>
+                        <th>Distributor<i class="fa-solid fa-bolt"></i></th>
+                        <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                        <th>Klasifikace<i class="fa-solid fa-tower-broadcast"></i></th>
+                        <th>Od<i class="fa-solid fa-clock"></i></th>
+                        <th>Do<i class="fa-solid fa-clock"></i></th>
+                        <th>Adresa<i class="fa-solid fa-house"></i></th>
+                        <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
+                        <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
                         <th>Popis</th>
                     </tr>
                 </thead>
@@ -77,13 +77,63 @@
                             <tr>
                                 <td>@odstavky.IdOdstavky</td>
                                 <td>@odstavky.Distributor</td>
-                                <td>@odstavky.Lokality.Lokalita</td>
-                                <td>@odstavky.Lokality.Klasifikace</td>
+                          
+                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
+                                {
+                                    <td>@odstavky.Lokality.Lokalita
+                                        @if(odstavky.Lokality.Klasifikace=="A1")
+                                    {
+                                        <span title="Kritická priorita" class="status red"></span>
+                                    }
+                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                    {
+                                        <span title="Vysoká priorita" class="status orange"></span>
+                                    }
+                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                    {
+                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                    }
+                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                    {
+                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                    }
+                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                    {
+                                        <span title="Nízká priorita" class="status green"></span>
+                                    }
+                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                    {
+                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                    }
+                                    </td>
+                                }
+                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
+                                {
+                                    <td>@odstavky.Lokality.Klasifikace</td>
+                                }
                                 <td>@odstavky.Od</td>
                                 <td>@odstavky.Do</td>
-                                <td>@odstavky.Lokality.Adresa</td>
-                                <td>@odstavky.Lokality.Baterie</td>
-                                <td>@odstavky.Lokality.Zásuvka</td>
+                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Adresa))
+                                {
+                                    <td>@odstavky.Lokality.Adresa</td>
+                                }
+                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Baterie))
+                                {
+                                    <td>@odstavky.Lokality.Baterie</td>
+                                }
+                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Zásuvka))
+                                {
+                                    <td>@odstavky.Lokality.Zásuvka
+                                        @if(odstavky.Lokality.Zásuvka=="TRUE")
+                                        {
+                                            <span class="status green"></span>
+                                        }
+                                        @if(odstavky.Lokality.Zásuvka=="FALSE")
+                                        {
+                                            <span class="status red"></span>
+                                        }
+                                    </td>
+                                }
                                 <td>@odstavky.Popis</td>
                             </tr>
                         }  

@@ -18,7 +18,7 @@
         <section class="tables-row">
             <div class="section small">
                 <h2>Aktuální dieslování:</h2>
-                <div class="table-div">
+                <div class="table-div now">
                     <table>
                         <thead>
                             <tr>
@@ -28,7 +28,9 @@
                                 <th id="firma">Firma</th>
                                 <th id="vstup">Vstup</th>
                                 <th id="com"></th>
-                                <th id="arrow"></th>
+                                <form asp-action="Vstup" asp-controller="Odstavky">
+                                    <th id="arrow"><input asp-for="AddOdstavka.Vstup" type="datetime-local"></th>
+                                </form>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,8 +46,33 @@
                                         <tr>
                                             <td title="aktivni vstup"><span class="status green"></span>
                                             </td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>@odstavky.Lokality.Lokalita</td>
+                                            <td>@odstavky.Lokality.Klasifikace
+                                                 @if(odstavky.Lokality.Klasifikace=="A1")
+                                                    {
+                                                        <span title="Kritická priorita" class="status red"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                                    {
+                                                        <span title="Vysoká priorita" class="status orange"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                                    {
+                                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                                    {
+                                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                    {
+                                                        <span title="Nízká priorita" class="status green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                                    {
+                                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                                    }
+                                            </td>
                                             <td></td>
                                             <td></td>
                                             <td title="komentář">
@@ -77,7 +104,7 @@
             </div>
             <div class="section small">
                 <h2>Dnešní nadcházející:</h2>
-                <div class="table-div">
+                <div class="table-div upcoming">
                     <table id="upcoming-table">
                         <thead>
                             <tr>
@@ -100,10 +127,35 @@
 
                                         <tr>
                                             <td title="čeká se"><span class="status yellow"></span></td>
+                                            <td>@odstavky.Lokality.Lokalita</td>
+                                            <td>@odstavky.Lokality.Klasifikace
+                                                 @if(odstavky.Lokality.Klasifikace=="A1")
+                                                    {
+                                                        <span title="Kritická priorita" class="status red"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                                    {
+                                                        <span title="Vysoká priorita" class="status orange"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                                    {
+                                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                                    {
+                                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                    {
+                                                        <span title="Nízká priorita" class="status green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                                    {
+                                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                                    }
+                                            </td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>@odstavky.Od.AddHours(2)</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
                                                 <div class="comment-box">
@@ -117,8 +169,10 @@
                                             <td title="Vstup">
                                                 <i class="fa-solid fa-arrow-right green-arrow"></i>
                                                 <div class="overlay">
-                                                    <span id="current-datetime"></span>
-                                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                    <form asp-action="Vstup" asp-controller="Odstavky">
+                                                        <input asp-for="AddOdstavka.Vstup" type="current-datetime">
+                                                         <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -134,7 +188,7 @@
             </div>
             <div class="section small">
                 <h2>Dnešní ukončené:</h2>
-                <div class="table-div">
+                <div class="table-div end">
                     <table>
                         <thead>
                             <tr>
@@ -157,7 +211,32 @@
                                         <tr>
                                             <td title="neaktivní"><span class="status red"></span></td>
                                             <td>@odstavky.Lokality.Lokalita</td>
-                                            <td>@odstavky.Lokality.Klasifikace</td>
+                                            <td>@odstavky.Lokality.Klasifikace
+                                                 @if(odstavky.Lokality.Klasifikace=="A1")
+                                                    {
+                                                        <span title="Kritická priorita" class="status red"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                                    {
+                                                        <span title="Vysoká priorita" class="status orange"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                                    {
+                                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                                    {
+                                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                    {
+                                                        <span title="Nízká priorita" class="status green"></span>
+                                                    }
+                                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                                    {
+                                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                                    }
+                                            </td>
                                             <td></td>
                                             <td></td>
                                             <td title="komentář">
@@ -186,17 +265,17 @@
         </section>
         <section class="section">
             <h2>Všechny dnešní:</h2>
-            <div class="table-div">
+            <div class="table-div all">
                 <table id="todayall-table">
                     <thead>
                         <tr>
                             <th id="th-stav">Stav</th>
-                            <th id="th-lokalita">Lokalita</th>
-                            <th id="th-klasifikace">Klasifikace</th>
-                            <th id="th-firma">Firma</th>
-                            <th id="th-objednano">Objednáno</th>
-                            <th id="th-vstup">Vstup</th>
-                            <th id="th-odchod">Odchod</th>
+                            <th id="th-lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                            <th id="th-klasifikace">Klasifikace<i class="fa-solid fa-star"></th>
+                            <th id="th-firma">Firma <i class="fa-solid fa-building"></i></th>
+                            <th id="th-objednano">Objednáno<i class="fa-solid fa-clock"></i></th>
+                            <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
+                            <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
                             <th id="th-poznamka">Poznámka</th>
                         </tr>
                     </thead>
@@ -217,9 +296,34 @@
                                         }
                                     </td>
                                     <td id="td-lokalita">@odstavky.Lokality.Lokalita</td>
-                                    <td id="td-klasifikace">@odstavky.Lokality.Klasifikace</td>
-                                    <td id="td-firma"></td>
-                                    <td id="td-objednano"></td>
+                                    <td id="td-klasifikace">@odstavky.Lokality.Klasifikace
+                                        @if(odstavky.Lokality.Klasifikace=="A1")
+                                        {
+                                            <span title="Kritická priorita" class="status red"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="A2")
+                                        {
+                                            <span title="Vysoká priorita" class="status orange"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="B1")
+                                        {
+                                            <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="B2")
+                                        {
+                                            <span title="Středně-nízká priorita" class="status light-green"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                        {
+                                            <span title="Nízká priorita" class="status green"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="D1")
+                                        {
+                                            <span title="Velmi-nízká priorita" class="status blue"></span>
+                                        }
+                                    </td>
+                                    <td id="td-firma"> </td>
+                                    <td id="td-objednano">@odstavky.Od</td>
                                     <td id="td-vstup"></td>
                                     <td id="td-odchod"></td>
                                     <td id="td-poznamka"></td>

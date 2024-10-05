@@ -53,7 +53,18 @@ h2.dark-mode {
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     background-color: white;
     border-radius: 10px;
-    
+    width: 100%;
+    overflow: auto;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+.table-div.all{
+    margin-bottom: 85px;
+    max-height: 300px;
+
+}
+.table-div.end, .table-div.now, .table-div.upcoming{
+    max-height: 350px;
 }
 
 table {
@@ -69,7 +80,10 @@ table.dark-mode {
     background-color: #333;
     color: #cccccc;
 }
-
+td
+{
+    height: 50px;
+}
 th, td {
     padding: 3px;
     border: 1px solid #e0e0e0;

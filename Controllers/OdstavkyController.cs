@@ -51,6 +51,23 @@ namespace Diesel_modular_application.Controllers
             odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync();
             return View("Index", odstavky);
         }
+        public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
+        {
+            var SetOdstavka=new OdstavkyTable
+            {   
+                Vstup=odstavky.AddOdstavka.Vstup
+
+            };
+            return Redirect("/Home/Index");
+        }
+        public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
+        {
+            var SetOdstavka = new OdstavkyTable
+            {
+                Odchod=odstavky.AddOdstavka.Odchod
+            };
+            return Redirect("/Home/Index");
+        }
 
 
     }
