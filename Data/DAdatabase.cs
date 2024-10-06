@@ -55,6 +55,26 @@ namespace Diesel_modular_application.Data
             {
                 entity.ToTable("OdstavkyTable", schema: "Data");
             });
+            builder.Entity<TableDieslovani>(entity=>
+            {
+                entity.ToTable("TableDieslovani",schema: "Data");
+            });
+             builder.Entity<TableFirma>(entity=>
+            {
+                entity.ToTable("TableFirma",schema: "Data");
+            });
+             builder.Entity<TableRegiony>(entity=>
+            {
+                entity.ToTable("TableRegiony",schema: "Data");
+            });
+             builder.Entity<TablePohotovosti>(entity=>
+            {
+                entity.ToTable("TablePohotovosti",schema: "Data");
+            });
+             builder.Entity<TableTechnik>(entity=>
+            {
+                entity.ToTable("TableTechnik",schema: "Data");
+            });
 
             // Přidání vztahu mezi Odstavky a Lokality
             builder.Entity<TableOdstavky>()
@@ -65,5 +85,10 @@ namespace Diesel_modular_application.Data
 
         public DbSet<TableLokality> LokalityS {get; set;}
         public DbSet<TableOdstavky> OdstavkyS {get;set;}
+        public DbSet<TableDieslovani> DieslovaniS {get;set;}
+        public DbSet<TableFirma> FrimaS{get;set;}
+        public DbSet<TableRegiony>ReginoS{get;set;}
+        public DbSet<TablePohotovosti> Pohotovst{get;set;}
+        public DbSet<TableTechnik> TechnikS{get;set;}
     }
 }
