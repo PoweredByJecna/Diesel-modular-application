@@ -44,6 +44,7 @@ namespace Diesel_modular_application.Data
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Register(RegisterMod model, string? returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");

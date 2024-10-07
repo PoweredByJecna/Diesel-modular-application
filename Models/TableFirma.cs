@@ -8,9 +8,6 @@ namespace Diesel_modular_application.Models
         [Key]
         public int IDFirmy{get;set;}
         public string NázevFirmy{get;set;}
-
-        [ForeignKey("Region")]
-        public int RegionId {get;set;}
-        public virtual TableRegiony Regiony {get;set;}
+        
     }
 }

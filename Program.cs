@@ -1,5 +1,6 @@
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
+using DocumentFormat.OpenXml.Packaging;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -70,4 +71,36 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+using (var scope= app.Services.CreateAsyncScope())
+{
+    var roleManager=scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new [] {"Admin","User","Engineer"};
+
+    foreach(var role in roles)
+    {
+        if(!await roleManager.RoleExistsAsync(role))
+        await roleManager.CreateAsync(new IdentityRole(role));
+    }
+}
+
+using (var scope=app.Services.CreateAsyncScope())
+{
+    var userManager=scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    string UserName="Administrator";
+    string Email="dieselmodapp@gmail.com";
+    string Password="Admin-123";
+
+    if(await userManager.FindByNameAsync(UserName)==null)
+    {
+        var user=new IdentityUser();
+        user.UserName=UserName;
+        user.Email=Email;
+        user.PasswordHash=Password;
+
+        await userManager.CreateAsync(user,Password);
+
+        await userManager.AddToRoleAsync(user,"Admin");
+    }
+}
 await app.RunAsync();

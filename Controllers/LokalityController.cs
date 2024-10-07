@@ -25,7 +25,7 @@ namespace Diesel_modular_application.Controllers
 
             return View(lokality);
         }
-       // [Authorize(Roles ="Admin")]
+       [Authorize(Roles ="Admin")]
         public async Task<IActionResult> ImportFromExcel(IFormFile file)
         {
             if(file != null && file.Length>0)

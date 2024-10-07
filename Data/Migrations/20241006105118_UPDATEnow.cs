@@ -59,7 +59,6 @@ namespace Diesel_modular_application.Data.Migrations
                     Tel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirmaId = table.Column<int>(type: "int", nullable: false),
                     RegionId = table.Column<int>(type: "int", nullable: false),
-                    RegionyIdRegion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +72,7 @@ namespace Diesel_modular_application.Data.Migrations
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_TableTechnik_TableRegiony_RegionyIdRegion",
-                        column: x => x.RegionyIdRegion,
+                        column: x => x.RegionId,
                         principalSchema: "Data",
                         principalTable: "TableRegiony",
                         principalColumn: "IdRegion",
@@ -161,10 +160,10 @@ namespace Diesel_modular_application.Data.Migrations
                 column: "IdTechnik");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableFirma_RegionyIdRegion",
+                name: "IX_TableFirma_RegionId",
                 schema: "Data",
                 table: "TableFirma",
-                column: "RegionyIdRegion");
+                column: "IdRegion");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TablePohotovosti_IdTechnik",
@@ -179,10 +178,10 @@ namespace Diesel_modular_application.Data.Migrations
                 column: "FirmaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableTechnik_RegionyIdRegion",
+                name: "IX_TableTechnik_RegionId",
                 schema: "Data",
                 table: "TableTechnik",
-                column: "RegionyIdRegion");
+                column: "IdRegion");
         }
 
         /// <inheritdoc />

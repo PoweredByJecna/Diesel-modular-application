@@ -16,8 +16,5 @@ namespace Diesel_modular_application.Models
         public int FirmaId{get;set;}
         public virtual TableFirma Firma {get;set;}
 
-         [ForeignKey("Region")]
-        public int RegionId {get;set;}
-        public virtual TableRegiony Regiony {get;set;}
     }
 }

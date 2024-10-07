@@ -50,9 +50,9 @@
                                 <i class="fa-solid fa-user"></i>
                             </div>
                             <ul class="list-wrapdropdown">
-                                <li class="dropdown-item list">
+                                 <li class="dropdown-item list">
                                     <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Profil
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #f7b100;"></i>Profil
                                     </a>
                                 </li>
                                 <li class="dropdown-item list">
@@ -85,7 +85,7 @@
                         <ul class="dropdown-menu user" aria-labelledby="userCaret">
                             <li class="dropdown-item list">
                                 <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Profil
+                                    <i class="fa-solid fa-circle fa-2xs" style="color: #f7b100;"></i>Profil
                                 </a>
                             </li>
                             <li class="dropdown-item list">
@@ -98,9 +98,17 @@
                                     <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
                                 </a>
                             </li>
+                            @if(User.IsInRole("Admin"))
+                            {
+                                <li class="dropdown-item list">
+                                    <a asp-action="Index" asp-controller="Register"  class="dropdown-item">
+                                        <i class="fa-solid fa-circle fa-2xs" style="color: #0ae324;"></i>Přidat Uživatele
+                                    </a>
+                                </li>
+                            }
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item list">
-                                <a asp-action="Logout" asp-controller="Login">
+                                <a asp-action="Logout" asp-controller="Login" class="dropdown-item">
                                     <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
                                 </a>
                             </li>
