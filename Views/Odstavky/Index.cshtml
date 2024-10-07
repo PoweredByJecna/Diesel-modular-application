@@ -1,157 +1,184 @@
 @model Diesel_modular_application.Models.OdstavkyViewModel
 <html>
     <body>
-        <div class="div-odstavka-create">
-        <h2>Vytvořit odstávku:</h2>
-        
-       
-        <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
-            <div class="form">
-             <label>Distributor:</label>   
-            <select asp-for="AddOdstavka.Distributor">
-                <option value="ČEZ">ČEZ</option>
-                <option value="PRE">PRE</option>
-                <option value="EGD">EGD</option>
-            </select>
-            </div>
-            <div class="form">
-                <label>Distributor:</label>
-                <select asp-for="AddOdstavka.Firma">
-                    <option value="VEGACOM">VEGACOM</option>
-                    <option value="FLMINFRA">FLMINFRA</option>
-                </select>
-            </div>
-            <div class="form">
-                <label>Lokalita:</label>
-                <div class="div-form">
-                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
-                </div>
-            </div>
-            <div class="form">
-                <label>Od:</label>
-                <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
-            </div>
-            <div class="form">
-                <label>Do:</label>
-                <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
-            </div>
-            <div class="form">
-                <label>Popis:</label>
-                <input type="text" class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky">
-            </div>
-            <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
-
-        </form>
-   </div>
-    <div class="menu">
-        <ul class="menu-ul">
-            <li class="menu-li"><a class="menu-text">Přidat odstávku</a></li>
-            <li class="menu-li"><a class="menu-text">Odstávky</a></li>
-        </ul>
-    </div>
-    <div class="div-odstavky-table">
-        <div class="table-div odstavky">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id<i class="fa-solid fa-id-badge"></i></th>
-                        <th>Distributor<i class="fa-solid fa-bolt"></i></th>
-                        <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                        <th>Klasifikace<i class="fa-solid fa-tower-broadcast"></i></th>
-                        <th>Od<i class="fa-solid fa-clock"></i></th>
-                        <th>Do<i class="fa-solid fa-clock"></i></th>
-                        <th>Adresa<i class="fa-solid fa-house"></i></th>
-                        <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
-                        <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
-                        <th>Popis</th>
-                    </tr>
-                </thead>
-                @if(Model == null)
-                {
-                <div class="error">
-                    <h1>Nelze načíst</h1>
-                </div>
-                }
-                <tbody>
-                    @if (Model != null)
-                    {
-                        <div>
-                            @ViewBag.Message
+        <div class="odstavky-section">
+            <div class="div-odstavka-create">
+                <h2>Vytvořit odstávku:</h2>
+                <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
+                    <div class="form">
+                    <label>Distributor:</label>   
+                    <select asp-for="AddOdstavka.Distributor">
+                        <option value="ČEZ">ČEZ</option>
+                        <option value="PRE">PRE</option>
+                        <option value="EGD">EGD</option>
+                    </select>
+                    </div>
+                    <div class="form">
+                        <label>Distributor:</label>
+                        <select asp-for="AddOdstavka.Firma">
+                            <option value="VEGACOM">VEGACOM</option>
+                            <option value="FLMINFRA">FLMINFRA</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label>Lokalita:</label>
+                        <div class="div-form">
+                            <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
                         </div>
+                    </div>
+                    <div class="form">
+                        <label>Od:</label>
+                        <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
+                    </div>
+                    <div class="form">
+                        <label>Do:</label>
+                        <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
+                    </div>
+                    <div class="form">
+                        <label>Popis:</label>
+                        <input type="text" class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky">
+                    </div>
+                    <button type="submit" class="button-odstavka"><a class="text-button">Vytvořit</a></button>
 
-                        @foreach(var odstavky in Model.OdstavkyList)
-                        {
+                </form>
+            </div>
+            <section class="tables">
+                <h2>Pohotovosti:</h2>
+                <div class="table-div pohotovosti">
+                    <table
+                        <thead>
                             <tr>
-                                <td>@odstavky.IdOdstavky</td>
-                                <td>@odstavky.Distributor</td>
-                          
-                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
-                                {
-                                    <td>@odstavky.Lokality.Lokalita
-                                        @if(odstavky.Lokality.Klasifikace=="A1")
-                                    {
-                                        <span title="Kritická priorita" class="status red"></span>
-                                    }
-                                    @if(odstavky.Lokality.Klasifikace=="A2")
-                                    {
-                                        <span title="Vysoká priorita" class="status orange"></span>
-                                    }
-                                    @if(odstavky.Lokality.Klasifikace=="B1")
-                                    {
-                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                    }
-                                    @if(odstavky.Lokality.Klasifikace=="B2")
-                                    {
-                                        <span title="Středně-nízká priorita" class="status light-green"></span>
-                                    }
-                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
-                                    {
-                                        <span title="Nízká priorita" class="status green"></span>
-                                    }
-                                    @if(odstavky.Lokality.Klasifikace=="D1")
-                                    {
-                                        <span title="Velmi-nízká priorita" class="status blue"></span>
-                                    }
-                                    </td>
-                                }
-                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
-                                {
-                                    <td>@odstavky.Lokality.Klasifikace</td>
-                                }
-                                <td>@odstavky.Od</td>
-                                <td>@odstavky.Do</td>
-                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Adresa))
-                                {
-                                    <td>@odstavky.Lokality.Adresa</td>
-                                }
-                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Baterie))
-                                {
-                                    <td>@odstavky.Lokality.Baterie</td>
-                                }
-                                @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Zásuvka))
-                                {
-                                    <td>@odstavky.Lokality.Zásuvka
-                                        @if(odstavky.Lokality.Zásuvka=="TRUE")
-                                        {
-                                            <span class="status green"></span>
-                                        }
-                                        @if(odstavky.Lokality.Zásuvka=="FALSE")
-                                        {
-                                            <span class="status red"></span>
-                                        }
-                                    </td>
-                                }
-                                <td>@odstavky.Popis</td>
+                                <td>Id</td>
+                                <td>Jmeno</td>
+                                <td>tel</td>
+                                <td>Začátek</td>
+                                <td>Konec</td>
                             </tr>
-                        }  
-                        
-                    }
-                </tbody>
-             
-                
-                
-            </table>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit">Zapsat se</button>
+                </div>  
+            </section>     
         </div>
+
+        <div class="menu">
+            <ul class="menu-ul">
+                <li class="menu-li"><a class="menu-text">Přidat odstávku</a></li>
+                <li class="menu-li"><a class="menu-text">Odstávky</a></li>
+            </ul>
+        </div>
+        <div class="div-odstavky-table">
+            <div class="table-div odstavky">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id<i class="fa-solid fa-id-badge"></i></th>
+                            <th>Distributor<i class="fa-solid fa-bolt"></i></th>
+                            <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                            <th>Klasifikace<i class="fa-solid fa-tower-broadcast"></i></th>
+                            <th>Od<i class="fa-solid fa-clock"></i></th>
+                            <th>Do<i class="fa-solid fa-clock"></i></th>
+                            <th>Adresa<i class="fa-solid fa-house"></i></th>
+                            <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
+                            <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    @if(Model == null)
+                    {
+                    <div class="error">
+                        <h1>Nelze načíst</h1>
+                    </div>
+                    }
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            <div>
+                                @ViewBag.Message
+                            </div>
+
+                            @foreach(var odstavky in Model.OdstavkyList)
+                            {
+                                <tr>
+                                    <td>@odstavky.IdOdstavky</td>
+                                    <td>@odstavky.Distributor</td>
+                            
+                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
+                                    {
+                                        <td>@odstavky.Lokality.Lokalita
+                                            @if(odstavky.Lokality.Klasifikace=="A1")
+                                        {
+                                            <span title="Kritická priorita" class="status red"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="A2")
+                                        {
+                                            <span title="Vysoká priorita" class="status orange"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="B1")
+                                        {
+                                            <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="B2")
+                                        {
+                                            <span title="Středně-nízká priorita" class="status light-green"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                        {
+                                            <span title="Nízká priorita" class="status green"></span>
+                                        }
+                                        @if(odstavky.Lokality.Klasifikace=="D1")
+                                        {
+                                            <span title="Velmi-nízká priorita" class="status blue"></span>
+                                        }
+                                        </td>
+                                    }
+                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
+                                    {
+                                        <td>@odstavky.Lokality.Klasifikace</td>
+                                    }
+                                    <td>@odstavky.Od</td>
+                                    <td>@odstavky.Do</td>
+                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Adresa))
+                                    {
+                                        <td>@odstavky.Lokality.Adresa</td>
+                                    }
+                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Baterie))
+                                    {
+                                        <td>@odstavky.Lokality.Baterie</td>
+                                    }
+                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Zásuvka))
+                                    {
+                                        <td>@odstavky.Lokality.Zásuvka
+                                            @if(odstavky.Lokality.Zásuvka=="TRUE")
+                                            {
+                                                <span class="status green"></span>
+                                            }
+                                            @if(odstavky.Lokality.Zásuvka=="FALSE")
+                                            {
+                                                <span class="status red"></span>
+                                            }
+                                        </td>
+                                    }
+                                    <td>@odstavky.Popis</td>
+                                </tr>
+                            }  
+                            
+                        }
+                    </tbody>
+                
+                    
+                    
+                </table>
+            </div>
     </div>
     </body>
 </html>

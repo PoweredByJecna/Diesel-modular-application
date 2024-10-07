@@ -103,4 +103,23 @@ using (var scope=app.Services.CreateAsyncScope())
         await userManager.AddToRoleAsync(user,"Admin");
     }
 }
+using (var scope=app.Services.CreateAsyncScope())
+{
+    var userManager=scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    string UserName="jnovotny602";
+    string Email="dieselmodapp@gmail.com";
+    string Password="Admin-123";
+
+    if(await userManager.FindByNameAsync(UserName)==null)
+    {
+        var user=new IdentityUser();
+        user.UserName=UserName;
+        user.Email=Email;
+        user.PasswordHash=Password;
+
+        await userManager.CreateAsync(user,Password);
+
+        await userManager.AddToRoleAsync(user,"Engineer");
+    }
+}
 await app.RunAsync();

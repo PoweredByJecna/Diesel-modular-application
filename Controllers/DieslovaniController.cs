@@ -21,12 +21,16 @@ namespace Diesel_modular_application.Controllers
         public async Task<IActionResult> Vstup (OdstavkyViewModel dieslovani)
         {
            var odstavkaSearch = await _context.OdstavkyS.FirstOrDefaultAsync(input => input.IdOdstavky == dieslovani.DieslovaniMod.IDodstavky);
+           var firmaSearch= await _context.FrimaS.FirstOrDefaultAsync(input=>input.IDFirmy==dieslovani.FirmaMod.IDFirmy);
+           var technikSearch= await _context.TechnikS.FirstOrDefaultAsync(input=>input.IdTechnika==dieslovani.TechnikMod.IdTechnika); 
 
            var NewDieslovani = new TableDieslovani
            {
                 Vstup=dieslovani.DieslovaniMod.Vstup,
                 Odchod=dieslovani.DieslovaniMod.Odchod,
-                IDodstavky=odstavkaSearch.IdOdstavky
+                IDodstavky=odstavkaSearch.IdOdstavky,
+                FirmaId=firmaSearch.IDFirmy,
+               IdTechnik=technikSearch.IdTechnika
            }; 
 
            odstavkaSearch.ZadanVstup=true;
