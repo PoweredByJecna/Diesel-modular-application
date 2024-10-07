@@ -4,6 +4,7 @@ using Diesel_modular_application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Data.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007161552_MIG8")]
+    partial class MIG8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,7 +445,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableTechnik", "Technik")
                         .WithMany()
                         .HasForeignKey("IdTechnik")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Firma");

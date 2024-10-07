@@ -34,39 +34,38 @@
                         <tbody>
                             @if(Model!=null)
                             {
-                                @foreach (var odstavky in Model.OdstavkyList)
+
+                                @foreach (var dieslovani in Model.DieslovaniList)
                                 {
-
-                                    @if (odstavky.Vstup==DateTime.Now)
+                                    
+                                    @if (dieslovani.Odstavka.ZadanVstup==true)
                                     {
-
-
                                         <tr>
                                             <td title="aktivni vstup"><span class="status green"></span>
                                             </td>
-                                            <td>@odstavky.Lokality.Lokalita</td>
-                                            <td>@odstavky.Lokality.Klasifikace
-                                                 @if(odstavky.Lokality.Klasifikace=="A1")
+                                            <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
+                                            <td>@dieslovani.Odstavka.Lokality.Klasifikace
+                                                 @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
                                                     {
                                                         <span title="Kritická priorita" class="status red"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
                                                     {
                                                         <span title="Vysoká priorita" class="status orange"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
                                                     {
                                                         <span title="Středně-vysoká priorita" class="status yellow"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
                                                     {
                                                         <span title="Středně-nízká priorita" class="status light-green"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
                                                     {
                                                         <span title="Nízká priorita" class="status green"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
                                                     {
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
@@ -118,13 +117,20 @@
                         <tbody>
                             @if (Model != null)
                             {
-                                @foreach (var odstavky in Model.OdstavkyList)
+                                @foreach (var odstavky in Model.OdstavkyList.Where(o=>o.ZadanVstup==false))
                                 {
-                                    @if (odstavky.Od>DateTime.Now)
+                                    @if (odstavky.Od>=DateTime.Today)
                                     {
 
                                         <tr>
-                                            <td title="čeká se"><span class="status yellow"></span></td>
+                                            @if(odstavky.Od.AddHours(2)>DateTime.Now)
+                                            {
+                                                <td title="čeká se"><span class="status yellow"></span></td>
+                                            }
+                                            @if(odstavky.Od.AddHours(2)<DateTime.Now)
+                                            {
+                                                 <td title="technik nedorazil, kontaktuj ho"><span class="status orange"></span></td>
+                                            }
                                             <td>@odstavky.Lokality.Lokalita</td>
                                             <td>@odstavky.Lokality.Klasifikace
                                                  @if(odstavky.Lokality.Klasifikace=="A1")
@@ -167,8 +173,9 @@
                                             <td title="Vstup">
                                                 <i class="fa-solid fa-arrow-right green-arrow"></i>
                                                 <div class="overlay">
-                                                    <form asp-action="Vstup" asp-controller="Odstavky">
-                                                        <input asp-for="AddOdstavka.Vstup" type="date">
+                                                    <form asp-action="Vstup" asp-controller="Dieslovani">
+                                                        <input asp-for="DieslovaniMod.IDodstavky" type="hidden" value="@odstavky.IdOdstavky" >
+                                                        <input asp-for="DieslovaniMod.Vstup" type="date">
                                                         <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
                                                     </form>
                                                 </div>

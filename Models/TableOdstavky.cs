@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace Diesel_modular_application.Models
 {
@@ -18,5 +19,7 @@ namespace Diesel_modular_application.Models
         [ForeignKey("Lokalita")]
         public int LokalitaId { get; set; }
         public virtual TableLokality Lokality { get; set; }
+
+        public bool ZadanVstup{get;set;}=false;
     }
 }

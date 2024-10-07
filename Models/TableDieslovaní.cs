@@ -9,7 +9,7 @@ namespace Diesel_modular_application.Models
         public int IdDieslovani{get;set;}
         public DateTime Vstup {get;set;}
         public DateTime Odchod {get;set;}
-
+        
         [ForeignKey("Odstavka")]
         public int IDodstavky {get;set;}
         public virtual TableOdstavky Odstavka {get;set;}
