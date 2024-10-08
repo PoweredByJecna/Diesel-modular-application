@@ -129,7 +129,7 @@ using (var scope=app.Services.CreateAsyncScope())
     string UserName="psvoboda603";
     string Email="dieselmodapp@gmail.com";
     string Password="Admin-123";
-    string PhoneNumber="";
+    string PhoneNumber="603 234 567";
    
 
     if(await userManager.FindByNameAsync(UserName)==null)
@@ -138,6 +138,7 @@ using (var scope=app.Services.CreateAsyncScope())
         user.UserName=UserName;
         user.Email=Email;
         user.PasswordHash=Password;
+        user.PhoneNumber=PhoneNumber;
 
         await userManager.CreateAsync(user,Password);
 
