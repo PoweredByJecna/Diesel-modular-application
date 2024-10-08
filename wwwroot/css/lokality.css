@@ -34,7 +34,7 @@
     border-radius: 15px;
 
 }
-.fa-solid.fa-id-badge, .fa-solid.fa-tower-broadcast, .fa-solid.fa-star{
+.fa-solid.fa-id-badge, .fa-solid.fa-tower-broadcast, .fa-solid.fa-star, .fa-solid.fa-clock,.fa-solid.fa-house,.fa-solid.fa-battery-full, .fa-solid.fa-plug{
     margin-left: 3px;
 }
 ::-webkit-scrollbar{

@@ -81,6 +81,23 @@ namespace Diesel_modular_application.Data
                 .HasOne(o => o.Lokality) // Navigační vlastnost v Odstavky
                 .WithMany(l => l.OdstavkyList) // Kolekce odstávek v Lokality
                 .HasForeignKey(o => o.LokalitaId); // Cizí klíč v Odstavky
+
+            builder.Entity<TableDieslovani>()
+                .HasOne(o=>o.Odstavka)
+                .WithMany(I=>I.DieslovaniList)
+                .HasForeignKey(o=>o.IDodstavky);
+
+            builder.Entity<TableDieslovani>()
+                .HasOne(o=>o.Technik)
+                .WithMany(i=>i.DieslovaniList)
+                .HasForeignKey(o=>o.IdTechnik);    
+            
+            builder.Entity<TableDieslovani>()
+                .HasOne(o=>o.Firma)
+                .WithMany(i=>i.DieslovaniList)
+                .HasForeignKey(o=>o.FirmaId);
+
+
         }
 
         public DbSet<TableLokality> LokalityS {get; set;}
@@ -88,7 +105,7 @@ namespace Diesel_modular_application.Data
         public DbSet<TableDieslovani> DieslovaniS {get;set;}
         public DbSet<TableFirma> FrimaS{get;set;}
         public DbSet<TableRegiony>ReginoS{get;set;}
-        public DbSet<TablePohotovosti> Pohotovst{get;set;}
+        public DbSet<TablePohotovosti> Pohotovts{get;set;}
         public DbSet<TableTechnik> TechnikS{get;set;}
     }
 }

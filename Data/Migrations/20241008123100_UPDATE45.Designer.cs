@@ -4,6 +4,7 @@ using Diesel_modular_application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Data.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241008123100_UPDATE45")]
+    partial class UPDATE45
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,7 +442,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
                         .WithMany("DieslovaniList")
                         .HasForeignKey("FirmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Diesel_modular_application.Models.TableOdstavky", "Odstavka")
@@ -451,7 +454,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableTechnik", "Technik")
                         .WithMany("DieslovaniList")
                         .HasForeignKey("IdTechnik")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Firma");
@@ -466,7 +469,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableLokality", "Lokality")
                         .WithMany("OdstavkyList")
                         .HasForeignKey("LokalitaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Lokality");
@@ -477,7 +480,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableTechnik", "Technik")
                         .WithMany()
                         .HasForeignKey("IdTechnik")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Technik");
@@ -488,7 +491,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
                         .WithMany()
                         .HasForeignKey("FirmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Users")
@@ -505,7 +508,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -514,7 +517,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -523,7 +526,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -532,13 +535,13 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -547,7 +550,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

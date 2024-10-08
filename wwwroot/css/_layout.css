@@ -275,7 +275,7 @@ a.dropdown-item {
 }
 
 .dropdown-menu.user.show {
-    height: 210px;
+    max-height: 210px;
     transform: translate(185%,47px);
 }
 
