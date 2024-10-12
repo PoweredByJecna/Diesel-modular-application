@@ -147,16 +147,22 @@
                             </section>
                         </nav>
                     </div> 
-                     @RenderBody()
+           
+                            
+                    @if(User.Identity?.IsAuthenticated==true)
+                    {
+                         @RenderBody()
+                    }
 
                 </div>
-           
 
-              
+                  
+                       
+                   
                 
             </div> 
         }  
-          
+             @RenderBody()
             
             @await RenderSectionAsync("Scripts", required: false)
 
