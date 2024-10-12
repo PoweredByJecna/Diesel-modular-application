@@ -1,10 +1,216 @@
 @model IEnumerable<Diesel_modular_application.Models.TableLokality>
 <body>
 <section class="section-lokality">
-    <div class="div-add">
-        <i class="fa-solid fa-plus fa-2xl" id="add-btn" style="color: #2dc838;"></i>
-    </div>
-    <div class="div-all-lokality">
+
+    <div class="div-import-lokality">
+        <section class="sctn import">
+            <h2 style="width: 97%;">Vytvoření lokality:</h2>
+            <div class="table-div import A">
+                <section class="sctn first">
+                    <div class="fr">
+                        <label><i class="fa-solid fa-tower-broadcast"></i>Lokalita:</label>   
+                    </div>
+                    <div class="fr">
+                        <label><i class="fa-solid fa-star" style="color: gold;"></i>Klasifikace:</label>
+                        <form id="app-cover">
+                            <div id="select-box">
+                                <input type="checkbox" id="options-view-button">
+                                <div id="select-button" class="brd">
+                                    <div id="selected-value">
+                                        <span></span>
+                                    </div>
+                                    <div id="chevrons">
+                                        <i class="fas fa-chevron-up"></i>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                <div id="options">
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="A1">
+                                        <input class="s-c bottom" type="radio" name="platform" value="A1">
+                                        <i class="fa-solid fa-circle" style="color: #ff0019;"></i>
+                                        <span class="label">A1</span>  
+                                        <span class="opt-val">A1</span>
+                                    </div>
+                            
+                                
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="A2">
+                                        <input class="s-c bottom" type="radio" name="platform" value="A2">
+                                        <i class="fa-solid fa-circle" style="color: #c28a0f;"></i>
+                                        <span class="label">A2</span>  
+                                        <span class="opt-val">A2</span>
+                                    </div>
+                            
+                            
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="B1">
+                                        <input class="s-c bottom" type="radio" name="platform" value="B1">
+                                        <i class="fa-solid fa-circle" style="color: #FFD43B;"></i>
+                                        <span class="label">B1</span>  
+                                        <span class="opt-val">B1</span>
+                                    </div>
+                            
+                            
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="B2">
+                                        <input class="s-c bottom" type="radio" name="platform" value="B2">
+                                        <i class="fa-solid fa-circle" style="color: #56dc6c;"></i>
+                                        <span class="label">B2</span>  
+                                        <span class="opt-val">B2</span>
+                                    </div>
+                        
+                            
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="B">
+                                        <input class="s-c bottom" type="radio" name="platform" value="B">
+                                        <i class="fa-solid fa-circle" style="color: #007514;"></i>
+                                        <span class="label">B</span>  
+                                        <span class="opt-val">B</span>
+                                    </div>
+                            
+                            
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="C">
+                                        <input class="s-c bottom" type="radio" name="platform" value="C">
+                                        <i class="fa-solid fa-circle" style="color: #007514;"></i>
+                                        <span class="label">C</span>  
+                                        <span class="opt-val">C</span>
+                                    </div>
+                            
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="D1">
+                                        <input class="s-c bottom" type="radio" name="platform" value="D1">
+                                        <i class="fa-solid fa-circle" style="color: #74C0FC;"></i>
+                                        <span class="label">D1</span>  
+                                        <span class="opt-val">D1</span>
+                                    </div>
+                                    <div id="option-bg"></div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>   
+                    
+                </section>
+                <section class="sctn first">
+                    <div class="fr">
+                        <label><i class="fa-solid fa-gas-pump" style="color:red"></i>DA:</label>
+                        <form id="app-cover">
+                            <div id="select-box">
+                                <input type="checkbox" id="options-view-button">
+                                <div id="select-button" class="brd">
+                                    <div id="selected-value">
+                                        <span></span>
+                                    </div>
+                                    <div id="chevrons">
+                                        <i class="fas fa-chevron-up"></i>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                <div id="options">
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="True">
+                                        <input class="s-c bottom" type="radio" name="platform" value="True">
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                        <span class="label">ANO</span>  
+                                        <span class="opt-val">ANO</span>
+                                    </div>
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="False">
+                                        <input class="s-c bottom" type="radio" name="platform" value="False">
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                        <span class="label">NE</span>  
+                                        <span class="opt-val">NE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>                
+                    </div> 
+                    <div class="fr">
+                        <label><i class="fa-solid fa-battery-full" style="color: #51fe06;"></i>Baterie:</label>
+                        
+                    </div> 
+                    <div class="fr">
+                        <label><i class="fa-solid fa-plug"></i>Zásuvka:</label>
+                        <form id="app-cover">
+                            <div id="select-box">
+                                <input type="checkbox" id="options-view-button">
+                                <div id="select-button" class="brd">
+                                    <div id="selected-value">
+                                        <span></span>
+                                    </div>
+                                    <div id="chevrons">
+                                        <i class="fas fa-chevron-up"></i>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                <div id="options">
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="True">
+                                        <input class="s-c bottom" type="radio" name="platform" value="True">
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                        <span class="label">ANO</span>  
+                                        <span class="opt-val">ANO</span>
+                                    </div>
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="False">
+                                        <input class="s-c bottom" type="radio" name="platform" value="False">
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                        <span class="label">NE</span>  
+                                        <span class="opt-val">NE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>              
+                    </div> 
+                    
+                </section>
+                <section class="sctn adresa">
+                    <div class="fr adresa">
+                        <label><i class="fa-solid fa-house"></i>Adresa</label>
+                        <div class="adresa mesto">
+                            <label><i class="fa-solid fa-city"></i>Město:</label>
+                            <input class="input adresa" type="text">
+                            
+                        </div>
+                        <div class="adresa Ulice">
+                            <label><i class="fa-solid fa-road"></i>Ulice:</label>
+                            <input class="input adresa" type="text">
+                        </div>
+                        <div class="adresa PSČ">
+                            <label><i class="fa-solid fa-signs-post" style="color: brown;"></i>PSČ:</label>
+                            <input class="input adresa PSC" type="number">
+                        </div>
+                    </div> 
+                    
+                </section>
+                
+
+
+                <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
+
+            </div>
+           
+        </section>
+        <section class="sctn">
+            <h2>Import Lokalit</h2>
+            <div class="table-div import B">
+                <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="file" name="file" class="form-control" />
+                    <button type="submit" name="Upload" class="button-odstavka">Upload</button>
+                </form>
+
+            </div>
+        </section>
+    </div>    
+
+
+
+
+
+
+    
         @if (Model == null)
         {
           <div class="error">
@@ -13,90 +219,87 @@
         }
         @if (Model != null)
         {
-            <table class="table-div">
-                <thead>
-                    <tr>
-                        <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
-                        <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                        <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
-                        <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
-                        <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
-                        <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
-                        <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var lokality in Model)
-                    {
+            <div class="table-div lokality">
+                <table>
+                    <section class="sctn search">
+                        <form onsubmit="event.preventDefault();" role="search" class="form-import Search">
+                            <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                            <button class="buttonsearch"type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>    
+                        </form>
+                    </section>
+                    <thead>
                         <tr>
-                            <td>@lokality.Id</td>
-                            <td>@lokality.Lokalita</td>
-                            <td>@lokality.Klasifikace
-                                @if(lokality.Klasifikace=="A1")
-                                {
-                                    <span title="Kritická priorita" class="status red"></span>
-                                }
-                                 @if(lokality.Klasifikace=="A2")
-                                {
-                                    <span title="Vysoká priorita" class="status orange"></span>
-                                }
-                                 @if(lokality.Klasifikace=="B1")
-                                {
-                                    <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                }
-                                 @if(lokality.Klasifikace=="B2")
-                                {
-                                    <span title="Středně-nízká priorita" class="status light-green"></span>
-                                }
-                                 @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
-                                {
-                                    <span title="Nízká priorita" class="status green"></span>
-                                }
-                                 @if(lokality.Klasifikace=="D1")
-                                {
-                                    <span title="Velmi-nízká priorita" class="status blue"></span>
-                                }
-                              
-                            </td>
-                            <td>@lokality.Adresa</td>
-                            <td>@lokality.Baterie</td>
-                            <td>
-                                @if(lokality.Zásuvka=="TRUE")
-                                {
-                                    <span class="status green"></span>
-                                }
-                                @if(lokality.Zásuvka=="FALSE")
-                                {
-                                    <span class="status red"></span>
-                                }
-                            </td>
-                            <td>
-                                @if(lokality.DA=="TRUE")
-                                {
-                                    <span class="status green"></span>
-                                }
-                                @if(lokality.DA=="FALSE")
-                                {
-                                    <span class="status red"></span>
-                                }
-                            </td>
+                            <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
+                            <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                            <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
+                            <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
+                            <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
+                            <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
+                            <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var lokality in Model)
+                        {
+                            <tr>
+                                <td>@lokality.Id</td>
+                                <td>@lokality.Lokalita</td>
+                                <td>@lokality.Klasifikace
+                                    @if(lokality.Klasifikace=="A1")
+                                    {
+                                        <span title="Kritická priorita" class="status red"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="A2")
+                                    {
+                                        <span title="Vysoká priorita" class="status orange"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="B1")
+                                    {
+                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="B2")
+                                    {
+                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
+                                    {
+                                        <span title="Nízká priorita" class="status green"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="D1")
+                                    {
+                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                    }
+                                
+                                </td>
+                                <td>@lokality.Adresa</td>
+                                <td>@lokality.Baterie</td>
+                                <td>
+                                    @if(lokality.Zásuvka=="TRUE")
+                                    {
+                                        <span class="status green"></span>
+                                    }
+                                    @if(lokality.Zásuvka=="FALSE")
+                                    {
+                                        <span class="status red"></span>
+                                    }
+                                </td>
+                                <td>
+                                    @if(lokality.DA=="TRUE")
+                                    {
+                                        <span class="status green"></span>
+                                    }
+                                    @if(lokality.DA=="FALSE")
+                                    {
+                                        <span class="status red"></span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
-    </div>
-        <div class="div-lokality-menu">
-        <section class="lokality-class-menu">
-                <div class="div-import">
-                    <h1 class="h1-import">Import lokalit</h1>
-                    <form class="form-class" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <input type="file" name="file" class="form-control" />
-                        <button type="submit" name="Upload" class="btn btn-primary">Upload</button>
-                    </form>
-                </div>
-        </section>
-    </div>
+        
+   
 </section>
 </body>

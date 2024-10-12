@@ -15,115 +15,152 @@
     <body>
         @if(User.Identity?.IsAuthenticated==true)   
         {
-            <header>
-                <nav id="navbar">
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Lokality" asp-action="Index">Lokality</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" id="odstavkyDropdown" role="button" asp-action="Index" asp-controller="Odstavky">Odstávky</a>
-                            <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="odstavkyCaret"></i>
-                            <ul class="dropdown-menu" aria-labelledby="odstavkyCaret">
-                                <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74fcaa;"></i>Přidat
-                                    </a>
-                                </li>
-                                <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #fc74e3;"></i>Dohledat
-                                    </a>
-                                </li>
-                                <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Upravit
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <section class="section-input-user">
-                        <i id="toggle-icon" class="fa-solid fa-bars fa-2xl"></i>
-                        <section class="section-wrap">
-                            <input id="wrapinput" type="text" placeholder="Search...">
-                            <div class="user-icon wrap">
-                                <i class="fa-solid fa-user"></i>
+            
+            <div class="Content">
+                <div class="sidemenu">
+                    <div class="s1">
+                        <i class="fa-solid fa-bars fa-2xl" style="color: #ffffff;"></i>
+                    </div>
+                    <div class="s2">
+                        <div id="sidebaroption">
+                            <div class="sidebaroption">
+                                <input class="s-c top" type="radio" name="platform" value="Home">
+                                <input class="s-c bottom" type="radio" name="platform" value="Home">
+                                <i class="fa-solid fa-house-chimney-window"></i>
+                                <span class="sb">Home</span>  
+                                <span class="sb-val">Home</span>
                             </div>
-                            <ul class="list-wrapdropdown">
-                                 <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #f7b100;"></i>Profil
-                                    </a>
-                                </li>
-                                <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #cafc74;"></i>Nastavení
-                                    </a>
-                                </li>
-                                <li class="dropdown-item list">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                <li class="dropdown-item list">
-
-                                    <a asp-action="Logout" asp-controller="Login">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
-                                    </a>
-
-                                </li>
-                            </ul>
-                        </section>
-
-                        <input type="text" placeholder="Search...">
-                        <div class="user-icon">
-                            <i class="fa-solid fa-user"></i>
+                        
+                            <div class="sidebaroption">
+                                <input class="s-c top" type="radio" name="platform" value="Lokality">
+                                <input class="s-c bottom" type="radio" name="platform" value="Lokality">
+                                <i class="fa-solid fa-tower-broadcast"></i>
+                                <span class="sb">Lokality</span>  
+                                <span class="sb-val">Lokality</span>
+                            </div>
+                        
+                            <div class="sidebaroption">
+                                <input class="s-c top" type="radio" name="platform" value="Odstávky">
+                                <input class="s-c bottom" type="radio" name="platform" value="Odstávky">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span class="sb">Odstávky</span>  
+                                <span class="sb-val">Odstávky</span>
+                            </div>
+                        
+                            <div id="sidebaroption-bg"></div>
                         </div>
+                    </div>
+            
+                </div>
 
-                        <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="userCaret"></i>
-                        <ul class="dropdown-menu user" aria-labelledby="userCaret">
-                            <li class="dropdown-item list">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-circle fa-2xs" style="color: #f7b100;"></i>Profil
-                                </a>
-                            </li>
-                            <li class="dropdown-item list">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-circle fa-2xs" style="color: #cafc74;"></i>Nastavení
-                                </a>
-                            </li>
-                            <li class="dropdown-item list">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
-                                </a>
-                            </li>
-                            @if(User.IsInRole("Admin"))
-                            {
-                                <li class="dropdown-item list">
-                                    <a asp-action="Index" asp-controller="Register"  class="dropdown-item">
-                                        <i class="fa-solid fa-circle fa-2xs" style="color: #0ae324;"></i>Přidat Uživatele
-                                    </a>
-                                </li>
-                            }
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item list">
-                                <a asp-action="Logout" asp-controller="Login" class="dropdown-item">
-                                    <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
-                                </a>
-                            </li>
-                        </ul>
+                <div class="main">
 
-                    </section>
-                </nav>
-            </header>
-        }
-         @RenderBody()
-      
+                    <div class="header">
+                        <nav id="navbar">
+                           
+                            <section class="section-input-user">
+                                <i id="toggle-icon" class="fa-solid fa-bars fa-2xl"></i>
+                                <section class="section-wrap">
+                                    <input id="wrapinput" type="text" placeholder="Search...">
+                                    <div class="user-icon wrap">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <ul class="list-wrapdropdown">
+                                        <li class="dropdown-item list">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-solid fa-circle fa-2xs" style="color: #f7b100;"></i>Profil
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-item list">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-solid fa-circle fa-2xs" style="color: #cafc74;"></i>Nastavení
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-item list">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-solid fa-circle fa-2xs" style="color: #74C0FC;"></i>Podpora
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item list">
 
-        @await RenderSectionAsync("Scripts", required: false)
+                                            <a asp-action="Logout" asp-controller="Login">
+                                                <i class="fa-solid fa-circle fa-2xs" style="color: #fc7474;"></i>Odhlásit se
+                                            </a>
 
+                                        </li>
+                                    </ul>
+                                </section>
 
+                               
+                                <div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                            <div id="app-cover">
+                                    <div id="select-box">
+                                        <i class="fa-solid fa-caret-down dropdown-toggle-icon" id="userCaret"></i>
+                                        <input type="checkbox" id="options-view-button">
+                                        
+                                        <div id="options">
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="platform" value="Profil">
+                                                <input class="s-c bottom" type="radio" name="platform" value="Profil">
+                                                <i class="fa-solid fa-user"></i>
+                                                <span class="label">Profil</span>  
+                                                <span class="opt-val">Profil</span>
+                                            </div>
+                                    
+                                        
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="platform" value="Nastavení">
+                                                <input class="s-c bottom" type="radio" name="platform" value="Nastavení">
+                                                <i class="fa-solid fa-gear"></i>
+                                                <span class="label">Nastavení</span>  
+                                                <span class="opt-val">Nastavení</span>
+                                            </div>
+                                    
+                                    
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="platform" value="Podpora">
+                                                <input class="s-c bottom" type="radio" name="platform" value="Podpora">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                                <span class="label">Podpora</span>  
+                                                <span class="opt-val">Podpora</span>
+                                            </div>
+                                    
+                                    
+                                            <div class="option">
+                                                <input  class="s-c top" type="radio" name="platform" value="OdhlásitSe">
+                                                <input class="s-c bottom" type="radio" name="platform" value="OdhlásitSe">
+                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                                <span class="label">Odhlásit se</span>  
+                                                <span class="opt-val">Odhlásit se</span>
+                                            </div>
+                                
+                                        </div>
+                                        <div id="option-bg"></div>
+                                    </div>
+                                    
+                                </div>
+
+                            </section>
+                        </nav>
+                    </div> 
+                     @RenderBody()
+
+                </div>
+           
+
+              
+                
+            </div> 
+        }  
+          
+            
+            @await RenderSectionAsync("Scripts", required: false)
+
+       
         @if (User.Identity?.IsAuthenticated == true)
         {
 
@@ -143,5 +180,5 @@
         }
     <script src="~/js/home.js"></script>
     </body>
-
+        
 </html>

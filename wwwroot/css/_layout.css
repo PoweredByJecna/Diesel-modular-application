@@ -80,9 +80,8 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
-    display: flex;
-   flex-direction:column;
-   background-color: #e9ecef;
+    background-color: #e9ecef;
+    height:100%;
 }
 
 body.dark-mode {
@@ -90,15 +89,14 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
+.Content{
 
-header {
-    background-color: #3948d0bf;
-    padding: 15px 30px;
-    border-bottom: 1px solid #ddd;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
 }
+
 
 header.dark-mode {
     background-color: #3A3A3A;
@@ -192,6 +190,218 @@ nav input {
     align-content: center;
     z-index: 200;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+
+.header {
+    background-color:white;
+    padding: 15px 30px;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header.dark-mode {
+    background-color: #3A3A3A;
+}
+.Content{
+
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+/*SIDEBAR*/
+.sidemenu
+{
+  background-color: #202B46;
+  width:23%;
+  top: 10px;
+  bottom: 10px;
+  position: sticky;
+}
+.conteiner{
+    padding: 10px;
+    margin: 10px;
+}
+.options-sidebar{
+    display: block;
+}
+.option-sidebar{
+    display: block;
+}
+#sidebaroption {
+    position: relative;
+    margin: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 4px;
+    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+}
+
+.sidebaroption {
+    position: relative;
+    line-height: 1;
+    transition: 0.3s ease all;
+    z-index: 2;
+    height: 40px;
+    
+}
+.sidebaroption i{
+    width: 16px;
+    height: 16px;
+    padding:  12px 0;
+}
+
+.sidebaroption, .sb{
+    font-size: 16px;
+}
+
+.sb {
+transition: 0.3s ease all;
+}
+
+.sb-val {
+position: absolute;
+left: 14px;
+width: 217px;
+height: 21px;
+opacity: 0;
+background-color: #fff;
+transform: scale(0);
+}
+.sidebaroption input:hover ~ .opt-val {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .sidebaroption input:hover ~ i {
+    top: 0;
+    bottom: auto;
+    opacity: 1;
+    animation: unset;
+  }
+.fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt,.sb {
+    color: #fff;
+  }
+.fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt{
+    margin-left: 5px;
+}  
+
+.sidebaroption:hover {
+    animation: moveup 0.3s;
+}
+
+@keyframes moveup {
+    0% {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+  .sidebaroption input:hover
+  ~ .sb-val {
+  top: -30px;
+  }
+  .sidebaroption:nth-child(1):hover ~ .sb:before {
+    background-color: #000;
+    border-radius: 4px 4px 0 0;
+  }
+  
+  .sidebaroption:nth-child(1):hover ~ .sb-val {
+    top: -31px;
+  }
+  .sidebaroption:nth-child(2):hover ~ .sb:before {
+    background-color: #ea4c89;
+  }
+  
+  .sidebaroption:nth-child(2):hover ~ .sb-val {
+    top: -71px;
+  }
+  .sidebaroption:nth-child(3):hover ~ .sb:before {
+    background-color: #0057ff;
+  }
+  
+  .sidebaroption:nth-child(3):hover ~ .sb-val {
+    top: -111px;
+  }
+  
+
+
+
+/* Zachováme hover efekty na položky menu */
+.sidebaroption:hover .sb {
+    color: #fff;
+}
+
+/* Efekt při hover na každou položku */
+.sidebaroption:nth-child(1):hover ~ #sidebaroption-bg {
+    top: 0;
+    background-color: #000;
+    border-radius: 4px 4px 0 0;
+}
+
+.sidebaroption:nth-child(2):hover ~ #sidebaroption-bg {
+    top: 40px;
+    background-color: #ea4c89;
+}
+
+.sidebaroption:nth-child(3):hover ~ #sidebaroption-bg {
+    top: 80px;
+    background-color: #0057ff;
+}
+
+.sidebaroption:nth-child(4):hover ~ #sidebaroption-bg {
+    top: 120px;
+    background-color: #32c766;
+}
+
+.sidebaroption:nth-child(5):hover ~ #sidebaroption-bg {
+    top: 160px;
+    background-color: #f48024;
+}
+
+.sidebaroption:nth-child(6):hover ~ #sidebaroption-bg {
+    top: 200px;
+    background-color: #f48024;
+}
+
+.sidebaroption:nth-child(7):hover ~ #sidebaroption-bg {
+    top: 240px;
+    background-color: #9f8e20;
+    border-radius: 0 0 4px 4px;
+}
+
+/* #sidebaroption-bg pro zvýraznění pozadí při hover */
+#sidebaroption-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    transition: 0.3s ease all;
+    z-index: 1;
+    display: block;
+}
+/*SIDEBAR*/
+.s1{
+    height: 40px;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 15px;
+}
+.s2{
+    margin-top: 10px;
 }
 
 
