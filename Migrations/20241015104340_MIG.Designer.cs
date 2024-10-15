@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    [Migration("20241014190131_MIG")]
+    [Migration("20241015104340_MIG")]
     partial class MIG
     {
         /// <inheritdoc />
@@ -231,7 +231,7 @@ namespace Diesel_modular_application.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TechniS", "Identity");
+                    b.ToTable("TableTechnici", "Data");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

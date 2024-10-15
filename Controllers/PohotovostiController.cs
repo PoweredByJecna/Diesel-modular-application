@@ -30,6 +30,7 @@ namespace Diesel_modular_application.Controllers
                 {
                     IdTechnik=currentUser.Id,
                     
+                    
 
                 };
                

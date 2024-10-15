@@ -228,7 +228,7 @@ namespace Diesel_modular_application.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TechniS", "Identity");
+                    b.ToTable("TableTechnici", "Data");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

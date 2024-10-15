@@ -1,4 +1,5 @@
 ﻿using Diesel_modular_application.Models;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +71,10 @@ namespace Diesel_modular_application.Data
              builder.Entity<TablePohotovosti>(entity=>
             {
                 entity.ToTable("TablePohotovosti",schema: "Data");
+            });
+            builder.Entity<TableTechnici>(entity=>
+            {
+                entity.ToTable("TableTechnici", schema:"Data");
             });
              
 
