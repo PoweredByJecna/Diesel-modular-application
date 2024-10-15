@@ -9,17 +9,21 @@ namespace Diesel_modular_application.Models
         public TableOdstavky AddOdstavka { get; set; } = new TableOdstavky(); 
         public IEnumerable<TableDieslovani> DieslovaniList {get;set;}
         public IEnumerable<TableFirma> FirmaList{get;set;}
-        public IEnumerable<TableTechnik> TechnikList{get;set;}
+        public IEnumerable<TableTechnici> TechnikList{get;set;}
         public TableDieslovani DieslovaniMod {get;set;} = new TableDieslovani();
         public TableFirma FirmaMod{get;set;}=new TableFirma();
-        public TableTechnik TechnikMod{get;set;}=new TableTechnik();
+        public TableTechnici TechnikMod{get;set;}=new TableTechnici();
+
+        public TablePohotovosti PohotovostMod{get;set;}= new TablePohotovosti();
+       
 
         public OdstavkyViewModel()
         {
             OdstavkyList = new List<TableOdstavky>(); 
             DieslovaniList= new List<TableDieslovani>();
             FirmaList= new List<TableFirma>();
-            TechnikList= new List<TableTechnik>();
+            TechnikList= new List<TableTechnici>();
+         
         }
     }
 }

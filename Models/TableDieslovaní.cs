@@ -16,9 +16,11 @@ namespace Diesel_modular_application.Models
         [ForeignKey("Firma")]
         public int FirmaId{get;set;}
         public virtual TableFirma Firma {get;set;}
-         [ForeignKey("Technik")]
-        public int IdTechnik{get;set;}
-        public virtual TableTechnik Technik {get;set;}
+        [ForeignKey("Technik")]
+        public string IdTechnik {get;set;}
+        public virtual TableTechnici Technik {get;set;}
+     
+       
 
     }
 }

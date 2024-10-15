@@ -120,73 +120,68 @@
                                    
                                         @foreach (var odstavky in Model.OdstavkyList)
                                        {
-                                            <tr>
-                                                @if(odstavky.Od.AddHours(2)>DateTime.Now)
-                                                {
-                                                    <td title="čeká se"><span class="status yellow"></span></td>
-                                                }
-                                                @if(odstavky.Od.AddHours(2)<DateTime.Now)
-                                                {
-                                                    <td title="technik nedorazil, kontaktuj ho"><span class="status orange"></span></td>
-                                                }
-                                                <td>@odstavky.Lokality.Lokalita</td>
-                                                <td>@odstavky.Lokality.Klasifikace
-                                                    @if(odstavky.Lokality.Klasifikace=="A1")
-                                                        {
-                                                            <span title="Kritická priorita" class="status red"></span>
-                                                        }
-                                                        @if(odstavky.Lokality.Klasifikace=="A2")
-                                                        {
-                                                            <span title="Vysoká priorita" class="status orange"></span>
-                                                        }
-                                                        @if(odstavky.Lokality.Klasifikace=="B1")
-                                                        {
-                                                            <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                                        }
-                                                        @if(odstavky.Lokality.Klasifikace=="B2")
-                                                        {
-                                                            <span title="Středně-nízká priorita" class="status light-green"></span>
-                                                        }
-                                                        @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
-                                                        {
-                                                            <span title="Nízká priorita" class="status green"></span>
-                                                        }
-                                                        @if(odstavky.Lokality.Klasifikace=="D1")
-                                                        {
-                                                            <span title="Velmi-nízká priorita" class="status blue"></span>
-                                                        }
-                                                </td>
-                                                <td></td>
-                                                <td>@odstavky.Od.AddHours(2)</td>
-                                                <td title="komentář">
-                                                    <i class="fa-regular fa-comment comment-icon"></i>
-                                                    <div class="comment-box">
-                                                        <textarea placeholder="Zadejte komentář..."></textarea>
-                                                        <div class="comment-actions">
-                                                            <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                                            <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                            @if(odstavky.Od==DateTime.Today)
+                                            {
+                                                <tr>
+                                                    @if(odstavky.Od.AddHours(2)>DateTime.Now)
+                                                    {
+                                                        <td title="čeká se"><span class="status yellow"></span></td>
+                                                    }
+                                                    @if(odstavky.Od.AddHours(2)<DateTime.Now)
+                                                    {
+                                                        <td title="technik nedorazil, kontaktuj ho"><span class="status orange"></span></td>
+                                                    }
+                                                    <td>@odstavky.Lokality.Lokalita</td>
+                                                    <td>@odstavky.Lokality.Klasifikace
+                                                        @if(odstavky.Lokality.Klasifikace=="A1")
+                                                            {
+                                                                <span title="Kritická priorita" class="status red"></span>
+                                                            }
+                                                            @if(odstavky.Lokality.Klasifikace=="A2")
+                                                            {
+                                                                <span title="Vysoká priorita" class="status orange"></span>
+                                                            }
+                                                            @if(odstavky.Lokality.Klasifikace=="B1")
+                                                            {
+                                                                <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                                            }
+                                                            @if(odstavky.Lokality.Klasifikace=="B2")
+                                                            {
+                                                                <span title="Středně-nízká priorita" class="status light-green"></span>
+                                                            }
+                                                            @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                            {
+                                                                <span title="Nízká priorita" class="status green"></span>
+                                                            }
+                                                            @if(odstavky.Lokality.Klasifikace=="D1")
+                                                            {
+                                                                <span title="Velmi-nízká priorita" class="status blue"></span>
+                                                            }
+                                                    </td>
+                                                    <td></td>
+                                                    <td>@odstavky.Od.AddHours(2)</td>
+                                                    <td title="komentář">
+                                                        <i class="fa-regular fa-comment comment-icon"></i>
+                                                        <div class="comment-box">
+                                                            <textarea placeholder="Zadejte komentář..."></textarea>
+                                                            <div class="comment-actions">
+                                                                <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
+                                                                <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td title="Vstup">
-                                                    <i class="fa-solid fa-arrow-right green-arrow"></i>
-                                                    <div class="overlay">
-                                                        <form asp-action="Vstup" asp-controller="Dieslovani">
-                                                            <input asp-for="DieslovaniMod.IDodstavky" type="hidden" value="@odstavky.IdOdstavky" >
-                                                            @foreach(var technik in Model.TechnikList)
-                                                            {
-                                                                <input asp-for="TechnikMod.IdTechnika" type="hidden" value="@technik.IdTechnika">  
-                                                            }
-                                                            @foreach(var firma in Model.FirmaList)
-                                                            {
-                                                                <input asp-for="FirmaMod.IDFirmy" type="hidden" value="@firma.IDFirmy">
-                                                            }
-                                                            <input asp-for="DieslovaniMod.Vstup" type="datetime-local">
-                                                            <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td title="Vstup">
+                                                        <i class="fa-solid fa-arrow-right green-arrow"></i>
+                                                        <div class="overlay">
+                                                            <form asp-action="Vstup" asp-controller="Dieslovani">
+                                                       
+                                                                <input asp-for="DieslovaniMod.Vstup" type="datetime-local">
+                                                                <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
                                             
                                         }
                                     

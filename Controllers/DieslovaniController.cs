@@ -22,7 +22,8 @@ namespace Diesel_modular_application.Controllers
         {
            var odstavkaSearch = await _context.OdstavkyS.FirstOrDefaultAsync(input => input.IdOdstavky == dieslovani.DieslovaniMod.IDodstavky);
            var firmaSearch= await _context.FrimaS.FirstOrDefaultAsync(input=>input.IDFirmy==dieslovani.FirmaMod.IDFirmy);
-           var technikSearch= await _context.TechnikS.FirstOrDefaultAsync(input=>input.IdTechnika==dieslovani.TechnikMod.IdTechnika); 
+           var technikSearch= await _context.TechniS.FirstOrDefaultAsync(input=>input.IdTechnika==dieslovani.TechnikMod.IdTechnika); 
+
 
            var NewDieslovani = new TableDieslovani
            {
@@ -30,7 +31,7 @@ namespace Diesel_modular_application.Controllers
                 Odchod=dieslovani.DieslovaniMod.Odchod,
                 IDodstavky=odstavkaSearch.IdOdstavky,
                 FirmaId=firmaSearch.IDFirmy,
-               IdTechnik=technikSearch.IdTechnika
+                IdTechnik=technikSearch.IdTechnika
            }; 
 
            odstavkaSearch.ZadanVstup=true;

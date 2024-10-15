@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Diesel_modular_application.Data.Migrations
+namespace Diesel_modular_application.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    [Migration("20241007162108_MIG9")]
-    partial class MIG9
+    [Migration("20241014190131_MIG")]
+    partial class MIG
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,9 @@ namespace Diesel_modular_application.Data.Migrations
                     b.Property<int>("IDodstavky")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTechnik")
-                        .HasColumnType("int");
+                    b.Property<string>("IdTechnik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Odchod")
                         .HasColumnType("datetime2");
@@ -167,8 +168,9 @@ namespace Diesel_modular_application.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPohotovst"));
 
-                    b.Property<int>("IdTechnik")
-                        .HasColumnType("int");
+                    b.Property<string>("IdTechnik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Konec")
                         .HasColumnType("datetime2");
@@ -200,16 +202,17 @@ namespace Diesel_modular_application.Data.Migrations
                     b.ToTable("TableRegiony", "Data");
                 });
 
-            modelBuilder.Entity("Diesel_modular_application.Models.TableTechnik", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableTechnici", b =>
                 {
-                    b.Property<int>("IdTechnika")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTechnika"));
+                    b.Property<string>("IdTechnika")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("FirmaId")
                         .HasColumnType("int");
+
+                    b.Property<string>("IdUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Jmeno")
                         .IsRequired()
@@ -219,11 +222,16 @@ namespace Diesel_modular_application.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("IdTechnika");
 
                     b.HasIndex("FirmaId");
 
-                    b.ToTable("TableTechnik", "Data");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TechniS", "Identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -431,21 +439,21 @@ namespace Diesel_modular_application.Data.Migrations
             modelBuilder.Entity("Diesel_modular_application.Models.TableDieslovani", b =>
                 {
                     b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
-                        .WithMany()
+                        .WithMany("DieslovaniList")
                         .HasForeignKey("FirmaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Diesel_modular_application.Models.TableOdstavky", "Odstavka")
-                        .WithMany()
+                        .WithMany("DieslovaniList")
                         .HasForeignKey("IDodstavky")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Diesel_modular_application.Models.TableTechnik", "Technik")
-                        .WithMany()
+                    b.HasOne("Diesel_modular_application.Models.TableTechnici", "Technik")
+                        .WithMany("DieslovaniList")
                         .HasForeignKey("IdTechnik")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Firma");
@@ -460,7 +468,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Diesel_modular_application.Models.TableLokality", "Lokality")
                         .WithMany("OdstavkyList")
                         .HasForeignKey("LokalitaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Lokality");
@@ -468,24 +476,30 @@ namespace Diesel_modular_application.Data.Migrations
 
             modelBuilder.Entity("Diesel_modular_application.Models.TablePohotovosti", b =>
                 {
-                    b.HasOne("Diesel_modular_application.Models.TableTechnik", "Technik")
+                    b.HasOne("Diesel_modular_application.Models.TableTechnici", "Technik")
                         .WithMany()
                         .HasForeignKey("IdTechnik")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Technik");
                 });
 
-            modelBuilder.Entity("Diesel_modular_application.Models.TableTechnik", b =>
+            modelBuilder.Entity("Diesel_modular_application.Models.TableTechnici", b =>
                 {
                     b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
                         .WithMany()
                         .HasForeignKey("FirmaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Firma");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -493,7 +507,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -502,7 +516,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -511,7 +525,7 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -520,13 +534,13 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -535,13 +549,28 @@ namespace Diesel_modular_application.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Diesel_modular_application.Models.TableFirma", b =>
+                {
+                    b.Navigation("DieslovaniList");
                 });
 
             modelBuilder.Entity("Diesel_modular_application.Models.TableLokality", b =>
                 {
                     b.Navigation("OdstavkyList");
+                });
+
+            modelBuilder.Entity("Diesel_modular_application.Models.TableOdstavky", b =>
+                {
+                    b.Navigation("DieslovaniList");
+                });
+
+            modelBuilder.Entity("Diesel_modular_application.Models.TableTechnici", b =>
+                {
+                    b.Navigation("DieslovaniList");
                 });
 #pragma warning restore 612, 618
         }

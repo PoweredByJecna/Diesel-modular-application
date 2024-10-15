@@ -71,7 +71,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
 using (var scope= app.Services.CreateAsyncScope())
 {
     var roleManager=scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -103,46 +102,6 @@ using (var scope=app.Services.CreateAsyncScope())
         await userManager.AddToRoleAsync(user,"Admin");
     }
 }
-using (var scope=app.Services.CreateAsyncScope())
-{
-    var userManager=scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    string UserName="jnovotny602";
-    string Email="dieselmodapp@gmail.com";
-    string Password="Admin-123";
-   
 
-    if(await userManager.FindByNameAsync(UserName)==null)
-    {
-        var user=new IdentityUser();
-        user.UserName=UserName;
-        user.Email=Email;
-        user.PasswordHash=Password;
 
-        await userManager.CreateAsync(user,Password);
-
-        await userManager.AddToRoleAsync(user,"Engineer");
-    }
-}
-using (var scope=app.Services.CreateAsyncScope())
-{
-    var userManager=scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    string UserName="psvoboda603";
-    string Email="dieselmodapp@gmail.com";
-    string Password="Admin-123";
-    string PhoneNumber="603 234 567";
-   
-
-    if(await userManager.FindByNameAsync(UserName)==null)
-    {
-        var user=new IdentityUser();
-        user.UserName=UserName;
-        user.Email=Email;
-        user.PasswordHash=Password;
-        user.PhoneNumber=PhoneNumber;
-
-        await userManager.CreateAsync(user,Password);
-
-        await userManager.AddToRoleAsync(user,"Engineer");
-    }
-}
 await app.RunAsync();

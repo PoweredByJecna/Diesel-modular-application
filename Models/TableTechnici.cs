@@ -1,16 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace Diesel_modular_application.Models
-{
-    public class TableTechnik
+namespace Diesel_modular_application.Models{
+     public class TableTechnici
     {
         [Key]
-        public int IdTechnika{get;set;}
+        public string IdTechnika{get;set;}
         public string Jmeno{get;set;}
         public string  Tel{get;set;}
 
@@ -19,10 +15,11 @@ namespace Diesel_modular_application.Models
         public virtual TableFirma Firma {get;set;}
 
         [ForeignKey("user")]
-        public string UserId{get;set;}
-        public virtual IdentityUser Users {get;set;}
+        public string IdUser{get;set;}
+        public virtual IdentityUser User {get;set;}
         public virtual ICollection<TableDieslovani> DieslovaniList {get;set;}
 
 
     }
-}
+
+   }

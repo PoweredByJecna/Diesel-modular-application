@@ -10,9 +10,13 @@ namespace Diesel_modular_application.Models
         public int IdPohotovst{get;set;}
         public DateTime Začátek {get;set;}
         public DateTime Konec {get;set;}
+
         [ForeignKey("Technik")]
-        public int IdTechnik{get;set;}
-        public virtual TableTechnik Technik {get;set;}
+        public string IdTechnik {get;set;}
+        public virtual TableTechnici Technik {get;set;}
+     
+        
+
 
     }
 }

@@ -71,10 +71,7 @@ namespace Diesel_modular_application.Data
             {
                 entity.ToTable("TablePohotovosti",schema: "Data");
             });
-             builder.Entity<TableTechnik>(entity=>
-            {
-                entity.ToTable("TableTechnik",schema: "Data");
-            });
+             
 
             // Přidání vztahu mezi Odstavky a Lokality
             builder.Entity<TableOdstavky>()
@@ -87,10 +84,7 @@ namespace Diesel_modular_application.Data
                 .WithMany(I=>I.DieslovaniList)
                 .HasForeignKey(o=>o.IDodstavky);
 
-            builder.Entity<TableDieslovani>()
-                .HasOne(o=>o.Technik)
-                .WithMany(i=>i.DieslovaniList)
-                .HasForeignKey(o=>o.IdTechnik);    
+           
             
             builder.Entity<TableDieslovani>()
                 .HasOne(o=>o.Firma)
@@ -106,6 +100,7 @@ namespace Diesel_modular_application.Data
         public DbSet<TableFirma> FrimaS{get;set;}
         public DbSet<TableRegiony>ReginoS{get;set;}
         public DbSet<TablePohotovosti> Pohotovts{get;set;}
-        public DbSet<TableTechnik> TechnikS{get;set;}
+        public DbSet<TableTechnici> TechniS{get;set;}
+        
     }
 }

@@ -24,33 +24,31 @@
                     <div class="s2">
                         <div id="sidebaroption">
                             <div class="sidebaroption">
-                                
-                                    <input class="s-c top" type="radio" name="platform" value="Home">
-                                    <input class="s-c bottom" type="radio" name="platform" value="Home">
+                                    <a asp-action="Index" asp-controller="Home" style="text-decoration: none;">
+                             
                                     <i class="fa-solid fa-house-chimney-window"></i>
-                                     <a asp-action="Index" asp-controller="Home">
                                     <span class="sb">Home</span>  
-                                    <span class="sb-val">Home</span>
+                                 
                                     </a>
                                 
                             </div>
                         
                             <div class="sidebaroption">
-                                <a asp-action="Index" asp-controller="Lokality">
-                                <input class="s-c top" type="radio" name="platform" value="Lokality">
-                                <input class="s-c bottom" type="radio" name="platform" value="Lokality">
+                                <a asp-action="Index" asp-controller="Lokality" style="text-decoration: none;"> 
+                                    
                                 <i class="fa-solid fa-tower-broadcast"></i>
                                 <span class="sb">Lokality</span>  
-                                <span class="sb-val">Lokality</span>
+                            
                                 </a>
                             </div>
                         
                             <div class="sidebaroption">
-                                <input class="s-c top" type="radio" name="platform" value="Odstávky">
-                                <input class="s-c bottom" type="radio" name="platform" value="Odstávky">
+                            <a asp-action="Index" asp-controller="Odstavky" style="text-decoration: none;"> 
+                                
                                 <i class="fa-solid fa-bolt"></i>
                                 <span class="sb">Odstávky</span>  
-                                <span class="sb-val">Odstávky</span>
+
+                            </a> 
                             </div>
                         
                             <div id="sidebaroption-bg"></div>
@@ -67,10 +65,6 @@
                               
                                  <div class="navdiv settings">
                                     <i class="fa-solid fa-gear"></i>
-                                </div>
-                                 <div class="navdiv ">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <a>Podpora</a>
                                 </div>
                                 <div class="navdiv signout">
                                     <a asp-action="Logout" asp-controller="Logout">
@@ -149,12 +143,10 @@
                     <div class="footer">
                         <ul class="ul-footer">
                             <li class="nav-footer"><a class="a-text" href="#" >Home</a></li>
-                            <li class="nav-footer"><a class="a-text" href="#" >Lokality</a></li>
-                            <li class="nav-footer"><a class="a-text" href="#" >Odstávky</a></li>
-                            <li class="nav-footer"><a class="a-text" href="#" >Kontaky</a></li>
-                            <li class="nav-footer"><a class="a-text" href="#" >About</a></li>
+                             <li class="nav-footer"><a class="a-text" href="#" >Podpora</a></li>   
+                            <li class="nav-footer"><a class="a-text" href="#" >Info</a></li>
                         </ul>
-                        <p >© 2024 Company, Inc</p>
+                        <p >© WebApp 2024</p>
                         <button id="theme-toggle" class="theme-toggle">
                             <i class="fa-solid fa-adjust"></i>
                         </button>
