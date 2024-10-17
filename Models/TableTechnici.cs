@@ -8,7 +8,6 @@ namespace Diesel_modular_application.Models{
         [Key]
         public string IdTechnika{get;set;}
         public string Jmeno{get;set;}
-        public string  Tel{get;set;}
 
         [ForeignKey("Firma")]
         public int FirmaId{get;set;}

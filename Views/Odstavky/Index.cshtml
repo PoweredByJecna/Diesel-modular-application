@@ -46,6 +46,7 @@
             <section class="tables">
                 <h2>Pohotovosti:</h2>
                 <div class="table-div pohotovosti">
+                
                     <form asp-action="Zapis" asp-controller="Pohotovosti">                   
                         <table
                             <thead>
@@ -58,24 +59,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <input asp-for="PohotovostMod.Začátek">
-                                    </td>
-                                    <td>
-                                        <input asp-for="PohotovostMod.Konec">
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td>pohotovost.User.PhoneNumber</td>
+                                            <td>pohotovost.Technik.Jmeno</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                        </tr>
+                                    
+                            
                             </tbody>
                         </table>
                         <div class="buttondiv">
                             <button type="submit" class="button">Zapsat se</button>
+                            <div>
+                                @ViewBag.Message
+                            </div>
                         </div>
                     </form>    
-                </div>  
+                </div> 
+               
             </section>     
         </div>
 
