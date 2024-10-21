@@ -1,9 +1,4 @@
-@media(max-width:1700px) {
-    .div-all-lokality{
-        height: 520px !important;
-    }
-    
-}
+
 
 .section-lokality{
     width: 100%;
@@ -11,6 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    min-height: 100vh;
+    flex-direction: column;
+  
 
 }
 .form-import{
@@ -25,7 +23,6 @@
 .sctn{
   display: flex;
   flex-direction: column;
-  height: 85%;
 }
 .sctn.import{
   width: 75%;
@@ -484,19 +481,41 @@ tr:hover{
     margin-right: 10px;
     
 }
+
+
+
 .lokality-class-menu{
     list-style: none;
     background-color: rgba(0, 0, 0, .1);
     border-radius:10px;
     display: flex;
     flex-direction: column;
-    padding: 5px;
-    
+    padding: 5px;    
 }
-.div-import{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.table-div.import{
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  height: 246px;
+}
+.table-div.import.A{
+  width: 95%;
+  height: 350px;
+ display: flex;
+ align-items: flex-start;
+ flex-direction: row;
+ justify-content: space-around;
+}
+.table-div.import.B{
+  width: 93%;
+}
+.div-import-lokality{
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  
 }
 .h1-import{
     margin-top: 0;

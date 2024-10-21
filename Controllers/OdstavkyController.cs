@@ -22,6 +22,11 @@ namespace Diesel_modular_application.Controllers
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ToListAsync();
+             odstavky.PohotovostList = await _context.Pohotovts
+        .Include(o => o.Technik)
+        .ToListAsync();
+
+
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)

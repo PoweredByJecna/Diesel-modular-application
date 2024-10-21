@@ -81,7 +81,7 @@ body {
     padding: 0;
     color: #333;
     background-color: #e9ecef2e;
-    height:100%;
+    min-height: 100vh;
 }
 
 body.dark-mode {
@@ -93,8 +93,7 @@ body.dark-mode {
 
     display: flex;
     flex-direction: row;
-    height: 100%;
-    width: 100%;
+    min-height: 100vh !important;
 }
 
 .navdiv{
@@ -275,6 +274,7 @@ header.dark-mode {
 .conteiner{
     padding: 10px;
     margin: 10px;
+    min-height: 100vh;
 }
 .options-sidebar{
     display: block;

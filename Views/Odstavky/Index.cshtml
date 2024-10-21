@@ -48,7 +48,7 @@
                 <div class="table-div pohotovosti">
                 
                     <form asp-action="Zapis" asp-controller="Pohotovosti">                   
-                        <table
+                        <table>
                             <thead>
                                 <tr>
                                     <td>Id</td>
@@ -59,16 +59,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    
-                                        
-                                        <tr>
-                                            <td>pohotovost.User.PhoneNumber</td>
-                                            <td>pohotovost.Technik.Jmeno</td>
-                                            <td>test</td>
-                                            <td>test</td>
-                                            <td>test</td>
-                                        </tr>
-                                    
+                                @foreach(var pohotovost in Model.PohotovostList)
+                                {
+
+                                
+                                <tr>
+                                    <td>@pohotovost.IdTechnik</td>
+                                    <td>@pohotovost.Technik.Jmeno</td>
+                                    <td>test</td>
+                                    <td>test</td>
+                                    <td>test</td>
+                                </tr>
+                                }
                             
                             </tbody>
                         </table>
