@@ -30,6 +30,7 @@
 
 .sctn.first{
   justify-content: space-evenly;
+  flex-direction: row;
   
 }
 .fr.adresa{
@@ -502,7 +503,7 @@ tr:hover{
 }
 .table-div.import.A{
   width: 95%;
-  height: 350px;
+  height: 550px;
  display: flex;
  align-items: flex-start;
  flex-direction: row;
