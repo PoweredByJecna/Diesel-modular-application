@@ -1,6 +1,8 @@
 .odstavky-section{
     display: flex;
     justify-content: space-around;
+    background-color: 227, 230, 237;
+    
 }
 
 .div-odstavka-create{
@@ -8,18 +10,16 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-right: 1px solid #cbd0dd;
     width: 30%;
 }
 .form-odstavky{
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    width: 80%;
-    padding: 15px;
+    width: 100%;
     align-items: center;
-    border-radius: 15px;
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  
 }
 input:focus{
     outline: none;
@@ -31,7 +31,8 @@ input{
        
 }
 .input.odstavky{
-    background-color: rgb(239, 243, 247);
+    border-radius: 5px;
+    border: 1px solid #cbd0dd;;
 }
 .div-form{
     display: flex;
@@ -71,10 +72,10 @@ width: 70%;
     padding: 15px;
     border-radius: 10px;
     border: none;
+    margin-bottom: 10px;
     cursor: pointer;
-    background-color: #55c2da;
-    
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    color: white;
+    background-color: rgb(0, 17, 255);
 }
 
 .button:hover{
@@ -96,11 +97,10 @@ width: 70%;
     width: 70%;
 }
 .table-div.pohotovosti{
-    margin-top: 20px;
-    padding: 15px;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    box-shadow: none;
     
 }
 .table-div.odstavkyTable{
@@ -111,17 +111,17 @@ width: 70%;
     justify-content: center;
 }
 .menu{
-    background-color: white;
-    margin-top: 50px;
-    height: 65px;
+    height: 40px;
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    border-top: 1px solid #cbd0dd;
+    border-bottom: 1px solid #cbd0dd;;
 }
 .menu-ul{
     display: flex;
     flex-direction: row;
     justify-content: center;
     list-style: none;
+    align-items: center;
     height: 100%;
 }
 .menu-text{

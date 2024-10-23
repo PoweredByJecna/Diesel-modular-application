@@ -24,13 +24,10 @@
                     <div class="s2">
                         <div id="sidebaroption">
                             <div class="sidebaroption">
-                                    <a asp-action="Index" asp-controller="Home" style="text-decoration: none;">
-                             
+                                <a asp-action="Index" asp-controller="Home" style="text-decoration: none;">
                                     <i class="fa-solid fa-house-chimney-window"></i>
                                     <span class="sb">Home</span>  
-                                 
-                                    </a>
-                                
+                                </a>
                             </div>
                         
                             <div class="sidebaroption">
@@ -84,7 +81,7 @@
                                             <i class="fa-solid fa-user"></i>
                                             
                                         </div>
-                                        <a>@User.Identity.Name</a>
+                                        <a class="a-username">@User.Identity.Name</a>
                                         <input type="checkbox" id="options-view-button">
                                         <div id="options">
                                             <div class="option">
@@ -142,17 +139,12 @@
 
 
                                
-                    <div class="footer">
-                        <ul class="ul-footer">
-                            <li class="nav-footer"><a class="a-text" href="#" >Home</a></li>
-                             <li class="nav-footer"><a class="a-text" href="#" >Podpora</a></li>   
-                            <li class="nav-footer"><a class="a-text" href="#" >Info</a></li>
-                        </ul>
-                        <p >© WebApp 2024</p>
+                
+                     
                         <button id="theme-toggle" class="theme-toggle">
-                            <i class="fa-solid fa-adjust"></i>
+                            <i class="fa-solid fa-circle-half-stroke"></i>
                         </button>
-                    </div>  
+                   
 
 
 

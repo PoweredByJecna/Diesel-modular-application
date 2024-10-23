@@ -2,10 +2,9 @@
 
 .section-lokality{
     width: 100%;
-    margin-top: 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    
+    align-items: center;
     min-height: 100vh;
     flex-direction: column;
   
@@ -18,41 +17,51 @@
 }
 .sctn.search{
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  height: 42px;
+  width: 95%;
 }
 .sctn{
   display: flex;
   flex-direction: column;
 }
 .sctn.import{
-  width: 75%;
+  max-width: 550px;
 }
 
 .sctn.first{
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-direction: row;
+  width: 95%;
   
+}
+
+.sctn.adresa{
+  width: 95%;
+ 
+
 }
 .fr.adresa{
   height: 100%;
   flex-direction: column;
-  padding: 15px;
-}
-.adresa.mesto{
   width: 100%;
-  border-radius: 10PX;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  align-items: flex-start;
 }
-.adresa.Ulice{
-  width: 100%;
-  border-radius: 10PX;
+.adresa.mesto,.adresa.PSČ,.adresa.Ulice{
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 5px;
+  margin: 5px;
+  margin-left: 25px;
+  height: 30px;
+}
+.adresa.mesto,.adresa.Ulice{
+  width: 66%;
 }
 .adresa.PSČ{
-  width: 58%;
-  border-radius: 10PX;
-  padding: 3px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  width: 45%;
 }
 
 .input.adresa.PSC{
@@ -63,19 +72,29 @@
   width: 160px;
   border-radius: 0;
   background-color: white;
-  height: 30px;
-  margin-top: 7px;
+  height: 18px;
   font-size: large;
-
-
-  
+ 
 }
+.button-odstavka
+{
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  border: 2px;
+  background-color: rgb(0, 17, 255);
+  font-style: inherit;
+  color: white;
+  font-size: larger;
+  cursor: pointer;
+}
+
 /*SELECT BOX*/
 .fr{
     display: flex;
     flex-direction: row;
     border-radius: 5px;
-    width: 250px;
+    width: 190px;
     height: 42px;
     align-items: center;
     justify-content: space-between;
@@ -114,7 +133,7 @@
 #select-button {
     position: relative;
     height: 16px;
-    padding: 12px 14px;
+    padding: 12px 6px;
     background-color: #fff;
     border-radius: 4px;
     cursor: pointer;
@@ -440,15 +459,15 @@ input[type="radio"] {
     margin-left: 3px;
 }
 ::-webkit-scrollbar{
-    width: 8px;
-    height: 8px;
+    width: 5px;
+
 }
 ::-webkit-scrollbar-track{
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: inset 0 0 10px rgb(0,0, 0);
 }
 ::-webkit-scrollbar-thumb{
- border-radius: 10px;
+ border-radius: 5px;
  background-color: rgb(180, 187, 187);
 }
 .table-lokality{
@@ -468,7 +487,11 @@ thead{
     position:sticky;
     top:0;
 }
-tr,th,td{
+.lokalityTable{
+  top:90px;
+  position: sticky;
+}
+th,td{
     border: none;  
 }
 tr:nth-child(even) {
@@ -502,21 +525,34 @@ tr:hover{
   height: 246px;
 }
 .table-div.import.A{
-  width: 95%;
-  height: 550px;
- display: flex;
- align-items: flex-start;
- flex-direction: row;
- justify-content: space-around;
+  width: 400px;
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: small;
 }
 .table-div.import.B{
-  width: 93%;
+  width: 300px;
+  height: 200px;
+}
+.table-div.import.C{
+  width: 95%;
+  height: 100%;
+  padding: 10px 0 0 0;
 }
 .div-import-lokality{
   display: flex;
-  width: 90%;
+  width: 95%;
   justify-content: space-between;
-  
+  align-items: flex-end;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.table-div.lokality{
+  width: 95%;
+  margin-bottom: 20px;
+  max-height: 500px;
 }
 .h1-import{
     margin-top: 0;
@@ -528,6 +564,7 @@ tr:hover{
 }
 .form-control{
     width: 95%;
+    
 }
 
 .btn{
@@ -552,11 +589,16 @@ tr:hover{
   }
   
 .form-import.Search {
-    position: relative;
+  position: relative;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 0;
-    height: 50px;
+    height: 35px;
+    border-radius: 5px;
+    align-items: center;
     flex-direction: row;
-    width: 300px;
+    width: 240px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   }
   .InputSearching, .buttonsearch {
@@ -565,36 +607,36 @@ tr:hover{
     border: 0;
     color: var(--color-dark);
     font-size: 1.8rem;
+    
   }
   input[type="search"] {
     outline: 0; 
-    width: 100%;
     background: var(--color-light);
-    font-size: medium;
-    padding: 0 1.6rem;
+    font-size: small;
     border-radius: var(--rad);
     appearance: none; 
     transition: all var(--dur) var(--bez);
     transition-property: width, border-radius;
     z-index: 1;
-    position: relative;
+    position: sticky;
   }
   .buttonsearch {
     display: none; 
-  
+    width: 50px;
     right: 0;
-    width: var(--btn-width);
     font-weight: bold;
-    background: var(--color-brand);
-    border-radius: 0 var(--rad) var(--rad) 0;
+    color: white;
+    background-color: rgb(0, 17, 255);
+    border-radius: 0 5px 5px 0;;
   }
   .InputSearching:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
-    width: calc(100% - var(--btn-width));
+    width: calc(120% - var(--btn-width));
     + .buttonsearch {
       display: flex;
       align-items: center;
       height: 100%;
+      transition: 0.4s;
 
     }
   }

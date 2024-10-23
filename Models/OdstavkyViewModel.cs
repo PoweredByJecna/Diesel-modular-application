@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office.CustomUI;
+using Microsoft.AspNetCore.Identity;
 
 namespace Diesel_modular_application.Models
 {
@@ -8,6 +9,7 @@ namespace Diesel_modular_application.Models
         public IEnumerable<TableOdstavky> OdstavkyList { get; set; }
         public TableOdstavky AddOdstavka { get; set; } = new TableOdstavky(); 
         public IEnumerable<TableDieslovani> DieslovaniList {get;set;}
+        public IEnumerable<IdentityUser> UserList {get;set;}
         public IEnumerable<TableFirma> FirmaList{get;set;}
         public IEnumerable<TablePohotovosti> PohotovostList{get;set;}
         public IEnumerable<TableTechnici> TechnikList{get;set;}
@@ -25,6 +27,7 @@ namespace Diesel_modular_application.Models
             FirmaList= new List<TableFirma>();
             TechnikList= new List<TableTechnici>();
             PohotovostList=new List<TablePohotovosti>();
+            UserList=new List<IdentityUser>();
         }
     }
 }

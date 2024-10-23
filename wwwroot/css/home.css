@@ -41,7 +41,6 @@ main.dark-mode {
 
 
 h2 {
-    border-bottom: 2px solid #333;
     padding-bottom: 5px;
     margin-bottom:10px;
 }
@@ -53,7 +52,7 @@ h2.dark-mode {
 .table-div{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 100%;
     overflow: auto;
     table-layout: auto;
@@ -96,9 +95,14 @@ th, td {
 }
 
 tr, th, td{
-    border: 1px solid white;
+    border: 0px solid white;
     background-color: white;
+    border-bottom: 1px solid #cbd0dd;;
 }
+table tr:hover {
+    font-weight:400;
+ }
+
 tr:nth-child(even) {
     background-color: #d4d4d444;
 }

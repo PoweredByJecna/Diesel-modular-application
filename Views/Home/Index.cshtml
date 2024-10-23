@@ -120,7 +120,7 @@
                                    
                                         @foreach (var odstavky in Model.OdstavkyList)
                                        {
-                                            @if(odstavky.Od==DateTime.Today)
+                                            @if(odstavky.Od.Date==DateTime.Today && odstavky.ZadanVstup==false)
                                             {
                                                 <tr>
                                                     @if(odstavky.Od.AddHours(2)>DateTime.Now)
@@ -177,6 +177,7 @@
                                                        
                                                                 <input asp-for="DieslovaniMod.Vstup" type="datetime-local">
                                                                 <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
+                                                                    
                                                             </form>
                                                         </div>
                                                     </td>

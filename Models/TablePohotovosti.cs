@@ -17,12 +17,9 @@ namespace Diesel_modular_application.Models
         public string IdUser{get;set;}
         public virtual IdentityUser User {get;set;}
 
-        
          [ForeignKey("Technik")]
         public string IdTechnik {get;set;}
-        public virtual TableTechnici Technik {get;set;}
-     
-        
+        public virtual TableTechnici Technik {get;set;}        
 
 
     }

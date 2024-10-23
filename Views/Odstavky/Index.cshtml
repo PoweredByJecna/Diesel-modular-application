@@ -3,24 +3,10 @@
     <body>
         <div class="odstavky-section">
             <div class="div-odstavka-create">
-                <h2>Vytvořit odstávku:</h2>
+                
                 <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
                     <div class="form">
-                        <label>Distributor:</label>   
-                        <select asp-for="AddOdstavka.Distributor">
-                            <option value="ČEZ">ČEZ</option>
-                            <option value="PRE">PRE</option>
-                            <option value="EGD">EGD</option>
-                        </select>
-                    </div>
-                    <div class="form">
-                        <label>Distributor:</label>
-                        <select asp-for="AddOdstavka.Firma">
-                            <option value="VEGACOM">VEGACOM</option>
-                            <option value="FLMINFRA">FLMINFRA</option>
-                        </select>
-                    </div>
-                    <div class="form">
+                        <h2>Vytvořit odstávku:</h2>
                         <label>Lokalita:</label>
                         <div class="div-form">
                             <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
@@ -36,7 +22,8 @@
                     </div>
                     <div class="form">
                         <label>Popis:</label>
-                        <input type="text" class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky">
+                       
+                        <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
                     </div>
                     
                         <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
@@ -44,41 +31,36 @@
                 </form>
             </div>
             <section class="tables">
-                <h2>Pohotovosti:</h2>
+               
                 <div class="table-div pohotovosti">
                 
-                    <form asp-action="Zapis" asp-controller="Pohotovosti">                   
+                    <form asp-action="Zapis" asp-controller="Pohotovosti"> 
+                        <h2>Pohotovosti:</h2>                  
                         <table>
                             <thead>
                                 <tr>
-                                    <td>Id</td>
-                                    <td>Jmeno</td>
-                                    <td>tel</td>
-                                    <td>Začátek</td>
-                                    <td>Konec</td>
+                                    <th>Jmeno</th>
+                                    <th>Tel</th>
+                                    <th>Firma</th>
+                                    <th>Začátek</th>
+                                    <th>Konec</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach(var pohotovost in Model.PohotovostList)
                                 {
-
-                                
-                                <tr>
-                                    <td>@pohotovost.IdTechnik</td>
-                                    <td>@pohotovost.Technik.Jmeno</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                </tr>
+                                    <tr>
+                                        <td>@pohotovost.Technik.Jmeno</td>
+                                        <td>@pohotovost.User.PhoneNumber</td>
+                                        <td>@pohotovost.Technik.Firma.NázevFirmy</td>
+                                        <td>@pohotovost.Začátek</td>
+                                        <td>@pohotovost.Konec</td>
+                                    </tr>
                                 }
-                            
                             </tbody>
                         </table>
                         <div class="buttondiv">
-                            <button type="submit" class="button">Zapsat se</button>
-                            <div>
-                                @ViewBag.Message
-                            </div>
+                            <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
                         </div>
                     </form>    
                 </div> 
@@ -87,9 +69,9 @@
         </div>
 
         <div class="menu">
-            <ul class="menu-ul">
-                <li class="menu-li"><a class="menu-text">Přidat odstávku</a></li>
-                <li class="menu-li"><a class="menu-text">Odstávky</a></li>
+            <ul class="ul-footer">
+                <li class="nav-footer"><a class="a-text">Přidat odstávku</a></li>
+                <li class="nav-footer"><a class="a-text">Odstávky</a></li>
             </ul>
         </div>
         <div class="div-odstavky-table">
@@ -126,7 +108,8 @@
                             {
                                 <tr>
                                     <td>@odstavky.IdOdstavky</td>
-                                    <td>@odstavky.Distributor</td>
+                                    <td>
+                                        @odstavky.Distributor</td>
                             
                                     @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
                                     {

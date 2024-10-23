@@ -23,7 +23,7 @@ namespace Diesel_modular_application.Controllers
         {
             var lokality = _context.LokalityS.ToList();
 
-            return View(lokality);
+            return View("Index",lokality);
         }
        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> ImportFromExcel(IFormFile file)
@@ -40,7 +40,7 @@ namespace Diesel_modular_application.Controllers
 
 
             }
-            return View();
+            return View("Index");
         }
     
 

@@ -1,210 +1,230 @@
 @model IEnumerable<Diesel_modular_application.Models.TableLokality>
 <body>
-<section class="section-lokality">
-
-    <div class="div-import-lokality">
-        <section class="sctn import">
-            <h2 style="width: 97%;">Vytvoření lokality:</h2>
-            <div class="table-div import A">
-                <section class="sctn first">
-                    <div class="fr">
-                        <label><i class="fa-solid fa-tower-broadcast"></i>Lokalita:</label>   
-                    </div>
-                    <div class="fr">
-                        <label><i class="fa-solid fa-star" style="color: gold;"></i>Klasifikace:</label>
-                        <form id="app-cover">
-                            <div id="select-box">
-                                <input type="checkbox" id="options-view-button">
-                                <div id="select-button" class="brd">
-                                    <div id="selected-value">
-                                        <span></span>
+    <section class="section-lokality">
+        <div class="div-import-lokality">
+            <section class="sctn import">
+                <div class="table-div import A">
+                    <h2 style="width: 97%;">Vytvoření lokality:</h2>
+                    <section class="sctn first">
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-tower-broadcast"></i>Lokalita:</label>   
+                        </div>
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-star" style="color: gold;"></i>Klasifikace:</label>
+                            <form id="app-cover">
+                                <div id="select-box">
+                                    <input type="checkbox" id="options-view-button">
+                                    <div id="select-button" class="brd">
+                                        <div id="selected-value">
+                                            <span></span>
+                                        </div>
+                                        <div id="chevrons">
+                                            <i class="fas fa-chevron-up"></i>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
                                     </div>
-                                    <div id="chevrons">
-                                        <i class="fas fa-chevron-up"></i>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </div>
-                                </div>
-                                <div id="options">
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="A1">
-                                        <input class="s-c bottom" type="radio" name="platform" value="A1">
-                                        <i class="fa-solid fa-circle" style="color: #ff0019;"></i>
-                                        <span class="label">A1</span>  
-                                        <span class="opt-val">A1</span>
-                                    </div>
+                                    <div id="options">
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="A1">
+                                            <input class="s-c bottom" type="radio" name="platform" value="A1">
+                                            <i class="fa-solid fa-circle" style="color: #ff0019;"></i>
+                                            <span class="label">A1</span>  
+                                            <span class="opt-val">A1</span>
+                                        </div>
+                                
+                                    
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="A2">
+                                            <input class="s-c bottom" type="radio" name="platform" value="A2">
+                                            <i class="fa-solid fa-circle" style="color: #c28a0f;"></i>
+                                            <span class="label">A2</span>  
+                                            <span class="opt-val">A2</span>
+                                        </div>
+                                
+                                
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="B1">
+                                            <input class="s-c bottom" type="radio" name="platform" value="B1">
+                                            <i class="fa-solid fa-circle" style="color: #FFD43B;"></i>
+                                            <span class="label">B1</span>  
+                                            <span class="opt-val">B1</span>
+                                        </div>
+                                
+                                
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="B2">
+                                            <input class="s-c bottom" type="radio" name="platform" value="B2">
+                                            <i class="fa-solid fa-circle" style="color: #56dc6c;"></i>
+                                            <span class="label">B2</span>  
+                                            <span class="opt-val">B2</span>
+                                        </div>
                             
                                 
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="A2">
-                                        <input class="s-c bottom" type="radio" name="platform" value="A2">
-                                        <i class="fa-solid fa-circle" style="color: #c28a0f;"></i>
-                                        <span class="label">A2</span>  
-                                        <span class="opt-val">A2</span>
-                                    </div>
-                            
-                            
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="B1">
-                                        <input class="s-c bottom" type="radio" name="platform" value="B1">
-                                        <i class="fa-solid fa-circle" style="color: #FFD43B;"></i>
-                                        <span class="label">B1</span>  
-                                        <span class="opt-val">B1</span>
-                                    </div>
-                            
-                            
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="B2">
-                                        <input class="s-c bottom" type="radio" name="platform" value="B2">
-                                        <i class="fa-solid fa-circle" style="color: #56dc6c;"></i>
-                                        <span class="label">B2</span>  
-                                        <span class="opt-val">B2</span>
-                                    </div>
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="B">
+                                            <input class="s-c bottom" type="radio" name="platform" value="B">
+                                            <i class="fa-solid fa-circle" style="color: #007514;"></i>
+                                            <span class="label">B</span>  
+                                            <span class="opt-val">B</span>
+                                        </div>
+                                
+                                
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="C">
+                                            <input class="s-c bottom" type="radio" name="platform" value="C">
+                                            <i class="fa-solid fa-circle" style="color: #007514;"></i>
+                                            <span class="label">C</span>  
+                                            <span class="opt-val">C</span>
+                                        </div>
+                                
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="D1">
+                                            <input class="s-c bottom" type="radio" name="platform" value="D1">
+                                            <i class="fa-solid fa-circle" style="color: #74C0FC;"></i>
+                                            <span class="label">D1</span>  
+                                            <span class="opt-val">D1</span>
+                                        </div>
+                                        <div id="option-bg"></div>
+                                </div>
+                                </div>
+                            </form>
+                        </div>   
                         
-                            
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="B">
-                                        <input class="s-c bottom" type="radio" name="platform" value="B">
-                                        <i class="fa-solid fa-circle" style="color: #007514;"></i>
-                                        <span class="label">B</span>  
-                                        <span class="opt-val">B</span>
+                    </section>
+                    <section class="sctn first">
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-gas-pump" style="color:red"></i>DA:</label>
+                            <form id="app-cover">
+                                <div id="select-box">
+                                    <input type="checkbox" id="options-view-button">
+                                    <div id="select-button" class="brd">
+                                        <div id="selected-value">
+                                            <span></span>
+                                        </div>
+                                        <div id="chevrons">
+                                            <i class="fas fa-chevron-up"></i>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
                                     </div>
-                            
-                            
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="C">
-                                        <input class="s-c bottom" type="radio" name="platform" value="C">
-                                        <i class="fa-solid fa-circle" style="color: #007514;"></i>
-                                        <span class="label">C</span>  
-                                        <span class="opt-val">C</span>
-                                    </div>
-                            
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="D1">
-                                        <input class="s-c bottom" type="radio" name="platform" value="D1">
-                                        <i class="fa-solid fa-circle" style="color: #74C0FC;"></i>
-                                        <span class="label">D1</span>  
-                                        <span class="opt-val">D1</span>
-                                    </div>
-                                    <div id="option-bg"></div>
-                            </div>
-                            </div>
-                        </form>
-                    </div>   
-                    
-                </section>
-                <section class="sctn first">
-                    <div class="fr">
-                        <label><i class="fa-solid fa-gas-pump" style="color:red"></i>DA:</label>
-                        <form id="app-cover">
-                            <div id="select-box">
-                                <input type="checkbox" id="options-view-button">
-                                <div id="select-button" class="brd">
-                                    <div id="selected-value">
-                                        <span></span>
-                                    </div>
-                                    <div id="chevrons">
-                                        <i class="fas fa-chevron-up"></i>
-                                        <i class="fas fa-chevron-down"></i>
+                                    <div id="options">
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="True">
+                                            <input class="s-c bottom" type="radio" name="platform" value="True">
+                                            <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                            <span class="label">ANO</span>  
+                                            <span class="opt-val">ANO</span>
+                                        </div>
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="False">
+                                            <input class="s-c bottom" type="radio" name="platform" value="False">
+                                            <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                            <span class="label">NE</span>  
+                                            <span class="opt-val">NE</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div id="options">
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="True">
-                                        <input class="s-c bottom" type="radio" name="platform" value="True">
-                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                        <span class="label">ANO</span>  
-                                        <span class="opt-val">ANO</span>
+                            </form>                
+                        </div> 
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-battery-full" style="color: #51fe06;"></i>Baterie:</label>
+                        </div>  
+                    </section>
+                    <section class="sctn first">
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-plug"></i>Zásuvka:</label>
+                            <form id="app-cover">
+                                <div id="select-box">
+                                    <input type="checkbox" id="options-view-button">
+                                    <div id="select-button" class="brd">
+                                        <div id="selected-value">
+                                            <span></span>
+                                        </div>
+                                        <div id="chevrons">
+                                            <i class="fas fa-chevron-up"></i>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
                                     </div>
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="False">
-                                        <input class="s-c bottom" type="radio" name="platform" value="False">
-                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                        <span class="label">NE</span>  
-                                        <span class="opt-val">NE</span>
+                                    <div id="options">
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="True">
+                                            <input class="s-c bottom" type="radio" name="platform" value="True">
+                                            <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                            <span class="label">ANO</span>  
+                                            <span class="opt-val">ANO</span>
+                                        </div>
+                                        <div class="option">
+                                            <input class="s-c top" type="radio" name="platform" value="False">
+                                            <input class="s-c bottom" type="radio" name="platform" value="False">
+                                            <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                            <span class="label">NE</span>  
+                                            <span class="opt-val">NE</span>
+                                        </div>
                                     </div>
                                 </div>
+                            </form>              
+                        </div>
+
+                    </section>
+                    <section class="sctn adresa">
+                        <div class="fr adresa">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-house"></i>Adresa</label>
+                            <div class="adresa mesto">
+                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-city"></i>Město:</label>
+                                <input class="input adresa" type="text">
+                                
                             </div>
-                        </form>                
-                    </div> 
-                    <div class="fr">
-                        <label><i class="fa-solid fa-battery-full" style="color: #51fe06;"></i>Baterie:</label>
+                            <div class="adresa Ulice">
+                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-road"></i>Ulice:</label>
+                                <input class="input adresa" type="text">
+                            </div>
+                            <div class="adresa PSČ">
+                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-signs-post" style="color: brown;"></i>PSČ:</label>
+                                <input class="input adresa PSC" type="number">
+                            </div>
+                        </div> 
                         
-                    </div> 
-                    <div class="fr">
-                        <label><i class="fa-solid fa-plug"></i>Zásuvka:</label>
-                        <form id="app-cover">
-                            <div id="select-box">
-                                <input type="checkbox" id="options-view-button">
-                                <div id="select-button" class="brd">
-                                    <div id="selected-value">
-                                        <span></span>
-                                    </div>
-                                    <div id="chevrons">
-                                        <i class="fas fa-chevron-up"></i>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </div>
-                                </div>
-                                <div id="options">
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="True">
-                                        <input class="s-c bottom" type="radio" name="platform" value="True">
-                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                        <span class="label">ANO</span>  
-                                        <span class="opt-val">ANO</span>
-                                    </div>
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="False">
-                                        <input class="s-c bottom" type="radio" name="platform" value="False">
-                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                        <span class="label">NE</span>  
-                                        <span class="opt-val">NE</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>              
-                    </div> 
+                    </section>
                     
-                </section>
-                <section class="sctn adresa">
-                    <div class="fr adresa">
-                        <label><i class="fa-solid fa-house"></i>Adresa</label>
-                        <div class="adresa mesto">
-                            <label><i class="fa-solid fa-city"></i>Město:</label>
-                            <input class="input adresa" type="text">
-                            
-                        </div>
-                        <div class="adresa Ulice">
-                            <label><i class="fa-solid fa-road"></i>Ulice:</label>
-                            <input class="input adresa" type="text">
-                        </div>
-                        <div class="adresa PSČ">
-                            <label><i class="fa-solid fa-signs-post" style="color: brown;"></i>PSČ:</label>
-                            <input class="input adresa PSC" type="number">
-                        </div>
-                    </div> 
-                    
-                </section>
+
+
+                    <button type="submit" class="button">  <a class="text-button"> Vytvořit</a> </button>
                 
 
-
-                <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-
-            </div>
-           
-        </section>
-        <section class="sctn">
-            <h2>Import Lokalit</h2>
-            <div class="table-div import B">
-                <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <input type="file" name="file" class="form-control" />
-                    <button type="submit" name="Upload" class="button-odstavka">Upload</button>
-                </form>
-
-            </div>
-        </section>
-    </div>    
-
+                </div>
+            
+            </section>
+            <section class="sctn">
+                
+                <div class="table-div import B">
+                    <h2>Import Lokalit</h2>
+                    <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <input type="file" name="file" class="form-control" />
+                        <button type="submit" name="Upload" class="button-odstavka">Upload</button>
+                    </form>
+                </div>
+                <div class="table-div import B">
+                    <h2>Regionyt</h2>
+                </div>
+            </section>
+            <section class="sctn">
+                <div class="table-div import B">
+                    <h2>Firmy</h2>
+                </div>
+                <div class="table-div import B">
+                    <h2>Import Lokalit</h2>
+                </div>
+            </section>
+            <section class="sctn">
+                <div class="table-div import B">
+                    <h2>Import Lokalit</h2>
+                </div>
+                <div class="table-div import B">
+                    <h2>Import Lokalit</h2>
+                </div>
+            </section>
+        </div>    
+       
 
 
 
@@ -219,14 +239,15 @@
         }
         @if (Model != null)
         {
-            <div class="table-div lokality">
-                <table>
-                    <section class="sctn search">
-                        <form onsubmit="event.preventDefault();" role="search" class="form-import Search">
-                            <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
-                            <button class="buttonsearch"type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>    
-                        </form>
-                    </section>
+        <div class="table-div import C">    
+            <section class="sctn search">
+                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
+                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
+                </div>
+            </section>
+            <div class="table-div lokality" style="box-shadow: none;">
+                <table> 
                     <thead>
                         <tr>
                             <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
@@ -276,21 +297,21 @@
                                 <td>
                                     @if(lokality.Zásuvka=="TRUE")
                                     {
-                                        <span class="status green"></span>
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
                                     }
                                     @if(lokality.Zásuvka=="FALSE")
                                     {
-                                        <span class="status red"></span>
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
                                     }
                                 </td>
                                 <td>
                                     @if(lokality.DA=="TRUE")
                                     {
-                                        <span class="status green"></span>
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
                                     }
                                     @if(lokality.DA=="FALSE")
                                     {
-                                        <span class="status red"></span>
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
                                     }
                                 </td>
                             </tr>
@@ -298,8 +319,9 @@
                     </tbody>
                 </table>
             </div>
+        </div>          
         }
-        
+
    
-</section>
+    </section>
 </body>
