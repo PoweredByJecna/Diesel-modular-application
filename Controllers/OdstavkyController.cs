@@ -1,3 +1,4 @@
+using System.Security.AccessControl;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Bibliography;
@@ -32,10 +33,16 @@ namespace Diesel_modular_application.Controllers
             odstavky.TechnikList= await _context.TechniS
                 .Include(o=>o.Firma)
                 .ToListAsync();
+            odstavky.RegionyList=await _context.ReginoS
+                .Include(O=>O.Firma)
+                .ToListAsync();
+                
+            
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
         {
+            
             var lokalitaSearch = await _context.LokalityS.FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
             if (lokalitaSearch == null)
             {
@@ -53,7 +60,7 @@ namespace Diesel_modular_application.Controllers
             var newOdstavka = new TableOdstavky
             {            
                 Distributor = distrib,
-                Firma="VEGACOM",
+                Firma=lokalitaSearch.Region?.Firma?.NázevFirmy,
                 Od = odstavky.AddOdstavka.Od,
                 Do = odstavky.AddOdstavka.Do,
                 Vstup=odstavky.AddOdstavka.Vstup,

@@ -104,6 +104,13 @@ namespace Diesel_modular_application.Data
                 .WithMany()
                 .HasForeignKey(o=>o.IdUser);
 
+            builder.Entity<TableRegiony>()
+                .HasOne(o=>o.Firma)
+                .WithMany()
+                .HasForeignKey(i=>i.FirmaID);
+
+        
+
         }
 
         public DbSet<TableLokality> LokalityS {get; set;}

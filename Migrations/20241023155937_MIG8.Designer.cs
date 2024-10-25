@@ -4,6 +4,7 @@ using Diesel_modular_application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    partial class DAdatabaseModelSnapshot : ModelSnapshot
+    [Migration("20241023155937_MIG8")]
+    partial class MIG8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,16 +204,11 @@ namespace Diesel_modular_application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRegion"));
 
-                    b.Property<int?>("FirmaID")
-                        .HasColumnType("int");
-
                     b.Property<string>("NazevRegionu")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdRegion");
-
-                    b.HasIndex("FirmaID");
 
                     b.ToTable("TableRegiony", "Data");
                 });
@@ -506,15 +504,6 @@ namespace Diesel_modular_application.Migrations
                     b.Navigation("Technik");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Diesel_modular_application.Models.TableRegiony", b =>
-                {
-                    b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
-                        .WithMany()
-                        .HasForeignKey("FirmaID");
-
-                    b.Navigation("Firma");
                 });
 
             modelBuilder.Entity("Diesel_modular_application.Models.TableTechnici", b =>

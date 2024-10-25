@@ -16,7 +16,7 @@ namespace Diesel_modular_application.Models
         public TableDieslovani DieslovaniMod {get;set;} = new TableDieslovani();
         public TableFirma FirmaMod{get;set;}=new TableFirma();
         public TableTechnici TechnikMod{get;set;}=new TableTechnici();
-
+        public IEnumerable<TableRegiony> RegionyList{get;set;}
         public TablePohotovosti PohotovostMod{get;set;}= new TablePohotovosti();
        
 
@@ -28,6 +28,8 @@ namespace Diesel_modular_application.Models
             TechnikList= new List<TableTechnici>();
             PohotovostList=new List<TablePohotovosti>();
             UserList=new List<IdentityUser>();
+            RegionyList=new List<TableRegiony>();
+            
         }
     }
 }
