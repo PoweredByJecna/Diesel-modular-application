@@ -36,14 +36,18 @@ namespace Diesel_modular_application.Controllers
             odstavky.RegionyList=await _context.ReginoS
                 .Include(O=>O.Firma)
                 .ToListAsync();
+    
                 
             
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
         {
-            
-            var lokalitaSearch = await _context.LokalityS.FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+            var lokalitaSearch = await _context.LokalityS
+                .Include(l => l.Region)
+                .ThenInclude(r => r.Firma)
+                .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+
             if (lokalitaSearch == null)
             {
                 ViewBag.Message = "Zadaná lokalita neexistuje";
