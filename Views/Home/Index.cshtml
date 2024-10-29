@@ -5,16 +5,6 @@
 
 <body>
     <div class="conteiner">
-        <section class="section-time">
-            <div>
-                <a class="a-time">Čas:</a>
-            </div>
-            <div class="clock" id="clock">
-                @{
-                    var todayDate = DateTime.Now.ToString("dd.MM.yyyy");
-                }
-            </div>
-        </section>
         <section class="tables-row">
             <div class="section small">
                 <h2>Aktuální dieslování:</h2>
@@ -38,7 +28,7 @@
                                 @foreach (var dieslovani in Model.DieslovaniList)
                                 {
                                     
-                                    @if (dieslovani.Odstavka.ZadanVstup==true)
+                                    @if (dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanVstup==true)
                                     {
                                         <tr>
                                             <td title="aktivni vstup"><span class="status green"></span>
@@ -207,41 +197,41 @@
                                 <th id="firma">Firma</th>
                                 <th id="odchod">Odchod</th>
                                 <th id="com"></th>
-                                <th id="clock"></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (Model != null)
                             {
-                                @foreach (var odstavky in Model.OdstavkyList)
+                                @foreach (var dieslovani in Model.DieslovaniList)
                                 {
-                                    @if (odstavky.Od<DateTime.Now)
+                                    @if (dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanOdchod==true)
                                     {
                                         <tr>
                                             <td title="neaktivní"><span class="status red"></span></td>
-                                            <td>@odstavky.Lokality.Lokalita</td>
-                                            <td>@odstavky.Lokality.Klasifikace
-                                                 @if(odstavky.Lokality.Klasifikace=="A1")
+                                            <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
+                                            <td>@dieslovani.Odstavka.Lokality.Klasifikace
+                                                 @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
                                                     {
                                                         <span title="Kritická priorita" class="status red"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="A2")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
                                                     {
                                                         <span title="Vysoká priorita" class="status orange"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="B1")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
                                                     {
                                                         <span title="Středně-vysoká priorita" class="status yellow"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="B2")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
                                                     {
                                                         <span title="Středně-nízká priorita" class="status light-green"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
                                                     {
                                                         <span title="Nízká priorita" class="status green"></span>
                                                     }
-                                                    @if(odstavky.Lokality.Klasifikace=="D1")
+                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
                                                     {
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
@@ -331,7 +321,9 @@
                                             <span title="Velmi-nízká priorita" class="status blue"></span>
                                         }
                                     </td>
-                                    <td id="td-firma"> </td>
+                                    <td id="td-firma">
+                                        @odstavky.Lokality.Region.Firma.NázevFirmy
+                                    </td>
                                     <td id="td-objednano">@odstavky.Od</td>
                                     <td id="td-vstup"></td>
                                     <td id="td-odchod"></td>

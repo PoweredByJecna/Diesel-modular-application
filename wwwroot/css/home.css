@@ -97,7 +97,7 @@ th, td {
 tr, th, td{
     border: 0px solid white;
     background-color: white;
-    border-bottom: 1px solid #cbd0dd;;
+    border-bottom: 1px solid #cbd0dd42;
 }
 table tr:hover {
     font-weight:400;

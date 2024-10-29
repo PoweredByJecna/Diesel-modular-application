@@ -84,6 +84,9 @@ body {
     min-height: 100vh;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 body.dark-mode {
     background-color: #2c2c2c;
     color: #e0e0e0;
@@ -116,8 +119,9 @@ body.dark-mode {
 }
 .a-username{
     position: fixed;
-    top: -5px;
+    top: -1px;
     right: 15px;
+    font-size:smaller;
 }
 
 .navdiv i{
@@ -317,7 +321,8 @@ header.dark-mode {
 }
 
 .sb {
-transition: 0.3s ease all;
+margin-left: 3px
+
 }
 
 .sb-val {
@@ -429,6 +434,35 @@ transform: scale(0);
     margin-top: 10px;
     position: sticky;
     top: 81px;
+    display: flex;
+    justify-content: center;
+}
+.sidebar{
+    padding: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ul-sidebar{
+    list-style: none;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-left: 19px;
+}
+.li-sidebar{
+    padding: 9px;
+    border-radius: 10px;
+}
+.li-sidebar:hover{
+    background-color: #0057ff;
+    transition: all 0.3s;
+    transition: background-color 0.5s ease;
+    
+}
+.a-sidebar{
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 

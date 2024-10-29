@@ -28,7 +28,10 @@ namespace Diesel_modular_application.Controllers
         {
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
+                .ThenInclude(l => l.Region)
+                .ThenInclude(l=>l.Firma)
                 .ToListAsync();
+            
             return View("Index", odstavky);
         }
 

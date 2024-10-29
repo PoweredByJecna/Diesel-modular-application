@@ -1,86 +1,18 @@
 @model Diesel_modular_application.Models.OdstavkyViewModel
 <html>
     <body>
-        <div class="odstavky-section">
-            <div class="div-odstavka-create">
-                
-                <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
-                    <div class="form">
-                        <h2>Vytvořit odstávku:</h2>
-                        <label>Lokalita:</label>
-                        <div class="div-form">
-                            <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
-                        </div>
-                    </div>
-                    <div class="form">
-                        <label>Od:</label>
-                        <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
-                    </div>
-                    <div class="form">
-                        <label>Do:</label>
-                        <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
-                    </div>
-                    <div class="form">
-                        <label>Popis:</label>
-                       
-                        <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
-                    </div>
-                    
-                        <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                    
-                </form>
-            </div>
-            <section class="tables">
-               
-                <div class="table-div pohotovosti">
-                
-                    <form asp-action="Zapis" asp-controller="Pohotovosti"> 
-                        <h2>Pohotovosti:</h2>                  
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Jmeno</th>
-                                    <th>Tel</th>
-                                    <th>Firma</th>
-                                    <th>Začátek</th>
-                                    <th>Konec</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(var pohotovost in Model.PohotovostList)
-                                {
-                                    <tr>
-                                        <td>@pohotovost.Technik.Jmeno</td>
-                                        <td>@pohotovost.User.PhoneNumber</td>
-                                        <td>@pohotovost.Technik.Firma.NázevFirmy</td>
-                                        <td>@pohotovost.Začátek</td>
-                                        <td>@pohotovost.Konec</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <div class="buttondiv">
-                            <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
-                        </div>
-                    </form>    
-                </div> 
-                <form asp-action="Nacteni" asp-controller="Lokality">
-                    <button type="submit">VYTVOŘ</button>
-                </form>
-               
-            </section>     
-        </div>
-
-        <div class="menu">
-            <ul class="ul-footer">
-                <li class="nav-footer"><a class="a-text">Přidat odstávku</a></li>
-                <li class="nav-footer"><a class="a-text">Odstávky</a></li>
-            </ul>
-        </div>
-        <div class="div-odstavky-table">
+        <div class="table-div import C odstavky">
+            <section class="sctn search odstavkyTable">
+                <h2 style="display: flex;justify-content: center;">Odstávky</h2>
+                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
+                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
+                </div>
+            </section>
             <div class="table-div odstavkyTable">
                 <table>
                     <thead>
+
                         <tr>
                             <th>Id<i class="fa-solid fa-id-badge"></i></th>
                             <th>Distributor<i class="fa-solid fa-bolt"></i></th>
@@ -103,9 +35,7 @@
                     <tbody>
                         @if (Model != null)
                         {
-                            <div>
-                                @ViewBag.Message
-                            </div>
+                            
 
                             @foreach(var odstavky in Model.OdstavkyList)
                             {
@@ -181,6 +111,82 @@
                     
                 </table>
             </div>
-    </div>
+        </div>
+        <div class="menu">
+            <ul class="ul-footer">
+               
+            </ul>
+        </div>
+        <div class="odstavky-section">
+            <div class="div-odstavka-create">
+                
+                <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
+                    <div class="form">
+                        <h2>Vytvořit odstávku:</h2>
+                        <label>Lokalita:</label>
+                        <div class="div-form">
+                            <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label>Od:</label>
+                        <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
+                    </div>
+                    <div class="form">
+                        <label>Do:</label>
+                        <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
+                    </div>
+                    <div class="form">
+                        <label>Popis:</label>
+                       
+                        <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
+                    <div>
+                        @ViewBag.Message
+                    </div>
+                </form>
+            </div>
+            <section class="tables" id="tablepohotovosti">
+               
+                <div class="table-div pohotovosti">
+                
+                    <form asp-action="Zapis" asp-controller="Pohotovosti"> 
+                        <h2 style="display: flex;,justify-content: center;">Pohotovosti:</h2>                  
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Jmeno</th>
+                                    <th>Tel</th>
+                                    <th>Firma</th>
+                                    <th>Začátek</th>
+                                    <th>Konec</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var pohotovost in Model.PohotovostList)
+                                {
+                                    <tr>
+                                        <td>@pohotovost.Technik.Jmeno</td>
+                                        <td>@pohotovost.User.PhoneNumber</td>
+                                        <td>@pohotovost.Technik.Firma.NázevFirmy</td>
+                                        <td>@pohotovost.Začátek</td>
+                                        <td>@pohotovost.Konec</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="buttondiv">
+                            <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
+                        </div>
+                    </form>    
+                </div> 
+                <form asp-action="Nacteni" asp-controller="Lokality">
+                    <button type="submit">VYTVOŘ</button>
+                </form>
+               
+            </section>     
+        </div>
     </body>
 </html>

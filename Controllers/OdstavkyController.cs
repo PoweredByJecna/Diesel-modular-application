@@ -64,7 +64,7 @@ namespace Diesel_modular_application.Controllers
             var newOdstavka = new TableOdstavky
             {            
                 Distributor = distrib,
-                Firma=lokalitaSearch.Region?.Firma?.NázevFirmy,
+                Firma=lokalitaSearch.Region.Firma.NázevFirmy,
                 Od = odstavky.AddOdstavka.Od,
                 Do = odstavky.AddOdstavka.Do,
                 Vstup=odstavky.AddOdstavka.Vstup,
@@ -80,10 +80,10 @@ namespace Diesel_modular_application.Controllers
 
             // Načti seznam odstávek pro zobrazení
             odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync();
-            return View("Index", odstavky);
+            return Redirect("/Odstavky/Index");
         }
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
-        {
+        { 
             var SetOdstavka=new TableOdstavky
             {   
                 Vstup=odstavky.AddOdstavka.Vstup

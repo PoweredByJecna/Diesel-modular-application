@@ -48,5 +48,10 @@ namespace Diesel_modular_application.Controllers
 
           return Redirect ("/Home/Index");
         }
+        public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)
+        {
+            
+            return Redirect("/Home/Index");
+        }
     }
 }

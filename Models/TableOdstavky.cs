@@ -21,5 +21,6 @@ namespace Diesel_modular_application.Models
         public virtual TableLokality Lokality { get; set; }
         public virtual ICollection<TableDieslovani> DieslovaniList {get;set;}
         public bool ZadanVstup{get;set;}=false;
+        public bool ZadanOdchod{get;set;} =false;
     }
 }

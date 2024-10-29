@@ -2,7 +2,8 @@
     using Diesel_modular_application.Data;
     using Diesel_modular_application.Models;
     using DocumentFormat.OpenXml.Spreadsheet;
-    using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +26,8 @@
                     .ToListAsync();
                 return View("Index", pohotovosti);
             }
-
+            
+            [Authorize(Roles="Engineer")]
             public async Task<IActionResult> Zapis (OdstavkyViewModel pohotovosti)
             {
                 

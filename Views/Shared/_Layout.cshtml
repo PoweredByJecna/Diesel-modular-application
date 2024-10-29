@@ -22,33 +22,115 @@
                         <i class="fa-solid fa-bars fa-2xl" style="color: #ffffff;"></i>
                     </div>
                     <div class="s2">
-                        <div id="sidebaroption">
-                            <div class="sidebaroption">
-                                <a asp-action="Index" asp-controller="Home" style="text-decoration: none;">
-                                    <i class="fa-solid fa-house-chimney-window"></i>
-                                    <span class="sb">Home</span>  
-                                </a>
-                            </div>
-                        
-                            <div class="sidebaroption">
-                                <a asp-action="Index" asp-controller="Lokality" style="text-decoration: none;"> 
-                                    
-                                <i class="fa-solid fa-tower-broadcast"></i>
-                                <span class="sb">Lokality</span>  
-                            
-                                </a>
-                            </div>
-                        
-                            <div class="sidebaroption">
-                            <a asp-action="Index" asp-controller="Odstavky" style="text-decoration: none;"> 
-                                
-                                <i class="fa-solid fa-bolt"></i>
-                                <span class="sb">Odstávky</span>  
+                        <div style="display: flex; flex-direction: column;width: 90%;">
 
-                            </a> 
+                            <div class="sidebar">
+                                <li class="li-sidebar" style="list-style: none;">
+                                    <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
+                                        <i class="fa-solid fa-house-chimney-window" style="display: flex; justify-content: flex-end; width: 20px;"></i>
+                                        <span class="sb">Home</span>  
+                                    </a>
+                                </li>
+                                <ul class="ul-sidebar">
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-person-running" style="display: flex; justify-content: flex-end; width: 20px; color:green;"></i>
+                                            <span class="sb">Dnešní dieslovaní</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-hourglass-end" style="display: flex; justify-content:flex-end; width: 20px; color:yellow;"></i>
+                                            <span class="sb">Dnešní nadcházející</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-regular fa-circle-xmark" style="display: flex; justify-content:flex-end; width: 20px; color:red;"></i>
+                                            <span class="sb">Dnešní ukončené</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-globe" style="display: flex; justify-content:flex-end; width: 20px; color:blue;"></i>
+                                            <span class="sb">Všechna dieslovaní</span> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                                 
+                        
+                            <div class="sidebar">
+                                <li class="li-sidebar" style="list-style: none;">
+                                    <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;"> 
+                                        <i class="fa-solid fa-tower-broadcast" style="display: flex; justify-content:flex-end; width: 20px;"></i>
+                                        <span class="sb">Lokality</span>  
+                                    </a>
+                                </li>
+                                 <ul class="ul-sidebar">
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Všechny Lokality</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Vytvořit Lokalitu</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Regiony</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Firmy</span> 
+                                        </a>
+                                    </li>
+                                     <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Mapa</span> 
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         
-                            <div id="sidebaroption-bg"></div>
+                                 
+                        
+                            <div class="sidebar">
+                                <li class="li-sidebar" style="list-style: none;">
+                                    <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;"> 
+                                        <i class="fa-solid fa-bolt" style="display: flex; justify-content:flex-end; width: 20px;"></i>
+                                        <span class="sb">Odstávky</span>  
+                                    </a>
+                                </li>
+                                 <ul class="ul-sidebar">
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Všechny Odstávky</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px;color:white"></i>
+                                            <span class="sb">Vytvořit odstávku</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Odstavky" asp-fragment="tablepohotovosti"class="a-sidebar"  style="text-decoration: none;display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Tabulka pohotovostí</span> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
             
