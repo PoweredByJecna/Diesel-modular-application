@@ -26,21 +26,59 @@ namespace Diesel_modular_application.Controllers
         {
            var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
            if(dis !=null)
-           {
+           {    
+                
                 dis.Vstup=dieslovani.DieslovaniMod.Vstup;
-
+                 _context.Update(dis);
+               
+                ViewBag.Message="vstup";
            }
-           _context.Update(dis);
-           await _context.SaveChangesAsync();
-
+               var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+            if (odstavka != null)
+            {
+                // Nastav ZadanVstup na true
+                odstavka.ZadanVstup = true;
+                _context.Update(odstavka);
+                
+            }    
+               
           
-
+            await _context.SaveChangesAsync();
           return Redirect ("/Home/Index");
         }
         public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)
         {
+            var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
+           if(dis !=null)
+           {    
+                
+                dis.Odchod=dieslovani.DieslovaniMod.Odchod;
+                 _context.Update(dis);
+               
+                ViewBag.Message="vstup";
+           }
+               var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+            if (odstavka != null)
+            {
+                // Nastav ZadanVstup na true
+                odstavka.ZadanOdchod = true;
+                odstavka.ZadanVstup=false;
+                _context.Update(odstavka);
+                
+            }    
+               
+          
+            await _context.SaveChangesAsync();
+          return Redirect ("/Home/Index");
             
-            return Redirect("/Home/Index");
         }
+        public async Task<IActionResult> Delete (OdstavkyViewModel dieslovani)
+        {
+            
+             var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
+             _context.DieslovaniS.Remove(dis);
+            await _context.SaveChangesAsync();
+            return Redirect ("/Home/Index");
+        } 
     }
 }

@@ -31,7 +31,7 @@ namespace Diesel_modular_application.Controllers
                 .ThenInclude(l => l.Region)
                 .ThenInclude(l=>l.Firma)
                 .ToListAsync();
-            
+            odstavky.DieslovaniList =await _context.DieslovaniS.ToListAsync();
             return View("Index", odstavky);
         }
 

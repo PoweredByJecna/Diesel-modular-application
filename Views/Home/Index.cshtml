@@ -60,8 +60,8 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>@dieslovani.Firma.NázevFirmy</td>
+                                            <td>@dieslovani.Vstup</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
                                                 <div class="comment-box">
@@ -74,10 +74,14 @@
                                             </td>
                                             <td title="Odchod">
                                                 <i class="fa-solid fa-arrow-right red-arrow"></i>
-                                                <div class="overlay">
-                                                    <span id="current-datetime"></span>
-                                                    <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                                </div>
+                                                    <div class="overlay">
+                                                        <form asp-action="Odchod" asp-controller="Dieslovani">
+                                                            <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                                            <input asp-for="DieslovaniMod.Odchod" type="datetime-local">
+                                                            <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
+                                                                <div>@ViewBag.Message</div>
+                                                        </form>
+                                                    </div>
                                             </td>
                                         </tr>
                                     }
@@ -108,48 +112,48 @@
                             @if (Model != null)
                             {
                                    
-                                        @foreach (var odstavky in Model.OdstavkyList)
+                                        @foreach (var dieslovani in Model.DieslovaniList)
                                        {
-                                            @if(odstavky.Od.Date==DateTime.Today && odstavky.ZadanVstup==false)
+                                            @if(dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
                                             {
                                                 <tr>
-                                                    @if(odstavky.Od.AddHours(2)>DateTime.Now)
+                                                    @if(dieslovani.Odstavka.Od.AddHours(2)>DateTime.Now)
                                                     {
                                                         <td title="čeká se"><span class="status yellow"></span></td>
                                                     }
-                                                    @if(odstavky.Od.AddHours(2)<DateTime.Now)
+                                                    @if(dieslovani.Odstavka.Od.AddHours(2)<DateTime.Now)
                                                     {
                                                         <td title="technik nedorazil, kontaktuj ho"><span class="status orange"></span></td>
                                                     }
-                                                    <td>@odstavky.Lokality.Lokalita</td>
-                                                    <td>@odstavky.Lokality.Klasifikace
-                                                        @if(odstavky.Lokality.Klasifikace=="A1")
+                                                    <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
+                                                    <td>@dieslovani.Odstavka.Lokality.Klasifikace
+                                                        @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
                                                             {
                                                                 <span title="Kritická priorita" class="status red"></span>
                                                             }
-                                                            @if(odstavky.Lokality.Klasifikace=="A2")
+                                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
                                                             {
                                                                 <span title="Vysoká priorita" class="status orange"></span>
                                                             }
-                                                            @if(odstavky.Lokality.Klasifikace=="B1")
+                                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
                                                             {
                                                                 <span title="Středně-vysoká priorita" class="status yellow"></span>
                                                             }
-                                                            @if(odstavky.Lokality.Klasifikace=="B2")
+                                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
                                                             {
                                                                 <span title="Středně-nízká priorita" class="status light-green"></span>
                                                             }
-                                                            @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
                                                             {
                                                                 <span title="Nízká priorita" class="status green"></span>
                                                             }
-                                                            @if(odstavky.Lokality.Klasifikace=="D1")
+                                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
                                                             {
                                                                 <span title="Velmi-nízká priorita" class="status blue"></span>
                                                             }
                                                     </td>
                                                     <td></td>
-                                                    <td>@odstavky.Od.AddHours(2)</td>
+                                                    <td>@dieslovani.Odstavka.Od.AddHours(2)</td>
                                                     <td title="komentář">
                                                         <i class="fa-regular fa-comment comment-icon"></i>
                                                         <div class="comment-box">
@@ -164,10 +168,10 @@
                                                         <i class="fa-solid fa-arrow-right green-arrow"></i>
                                                         <div class="overlay">
                                                             <form asp-action="Vstup" asp-controller="Dieslovani">
-                                                       
+                                                                <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
                                                                 <input asp-for="DieslovaniMod.Vstup" type="datetime-local">
                                                                 <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
-                                                                 
+                                                                 <div>@ViewBag.Message</div>
                                                             </form>
                                                      
                                                         </div>
@@ -238,8 +242,8 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>@dieslovani.Firma.NázevFirmy</td>
+                                            <td>@dieslovani.Odchod</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
                                                 <div class="comment-box">
@@ -278,60 +282,81 @@
                             <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
                             <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
                             <th id="th-poznamka">Poznámka</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model != null)
                         {
-                            @foreach (var odstavky in Model.OdstavkyList)
+                            @foreach (var dieslovani in Model.DieslovaniList)
                             {
-                                if(odstavky.Od.Date==DateTime.Today)
+                                if(dieslovani.Odstavka.Od.Date==DateTime.Today)
                                 {                                
-                                    <tr>
+                                    <tr class="table-row">
                                         <td id="td-stav">
-                                            @if(odstavky.Od<DateTime.Now)
+                                            @if(dieslovani.Odstavka.Od<DateTime.Now)
                                             {
-                                                <span class="status red"></span>
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">ukončené</span>
+                                                    <i class="fa-solid fa-check fa-sm" style="color: white;"></i>
+                                                </span> 
                                             }
-                                            @if (odstavky.Od > DateTime.Now)
+                                            @if (dieslovani.Odstavka.Od > DateTime.Now)
                                             {
-                                                <span class="status green"></span>
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success">
+                                                    <span class="badge-label">Approved</span>
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>                                            
                                             }
                                         </td>
-                                        <td id="td-lokalita">@odstavky.Lokality.Lokalita</td>
-                                        <td id="td-klasifikace">@odstavky.Lokality.Klasifikace
-                                            @if(odstavky.Lokality.Klasifikace=="A1")
+                                        <td id="td-lokalita">@dieslovani.Odstavka.Lokality.Lokalita</td>
+                                        <td id="td-klasifikace">@dieslovani.Odstavka.Lokality.Klasifikace
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
                                             {
                                                 <span title="Kritická priorita" class="status red"></span>
                                             }
-                                            @if(odstavky.Lokality.Klasifikace=="A2")
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
                                             {
                                                 <span title="Vysoká priorita" class="status orange"></span>
                                             }
-                                            @if(odstavky.Lokality.Klasifikace=="B1")
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
                                             {
                                                 <span title="Středně-vysoká priorita" class="status yellow"></span>
                                             }
-                                            @if(odstavky.Lokality.Klasifikace=="B2")
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
                                             {
                                                 <span title="Středně-nízká priorita" class="status light-green"></span>
                                             }
-                                            @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
                                             {
                                                 <span title="Nízká priorita" class="status green"></span>
                                             }
-                                            @if(odstavky.Lokality.Klasifikace=="D1")
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
                                             {
                                                 <span title="Velmi-nízká priorita" class="status blue"></span>
                                             }
                                         </td>
                                         <td id="td-firma">
-                                            @odstavky.Lokality.Region.Firma.NázevFirmy
+                                            @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
                                         </td>
-                                        <td id="td-objednano">@odstavky.Od</td>
-                                        <td id="td-vstup"></td>
-                                        <td id="td-odchod"></td>
+                                        <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
+                                        <td id="td-vstup">@dieslovani.Vstup</td>
+                                        <td id="td-odchod">@dieslovani.Odchod</td>
                                         <td id="td-poznamka"></td>
+                                        <td>
+                                            <div class="button-conteiner">
+                                                <button class="button Edit"><i class="fa-solid fa-ellipsis"></i></button>
+                                                <div class="hidden-buttons">
+                                                    
+                                                    <form asp-action="Delete" asp-controller="Dieslovani">
+                                                        <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                                        <button class="button Edit delete"><i class="fa-solid fa-trash"></i></button>
+                                                    </form>
+                                                    <button class="button Edit ed"><i class="fa-solid fa-pen"></i></button>
+                                                </div>
+                                            </div>
+                                        </td>
+
                                     </tr>
                                 }
                             }   

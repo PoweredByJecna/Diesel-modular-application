@@ -120,8 +120,8 @@ body.dark-mode {
 .a-username{
     position: fixed;
     top: -1px;
-    right: 15px;
-    font-size:smaller;
+    right: 23px;
+    font-size:x-small;
 }
 
 .navdiv i{
@@ -260,6 +260,55 @@ nav input {
     display: flex;
     justify-content: flex-end;
 }
+.button-conteiner{
+    display: flex;
+    flex-direction: row-reverse;
+   
+   
+}
+.button.Edit{
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    background-color:#b5b9bdaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hidden-buttons {
+    display: none; /* Skryje další tlačítka */
+    position: absolute; /* Umožní umístění vedle tlačítka */
+   
+}
+.table-row:hover  .hidden-buttons{
+    display: flex;
+    transition: 0.3s;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: absolute;
+    right: 125px;
+}
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2em 0.15em;
+    
+}
+
+.badge-phoenix-success {
+    background-color: #28a745; /* zelená barva pro úspěch */
+    color: white;
+}
+
+.badge-label {
+    margin-right: 0.5em; /* mezera mezi textem a ikonou */
+}
+
+.feather {
+    height: 12.8px;
+    width: 12.8px;
+}
+
 
 header.dark-mode {
     background-color: #3A3A3A;
