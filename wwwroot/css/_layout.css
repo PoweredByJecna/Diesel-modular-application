@@ -279,6 +279,7 @@ header.dark-mode {
   top: 10px;
   bottom: 10px;
   position: sticky;
+  overflow: auto;
 }
 .conteiner{
     padding: 10px;

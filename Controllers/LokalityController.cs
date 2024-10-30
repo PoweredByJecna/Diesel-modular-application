@@ -20,12 +20,15 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel lokality)
         {
-            var lokality = _context.LokalityS.ToList();
+            lokality.LokalityList = await _context.LokalityS.ToArrayAsync();
+            lokality.FirmaList =await _context.FrimaS.ToListAsync();
+            lokality.RegionyList = await _context.ReginoS.ToListAsync();
 
             return View("Index",lokality);
         }
+        
        [Authorize(Roles ="Admin")]
        public async Task<IActionResult> Nacteni(OdstavkyViewModel lok)
        {

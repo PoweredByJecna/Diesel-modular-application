@@ -20,6 +20,7 @@ namespace Diesel_modular_application.Models
         public virtual TableRegiony Region {get;set;}
 
         public virtual ICollection<TableOdstavky> OdstavkyList { get; set; }
+        
        
       
     }

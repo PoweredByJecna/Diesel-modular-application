@@ -36,6 +36,7 @@ namespace Diesel_modular_application.Controllers
             odstavky.RegionyList=await _context.ReginoS
                 .Include(O=>O.Firma)
                 .ToListAsync();
+      
     
                 
             

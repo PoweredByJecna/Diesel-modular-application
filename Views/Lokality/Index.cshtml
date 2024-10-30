@@ -1,13 +1,107 @@
-@model IEnumerable<Diesel_modular_application.Models.TableLokality>
+@model Diesel_modular_application.Models.OdstavkyViewModel
 <body>
     <section class="section-lokality">
+
+        @if (Model == null)
+        {
+          <div class="error">
+              <h1>Nelze načíst</h1>
+          </div>
+        }
+        @if (Model != null)
+        {
+        <div class="table-div import C">    
+           <section class="sctn search odstavkyTable" id="lokality">
+                <h2 style="display: flex;justify-content: center;">Lokality</h2>
+                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
+                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
+                </div>
+            </section>
+            <div class="table-div lokality" style="box-shadow: none;">
+                <table> 
+                    <thead>
+                        <tr>
+                            <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
+                            <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                            <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
+                            <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
+                            <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
+                            <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
+                            <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lokality in Model.LokalityList)
+                        {
+                            <tr>
+                                <td>@lokality.Id</td>
+                                <td>@lokality.Lokalita</td>
+                                <td>@lokality.Klasifikace
+                                    @if(lokality.Klasifikace=="A1")
+                                    {
+                                        <span title="Kritická priorita" class="status red"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="A2")
+                                    {
+                                        <span title="Vysoká priorita" class="status orange"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="B1")
+                                    {
+                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="B2")
+                                    {
+                                        <span title="Středně-nízká priorita" class="status light-green"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
+                                    {
+                                        <span title="Nízká priorita" class="status green"></span>
+                                    }
+                                    @if(lokality.Klasifikace=="D1")
+                                    {
+                                        <span title="Velmi-nízká priorita" class="status blue"></span>
+                                    }
+                                
+                                </td>
+                                <td>@lokality.Adresa</td>
+                                <td>@lokality.Baterie</td>
+                                <td>
+                                    @if(lokality.Zásuvka=="TRUE")
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                    }
+                                    @if(lokality.Zásuvka=="FALSE")
+                                    {
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @if(lokality.DA=="TRUE")
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                    }
+                                    @if(lokality.DA=="FALSE")
+                                    {
+                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>          
+        }
+
+
         <div class="div-import-lokality">
-            <section class="sctn import">
+            <section class="sctn import" id="vytvorenilokality">
                 <div class="table-div import A">
                     <h2 style="width: 97%;">Vytvoření lokality:</h2>
                     <section class="sctn first">
                         <div class="fr">
-                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-tower-broadcast"></i>Lokalita:</label>   
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-tower-broadcast" style="color: black;"></i>Lokalita:</label>   
                         </div>
                         <div class="fr">
                             <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-star" style="color: gold;"></i>Klasifikace:</label>
@@ -163,53 +257,61 @@
                                 </div>
                             </form>              
                         </div>
-
+                        <div class="fr">
+                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-house"></i>Adresa:</label>
+                        </div>  
                     </section>
-                    <section class="sctn adresa">
-                        <div class="fr adresa">
-                            <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-house"></i>Adresa</label>
-                            <div class="adresa mesto">
-                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-city"></i>Město:</label>
-                                <input class="input adresa" type="text">
-                                
-                            </div>
-                            <div class="adresa Ulice">
-                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-road"></i>Ulice:</label>
-                                <input class="input adresa" type="text">
-                            </div>
-                            <div class="adresa PSČ">
-                                <label style="padding: 5px 5px 2px 5px;"><i class="fa-solid fa-signs-post" style="color: brown;"></i>PSČ:</label>
-                                <input class="input adresa PSC" type="number">
-                            </div>
-                        </div> 
-                        
-                    </section>
-                    
-
-
-                    <button type="submit" class="button">  <a class="text-button"> Vytvořit</a> </button>
-                
-
+                    <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
                 </div>
             
             </section>
             <section class="sctn">
                 
-                <div class="table-div import B">
+                <div class="table-div import B" id="region">
                     <h2>Import Lokalit</h2>
                     <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
-                        <div asp-validation-summary="All" class="text-danger"></div>
                         <input type="file" name="file" class="form-control" />
                         <button type="submit" name="Upload" class="button-odstavka">Upload</button>
                     </form>
                 </div>
                 <div class="table-div import B">
-                    <h2>Regionyt</h2>
+                    <h2>Regiony</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Název</td>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                           @foreach(var region in Model.RegionyList)
+                           {
+                            <tr>
+                                <td>@region.NazevRegionu</td>
+                            </tr>
+                           }
+                        </tbody>
+                    </table>
                 </div>
             </section>
-            <section class="sctn">
+            <section class="sctn" id="firmy"> 
                 <div class="table-div import B">
                     <h2>Firmy</h2>
+                       <table>
+                        <thead>
+                            <tr>
+                                <th>Název</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach(var firma in Model.FirmaList)
+                           {
+                            <tr>
+                                <td>@firma.NázevFirmy</td>
+                            </tr>
+                           }
+                        </tbody>
+                    </table>
                 </div>
                 <div class="table-div import B">
                     <h2>Import Lokalit</h2>
@@ -231,96 +333,7 @@
 
 
     
-        @if (Model == null)
-        {
-          <div class="error">
-              <h1>Nelze načíst</h1>
-          </div>
-        }
-        @if (Model != null)
-        {
-        <div class="table-div import C">    
-            <section class="sctn search">
-                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
-                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
-                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
-                </div>
-            </section>
-            <div class="table-div lokality" style="box-shadow: none;">
-                <table> 
-                    <thead>
-                        <tr>
-                            <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
-                            <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                            <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
-                            <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
-                            <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
-                            <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
-                            <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var lokality in Model)
-                        {
-                            <tr>
-                                <td>@lokality.Id</td>
-                                <td>@lokality.Lokalita</td>
-                                <td>@lokality.Klasifikace
-                                    @if(lokality.Klasifikace=="A1")
-                                    {
-                                        <span title="Kritická priorita" class="status red"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="A2")
-                                    {
-                                        <span title="Vysoká priorita" class="status orange"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="B1")
-                                    {
-                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="B2")
-                                    {
-                                        <span title="Středně-nízká priorita" class="status light-green"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
-                                    {
-                                        <span title="Nízká priorita" class="status green"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="D1")
-                                    {
-                                        <span title="Velmi-nízká priorita" class="status blue"></span>
-                                    }
-                                
-                                </td>
-                                <td>@lokality.Adresa</td>
-                                <td>@lokality.Baterie</td>
-                                <td>
-                                    @if(lokality.Zásuvka=="TRUE")
-                                    {
-                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                    }
-                                    @if(lokality.Zásuvka=="FALSE")
-                                    {
-                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                    }
-                                </td>
-                                <td>
-                                    @if(lokality.DA=="TRUE")
-                                    {
-                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                    }
-                                    @if(lokality.DA=="FALSE")
-                                    {
-                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>          
-        }
+        
 
    
     </section>
