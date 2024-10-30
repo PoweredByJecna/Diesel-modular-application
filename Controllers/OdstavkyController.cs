@@ -2,6 +2,7 @@ using System.Security.AccessControl;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
@@ -72,14 +73,46 @@ namespace Diesel_modular_application.Controllers
                 Odchod=odstavky.AddOdstavka.Odchod,
                 Popis = odstavky.AddOdstavka.Popis,
                 LokalitaId = lokalitaSearch.Id // Odkaz na ID existující lokality
-            };
 
+            };
+            if(newOdstavka.Od<DateTime.Today && newOdstavka.Od>newOdstavka.Do)
+            {
+                ViewBag.Message ="Špatné datum";
+            }
+            if(newOdstavka.Od>=DateTime.Today && newOdstavka.Od<newOdstavka.Do)
+            {
             _context.OdstavkyS.Add(newOdstavka);
             await _context.SaveChangesAsync();
-
             ViewBag.Message = "Odstávka byla vytvořena";
+            }
+            var regionId = lokalitaSearch.Region.IdRegion;
 
+            var firmaVRegionu = await _context.ReginoS
+            .Where(r => r.IdRegion == regionId)
+            .Select(r => r.Firma)
+            .FirstOrDefaultAsync();
+
+                   
+            var TechnikSearch = await _context.Pohotovts
+                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy)
+                .Select(p=>p.Technik.IdTechnika)
+                .FirstOrDefaultAsync();
+            
+
+            var NewDieslovani = new TableDieslovani
+            {
+                Vstup=odstavky.DieslovaniMod.Vstup,
+                Odchod=odstavky.DieslovaniMod.Odchod,
+                IDodstavky=newOdstavka.IdOdstavky,
+                IdTechnik=TechnikSearch,
+                FirmaId=firmaVRegionu.IDFirmy
+
+                
+            };
+            _context.DieslovaniS.Add(NewDieslovani);
+            await _context.SaveChangesAsync();
             // Načti seznam odstávek pro zobrazení
+            odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
             odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync();
             return Redirect("/Odstavky/Index");
         }

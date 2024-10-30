@@ -24,36 +24,17 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> Vstup (OdstavkyViewModel dieslovani)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            
+           var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
+           if(dis !=null)
+           {
+                dis.Vstup=dieslovani.DieslovaniMod.Vstup;
 
-            
-            
-           var odstavkaSearch = await _context.OdstavkyS.FirstOrDefaultAsync(input => input.IdOdstavky==dieslovani.DieslovaniMod.IDodstavky);
-           var firmaSearch= await _context.FrimaS.FirstOrDefaultAsync(input=>input.IDFirmy==dieslovani.FirmaMod.IDFirmy);
-           var technikSearch= await _context.TechniS.FirstOrDefaultAsync(input=>input.IdTechnika==dieslovani.TechnikMod.IdTechnika); 
-           var userSearch = await _context.TechniS.FirstOrDefaultAsync(input=>input.IdUser==currentUser.Id);
+           }
+           _context.Update(dis);
+           await _context.SaveChangesAsync();
 
-            if (odstavkaSearch == null)
-            {
-            ViewBag.Message = "NĚCO JE ŠPATNĚ";
-            }
-           
-            if(odstavkaSearch!=null)
-            {
-                var NewDieslovani = new TableDieslovani
-                {
-                        Vstup=DateTime.Today,
-                        Odchod=DateTime.Today,
-                        IDodstavky=odstavkaSearch.IdOdstavky,
-                        FirmaId=firmaSearch.IDFirmy,
-                        IdTechnik=technikSearch.IdTechnika,
-                }; 
-            
-               
-                _context.DieslovaniS.Add(NewDieslovani);
-                await _context.SaveChangesAsync();
-            }
+          
+
           return Redirect ("/Home/Index");
         }
         public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)

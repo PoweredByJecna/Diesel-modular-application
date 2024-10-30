@@ -285,53 +285,55 @@
                         {
                             @foreach (var odstavky in Model.OdstavkyList)
                             {
-                                <tr>
-                                    <td id="td-stav">
-                                        @if(odstavky.Od<DateTime.Now)
-                                        {
-                                            <span class="status red"></span>
-                                        }
-                                        @if (odstavky.Od > DateTime.Now)
-                                        {
-                                            <span class="status green"></span>
-                                        }
-                                    </td>
-                                    <td id="td-lokalita">@odstavky.Lokality.Lokalita</td>
-                                    <td id="td-klasifikace">@odstavky.Lokality.Klasifikace
-                                        @if(odstavky.Lokality.Klasifikace=="A1")
-                                        {
-                                            <span title="Kritická priorita" class="status red"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="A2")
-                                        {
-                                            <span title="Vysoká priorita" class="status orange"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="B1")
-                                        {
-                                            <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="B2")
-                                        {
-                                            <span title="Středně-nízká priorita" class="status light-green"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
-                                        {
-                                            <span title="Nízká priorita" class="status green"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="D1")
-                                        {
-                                            <span title="Velmi-nízká priorita" class="status blue"></span>
-                                        }
-                                    </td>
-                                    <td id="td-firma">
-                                        @odstavky.Lokality.Region.Firma.NázevFirmy
-                                    </td>
-                                    <td id="td-objednano">@odstavky.Od</td>
-                                    <td id="td-vstup"></td>
-                                    <td id="td-odchod"></td>
-                                    <td id="td-poznamka"></td>
-                                </tr>
-                               
+                                if(odstavky.Od.Date==DateTime.Today)
+                                {                                
+                                    <tr>
+                                        <td id="td-stav">
+                                            @if(odstavky.Od<DateTime.Now)
+                                            {
+                                                <span class="status red"></span>
+                                            }
+                                            @if (odstavky.Od > DateTime.Now)
+                                            {
+                                                <span class="status green"></span>
+                                            }
+                                        </td>
+                                        <td id="td-lokalita">@odstavky.Lokality.Lokalita</td>
+                                        <td id="td-klasifikace">@odstavky.Lokality.Klasifikace
+                                            @if(odstavky.Lokality.Klasifikace=="A1")
+                                            {
+                                                <span title="Kritická priorita" class="status red"></span>
+                                            }
+                                            @if(odstavky.Lokality.Klasifikace=="A2")
+                                            {
+                                                <span title="Vysoká priorita" class="status orange"></span>
+                                            }
+                                            @if(odstavky.Lokality.Klasifikace=="B1")
+                                            {
+                                                <span title="Středně-vysoká priorita" class="status yellow"></span>
+                                            }
+                                            @if(odstavky.Lokality.Klasifikace=="B2")
+                                            {
+                                                <span title="Středně-nízká priorita" class="status light-green"></span>
+                                            }
+                                            @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
+                                            {
+                                                <span title="Nízká priorita" class="status green"></span>
+                                            }
+                                            @if(odstavky.Lokality.Klasifikace=="D1")
+                                            {
+                                                <span title="Velmi-nízká priorita" class="status blue"></span>
+                                            }
+                                        </td>
+                                        <td id="td-firma">
+                                            @odstavky.Lokality.Region.Firma.NázevFirmy
+                                        </td>
+                                        <td id="td-objednano">@odstavky.Od</td>
+                                        <td id="td-vstup"></td>
+                                        <td id="td-odchod"></td>
+                                        <td id="td-poznamka"></td>
+                                    </tr>
+                                }
                             }   
                         }
                     </tbody>

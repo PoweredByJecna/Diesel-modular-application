@@ -1,18 +1,4 @@
-﻿function updateClock() {
-    const now = new Date();
-    const clock = document.getElementById('clock');
-    clock.textContent = now.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-    const upcomingTableRows = document.querySelectorAll('#upcoming-table tbody tr');
-    upcomingTableRows.forEach(row => {
-        const orderedTime = new Date(row.cells[4].textContent);
-        if (now > orderedTime) {
-            row.cells[4].style.color = 'orange';
-        }
-    });
-}
-
-setInterval(updateClock, 1000);
+﻿
 
 
 const toggleButton = document.getElementById('theme-toggle');
