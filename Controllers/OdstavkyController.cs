@@ -57,11 +57,19 @@ namespace Diesel_modular_application.Controllers
             }
             var distrib="";
          
-            if(lokalitaSearch.Adresa=="Česká Lípa")
+            if(lokalitaSearch.Region.NazevRegionu=="Severní Čechy" || lokalitaSearch.Region.NazevRegionu=="Západní Čechy" || lokalitaSearch.Region.NazevRegionu=="Severní Morava")
             {
-                   distrib= "ČEZ";
+                distrib= "ČEZ";
             }
-            distrib="EGD";
+            if(lokalitaSearch.Region.NazevRegionu=="Jižní Morava" || lokalitaSearch.Region.NazevRegionu=="Jižní Čechy")
+            {
+                distrib= "EGD";
+            }
+            if(lokalitaSearch.Region.NazevRegionu=="Praha + Střední Čechy")
+            {
+                distrib= "PRE";
+            }
+          
 
             var newOdstavka = new TableOdstavky
             {            
@@ -113,7 +121,7 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             // Načti seznam odstávek pro zobrazení
             odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
-            odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync();
+            odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync(); 
             return Redirect("/Odstavky/Index");
         }
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
@@ -138,6 +146,14 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
         }
+        public async Task<IActionResult> Delete (OdstavkyViewModel odstavky)
+        {
+            
+             var odstavka= await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
+             _context.OdstavkyS.Remove(odstavka);
+            await _context.SaveChangesAsync();
+            return Redirect ("/Odstavky/Index");
+        } 
 
 
     }

@@ -294,18 +294,18 @@
                                 {                                
                                     <tr class="table-row">
                                         <td id="td-stav">
-                                            @if(dieslovani.Odstavka.Od<DateTime.Now)
+                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanOdchod==true)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">ukončené</span>
-                                                    <i class="fa-solid fa-check fa-sm" style="color: white;"></i>
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">ukončené</span>
+                                                    <i class="fa-solid fa-x" style="color: Black;"></i>
                                                 </span> 
                                             }
                                             @if (dieslovani.Odstavka.Od > DateTime.Now)
                                             {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success">
-                                                    <span class="badge-label">Approved</span>
-                                                    <i class="fa-solid fa-check"></i>
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                                                 </span>                                            
                                             }
                                         </td>
@@ -340,8 +340,20 @@
                                             @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
                                         </td>
                                         <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
-                                        <td id="td-vstup">@dieslovani.Vstup</td>
-                                        <td id="td-odchod">@dieslovani.Odchod</td>
+                                        <td id="td-vstup">@if(dieslovani.Vstup==DateTime.MinValue)
+                                            {
+                                                <a>-</a>
+                                            }
+                                            else
+                                            @dieslovani.Odstavka.Vstup
+                                        </td>
+                                          <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
+                                            {
+                                                <a>-</a>
+                                            }
+                                            else
+                                            @dieslovani.Odstavka.Odchod
+                                        </td>
                                         <td id="td-poznamka"></td>
                                         <td>
                                             <div class="button-conteiner">

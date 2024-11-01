@@ -19,6 +19,7 @@ namespace Diesel_modular_application.Models
         public TableTechnici TechnikMod{get;set;}=new TableTechnici();
         public IEnumerable<TableRegiony> RegionyList{get;set;}
         public TablePohotovosti PohotovostMod{get;set;}= new TablePohotovosti();
+        public TableOdstavky OdstavkyMod{get;set;} = new TableOdstavky();
        
 
         public OdstavkyViewModel()
