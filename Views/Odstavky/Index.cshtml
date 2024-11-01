@@ -215,7 +215,9 @@
                     </div>
                     
                     <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert" style="margin-bottom: 20px;"></div>
+                    <div class="alert alert-success">
+                    @TempData["Zprava"]
+                    </div>
                 </form>
             </div>
             <section class="tables" id="tablepohotovosti">

@@ -37,6 +37,11 @@ namespace Diesel_modular_application.Controllers
             odstavky.RegionyList=await _context.ReginoS
                 .Include(O=>O.Firma)
                 .ToListAsync();
+            odstavky.DieslovaniList=await _context.DieslovaniS
+                .Include(o=>o.Technik)
+                .ToListAsync();
+
+
       
     
                 
@@ -83,11 +88,11 @@ namespace Diesel_modular_application.Controllers
                 Popis = odstavky.AddOdstavka.Popis,
                 LokalitaId = lokalitaSearch.Id 
             };
-            if(newOdstavka.Od<DateTime.Today && newOdstavka.Od>newOdstavka.Do)
+            if(newOdstavka.Od.Date<DateTime.Today && newOdstavka.Od>newOdstavka.Do)
             {
                 ModelState.AddModelError(string.Empty,"Špatné datum");
             }
-            if(newOdstavka.Od>=DateTime.Today && newOdstavka.Od<newOdstavka.Do)
+            if(newOdstavka.Od.Date>=DateTime.Today && newOdstavka.Od<newOdstavka.Do)
             {
                 _context.OdstavkyS.Add(newOdstavka);
                 await _context.SaveChangesAsync();
@@ -122,12 +127,15 @@ namespace Diesel_modular_application.Controllers
                         FirmaId=firmaVRegionu.IDFirmy
                     };
                     _context.DieslovaniS.Add(NewDieslovani);
+                    await _context.SaveChangesAsync();
                     var technik = await _context.TechniS.FindAsync(TechnikSearch);
-                    if(NewDieslovani.Odstavka.Od==DateTime.Today)
-                        {
-                            technik.Taken=true;
-                            _context.TechniS.Update(technik);
-                        }
+                    
+                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
+                    {
+                        technik.Taken=true;
+                        _context.TechniS.Update(technik);
+                        TempData["Zprava"] = "TechnikUpdate";
+                    }
                     
                     await _context.SaveChangesAsync();
                     odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
@@ -140,7 +148,7 @@ namespace Diesel_modular_application.Controllers
                 odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync(); 
             }
 
-         
+            
             return Redirect("/Odstavky/Index");
         }
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
