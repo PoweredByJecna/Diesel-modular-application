@@ -27,16 +27,23 @@ main.dark-mode {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    
+    
 }
 
 .section {
     margin-bottom: 40px;
-    margin-right: 20px;
+  
 }
 
 .section.small {
     flex: 1;
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #cbd0dd;
+    padding-bottom: 25px;
+    
 }
 
 
@@ -58,6 +65,16 @@ h2.dark-mode {
     table-layout: auto;
     border-collapse: collapse;
 }
+.table-div.home{
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.table-home{
+    width: 95%;
+}
+
 .table-div.all{
     margin-bottom: 85px;
     max-height: 300px;

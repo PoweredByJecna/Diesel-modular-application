@@ -331,8 +331,6 @@ header.dark-mode {
   overflow: auto;
 }
 .conteiner{
-    padding: 10px;
-    margin: 10px;
     min-height: 100vh;
 }
 .options-sidebar{

@@ -5,17 +5,16 @@
 
 <body>
     <div class="conteiner">
-        <section class="tables-row">
-            <div class="section small">
+        <div class="tables-row">
+            <div class="section small" style="border-right: 0px;">
                 <h2>Aktuální dieslování:</h2>
-                <div class="table-div now">
-                    <table>
+                <div class="table-div home">
+                    <table class="table-home">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
-                                <th id="firma">Firma</th>
                                 <th id="vstup">Vstup</th>
                                 <th id="com"></th>
                                 <th></th>
@@ -64,7 +63,6 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
-                                            <td>@dieslovani.Firma.NázevFirmy</td>
                                             <td>@dieslovani.Vstup</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
@@ -97,16 +95,15 @@
                     </table>
                 </div>
             </div>
-            <div class="section small">
+            <div class="section small" style="border-right: 0px;">
                 <h2>Dnešní nadcházející:</h2>
-                <div class="table-div upcoming">
-                    <table id="upcoming-table">
+                <div class="table-div home">
+                    <table id="upcoming-table" class="table-home">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
-                                <th id="firma">Firma</th>
                                 <th id="objednano">Objednáno</th>
                                 <th id="com"></th>
                                 <th id="arrow"></th>
@@ -164,7 +161,6 @@
                                                                 <span title="Velmi-nízká priorita" class="status blue"></span>
                                                             }
                                                     </td>
-                                                    <td>@dieslovani.Firma.NázevFirmy</td>
                                                     <td>@dieslovani.Odstavka.Od.AddHours(2)</td>
                                                     <td title="komentář">
                                                         <i class="fa-regular fa-comment comment-icon"></i>
@@ -205,14 +201,13 @@
             </div>
             <div class="section small">
                 <h2>Dnešní ukončené:</h2>
-                <div class="table-div end">
-                    <table>
+                <div class="table-div home">
+                    <table class="table-home">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
-                                <th id="firma">Firma</th>
                                 <th id="odchod">Odchod</th>
                                 <th id="com"></th>
                                 <th></th>
@@ -254,7 +249,6 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
-                                            <td>@dieslovani.Firma.NázevFirmy</td>
                                             <td>@dieslovani.Odchod</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
@@ -279,11 +273,11 @@
                     </table>
                 </div>    
             </div>
-        </section>
+        </div>
         <section class="section">
             <h2>Všechny dnešní:</h2>
             <div class="table-div all">
-                <table id="todayall-table">
+                <table id="todayall-table" class="table-home">
                     <thead>
                         <tr>
                             <th id="th-stav">Stav</th>
