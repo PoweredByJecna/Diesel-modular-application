@@ -9,6 +9,8 @@ namespace Diesel_modular_application.Models{
         public string IdTechnika{get;set;}
         public string Jmeno{get;set;}
 
+        public bool Taken{get;set;}=false;
+
         [ForeignKey("Firma")]
         public int FirmaId{get;set;}
         public virtual TableFirma Firma {get;set;}

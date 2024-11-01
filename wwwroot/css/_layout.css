@@ -267,10 +267,10 @@ nav input {
    
 }
 .button.Edit{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 33px;
     margin-left: 5px;
-    background-color:#b5b9bdaa;
+    background-color:#b5b9bd3d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,7 +286,7 @@ nav input {
     flex-direction: row-reverse;
     align-items: center;
     position: absolute;
-    right: 125px;
+    right: 135px;
 }
 .badge {
     display: inline-flex;

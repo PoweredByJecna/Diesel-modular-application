@@ -36,21 +36,24 @@
                 if(User.IsInRole("Engineer"))
                 {
                     var technikSearch = await _context.TechniS.FirstOrDefaultAsync(input=>input.IdUser==currentUser.Id);
+
                     if(technikSearch!=null)
                     {
-                    ViewBag.Message=technikSearch.Jmeno;
-
-                    var Zapis = new TablePohotovosti
-                    {
-                    IdUser=currentUser.Id,  
-                    Začátek=pohotovosti.PohotovostMod.Začátek,
-                    Konec=pohotovosti.PohotovostMod.Konec,
-                    IdTechnik=technikSearch.IdTechnika 
-                    };
-                    
-                    _context.Pohotovts.Add(Zapis);
-                    await _context.SaveChangesAsync();
-                    
+                       
+                        ViewBag.Message=technikSearch.Jmeno;
+                        if(pohotovosti.PohotovostMod.Konec>pohotovosti.PohotovostMod.Začátek && pohotovosti.PohotovostMod.Začátek>=DateTime.Today)
+                        {
+                        var Zapis = new TablePohotovosti
+                        {
+                            IdUser=currentUser.Id,  
+                            Začátek=pohotovosti.PohotovostMod.Začátek,
+                            Konec=pohotovosti.PohotovostMod.Konec,
+                            IdTechnik=technikSearch.IdTechnika 
+                        };
+                        
+                        _context.Pohotovts.Add(Zapis);
+                        await _context.SaveChangesAsync();
+                        }
                     }
 
                     if (technikSearch == null)
@@ -61,7 +64,7 @@
                 
                 }
 
-            pohotovosti.PohotovostList = await _context.Pohotovts.ToListAsync();
+                pohotovosti.PohotovostList = await _context.Pohotovts.ToListAsync();
                 return View("Index", pohotovosti);
             }
 

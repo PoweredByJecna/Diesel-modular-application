@@ -82,12 +82,14 @@ namespace Diesel_modular_application.Data
             builder.Entity<TableOdstavky>()
                 .HasOne(o => o.Lokality) // Navigační vlastnost v Odstavky
                 .WithMany(l => l.OdstavkyList) // Kolekce odstávek v Lokality
-                .HasForeignKey(o => o.LokalitaId); // Cizí klíč v Odstavky
+                .HasForeignKey(o => o.LokalitaId) // Cizí klíč v Odstavky
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<TableDieslovani>()
                 .HasOne(o=>o.Odstavka)
                 .WithMany(I=>I.DieslovaniList)
-                .HasForeignKey(o=>o.IDodstavky);
+                .HasForeignKey(o=>o.IDodstavky)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<TablePohotovosti>()
                 .HasOne(o=>o.User)

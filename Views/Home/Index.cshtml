@@ -31,7 +31,11 @@
                                     @if (dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanVstup==true)
                                     {
                                         <tr>
-                                            <td title="aktivni vstup"><span class="status green"></span>
+                                            <td title="aktivni vstup">
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
+                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                </span>  
                                             </td>
                                             <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
                                             <td>@dieslovani.Odstavka.Lokality.Klasifikace
@@ -119,11 +123,19 @@
                                                 <tr>
                                                     @if(dieslovani.Odstavka.Od.AddHours(2)>DateTime.Now)
                                                     {
-                                                        <td title="čeká se"><span class="status yellow"></span></td>
+                                                        <td title="čeká se"><span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
+                                                            <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                                <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                            </span>    
+                                                        </td>
                                                     }
                                                     @if(dieslovani.Odstavka.Od.AddHours(2)<DateTime.Now)
                                                     {
-                                                        <td title="technik nedorazil, kontaktuj ho"><span class="status orange"></span></td>
+                                                        <td title="technik nedorazil, kontaktuj ho"> <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                                                            <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                                <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                            </span>
+                                                        </td>
                                                     }
                                                     <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
                                                     <td>@dieslovani.Odstavka.Lokality.Klasifikace
@@ -152,7 +164,7 @@
                                                                 <span title="Velmi-nízká priorita" class="status blue"></span>
                                                             }
                                                     </td>
-                                                    <td></td>
+                                                    <td>@dieslovani.Firma.NázevFirmy</td>
                                                     <td>@dieslovani.Odstavka.Od.AddHours(2)</td>
                                                     <td title="komentář">
                                                         <i class="fa-regular fa-comment comment-icon"></i>
@@ -278,6 +290,7 @@
                             <th id="th-lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
                             <th id="th-klasifikace">Klasifikace<i class="fa-solid fa-star"></th>
                             <th id="th-firma">Firma <i class="fa-solid fa-building"></i></th>
+                            <th></th>
                             <th id="th-objednano">Objednáno<i class="fa-solid fa-clock"></i></th>
                             <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
                             <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
@@ -297,16 +310,30 @@
                                             @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanOdchod==true)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">ukončené</span>
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
                                                     <i class="fa-solid fa-x" style="color: Black;"></i>
                                                 </span> 
                                             }
                                             @if (dieslovani.Odstavka.Od > DateTime.Now)
                                             {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
                                                     <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                                                 </span>                                            
+                                            }
+                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanVstup==false)
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.ZadanVstup==true)
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
+                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                </span>    
                                             }
                                         </td>
                                         <td id="td-lokalita">@dieslovani.Odstavka.Lokality.Lokalita</td>
@@ -339,6 +366,7 @@
                                         <td id="td-firma">
                                             @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
                                         </td>
+                                        <td>@dieslovani.IdTechnik</td>
                                         <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
                                         <td id="td-vstup">@if(dieslovani.Vstup==DateTime.MinValue)
                                             {
@@ -357,14 +385,13 @@
                                         <td id="td-poznamka"></td>
                                         <td>
                                             <div class="button-conteiner">
-                                                <button class="button Edit"><i class="fa-solid fa-ellipsis"></i></button>
+                                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                                                 <div class="hidden-buttons">
-                                                    
                                                     <form asp-action="Delete" asp-controller="Dieslovani">
                                                         <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
-                                                        <button class="button Edit delete"><i class="fa-solid fa-trash"></i></button>
+                                                        <button class="button Edit delete"><i class="fa-solid fa-trash" style="color: black;"></i></button>
                                                     </form>
-                                                    <button class="button Edit ed"><i class="fa-solid fa-pen"></i></button>
+                                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
                                                 </div>
                                             </div>
                                         </td>

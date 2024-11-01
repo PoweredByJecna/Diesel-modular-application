@@ -60,8 +60,8 @@
                             
                                     @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
                                     {
-                                        <td>@odstavky.Lokality.Lokalita
-                                            @if(odstavky.Lokality.Klasifikace=="A1")
+                                        <td><span>@odstavky.Lokality.Lokalita
+                                        @if(odstavky.Lokality.Klasifikace=="A1")
                                         {
                                             <span title="Kritická priorita" class="status red"></span>
                                             
@@ -86,7 +86,7 @@
                                         {
                                             <span title="Velmi-nízká priorita" class="status blue"></span>
                                         }
-                                        </td>
+                                        </span></td>
                                     }
                                     @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
                                     {
@@ -215,9 +215,7 @@
                     </div>
                     
                     <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                    <div>
-                        @ViewBag.Message
-                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert" style="margin-bottom: 20px;"></div>
                 </form>
             </div>
             <section class="tables" id="tablepohotovosti">
@@ -249,7 +247,16 @@
                                 }
                             </tbody>
                         </table>
+                        <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
                         <div class="buttondiv">
+                            <div>
+                                <a>Začátek</a><br>
+                                <input asp-for="PohotovostMod.Začátek" type="datetime-local">    
+                            </div>    
+                            <div>
+                                <a>Konec</a><br>
+                                <input asp-for="PohotovostMod.Konec" type="datetime-local">    
+                            </div>   
                             <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
                         </div>
                     </form>    

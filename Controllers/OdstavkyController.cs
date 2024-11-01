@@ -55,6 +55,7 @@ namespace Diesel_modular_application.Controllers
                 ViewBag.Message = "Zadaná lokalita neexistuje";
                 return View("Index", odstavky);
             }
+            
             var distrib="";
          
             if(lokalitaSearch.Region.NazevRegionu=="Severní Čechy" || lokalitaSearch.Region.NazevRegionu=="Západní Čechy" || lokalitaSearch.Region.NazevRegionu=="Severní Morava")
@@ -80,48 +81,66 @@ namespace Diesel_modular_application.Controllers
                 Vstup=odstavky.AddOdstavka.Vstup,
                 Odchod=odstavky.AddOdstavka.Odchod,
                 Popis = odstavky.AddOdstavka.Popis,
-                LokalitaId = lokalitaSearch.Id // Odkaz na ID existující lokality
-
+                LokalitaId = lokalitaSearch.Id 
             };
             if(newOdstavka.Od<DateTime.Today && newOdstavka.Od>newOdstavka.Do)
             {
-                ViewBag.Message ="Špatné datum";
+                ModelState.AddModelError(string.Empty,"Špatné datum");
             }
             if(newOdstavka.Od>=DateTime.Today && newOdstavka.Od<newOdstavka.Do)
             {
-            _context.OdstavkyS.Add(newOdstavka);
-            await _context.SaveChangesAsync();
-            ViewBag.Message = "Odstávka byla vytvořena";
-            }
-            var regionId = lokalitaSearch.Region.IdRegion;
+                _context.OdstavkyS.Add(newOdstavka);
+                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty,"Odstávka vytvořena");
 
-            var firmaVRegionu = await _context.ReginoS
-            .Where(r => r.IdRegion == regionId)
-            .Select(r => r.Firma)
-            .FirstOrDefaultAsync();
+                var regionId = lokalitaSearch.Region.IdRegion;
+
+                var firmaVRegionu = await _context.ReginoS
+                .Where(r => r.IdRegion == regionId)
+                .Select(r => r.Firma)
+                .FirstOrDefaultAsync();
 
                    
-            var TechnikSearch = await _context.Pohotovts
+                var TechnikSearch = await _context.Pohotovts
                 .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy)
                 .Select(p=>p.Technik.IdTechnika)
                 .FirstOrDefaultAsync();
-            
 
-            var NewDieslovani = new TableDieslovani
-            {
-                Vstup=odstavky.DieslovaniMod.Vstup,
-                Odchod=odstavky.DieslovaniMod.Odchod,
-                IDodstavky=newOdstavka.IdOdstavky,
-                IdTechnik=TechnikSearch,
-                FirmaId=firmaVRegionu.IDFirmy
+                if (TechnikSearch==null)
+                {
+                    return Redirect ("/Odstavky/Index");
+                }
+            
+                if(TechnikSearch!=null)
+                {
+                    var NewDieslovani = new TableDieslovani
+                    {
+                        Vstup=odstavky.DieslovaniMod.Vstup,
+                        Odchod=odstavky.DieslovaniMod.Odchod,
+                        IDodstavky=newOdstavka.IdOdstavky,
+                        IdTechnik=TechnikSearch,
+                        FirmaId=firmaVRegionu.IDFirmy
+                    };
+                    _context.DieslovaniS.Add(NewDieslovani);
+                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
+                    if(NewDieslovani.Odstavka.Od==DateTime.Today)
+                        {
+                            technik.Taken=true;
+                            _context.TechniS.Update(technik);
+                        }
+                    
+                    await _context.SaveChangesAsync();
+                    odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
+                    odstavky.TechnikList=await _context.TechniS.ToListAsync();
+                }
+               
+                
 
                 
-            };
-            _context.DieslovaniS.Add(NewDieslovani);
-            await _context.SaveChangesAsync();
-            // Načti seznam odstávek pro zobrazení
-            odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
-            odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync(); 
+                odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync(); 
+            }
+
+         
             return Redirect("/Odstavky/Index");
         }
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
@@ -154,6 +173,7 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect ("/Odstavky/Index");
         } 
+        
 
 
     }
