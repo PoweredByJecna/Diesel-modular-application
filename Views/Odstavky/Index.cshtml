@@ -252,6 +252,16 @@
                         <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
                         <div class="buttondiv">
                             <div>
+                                <a>Technik:</a>
+                                <select asp-for="TechnikMod.IdTechnika">
+                                    @foreach(var Technik in Model.TechnikList)
+                                    {
+                                    <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
+                                    }
+                                </select>
+                                
+                            </div>
+                            <div>
                                 <a>Začátek</a><br>
                                 <input asp-for="PohotovostMod.Začátek" type="datetime-local">    
                             </div>    

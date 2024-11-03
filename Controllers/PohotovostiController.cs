@@ -27,7 +27,7 @@
                 return View("Index", pohotovosti);
             }
             
-            [Authorize(Roles="Engineer")]
+            [Authorize(Roles="Engineer, Admin")]
             public async Task<IActionResult> Zapis (OdstavkyViewModel pohotovosti)
             {
                 
@@ -45,7 +45,7 @@
                         {
                         var Zapis = new TablePohotovosti
                         {
-                            IdUser=currentUser.Id,  
+                            IdUser=technikSearch.IdUser,  
                             Začátek=pohotovosti.PohotovostMod.Začátek,
                             Konec=pohotovosti.PohotovostMod.Konec,
                             IdTechnik=technikSearch.IdTechnika 
@@ -59,15 +59,33 @@
                     if (technikSearch == null)
                     {
                         ViewBag.Message = "Zadaná lokalita neexistuje";
-                    return Redirect("/Odstavky/Index");
+                        return Redirect("/Odstavky/Index");
                     }
-                
+
+                }
+                if(User.IsInRole("Admin"))
+                {
+                    var technikSearch = await _context.TechniS.FirstOrDefaultAsync(input=>input.IdTechnika==pohotovosti.TechnikMod.IdTechnika);
+                    if(pohotovosti.PohotovostMod.Konec>pohotovosti.PohotovostMod.Začátek && pohotovosti.PohotovostMod.Začátek>=DateTime.Today)
+                    {
+                    var Zapis = new TablePohotovosti
+                    {
+                        IdUser=technikSearch.IdUser,  
+                        Začátek=pohotovosti.PohotovostMod.Začátek,
+                        Konec=pohotovosti.PohotovostMod.Konec,
+                        IdTechnik=technikSearch.IdTechnika 
+                    };
+                        
+                    _context.Pohotovts.Add(Zapis);
+                    await _context.SaveChangesAsync();
                 }
 
-                pohotovosti.PohotovostList = await _context.Pohotovts.ToListAsync();
-                return View("Index", pohotovosti);
+                
             }
+            pohotovosti.PohotovostList = await _context.Pohotovts.ToListAsync();
+            return Redirect("/Odstavky/Index");
 
 
         }
     }
+}

@@ -321,14 +321,15 @@ header.dark-mode {
     width: 100%;
 }
 /*SIDEBAR*/
-.sidemenu
-{
-  background-color: #202B46;
-  width:18%;
-  top: 10px;
-  bottom: 10px;
-  position: sticky;
-  overflow: auto;
+.sidemenu {
+    background: #444e80;
+	color: #abafc6;
+    font-family: "Roboto", sans-serif;
+    width: 18%;
+    position: sticky;
+    top: 0; /* Ensures it starts at the top */
+    height: 100vh; /* Full height for vertical scrolling */
+    overflow-y: auto; /* Scrolls internally if content exceeds */
 }
 .conteiner{
     min-height: 100vh;

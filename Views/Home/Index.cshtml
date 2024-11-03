@@ -13,12 +13,14 @@
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
+                                <th>Distributor</th>
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
                                 <th id="vstup">Vstup</th>
                                 <th id="com"></th>
                                 <th></th>
                             </tr>
+    
                         </thead>
                         <tbody>
                             @if(Model!=null)
@@ -63,6 +65,7 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
+                                            <td>@dieslovani.</td>
                                             <td>@dieslovani.Vstup</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
@@ -199,6 +202,8 @@
                     </table>
                 </div>
             </div>
+        </div>    
+        <div class="tables-row">
             <div class="section small">
                 <h2>Dnešní ukončené:</h2>
                 <div class="table-div home">
@@ -206,7 +211,7 @@
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
-                                <th id="lokalita">Lokalita</th>
+                                <th id="lokalita">Lokalita</th> 
                                 <th id="klasifikace">Klasifikace</th>
                                 <th id="odchod">Odchod</th>
                                 <th id="com"></th>
@@ -272,6 +277,90 @@
                         </tbody>
                     </table>
                 </div>    
+            </div>
+            <div class="section small">
+                <h2>Aktuální vytížení:</h2>
+                <div class="main-container">
+                    <div class="year-stats">
+                        <div class="month-group">
+                            <div class="bar h-100"></div>
+                            <p class="month">Jan</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-50"></div>
+                            <p class="month">Feb</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-75"></div>
+                            <p class="month">Mar</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-25"></div>
+                            <p class="month">Apr</p>
+                        </div>
+                        <div class="month-group selected">
+                            <div class="bar h-100"></div>
+                            <p class="month">May</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-50"></div>
+                            <p class="month">Jun</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-75"></div>
+                            <p class="month">Jul</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-25"></div>
+                            <p class="month">Aug</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-50"></div>
+                            <p class="month">Sep</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-75"></div>
+                            <p class="month">Oct</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-25"></div>
+                            <p class="month">Nov</p>
+                        </div>
+                        <div class="month-group">
+                            <div class="bar h-100"></div>
+                            <p class="month">Dez</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-info">
+                        <div class="graph-container">
+                            <div class="percent">
+                                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                                <path class="circle" stroke-dasharray="100, 100" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="60, 100" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="30, 100" d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            </svg>
+                            </div>
+                            <p>Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
+                        </div>
+
+                        <div class="info">
+                            <p>Počet dnešních odstávek:<span>@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</span></p>
+                            <p>Počet aktivních:<span>@Model.OdstavkyList.Where(d=>d.ZadanVstup==true).Count()</span></p>
+                            <p>Všechny lokality:<span>@Model.LokalityList.Count()</span></p>
+                            <p>Všechny odstávky:<span>@Model.OdstavkyList.Count()</span></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <section class="section">

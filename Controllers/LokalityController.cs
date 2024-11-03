@@ -22,7 +22,7 @@ namespace Diesel_modular_application.Controllers
         [Authorize]
         public async Task<IActionResult> IndexAsync(OdstavkyViewModel lokality)
         {
-            lokality.LokalityList = await _context.LokalityS.ToArrayAsync();
+            lokality.LokalityList = await _context.LokalityS.ToListAsync();
             lokality.FirmaList =await _context.FrimaS.ToListAsync();
             lokality.RegionyList = await _context.ReginoS.ToListAsync();
 

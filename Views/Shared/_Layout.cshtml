@@ -151,10 +151,14 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
                             </div>   
-                                <div class="navdiv add">
+                            <div class="navdiv add">
                                 <i class="fa-solid fa-plus"></i>
                                 <a>Add member</a>
                             </div>
+                                <form asp-action="Test" asp-controller="Home" method="post">
+                                    <button class="navdiv add" type="submit">Test</button>
+                                </form>
+
                                
                             
 
@@ -217,12 +221,10 @@
                             
                     @if(User.Identity?.IsAuthenticated==true)
                     {
-                         @RenderBody()
+                        @RenderBody()
                     }
  
-                    <button id="theme-toggle" class="theme-toggle">
-                        <i class="fa-solid fa-circle-half-stroke"></i>
-                    </button>
+            
                    
 
 
