@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Diesel_modular_application.Data;
 
 namespace Diesel_modular_application.Services
 {
@@ -31,12 +32,18 @@ namespace Diesel_modular_application.Services
             using (var scope = _scopeFactory.CreateScope())
             {
                 var _context = scope.ServiceProvider.GetRequiredService<DAdatabase>();
-                var outdatedRecords= await _context.DieslovaniS
-                .Where(d=>d.Do.Date<Date.Today.AddDays(-5)).ToListAsync();
-
-                if(outdatedRecords.AnyAsync())
+                var outdatedRecordsOdstavky= await _context.OdstavkyS
+                .Where(d=>d.Do.Date<DateTime.Today.AddDays(-5)).ToListAsync();
+                var outdatedRecordsDieslovani = await _context.DieslovaniS
+                .Where(d=>d.Odstavka.Do.Date<DateTime.Today).ToListAsync();
+                if(outdatedRecordsOdstavky.Any())
                 {
-                    _context.DieslovaniS.Remove(outdatedRecords);
+                    _context.OdstavkyS.RemoveRange(outdatedRecordsOdstavky);
+                    await _context.SaveChangesAsync();
+                }
+                if(outdatedRecordsDieslovani.Any())
+                {
+                    _context.DieslovaniS.RemoveRange(outdatedRecordsDieslovani);
                     await _context.SaveChangesAsync();
                 }
 
@@ -46,13 +53,13 @@ namespace Diesel_modular_application.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _timer?.Change(Timeout.Infinite, 0);
+            _Timer?.Change(Timeout.Infinite, 0);
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
+            _Timer?.Dispose();
         }
 
     }

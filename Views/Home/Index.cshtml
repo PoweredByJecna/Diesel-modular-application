@@ -281,57 +281,101 @@
             <div class="section small">
                 <h2>Aktuální vytížení:</h2>
                 <div class="main-container">
+                @foreach(var StatsDieslovani in Model.DieslovaniList)
+                {  
                     <div class="year-stats">
                         <div class="month-group">
-                            <div class="bar h-100"></div>
-                            <p class="month">Jan</p>
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Severní Čechy</p>   
                         </div>
                         <div class="month-group">
-                            <div class="bar h-50"></div>
-                            <p class="month">Feb</p>
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Jižní Morava</p>  
                         </div>
                         <div class="month-group">
-                            <div class="bar h-75"></div>
-                            <p class="month">Mar</p>
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Severní Morava</p>  
+                        </div>    
+                        <div class="month-group">
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Praha + Střední Čechy</p>  
+                        </div>  
+                        <div class="month-group">
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Jižní Čechy</p>  
                         </div>
                         <div class="month-group">
-                            <div class="bar h-25"></div>
-                            <p class="month">Apr</p>
-                        </div>
-                        <div class="month-group selected">
-                            <div class="bar h-100"></div>
-                            <p class="month">May</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-50"></div>
-                            <p class="month">Jun</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-75"></div>
-                            <p class="month">Jul</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-25"></div>
-                            <p class="month">Aug</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-50"></div>
-                            <p class="month">Sep</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-75"></div>
-                            <p class="month">Oct</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-25"></div>
-                            <p class="month">Nov</p>
-                        </div>
-                        <div class="month-group">
-                            <div class="bar h-100"></div>
-                            <p class="month">Dez</p>
-                        </div>
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
+                            {   
+                                <div class="bar h-50"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
+                            {   
+                                <div class="bar h-100"></div>                        
+                            } 
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
+                            {   
+                                <div class="bar h-0"></div>                        
+                            } 
+                            <p class="month">Západní Čechy</p>  
+                        </div>  
                     </div>
-
+                
                     <div class="stats-info">
                         <div class="graph-container">
                             <div class="percent">
@@ -352,15 +396,19 @@
                             </div>
                             <p>Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
                         </div>
+                        
 
                         <div class="info">
                             <p>Počet dnešních odstávek:<span>@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</span></p>
                             <p>Počet aktivních:<span>@Model.OdstavkyList.Where(d=>d.ZadanVstup==true).Count()</span></p>
                             <p>Všechny lokality:<span>@Model.LokalityList.Count()</span></p>
                             <p>Všechny odstávky:<span>@Model.OdstavkyList.Count()</span></p>
+                            <p>Všechna dieslovaní:<span>@Model.DieslovaniList.Count()</span></p>
                         </div>
                     </div>
+                }    
                 </div>
+                
             </div>
         </div>
         <section class="section">

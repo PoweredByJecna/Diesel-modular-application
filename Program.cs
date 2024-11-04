@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
+using Diesel_modular_application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
