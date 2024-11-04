@@ -1,4 +1,5 @@
 using System.Security.AccessControl;
+using System.Security.Cryptography;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Bibliography;
@@ -162,6 +163,96 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
 
+        }
+        public async Task<IActionResult> Test (OdstavkyViewModel odstavky )
+        {
+            
+            var distrib="";
+            var number=await _context.LokalityS.CountAsync();
+            var IdNumber=RandomNumberGenerator.GetInt32(1,number);
+            var lokalitaSearch = await _context.LokalityS.Include(o=>o.Region).ThenInclude(p=>p.Firma).FirstOrDefaultAsync(i=>i.Id==IdNumber);
+           
+            for(int i=1;i<=5;i++)
+            {
+                if(await _context.LokalityS.AnyAsync())
+                {
+                
+                if(lokalitaSearch!=null)
+                {
+                    if(lokalitaSearch.Region.NazevRegionu=="Severní Čechy" || lokalitaSearch.Region.NazevRegionu=="Západní Čechy" || lokalitaSearch.Region.NazevRegionu=="Severní Morava")
+                    {
+                        distrib= "ČEZ";
+                    }
+                    if(lokalitaSearch.Region.NazevRegionu=="Jižní Morava" || lokalitaSearch.Region.NazevRegionu=="Jižní Čechy")
+                    {
+                        distrib= "EGD";
+                    }
+                    if(lokalitaSearch.Region.NazevRegionu=="Praha + Střední Čechy")
+                    {
+                        distrib= "PRE";
+                    }
+                    var hours = RandomNumberGenerator.GetInt32(1,50);
+                    var newOdstavka = new TableOdstavky
+                    {            
+                        Distributor = distrib,
+                        Firma=lokalitaSearch.Region.Firma.NázevFirmy,
+                        
+                        Od = DateTime.Today.AddHours(hours),
+                        Do = DateTime.Today.AddHours(hours+8),
+                        Vstup=odstavky.AddOdstavka.Vstup,
+                        Odchod=odstavky.AddOdstavka.Odchod,
+                        Popis = "Test",
+                        LokalitaId = lokalitaSearch.Id 
+                    };
+                    _context.OdstavkyS.Add(newOdstavka);
+                    await _context.SaveChangesAsync();
+                    var regionId = lokalitaSearch.Region.IdRegion;
+
+                var firmaVRegionu = await _context.ReginoS
+                .Where(r => r.IdRegion == regionId)
+                .Select(r => r.Firma)
+                .FirstOrDefaultAsync();
+
+                
+                var TechnikSearch = await _context.Pohotovts
+                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy)
+                .Select(p=>p.Technik.IdTechnika)
+                .FirstOrDefaultAsync();
+
+                if (TechnikSearch==null)
+                {
+                    return Redirect ("/Odstavky/Index");
+                }
+            
+                if(TechnikSearch!=null)
+                {
+                    var NewDieslovani = new TableDieslovani
+                    {
+                        Vstup=odstavky.DieslovaniMod.Vstup,
+                        Odchod=odstavky.DieslovaniMod.Odchod,
+                        IDodstavky=newOdstavka.IdOdstavky,
+                        IdTechnik=TechnikSearch,
+                        FirmaId=firmaVRegionu.IDFirmy
+                    };
+                    _context.DieslovaniS.Add(NewDieslovani);
+                    await _context.SaveChangesAsync();
+                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
+                    
+                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
+                    {
+                        technik.Taken=true;
+                        _context.TechniS.Update(technik);
+                        TempData["Zprava"] = "TechnikUpdate";
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                }
+                }
+
+            }
+
+            await _context.SaveChangesAsync();
+            return Redirect("/Home/Index");
         }
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
         {
