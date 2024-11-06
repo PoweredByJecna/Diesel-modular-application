@@ -8,8 +8,8 @@
         <div class="tables-row">
             <div class="section small" style="border-right: 0px;">
                 <h2>Aktuální dieslování:</h2>
-                <div class="table-div home">
-                    <table class="table-home">
+                <div class="table-div odstavkyTable">
+                    <table>
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
@@ -281,160 +281,200 @@
             <div class="section small">
                 <h2>Aktuální vytížení:</h2>
                 <div class="main-container">
-                @foreach(var StatsDieslovani in Model.DieslovaniList)
-                {  
+            
                     <div class="year-stats">
                         <div class="month-group">
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
+                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today && o.Do.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color: red;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color: red;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color: red;"></div>                        
                             } 
-                            <p class="month">Severní Čechy</p>   
+                            <p class="month" style="margin:0px">Severní Čechy</p>   
                         </div>
                         <div class="month-group">
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color:#4cc790 ;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color:#4cc790 ;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color:#4cc790 ;"></div>                        
                             } 
-                            <p class="month">Jižní Morava</p>  
+                            <p class="month" style="margin:0px">Jižní Morava</p>  
                         </div>
                         <div class="month-group">
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color: #0f1783;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color: #0f1783;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color: #0f1783;"></div>                        
                             } 
-                            <p class="month">Severní Morava</p>  
+                            <p class="month" style="margin:0px">Severní Morava</p>  
                         </div>    
-                        <div class="month-group">
+                        <div class="month-group" style="max-width: 165px;">
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color: #5397d6;"></div>                       
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color: #5397d6;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color: #5397d6;"></div>                        
                             } 
-                            <p class="month">Praha + Střední Čechy</p>  
+                            <p class="month" style="margin:0px">Praha + Střední Čechy</p>  
                         </div>  
-                        <div class="month-group">
+                        <div class="month-group" >
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color: #e59f3c;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color: #e59f3c;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color: #e59f3c;"></div>                        
                             } 
-                            <p class="month">Jižní Čechy</p>  
+                            <p class="month" style="margin:0px">Jižní Čechy</p>  
                         </div>
-                        <div class="month-group">
+                        <div class="month-group" >
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
                             {   
-                                <div class="bar h-50"></div>                        
+                                <div title="50%" class="bar h-50" style="background-color: #915db1;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
                             {   
-                                <div class="bar h-100"></div>                        
+                                <div title="100%" class="bar h-100" style="background-color: #915db1;"></div>                        
                             } 
                             @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
                             {   
-                                <div class="bar h-0"></div>                        
+                                <div class="bar h-0" style="background-color: #915db1;"></div>                        
                             } 
-                            <p class="month">Západní Čechy</p>  
+                            <p class="month" style="margin:0px">Západní Čechy</p>  
                         </div>  
                     </div>
-                
+                   @{
+                    int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count();
+                    int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date == DateTime.Today).Count();
+                    int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count();
+                    int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count();
+                    int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count();  
+                    int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morova" && o.Od.Date==DateTime.Today).Count();
+                    int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today).Count();
+
+
+
+                    double percentA = (double)regionA / totalOdstavky * 100;
+                    double percentB = (double)regionB / totalOdstavky * 100;
+                    double percentC = (double)regionC / totalOdstavky * 100;
+                    double percentD = (double)regionD / totalOdstavky * 100;
+                    double percentE = (double)regionE / totalOdstavky * 100;
+                    double percentF = (double)regionF / totalOdstavky * 100;
+
+                    double startB = percentA;
+                    double startC = startB + percentB;
+                    double startD = startC + percentC;
+                    double startE = startD + percentD;
+                    double startF = startE + percentE;
+                    }
+
                     <div class="stats-info">
                         <div class="graph-container">
                             <div class="percent">
-                                            <svg viewBox="0 0 36 36" class="circular-chart">
-                                                <path class="circle" stroke-dasharray="100, 100" d="M18 2.0845
-                            a 15.9155 15.9155 0 0 1 0 31.831
-                            a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845
-                            a 15.9155 15.9155 0 0 1 0 31.831
-                            a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="60, 100" d="M18 2.0845
-                            a 15.9155 15.9155 0 0 1 0 31.831
-                            a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="30, 100" d="M18 2.0845
-                            a 15.9155 15.9155 0 0 1 0 31.831
-                            a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            </svg>
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle" stroke-dasharray="@percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="@percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="@percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="@percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
                             </div>
                             <p>Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
-                        </div>
+                            </div>
+                            <div class="info">
+                                <p>Praha:<span>@percentC</span></p>
+                                <p>Sevrní Morava<span>@percentD</span></p>
+                                <p>Severní Čechy:<span>@percentF</span></p>
+                           
+                            </div>
                         
-
-                        <div class="info">
-                            <p>Počet dnešních odstávek:<span>@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</span></p>
-                            <p>Počet aktivních:<span>@Model.OdstavkyList.Where(d=>d.ZadanVstup==true).Count()</span></p>
-                            <p>Všechny lokality:<span>@Model.LokalityList.Count()</span></p>
-                            <p>Všechny odstávky:<span>@Model.OdstavkyList.Count()</span></p>
-                            <p>Všechna dieslovaní:<span>@Model.DieslovaniList.Count()</span></p>
-                        </div>
+                   
                     </div>
-                }    
                 </div>
-                
             </div>
         </div>
-        <section class="section">
-            <h2>Všechny dnešní:</h2>
-            <div class="table-div all">
-                <table id="todayall-table" class="table-home">
-                    <thead>
-                        <tr>
-                            <th id="th-stav">Stav</th>
-                            <th id="th-lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                            <th id="th-klasifikace">Klasifikace<i class="fa-solid fa-star"></th>
-                            <th id="th-firma">Firma <i class="fa-solid fa-building"></i></th>
-                            <th></th>
-                            <th id="th-objednano">Objednáno<i class="fa-solid fa-clock"></i></th>
-                            <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
-                            <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
-                            <th id="th-poznamka">Poznámka</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            @foreach (var dieslovani in Model.DieslovaniList)
+        <div class="conteiner">
+            @if (Model != null)
+            {
+                <section class="sctn search odstavkyTable">
+                <h2 style="display: flex;justify-content: center;">Všechny dnešní:</h2>
+                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
+                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
+                </div>
+                </section>
+                <div class="table-div odstavkyTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="th-stav">Stav</th>
+                                <th id="th-lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                                <th id="th-klasifikace">Klasifikace<i class="fa-solid fa-star"></th>
+                                <th>Adresa</th>
+                                <th id="th-firma">Firma <i class="fa-solid fa-building"></i></th>
+                                <th>Technik</th>
+                                <th>Region</th>
+                                <th id="th-objednano">Objednáno<i class="fa-solid fa-clock"></i></th>
+                                <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
+                                <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
+                                <th id="th-poznamka">Poznámka</th>
+                                <th>Vstup</th>
+                                <th>Odchod</th>
+                                <th>Baterie</th>
+                                <th>Zásuvka</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                       
+                        <tbody>
+                            @foreach (var dieslovani in Model.DieslovaniList.Take(10))
                             {
-                                if(dieslovani.Odstavka.Od.Date==DateTime.Today)
+                                @if(dieslovani.Odstavka.Od.Date==DateTime.Today)
                                 {                                
                                     <tr class="table-row">
                                         <td id="td-stav">
@@ -494,10 +534,15 @@
                                                 <span title="Velmi-nízká priorita" class="status blue"></span>
                                             }
                                         </td>
+                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Adresa))
+                                        {
+                                            <td>@dieslovani.Odstavka.Lokality.Adresa</td>
+                                        }
                                         <td id="td-firma">
                                             @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
                                         </td>
                                         <td>@dieslovani.Technik.Jmeno</td>
+                                        <td>@dieslovani.Odstavka.Lokality.Region.NazevRegionu</td>
                                         <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
                                         <td id="td-vstup">@if(dieslovani.Vstup==DateTime.MinValue)
                                             {
@@ -506,7 +551,7 @@
                                             else
                                             @dieslovani.Odstavka.Vstup
                                         </td>
-                                          <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
+                                        <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
                                             {
                                                 <a>-</a>
                                             }
@@ -514,6 +559,26 @@
                                             @dieslovani.Odstavka.Odchod
                                         </td>
                                         <td id="td-poznamka"></td>
+                                        <td>@dieslovani.Odstavka.Od</td>
+                                        <td>@dieslovani.Odstavka.Do</td>
+                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Baterie))
+                                        {
+                                            <td>@dieslovani.Odstavka.Lokality.Baterie</td>
+                                        }
+                                        <td>@dieslovani.Odstavka.Popis</td>
+                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
+                                        {
+                                            <td class="content-cell"><span>
+                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                                                {
+                                                    <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                {
+                                                    <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                }
+                                            </span></td>
+                                        }
                                         <td>
                                             <div class="button-conteiner">
                                                 <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
@@ -528,13 +593,20 @@
                                         </td>
 
                                     </tr>
-                                }
-                            }   
+                                } 
+                            }           
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        @for (int i = 1; i <= Model.DieslovaniList.Where(d=>d.Odstavka.Od.Date==DateTime.Today).Count() / 10; i++)
+                        {
+                            <a href="@Url.Action("Index", new { page = i })">@i</a>
                         }
-                    </tbody>
-                </table>
-            </div>    
-        </section>
+                    </div>
+
+                </div>         
+            }
+        </div>
     </div>
   
 

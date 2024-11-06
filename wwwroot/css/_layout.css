@@ -275,6 +275,9 @@ nav input {
     align-items: center;
     justify-content: center;
 }
+.table-row:hover .content-cell span {
+    display: none;
+}
 .hidden-buttons {
     display: none; /* Skryje další tlačítka */
     position: absolute; /* Umožní umístění vedle tlačítka */
@@ -282,11 +285,10 @@ nav input {
 }
 .table-row:hover  .hidden-buttons{
     display: flex;
-    transition: 0.3s;
     flex-direction: row-reverse;
     align-items: center;
-    position: absolute;
-    right: 135px;
+    transition: 0.3s;
+    margin-right: 45px;
 }
 .badge {
     display: inline-flex;

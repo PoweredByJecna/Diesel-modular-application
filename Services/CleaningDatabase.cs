@@ -33,7 +33,7 @@ namespace Diesel_modular_application.Services
             {
                 var _context = scope.ServiceProvider.GetRequiredService<DAdatabase>();
                 var outdatedRecordsOdstavky= await _context.OdstavkyS
-                .Where(d=>d.Do.Date<DateTime.Today.AddDays(-5)).ToListAsync();
+                .Where(d=>d.Do.Date<DateTime.Today).ToListAsync();
                 var outdatedRecordsDieslovani = await _context.DieslovaniS
                 .Where(d=>d.Odstavka.Do.Date<DateTime.Today).ToListAsync();
                 if(outdatedRecordsOdstavky.Any())

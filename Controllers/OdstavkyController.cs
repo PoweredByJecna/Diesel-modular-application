@@ -168,14 +168,15 @@ namespace Diesel_modular_application.Controllers
         {
             
             var distrib="";
-            var number=await _context.LokalityS.CountAsync();
-            var IdNumber=RandomNumberGenerator.GetInt32(1,number);
-            var lokalitaSearch = await _context.LokalityS.Include(o=>o.Region).ThenInclude(p=>p.Firma).FirstOrDefaultAsync(i=>i.Id==IdNumber);
+          
            
             for(int i=1;i<=5;i++)
             {
+                var number=await _context.LokalityS.CountAsync();
+                var IdNumber=RandomNumberGenerator.GetInt32(1,number);
+                var lokalitaSearch = await _context.LokalityS.Include(o=>o.Region).ThenInclude(p=>p.Firma).FirstOrDefaultAsync(i=>i.Id==IdNumber);
                 if(await _context.LokalityS.AnyAsync())
-                {
+                {   
                 
                 if(lokalitaSearch!=null)
                 {
@@ -238,7 +239,7 @@ namespace Diesel_modular_application.Controllers
                     await _context.SaveChangesAsync();
                     var technik = await _context.TechniS.FindAsync(TechnikSearch);
                     
-                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
+                    if(newOdstavka.Od.Date==DateTime.Today)
                     {
                         technik.Taken=true;
                         _context.TechniS.Update(technik);
