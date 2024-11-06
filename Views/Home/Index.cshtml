@@ -437,7 +437,7 @@
                 </div>
             </div>
         </div>
-        <div class="conteiner">
+        <div class="cnt" style="background-color: white;">
             @if (Model != null)
             {
                 <section class="sctn search odstavkyTable">
@@ -447,7 +447,7 @@
                     <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
                 </div>
                 </section>
-                <div class="table-div odstavkyTable">
+                <div class="table-div odstavkyTable" style="width: 100%;">
                     <table>
                         <thead>
                             <tr>
@@ -462,17 +462,13 @@
                                 <th id="th-vstup">Vstup <i class="fa-solid fa-door-open"></i></th>
                                 <th id="th-odchod">Odchod <i class="fa-solid fa-door-closed"></i></th>
                                 <th id="th-poznamka">Poznámka</th>
-                                <th>Vstup</th>
-                                <th>Odchod</th>
                                 <th>Baterie</th>
                                 <th>Zásuvka</th>
                                 <th></th>
                             </tr>
                         </thead>
-
-                       
                         <tbody>
-                            @foreach (var dieslovani in Model.DieslovaniList.Take(10))
+                            @foreach (var dieslovani in Model.DieslovaniList)
                             {
                                 @if(dieslovani.Odstavka.Od.Date==DateTime.Today)
                                 {                                
@@ -558,9 +554,6 @@
                                             else
                                             @dieslovani.Odstavka.Odchod
                                         </td>
-                                        <td id="td-poznamka"></td>
-                                        <td>@dieslovani.Odstavka.Od</td>
-                                        <td>@dieslovani.Odstavka.Do</td>
                                         @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Baterie))
                                         {
                                             <td>@dieslovani.Odstavka.Lokality.Baterie</td>
@@ -597,12 +590,6 @@
                             }           
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        @for (int i = 1; i <= Model.DieslovaniList.Where(d=>d.Odstavka.Od.Date==DateTime.Today).Count() / 10; i++)
-                        {
-                            <a href="@Url.Action("Index", new { page = i })">@i</a>
-                        }
-                    </div>
 
                 </div>         
             }

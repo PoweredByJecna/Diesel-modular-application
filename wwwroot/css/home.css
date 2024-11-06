@@ -420,18 +420,5 @@ th.dark-mode {
 	color: #fff;
 }
 
-.pagination{
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
 
-}
 
-.pagination a{
-    padding: 8px 16px;
-    margin: 0 4px;
-    background-color: #007bff;
-    color: white;
-    text-decoration:none;
-    border-radius: 4px;
-}
