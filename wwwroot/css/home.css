@@ -70,7 +70,7 @@ h2.dark-mode {
     box-shadow: none;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 95%;
     height: 320px;
 }
 .table-home{
@@ -355,9 +355,6 @@ th.dark-mode {
 }
 .h-75 {
 	height: 75%;
-}
-.h-100 {
-	height: 100%;
 }
 
 .stats-info {

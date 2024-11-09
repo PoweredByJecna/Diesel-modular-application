@@ -40,7 +40,21 @@
     display: none;
 }
 
-
+.ErrorDiv{
+    position: absolute;
+    display: none;
+    top: 50px;
+    right: 5px;
+    width: 180px;
+    background-color: white;
+    border: solid 0.5px black;
+    height: 150px;
+    border-radius: 10px;
+}
+.buttonTest:active+.ErrorDiv
+{
+    display: block;
+}
 
 .section-wrap {
     display: none;
@@ -53,7 +67,6 @@
     opacity: 0;
     z-index: 1000;
 }
-
 
 .section-wrap.show.dark-mode {
         color: white;

@@ -155,11 +155,14 @@
                                 <i class="fa-solid fa-plus"></i>
                                 <a>Add member</a>
                             </div>
+                            <div class="buttonTest"> 
                                 <form asp-action="Test" asp-controller="Odstavky" method="post">
                                     <button class="navdiv add" type="submit">Test</button>
-                                    @TempData["Zprava"]
                                 </form>
-
+                            </div>   
+                            <div class="ErrorDiv">
+                                @TempData["Zprava"]
+                            </div>
                                
                             
 

@@ -17,7 +17,12 @@
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
                                 <th id="vstup">Vstup</th>
-                                <th id="com"></th>
+                                <th class="content-cell">
+                                    <span>Zásuvka</span>
+                                </th>
+                                <th class="content-cell">
+                                    <span></span>
+                                </th>
                                 <th></th>
                             </tr>
     
@@ -31,12 +36,28 @@
                                     
                                     @if (dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanVstup==true)
                                     {
-                                        <tr>
+                                        <tr class="table-row">
                                             <td title="aktivni vstup">
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
                                                     <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                                                 </span>  
+                                            </td>
+                                            <td>
+                                                @if(dieslovani.Odstavka.Distributor=="ČEZ")
+                                                {
+                                                    <img src="~/Images/CEZ-Logo.jpg"  width="30" height="30">
+                                                    
+                                                }
+                                                @if(dieslovani.Odstavka.Distributor=="EGD")
+                                                {
+                                                    <img src="~/Images/EGD-Logo.jpg"  width="60" height="40">
+                                                }
+                                                @if(dieslovani.Odstavka.Distributor=="PRE")
+                                                {
+                                                    <img src="~/Images/PRE-Logo.jpg"  width="50" height="30">
+                                                    
+                                                }
                                             </td>
                                             <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
                                             <td>@dieslovani.Odstavka.Lokality.Klasifikace
@@ -65,29 +86,38 @@
                                                         <span title="Velmi-nízká priorita" class="status blue"></span>
                                                     }
                                             </td>
-                                            <td>@dieslovani.</td>
                                             <td>@dieslovani.Vstup</td>
-                                            <td title="komentář">
-                                                <i class="fa-regular fa-comment comment-icon"></i>
-                                                <div class="comment-box">
-                                                    <textarea placeholder="Zadejte komentář..."></textarea>
-                                                    <div class="comment-actions">
-                                                        <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                                        <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td title="Odchod">
-                                                <i class="fa-solid fa-arrow-right red-arrow"></i>
-                                                    <div class="overlay">
-                                                        <form asp-action="Odchod" asp-controller="Dieslovani">
-                                                            <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
-                                                            <input asp-for="DieslovaniMod.Odchod" type="datetime-local">
-                                                            <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
-                                                                <div>@ViewBag.Message</div>
-                                                        </form>
-                                                    </div>
-                                            </td>
+                                         
+                                                    @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
+                                                    {
+                                                        <td class="content-cell"><span>
+                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                                                            {
+                                                                <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                            }
+                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                            {
+                                                                <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                            }
+                                                        </span></td>
+                                                    }
+                                                    <td class="content-cell">
+                                                         <span></span>
+                                                     </td>
+                                                    <td>
+                                                        <div class="button-conteiner">
+                                                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                                            <div class="hidden-buttons">
+                                                                <form asp-action="Odchod" asp-controller="Dieslovani">
+                                                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                                                    <input  asp-for="DieslovaniMod.Odchod" type="hidden">
+                                                                    <button class="button Edit delete"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
+                                                                </form>
+                                                                <button class="button Edit ed"><i class="fa-regular fa-clock" style="color: black;"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                      
                                         </tr>
                                     }
                                 }
@@ -108,11 +138,19 @@
                                 <th id="lokalita">Lokalita</th>
                                 <th id="klasifikace">Klasifikace</th>
                                 <th id="objednano">Objednáno</th>
-                                <th id="com"></th>
-                                <th id="arrow"></th>
+                                <th class="content-cell">
+                                    <span>Zásuvka</span>
+                                </th>
+                                <th class="content-cell">
+                                    <span></span>
+                                </th>
+                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
+                         @if(User.IsInRole("Engineer"))
+                            {}
                             @if (Model != null)
                             {
                                    
@@ -120,7 +158,7 @@
                                        {
                                             @if(dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
                                             {
-                                                <tr>
+                                                <tr class="table-row">
                                                     @if(dieslovani.Odstavka.Od.AddHours(2)>DateTime.Now)
                                                     {
                                                         <td title="čeká se"><span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
@@ -165,37 +203,39 @@
                                                             }
                                                     </td>
                                                     <td>@dieslovani.Odstavka.Od.AddHours(2)</td>
-                                                    <td title="komentář">
-                                                        <i class="fa-regular fa-comment comment-icon"></i>
-                                                        <div class="comment-box">
-                                                            <textarea placeholder="Zadejte komentář..."></textarea>
-                                                            <div class="comment-actions">
-                                                                <i class="fa-solid fa-check" style="color: #1e9f27;"></i>
-                                                                <i class="fa-solid fa-xmark close-comment" style="color: #c91829;"></i>
+                                                    @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
+                                                    {
+                                                        <td class="content-cell"><span>
+                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                                                            {
+                                                                <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                            }
+                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                            {
+                                                                <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                            }
+                                                        </span></td>
+                                                    }
+                                                    <td class="content-cell">
+                                                      <span></span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="button-conteiner">
+                                                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                                            <div class="hidden-buttons">
+                                                                <form asp-action="Vstup" asp-controller="Dieslovani">
+                                                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                                                    <input  asp-for="DieslovaniMod.Vstup" type="hidden">
+                                                                    <button class="button Edit delete"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
+                                                                </form>
+                                                                <button class="button Edit ed"><i class="fa-regular fa-clock" style="color: black;"></i></button>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    <td title="Vstup">
-                                                        <i class="fa-solid fa-arrow-right green-arrow"></i>
-                                                        <div class="overlay">
-                                                            <form asp-action="Vstup" asp-controller="Dieslovani">
-                                                                <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
-                                                                <input asp-for="DieslovaniMod.Vstup" type="datetime-local">
-                                                                <button type="submit"> <i type="submit" class="fa-solid fa-check" style="color: #1e9f27;"> </i></button>
-                                                                 <div>@ViewBag.Message</div>
-                                                            </form>
-                                                     
-                                                        </div>
-                                                      
                                                     </td>
                                                 </tr>
                                             }
                                             
                                         }
-                                    
-                                
-
-                                    
                             }
 
                         </tbody>
@@ -214,7 +254,7 @@
                                 <th id="lokalita">Lokalita</th> 
                                 <th id="klasifikace">Klasifikace</th>
                                 <th id="odchod">Odchod</th>
-                                <th id="com"></th>
+                                <th></th>     
                                 <th></th>
                             </tr>
                         </thead>
@@ -226,7 +266,12 @@
                                     @if (dieslovani.Odstavka.Od.Date==DateTime.Today && dieslovani.Odstavka.ZadanOdchod==true)
                                     {
                                         <tr>
-                                            <td title="neaktivní"><span class="status red"></span></td>
+                                            <td title="neaktivní"> 
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
+                                                    <i class="fa-solid fa-x" style="color: Black;"></i>
+                                                </span>
+                                            </td>
                                             <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
                                             <td>@dieslovani.Odstavka.Lokality.Klasifikace
                                                  @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
@@ -282,99 +327,8 @@
                 <h2>Aktuální vytížení:</h2>
                 <div class="main-container">
             
-                    <div class="year-stats">
-                        <div class="month-group">
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today && o.Do.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color: red;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color: red;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color: red;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Severní Čechy</p>   
-                        </div>
-                        <div class="month-group">
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color:#4cc790 ;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color:#4cc790 ;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jížní Morova" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color:#4cc790 ;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Jižní Morava</p>  
-                        </div>
-                        <div class="month-group">
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color: #0f1783;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color: #0f1783;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color: #0f1783;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Severní Morava</p>  
-                        </div>    
-                        <div class="month-group" style="max-width: 165px;">
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color: #5397d6;"></div>                       
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color: #5397d6;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color: #5397d6;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Praha + Střední Čechy</p>  
-                        </div>  
-                        <div class="month-group" >
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color: #e59f3c;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color: #e59f3c;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color: #e59f3c;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Jižní Čechy</p>  
-                        </div>
-                        <div class="month-group" >
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==1)
-                            {   
-                                <div title="50%" class="bar h-50" style="background-color: #915db1;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==2)
-                            {   
-                                <div title="100%" class="bar h-100" style="background-color: #915db1;"></div>                        
-                            } 
-                            @if(Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Západní Čechy" && o.Od.Date==DateTime.Today).Count()==0)
-                            {   
-                                <div class="bar h-0" style="background-color: #915db1;"></div>                        
-                            } 
-                            <p class="month" style="margin:0px">Západní Čechy</p>  
-                        </div>  
-                    </div>
-                   @{
+
+            @{
                     int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count();
                     int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date == DateTime.Today).Count();
                     int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count();
@@ -398,6 +352,33 @@
                     double startE = startD + percentD;
                     double startF = startE + percentE;
                     }
+                    <div class="year-stats">
+                        <div class="month-group">
+                            <div title="@percentF%" class="bar h-50" style="background-color: red; height:@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
+                            <p class="month" style="margin:0px">Severní Čechy</p>                       
+                        </div>
+                        <div class="month-group">                          
+                            <div title="@percentE%" class="bar h-50" style="background-color:#4cc790; height: @percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
+                            <p class="month" style="margin:0px">Jižní Morava</p>  
+                        </div>
+                        <div class="month-group">
+                            <div title="@regionD%" class="bar h-50" style="background-color: #0f1783; height: @percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                                  
+                            <p class="month" style="margin:0px">Severní Morava</p>  
+                        </div>    
+                        <div class="month-group" style="max-width: 165px;">                
+                            <div title="@regionC%" class="bar h-50" style="background-color: #5397d6; height:@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
+                            <p class="month" style="margin:0px">Praha + Střední Čechy</p>  
+                        </div>  
+                        <div class="month-group" >
+                            <div title="@regionB%" class="bar h-50" style="background-color: #e59f3c; height: @percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);"></div>                                              
+                            <p class="month" style="margin:0px">Jižní Čechy</p>  
+                        </div>
+                        <div class="month-group" > 
+                            <div title="@regionA%" class="bar h-50" style="background-color: #915db1; height: @percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)"></div>                                 
+                            <p class="month" style="margin:0px">Západní Čechy</p>  
+                        </div>  
+                    </div>
+                   
 
                     <div class="stats-info">
                         <div class="graph-container">
@@ -443,7 +424,7 @@
                 <section class="sctn search odstavkyTable">
                 <h2 style="display: flex;justify-content: center;">Všechny dnešní:</h2>
                 <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
-                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
+                    <input id="search" class="InputSearching" type="search" placeholder="Search..." />
                     <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
                 </div>
                 </section>
@@ -474,7 +455,7 @@
                                 {                                
                                     <tr class="table-row">
                                         <td id="td-stav">
-                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanOdchod==true)
+                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanOdchod==true && dieslovani.Odstavka.ZadanVstup==false)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
@@ -488,7 +469,7 @@
                                                     <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                                                 </span>                                            
                                             }
-                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanVstup==false)
+                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
@@ -545,7 +526,7 @@
                                                 <a>-</a>
                                             }
                                             else
-                                            @dieslovani.Odstavka.Vstup
+                                            @dieslovani.Vstup
                                         </td>
                                         <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
                                             {

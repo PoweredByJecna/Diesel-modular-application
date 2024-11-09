@@ -21,8 +21,9 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page=1)
         {
+            int pagesize=10;
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ToListAsync();
@@ -36,17 +37,23 @@ namespace Diesel_modular_application.Controllers
                 .Include(o=>o.Firma)
                 .ToListAsync();
             odstavky.RegionyList=await _context.ReginoS
-                .Include(O=>O.Firma)
+                .Include(O=>O.Firma)    
                 .ToListAsync();
             odstavky.DieslovaniList=await _context.DieslovaniS
                 .Include(o=>o.Technik)
                 .ToListAsync();
 
+            var odstavkyQuery = _context.OdstavkyS
+                .Include(o=>o.Lokality)
+                .OrderBy(o=>o.IdOdstavky);    
 
-      
-    
-                
-            
+            odstavky.OdstavkyList= await odstavkyQuery
+                .Skip((page-1)*pagesize)
+                .Take(pagesize)
+                .ToListAsync();
+
+            odstavky.CurrentPage=page;
+            odstavky.TotalPages=(int)Math.Ceiling(await odstavkyQuery.CountAsync()/(double)pagesize);    
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
@@ -106,15 +113,25 @@ namespace Diesel_modular_application.Controllers
                 .Select(r => r.Firma)
                 .FirstOrDefaultAsync();
 
-                   
+              
                 var TechnikSearch = await _context.Pohotovts
-                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy)
+                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==false)
                 .Select(p=>p.Technik.IdTechnika)
                 .FirstOrDefaultAsync();
 
+                
+
                 if (TechnikSearch==null)
                 {
-                    return Redirect ("/Odstavky/Index");
+                    var technik = await _context.Pohotovts
+                    .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
+                    .Select(p=>p.Technik)
+                    .FirstOrDefaultAsync();
+
+                    TempData["Zprava"] = "Technik: " + technik.Jmeno + " je zabrán"+ 
+                    "aktuálně je objednán na lokalitu: " + lokalitaSearch.Lokalita;
+                    return Redirect ("/Home/Index");
+                   
                 }
             
                 if(TechnikSearch!=null)
@@ -215,14 +232,23 @@ namespace Diesel_modular_application.Controllers
                 .FirstOrDefaultAsync();
 
                 
+
+                
                 var TechnikSearch = await _context.Pohotovts
-                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy)
-                .Select(p=>p.Technik.IdTechnika)
+                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==false)
+                .Select(p=>p.Technik)
                 .FirstOrDefaultAsync();
 
                 if (TechnikSearch==null)
                 {
-                    return Redirect ("/Odstavky/Index");
+                    var technik = await _context.Pohotovts
+                    .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
+                    .Select(p=>p.Technik)
+                    .FirstOrDefaultAsync();
+
+                    TempData["Zprava"] = "Technik: " + technik.Jmeno + " je zabrán"+ 
+                    "aktuálně je objednán na lokalitu: " + lokalitaSearch.Lokalita;
+                    return Redirect ("/Home/Index");
                 }
             
                 if(TechnikSearch!=null)
@@ -232,12 +258,12 @@ namespace Diesel_modular_application.Controllers
                         Vstup=odstavky.DieslovaniMod.Vstup,
                         Odchod=odstavky.DieslovaniMod.Odchod,
                         IDodstavky=newOdstavka.IdOdstavky,
-                        IdTechnik=TechnikSearch,
+                        IdTechnik=TechnikSearch.IdTechnika,
                         FirmaId=firmaVRegionu.IDFirmy
                     };
                     _context.DieslovaniS.Add(NewDieslovani);
                     await _context.SaveChangesAsync();
-                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
+                    var technik = await _context.TechniS.FindAsync(TechnikSearch.IdTechnika);
                     
                     if(newOdstavka.Od.Date==DateTime.Today)
                     {
@@ -268,8 +294,13 @@ namespace Diesel_modular_application.Controllers
         public async Task<IActionResult> Delete (OdstavkyViewModel odstavky)
         {
             
-             var odstavka= await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
-             _context.OdstavkyS.Remove(odstavka);
+            var odstavka= await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
+            _context.OdstavkyS.Remove(odstavka);
+            var dieslovani = await _context.DieslovaniS.Where(p=>p.IdDieslovani==odstavka.IdOdstavky).Select(p=>p.Technik).FirstOrDefaultAsync();
+
+            var technik = await _context.TechniS.Where(p=>p.IdTechnika==dieslovani.IdTechnika).FirstAsync();
+            technik.Taken=false;
+            _context.TechniS.Update(technik);
             await _context.SaveChangesAsync();
             return Redirect ("/Odstavky/Index");
         } 

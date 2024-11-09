@@ -3,6 +3,7 @@ using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -13,21 +14,30 @@ namespace Diesel_modular_application.Controllers
     public class HomeController : Controller
     {
         private readonly DAdatabase _context;
+        
+        
+        private readonly UserManager<IdentityUser> _userManager;
 
-       
 
-        private readonly ILogger<HomeController> _logger;
+            private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, DAdatabase context)
+        public HomeController(ILogger<HomeController> logger, DAdatabase context,UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         
         [Authorize]
         public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
         {
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id; // 
+
+            if(User.IsInRole("Admin"))
+            {
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ThenInclude(l => l.Region)
@@ -37,7 +47,22 @@ namespace Diesel_modular_application.Controllers
                 .Include(o=>o.Technik)
                 .ToListAsync();
             odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+            }
+            if(User.IsInRole("Engineer"))
+            {
+                odstavky.OdstavkyList = await _context.OdstavkyS
+                .Include(o => o.Lokality)
+                .ThenInclude(l => l.Region)
+                .ThenInclude(l=>l.Firma)
+                .ToListAsync(); 
+               odstavky.DieslovaniList =await _context.DieslovaniS
+                .Include(o=>o.Technik).Where(o=>o.IdTechnik==userId)
+                .ToListAsync();
+                odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+            }
             return View("Index", odstavky);
+
+            
         }
        
         public IActionResult Privacy()

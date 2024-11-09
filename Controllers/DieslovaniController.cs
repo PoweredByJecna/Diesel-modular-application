@@ -28,12 +28,12 @@ namespace Diesel_modular_application.Controllers
            if(dis !=null)
            {    
                 
-                dis.Vstup=dieslovani.DieslovaniMod.Vstup;
+                dis.Vstup=DateTime.Now;
                  _context.Update(dis);
-               
+               await _context.SaveChangesAsync();
                 ViewBag.Message="vstup";
            }
-               var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+            var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
             if (odstavka != null)
             {
                 // Nastav ZadanVstup na true
@@ -52,16 +52,15 @@ namespace Diesel_modular_application.Controllers
            if(dis !=null)
            {    
                 
-                dis.Odchod=dieslovani.DieslovaniMod.Odchod;
+                dis.Odchod=DateTime.Now;
                  _context.Update(dis);
-               
                 ViewBag.Message="vstup";
            }
                var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
             if (odstavka != null)
             {
                 // Nastav ZadanVstup na true
-                odstavka.ZadanOdchod = true;
+                odstavka.ZadanOdchod=true;
                 odstavka.ZadanVstup=false;
                 _context.Update(odstavka);
                 
