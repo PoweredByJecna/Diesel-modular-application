@@ -28,32 +28,32 @@
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
                                     <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
-                                        <i class="fa-solid fa-house-chimney-window" style="display: flex; justify-content: flex-end; width: 20px;"></i>
+                                        <i class="fa-solid fa-house-chimney-window" style="display: flex; justify-content: flex-end; width: 20px; color: white;"></i>
                                         <span class="sb">Home</span>  
                                     </a>
                                 </li>
                                 <ul class="ul-sidebar">
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-person-running" style="display: flex; justify-content: flex-end; width: 20px; color:green;"></i>
-                                            <span class="sb">Dnešní dieslovaní</span> 
+                                            <i class="fa-solid fa-person-running fa-sm" style="display: flex; justify-content: flex-end; width: 20px; color: white;"></i>
+                                            <span class="sb">Dnešní Aktuální</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-hourglass-end" style="display: flex; justify-content:flex-end; width: 20px; color:yellow;"></i>
+                                            <i class="fa-solid fa-hourglass-end fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Dnešní nadcházející</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-regular fa-circle-xmark" style="display: flex; justify-content:flex-end; width: 20px; color:red;"></i>
+                                            <i class="fa-regular fa-circle-xmark fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Dnešní ukončené</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-globe" style="display: flex; justify-content:flex-end; width: 20px; color:blue;"></i>
+                                        <a asp-action="Index" asp-controller="Home" asp-fragment="search" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
+                                            <i class="fa-solid fa-globe fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Všechna dieslovaní</span> 
                                         </a>
                                     </li>
@@ -71,31 +71,31 @@
                                  <ul class="ul-sidebar">
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="lokality" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-globe fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Všechny Lokality</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="vytvorenilokality" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-regular fa-square-plus fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Vytvořit Lokalitu</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="regiony" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-earth-europe fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Regiony</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="firmy" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-building fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Firmy</span> 
                                         </a>
                                     </li>
                                      <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" style="text-decoration: none; display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-map fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Mapa</span> 
                                         </a>
                                     </li>
@@ -114,19 +114,19 @@
                                  <ul class="ul-sidebar">
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-globe fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Všechny Odstávky</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px;color:white"></i>
+                                            <i class="fa-regular fa-square-plus fa-sm" style="display: flex; justify-content:flex-end; width: 20px;color:white"></i>
                                             <span class="sb">Vytvořit odstávku</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Odstavky" asp-fragment="tablepohotovosti"class="a-sidebar"  style="text-decoration: none;display: flex; flex-direction: row;">
-                                            <i class="fa-solid fa-chevron-right" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
+                                            <i class="fa-solid fa-table fa-sm" style="display: flex; justify-content:flex-end; width: 20px; color: white;"></i>
                                             <span class="sb">Tabulka pohotovostí</span> 
                                         </a>
                                     </li>
@@ -157,7 +157,7 @@
                             </div>
                             <div class="buttonTest"> 
                                 <form asp-action="Test" asp-controller="Odstavky" method="post">
-                                    <button class="navdiv add" type="submit">Test</button>
+                                    <button class="navdiv add" type="submit" style="color: white;">Test</button>
                                 </form>
                             </div>   
                             <div class="ErrorDiv">

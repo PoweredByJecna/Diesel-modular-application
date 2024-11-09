@@ -56,6 +56,14 @@ namespace Diesel_modular_application.Controllers
             odstavky.TotalPages=(int)Math.Ceiling(await odstavkyQuery.CountAsync()/(double)pagesize);    
             return View("Index", odstavky);
         }
+        public async Task<IActionResult> Search(string query)
+        {
+            var FilteredList = await _context.OdstavkyS
+                .Include(o=>o.Lokality)
+                .Where(o=>o.Lokality.Lokalita.Contains(query))
+                .ToListAsync();
+            return PartialView("_OdstavkyTableRows",FilteredList);
+        }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
         {
             var lokalitaSearch = await _context.LokalityS
@@ -291,16 +299,29 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
         }
+       
+
         public async Task<IActionResult> Delete (OdstavkyViewModel odstavky)
         {
             
             var odstavka= await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
-            _context.OdstavkyS.Remove(odstavka);
-            var dieslovani = await _context.DieslovaniS.Where(p=>p.IdDieslovani==odstavka.IdOdstavky).Select(p=>p.Technik).FirstOrDefaultAsync();
+            if(odstavka!=null)
+            {
+                var dieslovani = await _context.DieslovaniS.Where(p=>p.IDodstavky==odstavka.IdOdstavky).FirstOrDefaultAsync();
+                
+                if(dieslovani!=null)
+                {
+                    var technik = await _context.TechniS.Where(p=>p.IdTechnika==dieslovani.IdTechnik).FirstOrDefaultAsync();
+                    if(technik!=null)
+                    {   
+                        technik.Taken=false;
+                        _context.TechniS.Update(technik);
+                    }
+                }
 
-            var technik = await _context.TechniS.Where(p=>p.IdTechnika==dieslovani.IdTechnika).FirstAsync();
-            technik.Taken=false;
-            _context.TechniS.Update(technik);
+            }
+           
+            _context.OdstavkyS.Remove(odstavka);
             await _context.SaveChangesAsync();
             return Redirect ("/Odstavky/Index");
         } 
