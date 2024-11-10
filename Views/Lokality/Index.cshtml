@@ -8,19 +8,19 @@
               <h1>Nelze načíst</h1>
           </div>
         }
-        @if (Model != null)
-        {
-        <div class="table-div import C">    
-           <section class="sctn search odstavkyTable" id="lokality">
+       
+        <div class="table-div import C odstavky">
+            <section class="sctn search odstavkyTable">
                 <h2 style="display: flex;justify-content: center;">Lokality</h2>
                 <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
                     <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
                     <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
                 </div>
             </section>
-            <div class="table-div lokality" style="box-shadow: none;">
-                <table> 
+            <div class="table-div odstavkyTable">
+                <table>
                     <thead>
+
                         <tr>
                             <th id="Id">Id<i class="fa-solid fa-id-badge"></i></th>
                             <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
@@ -90,9 +90,23 @@
                         }
                     </tbody>
                 </table>
+                 <div class="paging">
+                    @if(Model.CurrentPage>1)
+                    {
+                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)">Předchozí</a>
+                    }
+                    @for(int i=1;i<=Model.TotalPages;i++)
+                    {
+                        <a asp-action="Index" asp-route-page="@i" class="@(Model.CurrentPage==i ? "active" : "")">@i</a>
+                    }
+                    @if(Model.CurrentPage<Model.TotalPages)
+                    {
+                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)">Další</a>
+                    }
+                </div>
             </div>
         </div>          
-        }
+        
 
 
         <div class="div-import-lokality">

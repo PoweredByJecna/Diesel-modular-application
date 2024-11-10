@@ -20,11 +20,21 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel lokality)
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel lokality, int page=1)
         {
             lokality.LokalityList = await _context.LokalityS.ToListAsync();
             lokality.FirmaList =await _context.FrimaS.ToListAsync();
             lokality.RegionyList = await _context.ReginoS.ToListAsync();
+            int pagesize=10;
+            var odstavkyQuery = _context.LokalityS
+                .OrderBy(o=>o.Id);    
+
+            lokality.LokalityList= await odstavkyQuery
+                .Skip((page-1)*pagesize)
+                .Take(pagesize)
+                .ToListAsync();
+            lokality.CurrentPage=page;
+            lokality.TotalPages=(int)Math.Ceiling(await odstavkyQuery.CountAsync()/(double)pagesize);    
 
             return View("Index",lokality);
         }
