@@ -6,7 +6,8 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('table-body').innerHTML = data;
-            });
+            })
+            .catch(error=>console.log('chyba:',error));
     });
 
 

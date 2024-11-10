@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -56,13 +57,25 @@ namespace Diesel_modular_application.Controllers
             odstavky.TotalPages=(int)Math.Ceiling(await odstavkyQuery.CountAsync()/(double)pagesize);    
             return View("Index", odstavky);
         }
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(OdstavkyViewModel search, string query)
         {
-            var FilteredList = await _context.OdstavkyS
-                .Include(o=>o.Lokality)
-                .Where(o=>o.Lokality.Lokalita.Contains(query))
+            List<TableOdstavky>FilteredList;
+            if(string.IsNullOrEmpty(query))
+            {
+                FilteredList = await _context.OdstavkyS
+                .Include(o => o.Lokality)
                 .ToListAsync();
-            return PartialView("_OdstavkyTableRows",FilteredList);
+                search.OdstavkyList=FilteredList;
+            }
+            else
+            {
+                FilteredList = await _context.OdstavkyS
+                    .Include(o=>o.Lokality)
+                    .Where(o=>o.Lokality.Lokalita.Contains(query))
+                    .ToListAsync();
+                search.OdstavkyList=FilteredList;
+            }
+            return PartialView("_OdstavkyListPartial",search);
         }
         public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
         {
