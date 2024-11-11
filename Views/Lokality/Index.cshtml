@@ -93,15 +93,15 @@
                  <div class="paging">
                     @if(Model.CurrentPage>1)
                     {
-                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)">Předchozí</a>
+                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)"><i class="fa-solid fa-left-long" style="color: #0011ff;"></i></a>
                     }
                     @for(int i=1;i<=Model.TotalPages;i++)
                     {
-                        <a asp-action="Index" asp-route-page="@i" class="@(Model.CurrentPage==i ? "active" : "")">@i</a>
+                        <a asp-action="Index" class="act" asp-route-page="@i" class="@(Model.CurrentPage==i ? "active" : "")">@i</a>
                     }
                     @if(Model.CurrentPage<Model.TotalPages)
                     {
-                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)">Další</a>
+                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)"><i class="fa-solid fa-right-long" style="color: #0011ff;"></i></a>
                     }
                 </div>
             </div>
@@ -277,10 +277,40 @@
                     </section>
                     <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
                 </div>
-            
+                <div class="table-div import D">
+                    @foreach(var region in Model.RegionyList)
+                    {
+                        <div class="regiony">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>@region.NazevRegionu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @region.Firma.NázevFirmy
+                                            <div>
+                                                @foreach(var technik in Model.TechnikList.Where(o=>o.Firma.IDFirmy==region.Firma.IDFirmy))
+                                                {
+                                                <div>
+                                                <p>@technik.Jmeno</p>
+                                                </div>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+
             </section>
             <section class="sctn">
-                
+              
+
                 <div class="table-div import B" id="region">
                     <h2>Import Lokalit</h2>
                     <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
@@ -288,57 +318,9 @@
                         <button type="submit" name="Upload" class="button-odstavka">Upload</button>
                     </form>
                 </div>
-                <div class="table-div import B">
-                    <h2>Regiony</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Název</td>
-                            </tr>
-                            
-                        </thead>
-                        <tbody>
-                           @foreach(var region in Model.RegionyList)
-                           {
-                            <tr>
-                                <td>@region.NazevRegionu</td>
-                            </tr>
-                           }
-                        </tbody>
-                    </table>
-                </div>
             </section>
-            <section class="sctn" id="firmy"> 
-                <div class="table-div import B">
-                    <h2>Firmy</h2>
-                       <table>
-                        <thead>
-                            <tr>
-                                <th>Název</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @foreach(var firma in Model.FirmaList)
-                           {
-                            <tr>
-                                <td>@firma.NázevFirmy</td>
-                            </tr>
-                           }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-div import B">
-                    <h2>Import Lokalit</h2>
-                </div>
-            </section>
-            <section class="sctn">
-                <div class="table-div import B">
-                    <h2>Import Lokalit</h2>
-                </div>
-                <div class="table-div import B">
-                    <h2>Import Lokalit</h2>
-                </div>
-            </section>
+      
+            
         </div>    
        
 

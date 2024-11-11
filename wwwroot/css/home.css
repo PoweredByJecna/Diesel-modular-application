@@ -62,7 +62,6 @@ h2.dark-mode {
     background-color: white;
     border-radius: 5px;
     width: 96%;
-    overflow: auto;
     table-layout: auto;
     border-collapse: collapse;
 }
@@ -71,7 +70,7 @@ h2.dark-mode {
     display: flex;
     justify-content: center;
     width: 95%;
-    height: 320px;
+    max-height: 320px;
 }
 .table-home{
     width: 95%;

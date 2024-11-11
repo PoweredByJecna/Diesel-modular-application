@@ -29,7 +29,8 @@
   flex-direction: column;
 }
 .sctn.import{
-  max-width: 550px;
+  width: 100%;
+  flex-direction: row;
 }
 
 .sctn.first{
@@ -75,6 +76,10 @@
   height: 18px;
   font-size: large;
  
+}
+.regiony
+{
+
 }
 .button-odstavka
 {
@@ -493,8 +498,10 @@ thead{
   position: sticky;
 }
 th,td{
-    border: none;  
+    border: none;
+    
 }
+
 tr:nth-child(even) {
     background-color: #d4d4d444;
 }
@@ -541,6 +548,28 @@ tr:hover{
   width: 95%;
   height: 100%;
   padding: 10px 0 0 0;
+}
+.table-div.import.D{
+    display: flex;
+    flex-direction: row;
+}
+.paging
+{
+    display: flex;
+    justify-content: space-around;
+    height: 76px;
+    align-items: center;
+}
+.act{
+  color: white;
+  width: 20px;
+  height: 25px;
+  padding: 2px;
+  display: flex;
+  border: solid 1px black;
+  border-radius: 5px;
+  background-color: rgb(0, 17, 255);
+  justify-content: center;
 }
 .div-import-lokality{
   display: flex;

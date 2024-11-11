@@ -60,32 +60,50 @@
                                                 }
                                             </td>
                                             <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
-                                            <td>@dieslovani.Odstavka.Lokality.Klasifikace
-                                                 @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
-                                                    {
-                                                        <span title="Kritická priorita" class="status red"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
-                                                    {
-                                                        <span title="Vysoká priorita" class="status orange"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
-                                                    {
-                                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
-                                                    {
-                                                        <span title="Středně-nízká priorita" class="status light-green"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
-                                                    {
-                                                        <span title="Nízká priorita" class="status green"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
-                                                    {
-                                                        <span title="Velmi-nízká priorita" class="status blue"></span>
-                                                    }
-                                            </td>
+                                           <td>@if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
+                                                </span> 
+                                            }
+                                               @if(dieslovani.Odstavka.Lokality.Klasifikace=="C")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
+                                                </span> 
+                                            }
+                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px; ">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
+                                                </span> 
+                                            }
+                                         
+                                        </td>
                                             <td>@dieslovani.Vstup</td>
                                          
                                                     @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))

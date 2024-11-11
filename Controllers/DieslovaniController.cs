@@ -29,8 +29,8 @@ namespace Diesel_modular_application.Controllers
            {    
                 
                 dis.Vstup=DateTime.Now;
-                 _context.Update(dis);
-               await _context.SaveChangesAsync();
+                _context.Update(dis);
+                await _context.SaveChangesAsync();
                 ViewBag.Message="vstup";
            }
             var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
@@ -48,10 +48,11 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)
         {
-            var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
-           if(dis !=null)
+           var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
+           var technik=await _context.TechniS.FindAsync();
+           if(dis !=null && technik!=null)
            {    
-                
+                technik.Taken=false;
                 dis.Odchod=DateTime.Now;
                  _context.Update(dis);
                 ViewBag.Message="vstup";
@@ -62,11 +63,10 @@ namespace Diesel_modular_application.Controllers
                 // Nastav ZadanVstup na true
                 odstavka.ZadanOdchod=true;
                 odstavka.ZadanVstup=false;
+               
                 _context.Update(odstavka);
                 
             }    
-               
-          
             await _context.SaveChangesAsync();
           return Redirect ("/Home/Index");
             

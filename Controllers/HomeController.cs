@@ -9,13 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
+
 namespace Diesel_modular_application.Controllers
 {
     public class HomeController : Controller
     {
         private readonly DAdatabase _context;
         
-        
+
         private readonly UserManager<IdentityUser> _userManager;
 
 
