@@ -48,11 +48,13 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)
         {
-           var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
-           var technik=await _context.TechniS.FindAsync();
-           if(dis !=null && technik!=null)
+            var dis = await _context.DieslovaniS
+            .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
+            .FirstAsync(d=>d.IdDieslovani==dieslovani.DieslovaniMod.IdDieslovani);
+
+           if(dis !=null)
            {    
-                technik.Taken=false;
+                dis.Technik.Taken=false;
                 dis.Odchod=DateTime.Now;
                  _context.Update(dis);
                 ViewBag.Message="vstup";
@@ -65,11 +67,31 @@ namespace Diesel_modular_application.Controllers
                 odstavka.ZadanVstup=false;
                
                 _context.Update(odstavka);
-                
+                TempData["Message"] = dis.Technik.Jmeno+" je ted volny";
+
             }    
             await _context.SaveChangesAsync();
           return Redirect ("/Home/Index");
+
             
+        }
+        public async Task<IActionResult> TemporaryLeave (OdstavkyViewModel dieslovani)
+        {
+             var dis = await _context.DieslovaniS
+            .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
+            .FirstAsync(d=>d.IdDieslovani==dieslovani.DieslovaniMod.IdDieslovani);
+            if(dis.Technik.Taken)
+            {
+                dis.Technik.Taken=false;
+                _context.Update(dis);
+            }
+            else
+            {
+                dis.Technik.Taken=true;
+                _context.Update(dis);
+            }
+            await _context.SaveChangesAsync();
+            return Redirect ("/Home/Index");
         }
         public async Task<IActionResult> Delete (OdstavkyViewModel dieslovani)
         {

@@ -108,16 +108,23 @@
                                          
                                                     @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
                                                     {
-                                                        <td class="content-cell"><span>
-                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
-                                                            {
-                                                                <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                                            }
-                                                            @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
-                                                            {
-                                                                <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                                            }
-                                                        </span></td>
+                                                        <td class="content-cell">
+                                                            <span>
+                                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                                                                {
+                                                                    <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                                }
+                                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                                {
+                                                                    <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                                }
+                                                            </span>
+                                                            <span>
+                                                                @if(dieslovani.Technik.Taken==false)
+                                                                {<a>(@dieslovani.Technik.Jmeno si dal dočasný odchod)</a>} 
+                                                              
+                                                            </span>
+                                                        </td>
                                                     }
                                                     <td class="content-cell">
                                                          <span></span>
@@ -129,13 +136,18 @@
                                                                 <form asp-action="Odchod" asp-controller="Dieslovani">
                                                                     <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
                                                                     <input  asp-for="DieslovaniMod.Odchod" type="hidden">
-                                                                    <button class="button Edit delete"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
+                                                                    <button class="button Edit delete" title="odchod"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
                                                                 </form>
-                                                                <button class="button Edit ed"><i class="fa-regular fa-clock" style="color: black;"></i></button>
+                                                                <form asp-action="TemporaryLeave" asp-controller="Dieslovani">
+                                                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani"/>
+                                                                    <button class="button Edit ed" title="dočasný odchod">
+                                                                        @if(dieslovani.Technik.Taken){<i class="fa-solid fa-person-walking-arrow-right" style="color: black;"></i>}
+                                                                        @if(dieslovani.Technik.Taken==false){<i class="fa-solid fa-person-walking-arrow-loop-left" style="color: black;"></i>}
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </td>
-                                      
                                         </tr>
                                     }
                                 }
@@ -253,11 +265,25 @@
                                                 </tr>
                                             }
                                             
-                                        }
+                                }
                             }
 
                         </tbody>
                     </table>
+                    <div class="paging">
+                        @if(Model.CurrentPage>1)
+                        {
+                            <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)"><i class="fa-solid fa-left-long" style="color: #0011ff;"></i></a>
+                        }
+                        @for(int i=1;i<=Model.TotalPages;i++)
+                        {
+                            <a asp-action="Index" class="act" asp-route-page="@i" class="@(Model.CurrentPage==i ? "active" : "")">@i</a>
+                        }
+                        @if(Model.CurrentPage<Model.TotalPages)
+                        {
+                            <a asp-action="Index" asp-route-page="@(Model.CurrentPage+1)"><i class="fa-solid fa-right-long" style="color: #0011ff;"></i></a>
+                        }
+                    </div>
                 </div>
             </div>
         </div>    
@@ -292,31 +318,40 @@
                                             </td>
                                             <td>@dieslovani.Odstavka.Lokality.Lokalita</td>
                                             <td>@dieslovani.Odstavka.Lokality.Klasifikace
-                                                 @if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
+                                                @{
+                                                    string klasifikace = dieslovani.Odstavka.Lokality.Klasifikace;
+                                                    string title = "";
+                                                    string statusClass = "";
+                                                    switch (klasifikace)
                                                     {
-                                                        <span title="Kritická priorita" class="status red"></span>
+                                                        case "A1":
+                                                            title = "Kritická priorita";
+                                                            statusClass = "red";
+                                                            break;
+                                                        case "A2":
+                                                            title = "Vysoká priorita";
+                                                            statusClass = "orange";
+                                                            break;
+                                                        case "B1":
+                                                            title = "Středně-vysoká priorita";
+                                                            statusClass = "yellow";
+                                                            break;
+                                                        case "B2":
+                                                            title = "Středně-nízká priorita";
+                                                            statusClass = "light-green";
+                                                            break;
+                                                        case "C":
+                                                        case "B":
+                                                            title = "Nízká priorita";
+                                                            statusClass = "green";
+                                                            break;
+                                                        case "D1":
+                                                            title = "Velmi-nízká priorita";
+                                                            statusClass = "blue";
+                                                            break;
                                                     }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
-                                                    {
-                                                        <span title="Vysoká priorita" class="status orange"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
-                                                    {
-                                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
-                                                    {
-                                                        <span title="Středně-nízká priorita" class="status light-green"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="C" || dieslovani.Odstavka.Lokality.Klasifikace=="B")
-                                                    {
-                                                        <span title="Nízká priorita" class="status green"></span>
-                                                    }
-                                                    @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
-                                                    {
-                                                        <span title="Velmi-nízká priorita" class="status blue"></span>
-                                                    }
-                                            </td>
+                                                }
+                                                <span title="@title" class="status @statusClass"></span>
                                             <td>@dieslovani.Odchod</td>
                                             <td title="komentář">
                                                 <i class="fa-regular fa-comment comment-icon"></i>
@@ -348,12 +383,12 @@
 
             @{
                     int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count();
-                    int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date == DateTime.Today).Count();
-                    int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today).Count();
-                    int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today).Count();
-                    int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today).Count();  
-                    int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morova" && o.Od.Date==DateTime.Today).Count();
-                    int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today).Count();
+                    int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date == DateTime.Today || o.ZadanVstup==true).Count();
+                    int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
+                    int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
+                    int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();  
+                    int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morova" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
+                    int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today || o.ZadanVstup==true).Count();
 
 
 
@@ -425,9 +460,17 @@
                             <p>Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
                             </div>
                             <div class="info">
-                                <p>Praha:<span>@percentC</span></p>
-                                <p>Sevrní Morava<span>@percentD</span></p>
-                                <p>Severní Čechy:<span>@percentF</span></p>
+                                <div class="region-sctn">
+                                    <p>Praha:<span>@regionC</span></p>
+                                    <p>Jížní Čechy<span>@regionB</span></p>
+                                    <p>Severní Čechy:<span>@regionF</span></p>
+                                </div>
+                                <div class="region-sctn">
+                                    <p>Západní Čechy:<span>@regionA</span></p>    
+                                    <p>Severní Morava<span>@regionD</span></p>
+                                    <p>Jížní Morava:<span>@regionE</span></p>
+                                </div>
+                                
                            
                             </div>
                         
@@ -473,14 +516,14 @@
                                 {                                
                                     <tr class="table-row">
                                         <td id="td-stav">
-                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanOdchod==true && dieslovani.Odstavka.ZadanVstup==false)
+                                            @if(dieslovani.Odstavka.ZadanOdchod==true && dieslovani.Odstavka.ZadanVstup==false)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
                                                     <i class="fa-solid fa-x" style="color: Black;"></i>
                                                 </span> 
                                             }
-                                            @if (dieslovani.Odstavka.Od > DateTime.Now)
+                                            @if (dieslovani.Odstavka.Od > DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
                                             {
                                                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
                                                     <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
@@ -551,7 +594,7 @@
                                                 <a>-</a>
                                             }
                                             else
-                                            @dieslovani.Odstavka.Odchod
+                                            @dieslovani.Odchod
                                         </td>
                                         @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Baterie))
                                         {

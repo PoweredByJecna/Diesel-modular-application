@@ -401,5 +401,15 @@ th.dark-mode {
 	color: #fff;
 }
 
+.info{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.region-sctn{
+    display: flex;
+    flex-direction: column;
+}
+
 
 

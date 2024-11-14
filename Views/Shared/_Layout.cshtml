@@ -160,9 +160,7 @@
                                     <button class="navdiv add" type="submit" style="color: white;">Test</button>
                                 </form>
                             </div>   
-                            <div class="ErrorDiv">
-                                @TempData["Zprava"]
-                            </div>
+                 
                                
                             
 
@@ -221,7 +219,18 @@
 
                         </nav>
                     </div> 
-           
+                    <!-- Modal Window HTML -->
+                    @if (TempData["Zprava"] != null)
+                    {
+                    <div id="messageModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span id="closeModal" class="close">&times;</span>
+                            <p id="modalText">@TempData["Zprava"]</p>
+                        </div>
+                    </div>
+                    }
+
+
                             
                     @if(User.Identity?.IsAuthenticated==true)
                     {
@@ -244,7 +253,9 @@
              @RenderBody()
             
             @await RenderSectionAsync("Scripts", required: false)
-    <script src="~/js/home.js"></script>
+            <script src="~/js/home.js"></script>
+          
+
     </body>
         
 </html>

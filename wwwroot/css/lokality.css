@@ -27,10 +27,12 @@
 .sctn{
   display: flex;
   flex-direction: column;
+
 }
 .sctn.import{
   width: 100%;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .sctn.first{
@@ -533,7 +535,7 @@ tr:hover{
   height: 246px;
 }
 .table-div.import.A{
-  width: 400px;
+  width: 30%;
   height: 440px;
   display: flex;
   align-items: center;
@@ -552,6 +554,7 @@ tr:hover{
 .table-div.import.D{
     display: flex;
     flex-direction: row;
+    width: 60%;
 }
 .paging
 {
