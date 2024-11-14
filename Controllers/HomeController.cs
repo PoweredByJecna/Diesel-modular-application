@@ -65,6 +65,7 @@ namespace Diesel_modular_application.Controllers
 
             
         }
+        
        
         public IActionResult Privacy()
         {

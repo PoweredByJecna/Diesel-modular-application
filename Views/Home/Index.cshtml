@@ -382,13 +382,13 @@
             
 
             @{
-                    int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count();
-                    int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date == DateTime.Today || o.ZadanVstup==true).Count();
-                    int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
-                    int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
-                    int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();  
-                    int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morova" && o.Od.Date==DateTime.Today || o.ZadanVstup==true).Count();
-                    int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today || o.ZadanVstup==true).Count();
+                    int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today && (d.ZadanVstup == true || d.Od.Date == DateTime.Today) && d.Lokality.DA=="FALSE").Count();
+                    int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date <= DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                    int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                    int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                    int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                    int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morova" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                    int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
 
 
 

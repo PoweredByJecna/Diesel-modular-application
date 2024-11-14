@@ -16,7 +16,7 @@ namespace Diesel_modular_application.KlasifikaceRule
 
             };
 
-            return klasifikaceVaha.TryGetValue(Klasifikace,out int vaha) ? vaha:0; //pokud se nenajde žádná klasifikace, vrátí default hodnotu 0
+            return klasifikaceVaha.TryGetValue(Klasifikace,out int vaha) ? vaha:1; //pokud se nenajde žádná klasifikace, vrátí default hodnotu 0
         }
 
     }

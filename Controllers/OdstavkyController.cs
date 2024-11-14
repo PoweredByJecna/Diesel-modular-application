@@ -142,23 +142,72 @@ namespace Diesel_modular_application.Controllers
               
                 var TechnikSearch = await _context.Pohotovts
                 .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==false)
-                .Select(p=>p.Technik.IdTechnika)
+                .Select(p=>p.Technik)
                 .FirstOrDefaultAsync();
 
                 
 
                 if (TechnikSearch==null)
                 {
-                    var technik = await _context.Pohotovts
-                    .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
-                    .Select(p=>p.Technik)
-                    .FirstOrDefaultAsync();
+                   var dieslovani = await _context.Pohotovts
+                        .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
+                        .SelectMany(p => _context.DieslovaniS
+                        .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika))
+                        .FirstOrDefaultAsync();
 
-                    TempData["Zprava"] = "Technik: " + technik.Jmeno + " je zabrán"+ 
-                    "aktuálně je objednán na lokalitu: " + lokalitaSearch.Lokalita;
-                    return Redirect ("/Home/Index");
-                   
-                }
+                        if(dieslovani!=null)
+                        {
+                            if(dieslovani.Odstavka?.Lokality?.Klasifikace?.ZiskejVahu()<newOdstavka?.Lokality?.Klasifikace?.ZiskejVahu() && dieslovani?.Odstavka?.Od.Date.AddHours(2)<DateTime.Now && dieslovani.Odstavka.Lokality.DA=="FALSE")
+                            {
+                                TechnikSearch=dieslovani.Technik;
+                            
+                                var novyTechnik = _context.TechniS.FirstOrDefault(p => p.IdTechnika == "606794464");
+                                if (novyTechnik != null)
+                                {
+                                    dieslovani.Technik = novyTechnik;
+                                    _context.DieslovaniS.Update(dieslovani);
+                                }
+                                if(TechnikSearch!=null)
+                                {
+                                    var NewDieslovani = new TableDieslovani
+                                    {
+                                        Vstup=odstavky.DieslovaniMod.Vstup,
+                                        Odchod=odstavky.DieslovaniMod.Odchod,
+                                        IDodstavky=newOdstavka.IdOdstavky,
+                                        IdTechnik=TechnikSearch.IdTechnika,
+                                        FirmaId=firmaVRegionu.IDFirmy
+                                    };
+                                    _context.DieslovaniS.Add(NewDieslovani);
+                                    await _context.SaveChangesAsync();
+                                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
+
+                                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
+                                    {
+                                        technik.Taken=true;
+                                        _context.TechniS.Update(technik);
+                                        TempData["Zprava"] = "TechnikUpdate";
+                                    }
+
+                                    await _context.SaveChangesAsync();
+                                    odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
+                                    odstavky.TechnikList=await _context.TechniS.ToListAsync();
+                                    TempData["Zprava"] = "Odstavka vytvořena";
+                                }
+                                else
+                                {
+                                    TempData["Zprava"] = "nefunguje to";
+                                    return Redirect ("/Home/Index");
+                                }
+                                TempData["Zprava"] = "Technik: " + dieslovani.Technik.Jmeno + " je zabrán";
+                                return Redirect ("/Home/Index");
+                                
+                            }
+                            
+                        }
+                      
+                        return Redirect ("/Home/Index");
+
+                    }
             
                 if(TechnikSearch!=null)
                 {
@@ -167,7 +216,7 @@ namespace Diesel_modular_application.Controllers
                         Vstup=odstavky.DieslovaniMod.Vstup,
                         Odchod=odstavky.DieslovaniMod.Odchod,
                         IDodstavky=newOdstavka.IdOdstavky,
-                        IdTechnik=TechnikSearch,
+                        IdTechnik=TechnikSearch.IdTechnika,
                         FirmaId=firmaVRegionu.IDFirmy
                     };
                     _context.DieslovaniS.Add(NewDieslovani);
@@ -273,17 +322,22 @@ namespace Diesel_modular_application.Controllers
                         .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika))
                         .FirstOrDefaultAsync();
 
-
-                        if(dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu()<newOdstavka.Lokality.Klasifikace.ZiskejVahu() && dieslovani.Odstavka.Od.Date.AddHours(2)<DateTime.Now && dieslovani.Odstavka.Lokality.DA=="False")
+                        if(dieslovani!=null)
                         {
-
+                            if(dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu()<newOdstavka.Lokality.Klasifikace.ZiskejVahu() && dieslovani.Odstavka.Od.Date.AddHours(2)<DateTime.Now && dieslovani.Odstavka.Lokality.DA=="False")
+                            {
+                                TechnikSearch=dieslovani.Technik;
+                                dieslovani.Technik=_context.TechniS.Where(p=>p.IdTechnika=="606794464").FirstOrDefault();
+                            }
                         }
+
+                     
 
                         TempData["Zprava"] = "Technik: " + dieslovani.Technik.Jmeno + " je zabrán"+ 
                         "aktuálně je objednán na lokalitu: " + lokalitaSearch.Lokalita;
                         return Redirect ("/Home/Index");
                     }
-                    if(newOdstavka.Lokality.DA=="False")
+                    if(newOdstavka.Lokality.DA=="FALSE")
                     {
                         if(TechnikSearch!=null)
                         {
