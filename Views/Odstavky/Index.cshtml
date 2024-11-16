@@ -59,37 +59,8 @@
                                             
                                         }
                                     </td>
-                            
-                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Lokalita))
-                                    {
-                                        <td><span>@odstavky.Lokality.Lokalita
-                                        @if(odstavky.Lokality.Klasifikace=="A1")
-                                        {
-                                            <span title="Kritická priorita" class="status red"></span>
-                                            
-                                        }                                           
-                                        @if(odstavky.Lokality.Klasifikace=="A2")
-                                        {
-                                            <span title="Vysoká priorita" class="status orange"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="B1")
-                                        {
-                                            <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="B2")
-                                        {
-                                            <span title="Středně-nízká priorita" class="status light-green"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="C" || odstavky.Lokality.Klasifikace=="B")
-                                        {
-                                            <span title="Nízká priorita" class="status green"></span>
-                                        }
-                                        @if(odstavky.Lokality.Klasifikace=="D1")
-                                        {
-                                            <span title="Velmi-nízká priorita" class="status blue"></span>
-                                        }
-                                        </span></td>
-                                    }
+                                    <td>@odstavky.Lokality.Lokalita</td>
+                                    
                                     @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
                                     {
                                         <td>@if(odstavky.Lokality.Klasifikace=="A1")

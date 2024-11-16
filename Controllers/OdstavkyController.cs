@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Diesel_modular_application.KlasifikaceRule;
+using DocumentFormat.OpenXml.Office.CustomUI;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -23,9 +24,9 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page=1)
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page = 1)
         {
-            int pagesize=10;
+            int pagesize = 10;
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ToListAsync();
@@ -33,223 +34,235 @@ namespace Diesel_modular_application.Controllers
                 .Include(o => o.Technik)
                 .ToListAsync();
             odstavky.PohotovostList = await _context.Pohotovts
-                .Include(O=>O.User)
+                .Include(O => O.User)
                 .ToListAsync();
-            odstavky.TechnikList= await _context.TechniS
-                .Include(o=>o.Firma)
+            odstavky.TechnikList = await _context.TechniS
+                .Include(o => o.Firma)
                 .ToListAsync();
-            odstavky.RegionyList=await _context.ReginoS
-                .Include(O=>O.Firma)    
+            odstavky.RegionyList = await _context.ReginoS
+                .Include(O => O.Firma)
                 .ToListAsync();
-            odstavky.DieslovaniList=await _context.DieslovaniS
-                .Include(o=>o.Technik)
+            odstavky.DieslovaniList = await _context.DieslovaniS
+                .Include(o => o.Technik)
                 .ToListAsync();
 
             var odstavkyQuery = _context.OdstavkyS
-                .Include(o=>o.Lokality)
-                .OrderBy(o=>o.IdOdstavky);    
+                .Include(o => o.Lokality)
+                .OrderBy(o => o.IdOdstavky);
 
-            odstavky.OdstavkyList= await odstavkyQuery
-                .Skip((page-1)*pagesize)
+            odstavky.OdstavkyList = await odstavkyQuery
+                .Skip((page - 1) * pagesize)
                 .Take(pagesize)
                 .ToListAsync();
 
-            odstavky.CurrentPage=page;
-            odstavky.TotalPages=(int)Math.Ceiling(await odstavkyQuery.CountAsync()/(double)pagesize);    
+            odstavky.CurrentPage = page;
+            odstavky.TotalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Search(OdstavkyViewModel search, string query, int page = 1)
         {
             int pageSize = 10; // nastavte počet záznamů na stránku
 
-            List<TableOdstavky>FilteredList;
-            if(string.IsNullOrEmpty(query))
+            List<TableOdstavky> FilteredList;
+            if (string.IsNullOrEmpty(query))
             {
                 FilteredList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-                search.OdstavkyList=FilteredList;
+                search.OdstavkyList = FilteredList;
             }
             else
             {
                 FilteredList = await _context.OdstavkyS
-                    .Include(o=>o.Lokality)
-                    .Where(o=>o.Lokality.Lokalita.Contains(query))
+                    .Include(o => o.Lokality)
+                    .Where(o => o.Lokality.Lokalita.Contains(query))
                     .ToListAsync();
-                search.OdstavkyList=FilteredList;
+                search.OdstavkyList = FilteredList;
             }
-            return PartialView("_OdstavkyListPartial",search);
+            return PartialView("_OdstavkyListPartial", search);
         }
-        public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
+        public async Task<IActionResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky,string popis)
         {
-            var lokalitaSearch = await _context.LokalityS
-                .Include(l => l.Region)
-                .ThenInclude(r => r.Firma)
-                .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
-
             if (lokalitaSearch == null)
             {
                 ViewBag.Message = "Zadaná lokalita neexistuje";
                 return View("Index", odstavky);
             }
-            
-            var distrib="";
-         
-            if(lokalitaSearch.Region.NazevRegionu=="Severní Čechy" || lokalitaSearch.Region.NazevRegionu=="Západní Čechy" || lokalitaSearch.Region.NazevRegionu=="Severní Morava")
-            {
-                distrib= "ČEZ";
-            }
-            if(lokalitaSearch.Region.NazevRegionu=="Jižní Morava" || lokalitaSearch.Region.NazevRegionu=="Jižní Čechy")
-            {
-                distrib= "EGD";
-            }
-            if(lokalitaSearch.Region.NazevRegionu=="Praha + Střední Čechy")
-            {
-                distrib= "PRE";
-            }
-          
 
-            var newOdstavka = new TableOdstavky
-            {            
-                Distributor = distrib,
-                Firma=lokalitaSearch.Region.Firma.NázevFirmy,
-                Od = odstavky.AddOdstavka.Od,
-                Do = odstavky.AddOdstavka.Do,
-                Vstup=odstavky.AddOdstavka.Vstup,
-                Odchod=odstavky.AddOdstavka.Odchod,
-                Popis = odstavky.AddOdstavka.Popis,
-                LokalitaId = lokalitaSearch.Id 
-            };
-            if(newOdstavka.Od.Date<DateTime.Today && newOdstavka.Od>newOdstavka.Do)
+            string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
+            var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
+
+            if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
             {
-                ModelState.AddModelError(string.Empty,"Špatné datum");
+                ModelState.AddModelError(string.Empty, "Špatné datum");
             }
-            if(newOdstavka.Od.Date>=DateTime.Today && newOdstavka.Od<newOdstavka.Do)
+            else
             {
-                _context.OdstavkyS.Add(newOdstavka);
+                await _context.OdstavkyS.AddAsync(newOdstavka);
                 await _context.SaveChangesAsync();
-                ModelState.AddModelError(string.Empty,"Odstávka vytvořena");
-
-                var regionId = lokalitaSearch.Region.IdRegion;
-
-                var firmaVRegionu = await _context.ReginoS
-                .Where(r => r.IdRegion == regionId)
-                .Select(r => r.Firma)
-                .FirstOrDefaultAsync();
-
-              
-                var TechnikSearch = await _context.Pohotovts
-                .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==false)
-                .Select(p=>p.Technik)
-                .FirstOrDefaultAsync();
-
-                
-
-                if (TechnikSearch==null)
-                {
-                   var dieslovani = await _context.Pohotovts
-                        .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
-                        .SelectMany(p => _context.DieslovaniS
-                        .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika))
-                        .FirstOrDefaultAsync();
-
-                        if(dieslovani!=null)
-                        {
-                            if(dieslovani.Odstavka?.Lokality?.Klasifikace?.ZiskejVahu()<newOdstavka?.Lokality?.Klasifikace?.ZiskejVahu() && dieslovani?.Odstavka?.Od.Date.AddHours(2)<DateTime.Now && dieslovani.Odstavka.Lokality.DA=="FALSE")
-                            {
-                                TechnikSearch=dieslovani.Technik;
-                            
-                                var novyTechnik = _context.TechniS.FirstOrDefault(p => p.IdTechnika == "606794464");
-                                if (novyTechnik != null)
-                                {
-                                    dieslovani.Technik = novyTechnik;
-                                    _context.DieslovaniS.Update(dieslovani);
-                                }
-                                if(TechnikSearch!=null)
-                                {
-                                    var NewDieslovani = new TableDieslovani
-                                    {
-                                        Vstup=odstavky.DieslovaniMod.Vstup,
-                                        Odchod=odstavky.DieslovaniMod.Odchod,
-                                        IDodstavky=newOdstavka.IdOdstavky,
-                                        IdTechnik=TechnikSearch.IdTechnika,
-                                        FirmaId=firmaVRegionu.IDFirmy
-                                    };
-                                    _context.DieslovaniS.Add(NewDieslovani);
-                                    await _context.SaveChangesAsync();
-                                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
-
-                                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
-                                    {
-                                        technik.Taken=true;
-                                        _context.TechniS.Update(technik);
-                                        TempData["Zprava"] = "TechnikUpdate";
-                                    }
-
-                                    await _context.SaveChangesAsync();
-                                    odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
-                                    odstavky.TechnikList=await _context.TechniS.ToListAsync();
-                                    TempData["Zprava"] = "Odstavka vytvořena";
-                                }
-                                else
-                                {
-                                    TempData["Zprava"] = "nefunguje to";
-                                    return Redirect ("/Home/Index");
-                                }
-                                TempData["Zprava"] = "Technik: " + dieslovani.Technik.Jmeno + " je zabrán";
-                                return Redirect ("/Home/Index");
-                                
-                            }
-                            
-                        }
-                      
-                        return Redirect ("/Home/Index");
-
-                    }
-            
-                if(TechnikSearch!=null)
-                {
-                    var NewDieslovani = new TableDieslovani
-                    {
-                        Vstup=odstavky.DieslovaniMod.Vstup,
-                        Odchod=odstavky.DieslovaniMod.Odchod,
-                        IDodstavky=newOdstavka.IdOdstavky,
-                        IdTechnik=TechnikSearch.IdTechnika,
-                        FirmaId=firmaVRegionu.IDFirmy
-                    };
-                    _context.DieslovaniS.Add(NewDieslovani);
-                    await _context.SaveChangesAsync();
-                    var technik = await _context.TechniS.FindAsync(TechnikSearch);
-                    
-                    if(odstavky.AddOdstavka.Od.Date==DateTime.Today)
-                    {
-                        technik.Taken=true;
-                        _context.TechniS.Update(technik);
-                        TempData["Zprava"] = "TechnikUpdate";
-                    }
-                    
-                    await _context.SaveChangesAsync();
-                    odstavky.DieslovaniList=await _context.DieslovaniS.ToListAsync();
-                    odstavky.TechnikList=await _context.TechniS.ToListAsync();
-                    TempData["Zprava"] = "Odstavka vytvořena";
-                }
-               
-                
-
-                
-                odstavky.OdstavkyList = await _context.OdstavkyS.ToListAsync(); 
+                ModelState.AddModelError(string.Empty, "Odstávka vytvořena");
             }
 
-            
+            var technikSearch = await AssignTechnikAsync(newOdstavka, lokalitaSearch, odstavky);
+            if (technikSearch == null)
+            {
+                TempData["Zprava"] = "nefunguje to";
+                return Redirect("/Home/Index");
+            }
+
+            TempData["Zprava"] = "Technik: " + technikSearch.Jmeno + " je zabrán";
             return Redirect("/Odstavky/Index");
         }
+        public async Task<IActionResult> Create(OdstavkyViewModel odstavky)
+        {
+            var lokalitaSearch = await _context.LokalityS
+            .Include(l => l.Region)
+            .ThenInclude(r => r.Firma)
+            .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+
+
+            return await HandleOdstavkyDieslovani(lokalitaSearch, odstavky.AddOdstavka.Od, odstavky.AddOdstavka.Do, odstavky, odstavky.AddOdstavka.Popis);
+        }
+        private async Task<TableLokality?> GetLokalitaAsync(OdstavkyViewModel odstavky)
+        {
+            return await _context.LokalityS
+                .Include(l => l.Region)
+                .ThenInclude(r => r.Firma)
+                .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+
+        }
+        private async Task<TableDieslovani> GetHigherPriortiy(TableOdstavky newOdstavka)
+        {
+            var dieslovani = await _context.Pohotovts
+            .Where(p => p.Technik.FirmaId == newOdstavka.Lokality.Region.IdRegion && p.Technik.Taken == true)
+            .SelectMany(p => _context.DieslovaniS
+            .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika)
+            .Include(td => td.Odstavka).ThenInclude(td => td.Lokality))
+            .FirstOrDefaultAsync();
+
+            if (dieslovani == null)
+            {
+                return null;
+            }
+
+            int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
+            int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
+
+            // Logika pro prioritu
+            bool maVyssiPrioritu = novaVaha > staraVaha;
+            bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(2) < DateTime.Now;
+            bool daPodminka = dieslovani.Odstavka.Lokality.DA == "FALSE";
+
+            return (maVyssiPrioritu && casovyLimit && daPodminka) ? dieslovani : null;
+
+
+        }
+
+        private string DetermineDistributor(string NazevRegionu)
+        {
+            return NazevRegionu switch
+            {
+                "Severní Čechy" or "Západní Čechy" or "Severní Morava" => "ČEZ",
+                "Jižní Morava" or "Jižní Čechy" => "EGD",
+                "Praha + Střední Čechy" => "PRE",
+                _ => ""
+            };
+        }
+
+        private TableOdstavky CreateNewOdstavka(OdstavkyViewModel odstavky, TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
+        {
+            return new TableOdstavky
+            {
+                Distributor = distrib,
+                Firma = lokalitaSearch.Region.Firma.NázevFirmy,
+                Od = od,
+                Do = do_,
+                Vstup = odstavky.AddOdstavka.Vstup,
+                Odchod = odstavky.AddOdstavka.Odchod,
+                Popis = popis,
+                LokalitaId = lokalitaSearch.Id
+            };
+        }
+        private bool ISvalidDateRange(DateTime od, DateTime Do)
+        {
+            return od.Date >= DateTime.Today && od < Do;
+        }
+        private async Task<TableTechnici?> AssignTechnikAsync(TableOdstavky newOdstavka, TableLokality lokalitaSearch, OdstavkyViewModel odstavky)
+        {
+            var firmaVRegionu = await GetFirmaVRegionuAsync(lokalitaSearch.Region.IdRegion);
+            var technikSearch = await _context.Pohotovts
+            .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && !p.Technik.Taken)
+            .Select(p => p.Technik)
+            .FirstOrDefaultAsync();
+
+            if (technikSearch == null)
+            {
+                technikSearch = await CheckTechnikReplacementAsync(newOdstavka, firmaVRegionu, odstavky);
+            }
+
+            if (technikSearch != null)
+            {
+                await CreateNewDielovaniAsync(newOdstavka, technikSearch, firmaVRegionu, odstavky);
+                return technikSearch;
+            }
+            return null;
+        }  
+        private async Task<TableFirma?> GetFirmaVRegionuAsync(int regionId)
+        {
+            return await _context.ReginoS
+            .Where(r => r.IdRegion == regionId)
+                .Select(r => r.Firma)
+                .FirstOrDefaultAsync();
+        }
+        private async Task<TableTechnici> CheckTechnikReplacementAsync(TableOdstavky newOdstavka, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
+        {
+            var dieslovani = await GetHigherPriortiy(newOdstavka);
+            if (dieslovani == null) return null;
+
+            var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
+            if (novyTechnik != null)
+            {
+                dieslovani.Technik = novyTechnik;
+                _context.DieslovaniS.Update(dieslovani);
+                TempData["Zprava"] = "Technik přiřazen";
+                await _context.SaveChangesAsync();
+                return dieslovani.Technik;
+            }
+
+            TempData["Zprava"] = "Technik nepřiřazen";
+            return null;
+        }
+        private async Task CreateNewDielovaniAsync(TableOdstavky newOdstavky, TableTechnici technik, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
+        {
+            var NewDieslovani = new TableDieslovani
+            {
+                Vstup = odstavky.DieslovaniMod.Vstup,
+                Odchod = odstavky.DieslovaniMod.Odchod,
+                IDodstavky = newOdstavky.IdOdstavky,
+                IdTechnik = technik.IdTechnika,
+                FirmaId = firmaVRegionu.IDFirmy
+            };
+            _context.DieslovaniS.Add(NewDieslovani);
+            await _context.SaveChangesAsync();
+
+            if (odstavky.AddOdstavka.Od.Date == DateTime.Today)
+            {
+                technik.Taken = true;
+                _context.TechniS.Update(technik);
+                TempData["Zprava"] = "TechnikUpdate";
+            }
+            await _context.SaveChangesAsync();
+        }
+
+
+
         public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
-        { 
-            var SetOdstavka=new TableOdstavky
-            {   
-                Vstup=odstavky.AddOdstavka.Vstup
+        {
+            var SetOdstavka = new TableOdstavky
+            {
+                Vstup = odstavky.AddOdstavka.Vstup
 
             };
             _context.OdstavkyS.Add(SetOdstavka);
@@ -257,162 +270,61 @@ namespace Diesel_modular_application.Controllers
             return Redirect("/Home/Index");
 
         }
-        public async Task<IActionResult> Test (OdstavkyViewModel odstavky )
+
+
+        public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
         {
-            
-            var distrib="";
-          
-           
-            for(int i=1;i<=1;i++)
+            for (int i = 1; i <= 2; i++)
             {
-                var number=await _context.LokalityS.CountAsync();
-                var IdNumber=RandomNumberGenerator.GetInt32(1,number);
-                var lokalitaSearch = await _context.LokalityS.Include(o=>o.Region).ThenInclude(p=>p.Firma).FirstOrDefaultAsync(i=>i.Id==IdNumber);
-                if(await _context.LokalityS.AnyAsync())
-                {   
-                
-                if(lokalitaSearch!=null)
+                var number = await _context.LokalityS.CountAsync();
+                var IdNumber = RandomNumberGenerator.GetInt32(1, number);
+                var lokalitaSearch = await _context.LokalityS.Include(o => o.Region).ThenInclude(p => p.Firma).FirstOrDefaultAsync(i => i.Id == IdNumber);
+                if (lokalitaSearch!=null)
                 {
-                    if(lokalitaSearch.Region.NazevRegionu=="Severní Čechy" || lokalitaSearch.Region.NazevRegionu=="Západní Čechy" || lokalitaSearch.Region.NazevRegionu=="Severní Morava")
-                    {
-                        distrib= "ČEZ";
-                    }
-                    if(lokalitaSearch.Region.NazevRegionu=="Jižní Morava" || lokalitaSearch.Region.NazevRegionu=="Jižní Čechy")
-                    {
-                        distrib= "EGD";
-                    }
-                    if(lokalitaSearch.Region.NazevRegionu=="Praha + Střední Čechy")
-                    {
-                        distrib= "PRE";
-                    }
-                    var hours = RandomNumberGenerator.GetInt32(1,50);
-                    var newOdstavka = new TableOdstavky
-                    {            
-                        Distributor = distrib,
-                        Firma=lokalitaSearch.Region.Firma.NázevFirmy,
-                        Od = DateTime.Today.AddHours(hours),
-                        Do = DateTime.Today.AddHours(hours+8),
-                        Vstup=odstavky.AddOdstavka.Vstup,
-                        Odchod=odstavky.AddOdstavka.Odchod,
-                        Popis = "Test",
-                        LokalitaId = lokalitaSearch.Id 
-                    };
-                    _context.OdstavkyS.Add(newOdstavka);
-                    await _context.SaveChangesAsync();
-                    var regionId = lokalitaSearch.Region.IdRegion;
-
-                    var firmaVRegionu = await _context.ReginoS
-                    .Where(r => r.IdRegion == regionId)
-                    .Select(r => r.Firma)
-                    .FirstOrDefaultAsync();
-
-                
-
-                
-                    var TechnikSearch = await _context.Pohotovts
-                    .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==false)
-                    .Select(p=>p.Technik)
-                    .FirstOrDefaultAsync();
-
-                    if (TechnikSearch==null)
-                    {
-                        var dieslovani = await _context.Pohotovts
-                        .Where(p=>p.Technik.FirmaId==firmaVRegionu.IDFirmy && p.Technik.Taken==true)
-                        .SelectMany(p => _context.DieslovaniS
-                        .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika))
-                        .FirstOrDefaultAsync();
-
-                        if(dieslovani!=null)
-                        {
-                            if(dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu()<newOdstavka.Lokality.Klasifikace.ZiskejVahu() && dieslovani.Odstavka.Od.Date.AddHours(2)<DateTime.Now && dieslovani.Odstavka.Lokality.DA=="False")
-                            {
-                                TechnikSearch=dieslovani.Technik;
-                                dieslovani.Technik=_context.TechniS.Where(p=>p.IdTechnika=="606794464").FirstOrDefault();
-                            }
-                        }
-
-                     
-
-                        TempData["Zprava"] = "Technik: " + dieslovani.Technik.Jmeno + " je zabrán"+ 
-                        "aktuálně je objednán na lokalitu: " + lokalitaSearch.Lokalita;
-                        return Redirect ("/Home/Index");
-                    }
-                    if(newOdstavka.Lokality.DA=="FALSE")
-                    {
-                        if(TechnikSearch!=null)
-                        {
-                            var NewDieslovani = new TableDieslovani
-                            {
-                                Vstup=odstavky.DieslovaniMod.Vstup,
-                                Odchod=odstavky.DieslovaniMod.Odchod,
-                                IDodstavky=newOdstavka.IdOdstavky,
-                                IdTechnik=TechnikSearch.IdTechnika,
-                                FirmaId=firmaVRegionu.IDFirmy
-                            };
-                            _context.DieslovaniS.Add(NewDieslovani);
-                            await _context.SaveChangesAsync();
-                            var technik = await _context.TechniS.FindAsync(TechnikSearch.IdTechnika);
-                            
-                            if(newOdstavka.Od.Date==DateTime.Today)
-                            {
-                                technik.Taken=true;
-                                _context.TechniS.Update(technik);
-                                TempData["Zprava"] = "TechnikUpdate";
-                            }
-                            await _context.SaveChangesAsync();
-                            TempData["Zprava"] = NewDieslovani.Technik.Jmeno + "bude dieslovat";
-                        }
-                    }
-                    else
-                    {
-                        TempData["Zprava"] = newOdstavka.Lokality.Lokalita + "na této lokalitě je Diesel agregát, není potřeba dieslovat";
-
-                    }
-                    }
+                    var hours = RandomNumberGenerator.GetInt32(1, 50);
+                    string popis = "test";
+                    return await HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours+2), DateTime.Today.AddHours(hours+8), odstavky, popis);
                 }
-
             }
-            
-            await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
         }
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
         {
             var SetOdstavka = new TableOdstavky
             {
-                Odchod=odstavky.AddOdstavka.Odchod
+                Odchod = odstavky.AddOdstavka.Odchod
             };
             _context.OdstavkyS.Add(SetOdstavka);
             await _context.SaveChangesAsync();
             return Redirect("/Home/Index");
         }
-       
 
-        public async Task<IActionResult> Delete (OdstavkyViewModel odstavky)
+
+        public async Task<IActionResult> Delete(OdstavkyViewModel odstavky)
         {
-            
-            var odstavka= await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
-            if(odstavka!=null)
+
+            var odstavka = await _context.OdstavkyS.FindAsync(odstavky.OdstavkyMod.IdOdstavky);
+            if (odstavka != null)
             {
-                var dieslovani = await _context.DieslovaniS.Where(p=>p.IDodstavky==odstavka.IdOdstavky).FirstOrDefaultAsync();
-                
-                if(dieslovani!=null)
+                var dieslovani = await _context.DieslovaniS.Where(p => p.IDodstavky == odstavka.IdOdstavky).FirstOrDefaultAsync();
+
+                if (dieslovani != null)
                 {
-                    var technik = await _context.TechniS.Where(p=>p.IdTechnika==dieslovani.IdTechnik).FirstOrDefaultAsync();
-                    if(technik!=null)
-                    {   
-                        technik.Taken=false;
+                    var technik = await _context.TechniS.Where(p => p.IdTechnika == dieslovani.IdTechnik).FirstOrDefaultAsync();
+                    if (technik != null)
+                    {
+                        technik.Taken = false;
                         _context.TechniS.Update(technik);
                     }
                 }
 
             }
-           
+
             _context.OdstavkyS.Remove(odstavka);
             await _context.SaveChangesAsync();
-            return Redirect ("/Odstavky/Index");
-        } 
-        
+            return Redirect("/Odstavky/Index");
+        }
+
 
 
     }

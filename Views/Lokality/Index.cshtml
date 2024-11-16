@@ -11,11 +11,11 @@
        
         <div class="table-div import C odstavky">
             <section class="sctn search odstavkyTable">
-                <h2 style="display: flex;justify-content: center;">Lokality</h2>
-                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
-                    <input id="search" class="InputSearching" type="search" placeholder="Search..." autofocus required />
-                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
-                </div>
+            <h2 style="display: flex; justify-content: center;">Lokality</h2>
+            <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style="background-color: white;">
+            <input id="search-lokality" class="InputSearching" type="search" placeholder="Search..." data-search-type="lokality" autofocus required />
+            <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
+            </div>
             </section>
             <div class="table-div odstavkyTable">
                 <table>
@@ -37,33 +37,50 @@
                             <tr>
                                 <td>@lokality.Id</td>
                                 <td>@lokality.Lokalita</td>
-                                <td>@lokality.Klasifikace
-                                    @if(lokality.Klasifikace=="A1")
-                                    {
-                                        <span title="Kritická priorita" class="status red"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="A2")
-                                    {
-                                        <span title="Vysoká priorita" class="status orange"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="B1")
-                                    {
-                                        <span title="Středně-vysoká priorita" class="status yellow"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="B2")
-                                    {
-                                        <span title="Středně-nízká priorita" class="status light-green"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="C" || lokality.Klasifikace=="B")
-                                    {
-                                        <span title="Nízká priorita" class="status green"></span>
-                                    }
-                                    @if(lokality.Klasifikace=="D1")
-                                    {
-                                        <span title="Velmi-nízká priorita" class="status blue"></span>
-                                    }
-                                
-                                </td>
+                                 <td>@if(lokality.Klasifikace=="A1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
+                                                </span> 
+                                            }
+                                            @if(lokality.Klasifikace=="A2")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
+                                                </span> 
+                                            }
+                                            @if(lokality.Klasifikace=="B1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
+                                                </span> 
+                                            }
+                                            @if(lokality.Klasifikace=="B2")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
+                                                </span> 
+                                            }
+                                            @if(lokality.Klasifikace=="B")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
+                                                </span> 
+                                            }
+                                               @if(lokality.Klasifikace=="C")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
+                                                </span> 
+                                            }
+                                            @if(lokality.Klasifikace=="D1")
+                                            {
+                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px; ">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
+                                                </span> 
+                                            }
+                                         
+                                        </td>
                                 <td>@lokality.Adresa</td>
                                 <td>@lokality.Baterie</td>
                                 <td>
