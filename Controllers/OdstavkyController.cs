@@ -94,6 +94,8 @@ namespace Diesel_modular_application.Controllers
             string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
             var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
 
+            if(ExistingOdstavka(newOdstavka.LokalitaId,newOdstavka.Do))
+
             if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
             {
                 ModelState.AddModelError(string.Empty, "Špatné datum");
@@ -188,6 +190,13 @@ namespace Diesel_modular_application.Controllers
         private bool ISvalidDateRange(DateTime od, DateTime Do)
         {
             return od.Date >= DateTime.Today && od < Do;
+        }
+        private bool ExistingOdstavka(int lokalitaSearchId, DateTime od)
+        {
+            var existingOdstavka = _context.OdstavkyS
+            .FirstOrDefault(o => o.Od == od && o.Lokality.Id == lokalitaSearchId);
+            if(existingOdstavka==null){return true;}
+            else{return false;}
         }
         private async Task<TableTechnici?> AssignTechnikAsync(TableOdstavky newOdstavka, TableLokality lokalitaSearch, OdstavkyViewModel odstavky)
         {
