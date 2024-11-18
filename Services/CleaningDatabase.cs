@@ -41,11 +41,7 @@ namespace Diesel_modular_application.Services
                     _context.OdstavkyS.RemoveRange(outdatedRecordsOdstavky);
                     await _context.SaveChangesAsync();
                 }
-                if(outdatedRecordsDieslovani.Any())
-                {
-                    _context.DieslovaniS.RemoveRange(outdatedRecordsDieslovani);
-                    await _context.SaveChangesAsync();
-                }
+               
 
 
             }
