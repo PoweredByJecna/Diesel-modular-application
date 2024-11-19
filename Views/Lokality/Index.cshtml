@@ -27,62 +27,41 @@
                             <th id="lokalita">Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
                             <th id="klasifikace">Klasifikace<i class="fa-solid fa-star"></i></th>
                             <th id="adresa">Adresa <i class="fa-solid fa-house"></i></th>
+                            <th>Region <i class="fa-solid fa-earth-europe fa-sm"></i></th>
                             <th id="baterie">Baterie <i class="fa-solid fa-battery-full"></i><br><a>[min]</a></th>
                             <th id="zasuvka">Zásuvka <i class="fa-solid fa-plug"></i></th>
                             <th id="da">DA <i class="fa-solid fa-gas-pump"></i></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-body">
                         @foreach (var lokality in Model.LokalityList)
                         {
                             <tr>
                                 <td>@lokality.Id</td>
                                 <td>@lokality.Lokalita</td>
-                                 <td>@if(lokality.Klasifikace=="A1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
-                                                </span> 
-                                            }
-                                            @if(lokality.Klasifikace=="A2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
-                                                </span> 
-                                            }
-                                            @if(lokality.Klasifikace=="B1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
-                                                </span> 
-                                            }
-                                            @if(lokality.Klasifikace=="B2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
-                                                </span> 
-                                            }
-                                            @if(lokality.Klasifikace=="B")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
-                                                </span> 
-                                            }
-                                               @if(lokality.Klasifikace=="C")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
-                                                </span> 
-                                            }
-                                            @if(lokality.Klasifikace=="D1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px; ">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
-                                                </span> 
-                                            }
-                                         
-                                        </td>
+                                <td>
+                                    @{
+                                        var klasifikacebarva = new Dictionary<string,string>
+                                        {
+                                            { "A1", "#c91829" },
+                                            { "A2", "orange" },
+                                            { "B1", "yellow" },
+                                            { "B2", "lightgreen" },
+                                            { "B", "green" },
+                                            { "C", "green" },
+                                            { "D1", "blue" }
+
+                                        };
+                                        if(klasifikacebarva.TryGetValue(lokality.Klasifikace, out var barva))
+                                        {
+                                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: @barva; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;"> @lokality.Klasifikace </span>
+                                            </span>
+                                        }
+                                    }
+                                </td>
                                 <td>@lokality.Adresa</td>
+                                <td>@lokality.Region.NazevRegionu</td>
                                 <td>@lokality.Baterie</td>
                                 <td>
                                     @if(lokality.Zásuvka=="TRUE")

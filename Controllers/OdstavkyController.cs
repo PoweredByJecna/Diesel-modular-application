@@ -82,7 +82,7 @@ namespace Diesel_modular_application.Controllers
                     .ToListAsync();
                 search.OdstavkyList = FilteredList;
             }
-            return PartialView("_OdstavkyListPartial", search);
+            return PartialView("_LokalityListPartial", search);
         }
         public async Task<IActionResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky,string popis)
         {

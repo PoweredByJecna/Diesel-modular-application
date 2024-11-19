@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DocumentFormat.OpenXml.Office2016.Excel;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -38,7 +39,30 @@ namespace Diesel_modular_application.Controllers
 
             return View("Index",lokality);
         }
-        
+        public async Task<IActionResult> Search(OdstavkyViewModel search, string query, int page = 1)
+        {
+            int pageSize = 10; // nastavte počet záznamů na stránku
+
+            List<TableLokality> FilteredList;
+            if (string.IsNullOrEmpty(query))
+            {
+                FilteredList = await _context.LokalityS
+                .Include(o=>o.Region)
+                .Skip((page - 1) * pageSize) 
+                .Take(pageSize)
+                .ToListAsync();
+                search.LokalityList = FilteredList;
+            }
+            else
+            {
+                FilteredList = await _context.LokalityS
+                    .Include(o=>o.Region)
+                    .Where(o => o.Lokalita.Contains(query) || o.Region.NazevRegionu.Contains(query) || o.Id.ToString().Contains(query))
+                    .ToListAsync();
+                search.LokalityList = FilteredList;
+            }
+            return PartialView("_LokalityListPartial", search);
+        }
        [Authorize(Roles ="Admin")]
        public async Task<IActionResult> Nacteni(OdstavkyViewModel lok)
        {
