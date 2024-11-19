@@ -114,6 +114,7 @@ namespace Diesel_modular_application.Controllers
             }
 
             var technikSearch = await AssignTechnikAsync(newOdstavka, lokalitaSearch, odstavky);
+            
             if (technikSearch == null)
             {
                     
@@ -270,7 +271,7 @@ namespace Diesel_modular_application.Controllers
         private async Task<TableTechnici?> CheckTechnikReplacementAsync(TableOdstavky newOdstavka, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
         {
             var dieslovani = await GetHigherPriortiy(newOdstavka);
-            if (dieslovani == null) return null;
+            if (dieslovani == null)  {TempData["Zprava"] = "Priority je null."; return null;}
             else
             {
                 return dieslovani.Technik;

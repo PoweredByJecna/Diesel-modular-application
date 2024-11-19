@@ -48,6 +48,7 @@ namespace Diesel_modular_application.Controllers
                 .Include(o=>o.Technik)
                 .ToListAsync();
             odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+             return View("Index", odstavky);
             }
             if(User.IsInRole("Engineer"))
             {
@@ -60,6 +61,7 @@ namespace Diesel_modular_application.Controllers
                 .Include(o=>o.Technik).Where(o=>o.IdTechnik==userId)
                 .ToListAsync();
                 odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+                 return View("Index", odstavky);
             }
             return View("Index", odstavky);
 
