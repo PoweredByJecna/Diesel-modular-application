@@ -55,7 +55,7 @@ namespace Diesel_modular_application.Controllers
 
             foreach(var lokalityReg in lokality)
             {
-                foreach(var Region in regionyAMesta)
+                foreach(var Region in regionyAMesta)    
                 {
                     if(Region.Value.Any(mesto=>lokalityReg.Adresa.Contains(mesto)))
                     {
