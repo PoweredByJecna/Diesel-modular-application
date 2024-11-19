@@ -79,6 +79,7 @@ namespace Diesel_modular_application.Controllers
                 FilteredList = await _context.OdstavkyS
                     .Include(o => o.Lokality)
                     .Where(o => o.Lokality.Lokalita.Contains(query))
+                    .Take(pageSize)
                     .ToListAsync();
                 search.OdstavkyList = FilteredList;
             }

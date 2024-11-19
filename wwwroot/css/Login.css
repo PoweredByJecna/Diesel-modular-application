@@ -1,4 +1,11 @@
-
+.Content-Login{
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
 .login-section {
     margin:auto !important;
     width: 380px;
@@ -6,7 +13,6 @@
     background-color: #3948d0bf;
     border-radius: 15px;
     position:fixed;
-    inset-area:center;
 }
 
 .login-section.dark-mode {

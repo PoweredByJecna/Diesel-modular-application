@@ -58,6 +58,7 @@ namespace Diesel_modular_application.Controllers
                 FilteredList = await _context.LokalityS
                     .Include(o=>o.Region)
                     .Where(o => o.Lokalita.Contains(query) || o.Region.NazevRegionu.Contains(query) || o.Id.ToString().Contains(query))
+                    .Take(pageSize)
                     .ToListAsync();
                 search.LokalityList = FilteredList;
             }

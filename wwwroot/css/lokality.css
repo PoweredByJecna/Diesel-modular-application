@@ -559,8 +559,8 @@ tr:hover{
 .paging
 {
     display: flex;
-    justify-content: space-around;
-    height: 76px;
+    justify-content: flex-end;
+    height: 40px;
     align-items: center;
 }
 .act{
