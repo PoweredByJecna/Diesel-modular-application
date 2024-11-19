@@ -23,6 +23,7 @@ namespace Diesel_modular_application.Controllers
         {
             _context = context;
         }
+        private List<string> Zpravy { get; set; } = new List<string>();
 
         [Authorize]
         public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page = 1)
@@ -99,7 +100,8 @@ namespace Diesel_modular_application.Controllers
             if(ExistingOdstavka(newOdstavka.LokalitaId,newOdstavka.Do)){}
             else
             {
-                TempData["Zprava"] = "Odstávka na tento den: " + newOdstavka.Od  +" lokalitu: " + newOdstavka.LokalitaId + "(Id)";  
+
+                TempData["Zprava"] = "Odstávka na tento den: " + newOdstavka.Od  +" lokalitu: " + newOdstavka.LokalitaId + "(Id), je již vypsána";  
                 return Redirect("/Home/Index");
             }
 
@@ -118,7 +120,8 @@ namespace Diesel_modular_application.Controllers
             
             if (technikSearch == null)
             {
-                    
+                Zpravy.Add("Technik nebyl nalezen.");
+                TempData["Zprava"] = string.Join("; ", Zpravy);    
                 return Redirect("/Home/Index");
             }
             else
@@ -148,14 +151,17 @@ namespace Diesel_modular_application.Controllers
         private async Task<TableDieslovani?> GetHigherPriortiy(TableOdstavky newOdstavka)
         {
             var dieslovani = await _context.Pohotovts
-            .Where(p => p.Technik.FirmaId == newOdstavka.Lokality.Region.IdRegion && p.Technik.Taken == true)
+            .Include(o=>o.Technik)
+            .ThenInclude(o=>o.Firma)
+            .Where(p => p.Technik.Firma.IDFirmy == newOdstavka.Lokality.Region.IdRegion && p.Technik.Taken == true)
             .SelectMany(p => _context.DieslovaniS
             .Where(td => td.Technik.IdTechnika == p.Technik.IdTechnika)
-            .Include(td => td.Odstavka).ThenInclude(td => td.Lokality))
+            .Include(td => td.Odstavka).ThenInclude(td => td.Lokality)) 
             .FirstOrDefaultAsync();
 
             if (dieslovani == null)
             {
+                Zpravy.Add("1 Dieslovani nenalezeno ");
                 return null;
             }
 
@@ -168,6 +174,7 @@ namespace Diesel_modular_application.Controllers
 
             if(maVyssiPrioritu && casovyLimit && daPodminka)
             {
+                Zpravy.Add("Podminka pro prioritu splněna");
                 return dieslovani;
             }
             else
@@ -179,6 +186,7 @@ namespace Diesel_modular_application.Controllers
                     _context.DieslovaniS.Update(dieslovani);
                     await _context.SaveChangesAsync();
                 }
+                Zpravy.Add("Přiřazen fiktivni technik");
             }
 
             return null;
@@ -228,7 +236,7 @@ namespace Diesel_modular_application.Controllers
             if(firmaVRegionu!=null)
             {
                 var technikSearch = await _context.Pohotovts
-                .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && !p.Technik.Taken)
+                .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken==false)
                 .Select(p => p.Technik)
                 .FirstOrDefaultAsync();
 
@@ -243,7 +251,7 @@ namespace Diesel_modular_application.Controllers
                     }
                     else
                     {
-                        TempData["Zprava"] = "Žádný náhradní technik nebyl nalezen.";
+                        Zpravy.Add("Žádný náhradní technik nebyl nalezen.");
                         return technikSearch;
                     }
 
@@ -257,7 +265,7 @@ namespace Diesel_modular_application.Controllers
 
                 }
             }
-            TempData["Zprava"] = "Technik nemá pohotovost.";
+            Zpravy.Add("Firma V regionu je null");
 
             return null;
 
@@ -272,7 +280,7 @@ namespace Diesel_modular_application.Controllers
         private async Task<TableTechnici?> CheckTechnikReplacementAsync(TableOdstavky newOdstavka, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
         {
             var dieslovani = await GetHigherPriortiy(newOdstavka);
-            if (dieslovani == null)  {TempData["Zprava"] = "Priority je null."; return null;}
+            if (dieslovani == null)  {Zpravy.Add("Priority je null."); return null;}
             else
             {
                 return dieslovani.Technik;
