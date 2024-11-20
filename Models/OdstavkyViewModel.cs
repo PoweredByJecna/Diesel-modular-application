@@ -8,6 +8,10 @@ namespace Diesel_modular_application.Models
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+
+        public int CurrentPageDieslovaniUpcoming {get; set;}
+        public int TotalPagesDieslovaniUpcoming{get;set;}
+
         public IEnumerable<TableOdstavky> OdstavkyList { get; set; }
         public IEnumerable<TableLokality> LokalityList{get;set;}
         public TableOdstavky AddOdstavka { get; set; } = new TableOdstavky(); 

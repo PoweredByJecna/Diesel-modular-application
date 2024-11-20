@@ -71,6 +71,7 @@ h2.dark-mode {
     justify-content: center;
     width: 95%;
     max-height: 320px;
+    flex-direction: column;
 }
 .table-home{
     width: 95%;

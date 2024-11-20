@@ -31,14 +31,13 @@ namespace Diesel_modular_application.Controllers
 
         
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page =1, string tableId="upcoming")
         {
-
+            int pagesize = 4;
             var currentUser = await _userManager.GetUserAsync(User);
             var userId = currentUser?.Id; // 
 
-            if(User.IsInRole("Admin"))
-            {
+            
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ThenInclude(l => l.Region)
@@ -48,22 +47,26 @@ namespace Diesel_modular_application.Controllers
                 .Include(o=>o.Technik)
                 .ToListAsync();
             odstavky.LokalityList=await _context.LokalityS.ToListAsync();
-             return View("Index", odstavky);
-            }
-            if(User.IsInRole("Engineer"))
+            
+            if(tableId=="upcoming")
             {
-                odstavky.OdstavkyList = await _context.OdstavkyS
-                .Include(o => o.Lokality)
-                .ThenInclude(l => l.Region)
-                .ThenInclude(l=>l.Firma)
-                .ToListAsync(); 
-               odstavky.DieslovaniList =await _context.DieslovaniS
-                .Include(o=>o.Technik).Where(o=>o.IdTechnik==userId)
-                .ToListAsync();
-                odstavky.LokalityList=await _context.LokalityS.ToListAsync();
-                 return View("Index", odstavky);
+                var odstavkyQuery = _context.DieslovaniS
+                    .Include(o=>o.Odstavka)
+                    .ThenInclude(o => o.Lokality)
+                    .OrderBy(o => o.Odstavka.Od);
+
+                odstavky.DieslovaniList = await odstavkyQuery
+                    .Skip((page - 1) * pagesize)
+                    .Take(pagesize)
+                    .ToListAsync();
+                    
+
+                odstavky.CurrentPageDieslovaniUpcoming = page;
+                odstavky.TotalPagesDieslovaniUpcoming = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
             }
             return View("Index", odstavky);
+            
+      
 
             
         }

@@ -93,7 +93,7 @@
                   
                     @if(Model.CurrentPage>1)
                     {
-                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)" style="font-size: small; text-decoration: none; color: #0011ff;"> <i class="fa-solid fa-chevron-left" style="color: #0011ff;"></i>Previus</a>
+                        <a asp-action="Index" asp-route-page="@(Model.CurrentPage-1)" style="font-size: small; text-decoration: none; color: #0011ff; margin-right: 10px;"> <i class="fa-solid fa-chevron-left" style="color: #0011ff;"></i>Previus</a>
                     }
                     @if(Model.CurrentPage<Model.TotalPages)
                     {
