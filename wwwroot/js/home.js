@@ -61,40 +61,42 @@ document.querySelectorAll('.InputSearching').forEach(input => {
         };
     });
     
+   
 
-    $(document).on('click', '.paging a', function (e) {
-        e.preventDefault();
-    
-        const url = $(this).attr('href');
-        const tableId = $(this).data('table-id'); // Identify which table
-        const targetTable = tableId === 'upcoming' ? '#upcoming-table' : '#all-table'; // Target table
-    
-        $.get(url, function (response) {
-            // Update the table body with new data
-            $(targetTable + ' tbody').empty();
-            response.Data.forEach(item => {
-                $(targetTable + ' tbody').append(`
-                    <tr>
-                        <td>${item.SomeField}</td>
-                        <td>${item.AnotherField}</td>
-                    </tr>
-                `);
-            });
-    
-            // Update pagination
-            const pagination = $(targetTable + ' .paging');
-            pagination.empty();
-            if (response.CurrentPage > 1) {
-                pagination.append(`<a href="/Home/GetTableData?tableId=${tableId}&page=${response.CurrentPage - 1}" data-table-id="${tableId}">Previous</a>`);
-            }
-            if (response.CurrentPage < response.TotalPages) {
-                pagination.append(`<a href="/Home/GetTableData?tableId=${tableId}&page=${response.CurrentPage + 1}" data-table-id="${tableId}">Next</a>`);
-            }
+    $(document).ready(function() {
+        // Inicializace pro tabulku "Upcoming"
+        $('#upcomingTable').DataTable({
+            paging: true,        
+            searching: true,
+            ordering: false,     
+            pageLength: 4        
+        });
+
+        // Inicializace pro tabulku "All"
+        $('#allTable').DataTable({
+            paging: true,        
+            searching: true,
+            ordering: false,     
+            pageLength: 4        // Počet řádků na stránku
+        });
+
+        $('#endTable').DataTable({
+            paging: true,        
+            searching: true,
+            ordering: false,     
+            pageLength: 4        // Počet řádků na stránku
+        });
+
+        $('#runningTable').DataTable({
+            paging: true,        
+            searching: true,
+            ordering: false,     
+            pageLength: 4         // Počet řádků na stránku
         });
     });
-    
-    
 
+
+    
 
 
 

@@ -9,6 +9,8 @@ namespace Diesel_modular_application.Models
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
+        public int PageSize{get;set;}
+
         public int CurrentUpcoming {get; set;}
         public int TotalUpcoming{get;set;}
 

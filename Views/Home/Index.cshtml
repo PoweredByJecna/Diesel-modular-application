@@ -8,8 +8,8 @@
         <div class="tables-row">
             <div class="section small" style="border-right: 0px;">
                 <h2>Aktuální dieslování:</h2>
-                <div class="table-div odstavkyTable" id="aktual">
-                    <table>
+                <div class="table-div odstavkyTable">
+                    <table id="runningTable">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
@@ -161,7 +161,7 @@
             <div class="section small" style="border-right: 0px;">
                 <h2>Dnešní nadcházející:</h2>
                 <div class="table-div home" id="upcoming-table">
-                    <table id="upcoming" class="table-home">
+                    <table id="upcomingTable" class="table-home">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
@@ -287,9 +287,7 @@
 
                         </tbody>
                     </table>
-                    <div class="paging" style="width: 95%;">
-                        <a href="/Home/GetTableData?tableId=upcoming&page=1" data-table-id="upcoming" style="font-size: small; text-decoration: none; color: #0011ff;">Next <i class="fa-solid fa-chevron-right" style="color: #0011ff;"></i> </a>
-                    </div>
+                  
                 </div>
             </div>
         </div>    
@@ -297,7 +295,7 @@
             <div class="section small">
                 <h2>Dnešní ukončené:</h2>
                 <div class="table-div home" id="end">
-                    <table class="table-home">
+                    <table class="table-home" id="endTable">
                         <thead>
                             <tr>
                                 <th id="stav">Stav</th>
@@ -497,13 +495,9 @@
         <div class="cnt" style="background-color: white;">
                 <section class="sctn search odstavkyTable">
                 <h2 style="display: flex; margin-left: 20px;">Všechny dnešní</h2>
-                <div onsubmit="event.preventDefault();" role="search" class="form-import Search" style=" background-color: white;">
-                    <input id="search" class="InputSearching" type="search" placeholder="Search..." />
-                    <button class="buttonsearch" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>  
-                </div>
                 </section>
                 <div class="table-div odstavkyTable" style="width: 95%;" id="all-table">
-                    <table id="all">
+                    <table id="allTable">
                         <thead>
                             <tr>
                                 <th id="th-stav">Stav</th>
@@ -663,9 +657,7 @@
                             }           
                         </tbody>
                     </table>
-                    <div class="paging">
-                        <a href="/Home/GetTableData?tableId=all&page=1" data-table-id="all" style="font-size: small; text-decoration: none; color: #0011ff;">Next <i class="fa-solid fa-chevron-right" style="color: #0011ff;"></i> </a>
-                    </div>
+              
 
                 </div>         
             

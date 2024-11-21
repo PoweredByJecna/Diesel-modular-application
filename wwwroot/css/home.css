@@ -47,7 +47,9 @@ main.dark-mode {
     
 }
 
-
+.table-home.dataTable.no-footer{
+    border-bottom: 0px;
+}
 h2 {
     padding-bottom: 5px;
     margin-bottom:10px;
@@ -419,4 +421,10 @@ th.dark-mode {
 }
 
 
+/*TABULKY*/
+/* Skrytí výchozích ikon DataTables */
+.dataTables_wrapper{
+    width: 100%;
+}
 
+/**/

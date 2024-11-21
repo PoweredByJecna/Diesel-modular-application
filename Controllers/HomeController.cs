@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Numerics;
 using System.Security.Cryptography;
 
 
@@ -54,47 +55,8 @@ namespace Diesel_modular_application.Controllers
 
             
         }
-        public async Task<IActionResult> GetTableData(string tableId, int page = 1)
-        {
-        int pageSize = 4;
-        if (tableId == "upcoming")
-        {
-        var odstavkyQuery = _context.DieslovaniS
-            .Include(o => o.Odstavka)
-            .ThenInclude(o => o.Lokality)
-            .Where(d => d.Odstavka.Od.Date == DateTime.Today)
-            .OrderBy(o => o.Odstavka.Od);
 
-        var dieslovaniList = await odstavkyQuery
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
 
-        var totalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pageSize);
-
-        return Json(new { Data = dieslovaniList, CurrentPage = page, TotalPages = totalPages });
-        }
-
-        if (tableId == "all")
-        {
-        var dieslovaniAll = _context.DieslovaniS
-            .Include(o => o.Odstavka)
-            .ThenInclude(o => o.Lokality)
-            .Where(d => d.Odstavka.Od.Date == DateTime.Today)
-            .OrderBy(o => o.Odstavka.Od);
-
-        var dieslovaniList = await dieslovaniAll
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-
-        var totalPages = (int)Math.Ceiling(await dieslovaniAll.CountAsync() / (double)pageSize);
-
-        return Json(new { Data = dieslovaniList, CurrentPage = page, TotalPages = totalPages });
-        }
-
-        return BadRequest("Invalid tableId");
-        }
        
         public IActionResult Privacy()
         {
