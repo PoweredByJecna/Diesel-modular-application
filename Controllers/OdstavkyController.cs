@@ -151,12 +151,13 @@ namespace Diesel_modular_application.Controllers
         private async Task<TableDieslovani?> GetHigherPriortiy(TableOdstavky newOdstavka, OdstavkyViewModel odstavky)
         {
                
-            var dieslovani = await _context.DieslovaniS
+            var dieslovani = await _context.DieslovaniS 
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(o=>o.Firma)
             .Include(o=>o.Technik)
             .ThenInclude(o=>o.Firma)
+            .Include(o=>o.Firma)
             .Where(p => 
             p.Technik.Firma.IDFirmy == newOdstavka.Lokality.Region.Firma.IDFirmy &&
             p.Technik.Taken == true).FirstAsync();
@@ -169,35 +170,40 @@ namespace Diesel_modular_application.Controllers
                 Zpravy.Add("Dieslovani nenalezeno ");
                 return null;
             }
-
-            int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
-            int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
-
-            bool maVyssiPrioritu = novaVaha > staraVaha;
-            bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(2) < DateTime.Now;
-            bool daPodminka = dieslovani.Odstavka.Lokality.DA == "FALSE";
-
-            if(maVyssiPrioritu && casovyLimit && daPodminka)
+            if(dieslovani !=null)
             {
-                Zpravy.Add("Podminka pro prioritu splněna");
-                var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
-                if (novyTechnik != null)
+                int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
+                int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
+
+                bool maVyssiPrioritu = novaVaha > staraVaha;
+                bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(2) < DateTime.Now;
+                bool daPodminka = dieslovani.Odstavka.Lokality.DA == "FALSE";
+
+                if(maVyssiPrioritu && casovyLimit && daPodminka)
                 {
-                    dieslovani.Technik = novyTechnik;
-                    _context.DieslovaniS.Update(dieslovani);
-                    await _context.SaveChangesAsync();
-                    Zpravy.Add("Přiřazen fiktivni technik na lokalitu" + newOdstavka.Lokality.Lokalita);
+                    Zpravy.Add("Podminka pro prioritu splněna");
+                    var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
+                    if (novyTechnik != null)
+                    {
+                        dieslovani.Technik = novyTechnik;
+                        _context.DieslovaniS.Update(dieslovani);
+                        await _context.SaveChangesAsync();
+                        Zpravy.Add("Přiřazen fiktivni technik na lokalitu" + newOdstavka.Lokality.Lokalita);
 
+                    }
+                    return dieslovani;
                 }
-                return dieslovani;
-            }
-            else
-            {
-                
-                var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
-                await CreateNewDielovaniAsync( newOdstavka , novyTechnik , novyTechnik.Firma, odstavky);
+                else
+                {
+                    
+                    var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
+                    if(novyTechnik !=null){ await  CreateNewDielovaniAsync( newOdstavka , novyTechnik , novyTechnik.Firma, odstavky);}
+                    
+                    
+                    
 
-                
+                    
+                }
             }
 
             return null;
@@ -255,10 +261,10 @@ namespace Diesel_modular_application.Controllers
 
                 
 
-                if (technikSearch == null)
+                if (technikSearch == null) //žádný technik není volný
                 {
                     
-                    technikSearch = await CheckTechnikReplacementAsync(newOdstavka, firmaVRegionu, odstavky);
+                    technikSearch = await CheckTechnikReplacementAsync(newOdstavka, firmaVRegionu, odstavky); //
 
                     if(technikSearch!=null)
                     { 
@@ -315,13 +321,8 @@ namespace Diesel_modular_application.Controllers
                 FirmaId = firmaVRegionu.IDFirmy
             };
             _context.DieslovaniS.Add(NewDieslovani);
-            await _context.SaveChangesAsync();
-
-            if (odstavky.AddOdstavka.Od.Date == DateTime.Today)
-            {
             technik.Taken = true;
             _context.TechniS.Update(technik);
-            }
             await _context.SaveChangesAsync();
         }
 
@@ -343,7 +344,7 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
         {
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 1; i++)
             {
                 var number = await _context.LokalityS.CountAsync();
                 var IdNumber = RandomNumberGenerator.GetInt32(1, number);

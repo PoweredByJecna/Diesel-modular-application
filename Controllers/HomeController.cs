@@ -31,9 +31,8 @@ namespace Diesel_modular_application.Controllers
 
         
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page =1, string tableId="upcoming")
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
         {
-            int pagesize = 4;
             var currentUser = await _userManager.GetUserAsync(User);
             var userId = currentUser?.Id; // 
 
@@ -48,29 +47,54 @@ namespace Diesel_modular_application.Controllers
                 .ToListAsync();
             odstavky.LokalityList=await _context.LokalityS.ToListAsync();
             
-            if(tableId=="upcoming")
-            {
-                var odstavkyQuery = _context.DieslovaniS
-                    .Include(o=>o.Odstavka)
-                    .ThenInclude(o => o.Lokality)
-                    .OrderBy(o => o.Odstavka.Od);
-
-                odstavky.DieslovaniList = await odstavkyQuery
-                    .Skip((page - 1) * pagesize)
-                    .Take(pagesize)
-                    .ToListAsync();
-                    
-
-                odstavky.CurrentPageDieslovaniUpcoming = page;
-                odstavky.TotalPagesDieslovaniUpcoming = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
-            }
+       
             return View("Index", odstavky);
             
       
 
             
         }
-        
+        public async Task<IActionResult> GetTableData(string tableId, int page = 1)
+        {
+        int pageSize = 4;
+        if (tableId == "upcoming")
+        {
+        var odstavkyQuery = _context.DieslovaniS
+            .Include(o => o.Odstavka)
+            .ThenInclude(o => o.Lokality)
+            .Where(d => d.Odstavka.Od.Date == DateTime.Today)
+            .OrderBy(o => o.Odstavka.Od);
+
+        var dieslovaniList = await odstavkyQuery
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var totalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pageSize);
+
+        return Json(new { Data = dieslovaniList, CurrentPage = page, TotalPages = totalPages });
+        }
+
+        if (tableId == "all")
+        {
+        var dieslovaniAll = _context.DieslovaniS
+            .Include(o => o.Odstavka)
+            .ThenInclude(o => o.Lokality)
+            .Where(d => d.Odstavka.Od.Date == DateTime.Today)
+            .OrderBy(o => o.Odstavka.Od);
+
+        var dieslovaniList = await dieslovaniAll
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var totalPages = (int)Math.Ceiling(await dieslovaniAll.CountAsync() / (double)pageSize);
+
+        return Json(new { Data = dieslovaniList, CurrentPage = page, TotalPages = totalPages });
+        }
+
+        return BadRequest("Invalid tableId");
+        }
        
         public IActionResult Privacy()
         {

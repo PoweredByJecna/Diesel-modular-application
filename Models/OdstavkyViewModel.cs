@@ -9,8 +9,11 @@ namespace Diesel_modular_application.Models
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
-        public int CurrentPageDieslovaniUpcoming {get; set;}
-        public int TotalPagesDieslovaniUpcoming{get;set;}
+        public int CurrentUpcoming {get; set;}
+        public int TotalUpcoming{get;set;}
+
+        public int CurrentAll{get;set;}
+        public int TotalAll{get;set;}
 
         public IEnumerable<TableOdstavky> OdstavkyList { get; set; }
         public IEnumerable<TableLokality> LokalityList{get;set;}

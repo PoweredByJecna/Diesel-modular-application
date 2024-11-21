@@ -223,6 +223,7 @@
                                     <th>Firma</th>
                                     <th>Začátek</th>
                                     <th>Konec</th>
+                                    <th>Obsazenost</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -234,6 +235,9 @@
                                         <td>@pohotovost.Technik.Firma.NázevFirmy</td>
                                         <td>@pohotovost.Začátek</td>
                                         <td>@pohotovost.Konec</td>
+                                        <td>@if(pohotovost.Technik.Taken==true){<a>Právě je obejednán</a>}
+                                            @if(pohotovost.Technik.Taken==false){<a>Právě je volný</a>}
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
