@@ -126,7 +126,7 @@ namespace Diesel_modular_application.Controllers
             }
             else
             {
-                TempData["Zprava"] = "Technik: " + technikSearch.Jmeno + " je objednán na dieslovaní";
+                TempData["Zprava"] =  string.Join("Technik: " + technikSearch.Jmeno + " je objednán na dieslovaní; ", Zpravy);
                 return Redirect("/Home/Index");
             }
         }
@@ -250,6 +250,24 @@ namespace Diesel_modular_application.Controllers
         private async Task<TableTechnici?> AssignTechnikAsync(TableOdstavky newOdstavka, TableLokality lokalitaSearch, OdstavkyViewModel odstavky)
         {
             var firmaVRegionu = await GetFirmaVRegionuAsync(lokalitaSearch.Region.IdRegion);
+
+            var lokalita = _context.DieslovaniS
+            .Include(o=>o.Odstavka)
+            .ThenInclude(o=>o.Lokality)
+            .Include(o=>o.Technik)
+            .Where(d=> _context.Pohotovts.Any(p=>p.Technik.IdTechnika==d.Technik.IdTechnika))
+            .Select(d=>d.Odstavka.Lokality.Lokalita)
+            .ToListAsync();
+            if(lokalita!=null)
+            {
+                Zpravy.Add("Žádný náhradní technik nebyl nalezen.");
+            }
+
+
+
+
+
+
             Zpravy.Add(firmaVRegionu.NázevFirmy);
             if(firmaVRegionu!=null)
             {
@@ -258,7 +276,7 @@ namespace Diesel_modular_application.Controllers
                 .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken==false)
                 .Select(p => p.Technik)
                 .FirstOrDefaultAsync();
-
+              
                 
 
                 if (technikSearch == null) //žádný technik není volný
@@ -284,6 +302,7 @@ namespace Diesel_modular_application.Controllers
                 {
                     Zpravy.Add(technikSearch.Jmeno);
                     await CreateNewDielovaniAsync(newOdstavka, technikSearch, firmaVRegionu, odstavky);
+                    
                     return technikSearch;
 
                 }

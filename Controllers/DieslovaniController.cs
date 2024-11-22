@@ -96,7 +96,19 @@ namespace Diesel_modular_application.Controllers
         public async Task<IActionResult> Delete (OdstavkyViewModel dieslovani)
         {
             
-             var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
+            var dis = await _context.DieslovaniS
+            .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
+            .FirstAsync(d=>d.IdDieslovani==dieslovani.DieslovaniMod.IdDieslovani);
+             if(dis.Technik.Taken)
+            {
+                dis.Technik.Taken=false;
+                _context.Update(dis);
+            }
+            else
+            {
+                dis.Technik.Taken=true;
+                _context.Update(dis);
+            }
              _context.DieslovaniS.Remove(dis);
             await _context.SaveChangesAsync();
             return Redirect ("/Home/Index");

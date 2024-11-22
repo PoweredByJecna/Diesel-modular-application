@@ -67,9 +67,25 @@ document.querySelectorAll('.InputSearching').forEach(input => {
         // Inicializace pro tabulku "Upcoming"
         $('#upcomingTable').DataTable({
             paging: true,        
-            searching: true,
-            ordering: false,     
+            searching: false,
+            ordering: false, 
+            lengthChange: false,    
             pageLength: 4        
+        });
+        $('#endTable').DataTable({
+            paging: true,        
+            searching: false,
+            ordering: false, 
+            lengthChange: false,     
+            pageLength: 4        // Počet řádků na stránku
+        });
+
+        $('#runningTable').DataTable({
+            paging: true,        
+            searching: false,
+            ordering: false,  
+            lengthChange: false,    
+            pageLength: 4         // Počet řádků na stránku
         });
 
         // Inicializace pro tabulku "All"
@@ -77,22 +93,38 @@ document.querySelectorAll('.InputSearching').forEach(input => {
             paging: true,        
             searching: true,
             ordering: false,     
-            pageLength: 4        // Počet řádků na stránku
+            pageLength: 4,
+            paginate: {
+                previous: '<i class="fa-solid fa-chevron-left"></i>',
+                next: '<i class="fa-solid fa-chevron-right"></i>'
+            },
+            drawCallback: function () {
+                // Upravit styl stránkování
+                $('.dataTables_paginate a').css({
+                    'color': '#0011ff',
+                    'background': 'none',
+                    'border': 'none',
+                    'padding': '5px',
+                    'font-weight': 'bold',
+                    'text-decoration': 'none'
+                });
+    
+                $('.dataTables_paginate span a.current').css({
+                    'color': '#0011ff',
+                    'font-weight': 'bold',
+                    'text-decoration': 'none'
+                });
+            }
         });
 
-        $('#endTable').DataTable({
-            paging: true,        
-            searching: true,
-            ordering: false,     
-            pageLength: 4        // Počet řádků na stránku
-        });
+        $('.dataTables_filter label').contents().filter(function () {
+            return this.nodeType === 3; // Textové uzly
+        }).remove(); // Odstraní text "Search:"
+        $('.dataTables_filter input').attr('placeholder', 'Hledat...'); 
 
-        $('#runningTable').DataTable({
-            paging: true,        
-            searching: true,
-            ordering: false,     
-            pageLength: 4         // Počet řádků na stránku
-        });
+        
+
+    
     });
 
 

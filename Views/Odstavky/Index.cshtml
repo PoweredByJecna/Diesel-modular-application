@@ -235,7 +235,7 @@
                                         <td>@pohotovost.Technik.Firma.NázevFirmy</td>
                                         <td>@pohotovost.Začátek</td>
                                         <td>@pohotovost.Konec</td>
-                                        <td>@if(pohotovost.Technik.Taken==true){<a>Právě je obejednán</a>}
+                                        <td>@if(pohotovost.Technik.Taken==true){<textarea>Právě je objednán, na lokalite te: @Model</textarea>}
                                             @if(pohotovost.Technik.Taken==false){<a>Právě je volný</a>}
                                         </td>
                                     </tr>
