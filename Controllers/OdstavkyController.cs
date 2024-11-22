@@ -251,17 +251,6 @@ namespace Diesel_modular_application.Controllers
         {
             var firmaVRegionu = await GetFirmaVRegionuAsync(lokalitaSearch.Region.IdRegion);
 
-            var lokalita = _context.DieslovaniS
-            .Include(o=>o.Odstavka)
-            .ThenInclude(o=>o.Lokality)
-            .Include(o=>o.Technik)
-            .Where(d=> _context.Pohotovts.Any(p=>p.Technik.IdTechnika==d.Technik.IdTechnika))
-            .Select(d=>d.Odstavka.Lokality.Lokalita)
-            .ToListAsync();
-            if(lokalita!=null)
-            {
-                Zpravy.Add("Žádný náhradní technik nebyl nalezen.");
-            }
 
 
 
