@@ -235,8 +235,22 @@
                                         <td>@pohotovost.Technik.Firma.NázevFirmy</td>
                                         <td>@pohotovost.Začátek</td>
                                         <td>@pohotovost.Konec</td>
-                                        <td>@if(pohotovost.Technik.Taken==true){<textarea>Právě je objednán, na lokalite te:</textarea>}
-                                            @if(pohotovost.Technik.Taken==false){<a>Právě je volný</a>}
+                                       <td>
+                                            @if (pohotovost.Technik.Taken)
+                                            {
+                                                if (Model.TechnikLokalitaMap.TryGetValue(pohotovost.Technik.IdTechnika, out var lokalita))
+                                                {
+                                                    <textarea>Právě je objednán, na lokalitě: @lokalita</textarea>
+                                                }
+                                                else
+                                                {
+                                                    <span>Právě je objednán, ale nemá přiřazenou lokalitu.</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>Právě je volný</span>
+                                            }
                                         </td>
                                     </tr>
                                 }

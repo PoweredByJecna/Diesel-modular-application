@@ -57,6 +57,22 @@ namespace Diesel_modular_application.Controllers
                 .Take(pagesize)
                 .ToListAsync();
 
+
+            var id = await _context.DieslovaniS
+            .Include(o => o.Technik)
+            .Where(static o => o.Technik.Taken == true)
+            .Select(o => o.IdTechnik)
+            .ToListAsync();
+
+
+            odstavky.TechnikLokalitaMap = await _context.DieslovaniS
+            .Where(d => d.Technik.Taken) // Pouze technici, kteří jsou právě na dieslování
+            .GroupBy(d => d.IdTechnik)  // Seskupení podle IdTechnika
+            .ToDictionaryAsync(
+                group => group.Key,
+                group => group.Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
+            );
+
             odstavky.CurrentPage = page;
             odstavky.TotalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
             return View("Index", odstavky);
@@ -86,7 +102,7 @@ namespace Diesel_modular_application.Controllers
             }
             return PartialView("_LokalityListPartial", search);
         }
-        public async Task<IActionResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky,string popis)
+        public async Task<IActionResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis)
         {
             if (lokalitaSearch == null)
             {
@@ -97,11 +113,11 @@ namespace Diesel_modular_application.Controllers
             string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
             var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
 
-            if(ExistingOdstavka(newOdstavka.LokalitaId,newOdstavka.Do)){}
+            if (ExistingOdstavka(newOdstavka.LokalitaId, newOdstavka.Do)) { }
             else
             {
 
-                TempData["Zprava"] = "Odstávka na tento den: " + newOdstavka.Od  +" lokalitu: " + newOdstavka.LokalitaId + "(Id), je již vypsána";  
+                TempData["Zprava"] = "Odstávka na tento den: " + newOdstavka.Od + " lokalitu: " + newOdstavka.LokalitaId + "(Id), je již vypsána";
                 return Redirect("/Home/Index");
             }
 
@@ -117,16 +133,16 @@ namespace Diesel_modular_application.Controllers
             }
 
             var technikSearch = await AssignTechnikAsync(newOdstavka, lokalitaSearch, odstavky);
-            
+
             if (technikSearch == null)
             {
                 Zpravy.Add("Technik nebyl nalezen.");
-                TempData["Zprava"] = string.Join("; ", Zpravy);    
+                TempData["Zprava"] = string.Join("; ", Zpravy);
                 return Redirect("/Home/Index");
             }
             else
             {
-                TempData["Zprava"] =  string.Join("Technik: " + technikSearch.Jmeno + " je objednán na dieslovaní; ", Zpravy);
+                TempData["Zprava"] = string.Join("Technik: " + technikSearch.Jmeno + " je objednán na dieslovaní; ", Zpravy);
                 return Redirect("/Home/Index");
             }
         }
@@ -150,27 +166,23 @@ namespace Diesel_modular_application.Controllers
         }
         private async Task<TableDieslovani?> GetHigherPriortiy(TableOdstavky newOdstavka, OdstavkyViewModel odstavky)
         {
-               
-            var dieslovani = await _context.DieslovaniS 
-            .Include(o=>o.Odstavka)
-            .ThenInclude(o=>o.Lokality)
-            .Include(o=>o.Firma)
-            .Include(o=>o.Technik)
-            .ThenInclude(o=>o.Firma)
-            .Include(o=>o.Firma)
-            .Where(p => 
+            var dieslovani = await _context.DieslovaniS
+            .Include(o => o.Odstavka)
+            .ThenInclude(o => o.Lokality)
+            .Include(o => o.Firma)
+            .Include(o => o.Technik)
+            .ThenInclude(o => o.Firma)
+            .Include(o => o.Firma)
+            .Where(p =>
             p.Technik.Firma.IDFirmy == newOdstavka.Lokality.Region.Firma.IDFirmy &&
             p.Technik.Taken == true).FirstAsync();
-                
-                
-            
 
             if (dieslovani == null)
             {
                 Zpravy.Add("Dieslovani nenalezeno ");
                 return null;
             }
-            if(dieslovani !=null)
+            if (dieslovani != null)
             {
                 int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
                 int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
@@ -179,7 +191,7 @@ namespace Diesel_modular_application.Controllers
                 bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(2) < DateTime.Now;
                 bool daPodminka = dieslovani.Odstavka.Lokality.DA == "FALSE";
 
-                if(maVyssiPrioritu && casovyLimit && daPodminka)
+                if (maVyssiPrioritu && casovyLimit && daPodminka)
                 {
                     Zpravy.Add("Podminka pro prioritu splněna");
                     var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
@@ -195,14 +207,8 @@ namespace Diesel_modular_application.Controllers
                 }
                 else
                 {
-                    
                     var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
-                    if(novyTechnik !=null){ await  CreateNewDielovaniAsync( newOdstavka , novyTechnik , novyTechnik.Firma, odstavky);}
-                    
-                    
-                    
-
-                    
+                    if (novyTechnik != null) { await CreateNewDielovaniAsync(newOdstavka, novyTechnik, novyTechnik.Firma, odstavky); }
                 }
             }
 
@@ -220,6 +226,16 @@ namespace Diesel_modular_application.Controllers
                 "Praha + Střední Čechy" => "PRE",
                 _ => ""
             };
+        }
+
+        public string GetTechnikLokalita(string technikId)
+        {
+#pragma warning disable CS8603 // Possible null reference return.
+            return _context.DieslovaniS
+            .Where(d => d.IdTechnik == technikId)
+            .Select(d => d.Odstavka.Lokality.Lokalita)
+            .FirstOrDefault();
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private TableOdstavky CreateNewOdstavka(OdstavkyViewModel odstavky, TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
@@ -244,8 +260,8 @@ namespace Diesel_modular_application.Controllers
         {
             var existingOdstavka = _context.OdstavkyS
             .FirstOrDefault(o => o.Od == od && o.Lokality.Id == lokalitaSearchId);
-            if(existingOdstavka==null){return true;}
-            else{return false;}
+            if (existingOdstavka == null) { return true; }
+            else { return false; }
         }
         private async Task<TableTechnici?> AssignTechnikAsync(TableOdstavky newOdstavka, TableLokality lokalitaSearch, OdstavkyViewModel odstavky)
         {
@@ -258,25 +274,25 @@ namespace Diesel_modular_application.Controllers
 
 
             Zpravy.Add(firmaVRegionu.NázevFirmy);
-            if(firmaVRegionu!=null)
+            if (firmaVRegionu != null)
             {
                 var technikSearch = await _context.Pohotovts
-                .Include(p=>p.Technik.Firma)
-                .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken==false)
+                .Include(p => p.Technik.Firma)
+                .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken == false)
                 .Select(p => p.Technik)
                 .FirstOrDefaultAsync();
-              
-                
+
+
 
                 if (technikSearch == null) //žádný technik není volný
                 {
-                    
+
                     technikSearch = await CheckTechnikReplacementAsync(newOdstavka, firmaVRegionu, odstavky); //
 
-                    if(technikSearch!=null)
-                    { 
-                       await CreateNewDielovaniAsync(newOdstavka, technikSearch, firmaVRegionu, odstavky);
-                       return technikSearch;
+                    if (technikSearch != null)
+                    {
+                        await CreateNewDielovaniAsync(newOdstavka, technikSearch, firmaVRegionu, odstavky);
+                        return technikSearch;
                     }
                     else
                     {
@@ -291,7 +307,7 @@ namespace Diesel_modular_application.Controllers
                 {
                     Zpravy.Add(technikSearch.Jmeno);
                     await CreateNewDielovaniAsync(newOdstavka, technikSearch, firmaVRegionu, odstavky);
-                    
+
                     return technikSearch;
 
                 }
@@ -300,7 +316,7 @@ namespace Diesel_modular_application.Controllers
 
             return null;
 
-        }  
+        }
         private async Task<TableFirma?> GetFirmaVRegionuAsync(int regionId)
         {
             return await _context.ReginoS
@@ -310,8 +326,8 @@ namespace Diesel_modular_application.Controllers
         }
         private async Task<TableTechnici?> CheckTechnikReplacementAsync(TableOdstavky newOdstavka, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
         {
-            var dieslovani = await GetHigherPriortiy(newOdstavka , odstavky);
-            if (dieslovani == null)  {Zpravy.Add("Priority je null."); return null;}
+            var dieslovani = await GetHigherPriortiy(newOdstavka, odstavky);
+            if (dieslovani == null) { Zpravy.Add("Priority je null."); return null; }
             else
             {
                 return dieslovani.Technik;
@@ -357,11 +373,11 @@ namespace Diesel_modular_application.Controllers
                 var number = await _context.LokalityS.CountAsync();
                 var IdNumber = RandomNumberGenerator.GetInt32(1, number);
                 var lokalitaSearch = await _context.LokalityS.Include(o => o.Region).ThenInclude(p => p.Firma).FirstOrDefaultAsync(i => i.Id == IdNumber);
-                if (lokalitaSearch!=null)
+                if (lokalitaSearch != null)
                 {
                     var hours = RandomNumberGenerator.GetInt32(1, 50);
                     string popis = "test";
-                    return await HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours+2), DateTime.Today.AddHours(hours+8), odstavky, popis);
+                    return await HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours + 2), DateTime.Today.AddHours(hours + 8), odstavky, popis);
                 }
             }
             return Redirect("/Home/Index");
