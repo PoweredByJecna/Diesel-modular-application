@@ -7,7 +7,7 @@
                 <h2 style="display: flex;justify-content: center;">Odstávky</h2>               
             </section>
             <div class="table-div odstavkyTable">
-                <table id="odstavkyTable">
+                <table id="odTable">
                     <thead>
 
                         <tr>
@@ -21,132 +21,13 @@
                             <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
                             <th>Popis</th>
                             <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
+                            <th></th>
                             
                         </tr>
                     </thead>
-                    @if(Model == null)
-                    {
-                    <div class="error">
-                        <h1>Nelze načíst</h1>
-                    </div>
-                    }
+                 
                     <tbody id="table-body">     
-                        @if (Model != null)
-                        {
-                            
-
-                            @foreach(var odstavky in Model.OdstavkyList)
-                            {
-                                <tr class="table-row">
-                                    <td>@odstavky.IdOdstavky</td>
-                                    <td>
-                                        @if(odstavky.Distributor=="ČEZ")
-                                        {
-                                            <img src="~/Images/CEZ-Logo.jpg"  width="30" height="30">
-                                            
-                                        }
-                                         @if(odstavky.Distributor=="EGD")
-                                        {
-                                            <img src="~/Images/EGD-Logo.jpg"  width="60" height="40">
-                                        }
-                                         @if(odstavky.Distributor=="PRE")
-                                        {
-                                            <img src="~/Images/PRE-Logo.jpg"  width="50" height="30">
-                                            
-                                        }
-                                    </td>
-                                    <td>@odstavky.Lokality.Lokalita</td>
-                                    
-                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Klasifikace))
-                                    {
-                                        <td>@if(odstavky.Lokality.Klasifikace=="A1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
-                                                </span> 
-                                            }
-                                            @if(odstavky.Lokality.Klasifikace=="A2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
-                                                </span> 
-                                            }
-                                            @if(odstavky.Lokality.Klasifikace=="B1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
-                                                </span> 
-                                            }
-                                            @if(odstavky.Lokality.Klasifikace=="B2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
-                                                </span> 
-                                            }
-                                            @if(odstavky.Lokality.Klasifikace=="B")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
-                                                </span> 
-                                            }
-                                               @if(odstavky.Lokality.Klasifikace=="C")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
-                                                </span> 
-                                            }
-                                            @if(odstavky.Lokality.Klasifikace=="D1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
-                                                </span> 
-                                            }
-                                         
-                                        </td>
-                                    }
-                                    <td>@odstavky.Od</td>
-                                    <td>@odstavky.Do</td>
-                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Adresa))
-                                    {
-                                        <td>@odstavky.Lokality.Adresa</td>
-                                    }
-                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Baterie))
-                                    {
-                                        <td>@odstavky.Lokality.Baterie</td>
-                                    }
-                                    <td>@odstavky.Popis</td>
-                                    @if(odstavky.Lokality != null && !string.IsNullOrEmpty(odstavky.Lokality.Zásuvka))
-                                    {
-                                        <td class="content-cell"><span>
-                                            @if(odstavky.Lokality.Zásuvka=="TRUE")
-                                            {
-                                                <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
-                                            }
-                                            @if(odstavky.Lokality.Zásuvka=="FALSE")
-                                            {
-                                                <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
-                                            }
-                                        </span></td>
-                                    }
-                                    
-                                    <td>
-                                        <div class="button-conteiner">
-                                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                            <div class="hidden-buttons">
-                                                
-                                                <form asp-action="Delete" asp-controller="Odstavky">
-                                                    <input type="hidden" asp-for="OdstavkyMod.IdOdstavky" value="@odstavky.IdOdstavky" />
-                                                    <button class="button Edit delete"><i class="fa-solid fa-trash" style="color:black"></i></button>
-                                                </form>
-                                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                            }  
-                            
-                        }
+                        
                     </tbody>
                 
                     

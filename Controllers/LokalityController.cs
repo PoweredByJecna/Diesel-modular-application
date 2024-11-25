@@ -64,6 +64,41 @@ namespace Diesel_modular_application.Controllers
             }
             return PartialView("_LokalityListPartial", search);
         }
+        [HttpPost]
+        public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
+        {
+            // Celkový počet záznamů v tabulce
+            int totalRecords = await _context.LokalityS.CountAsync();
+            length = totalRecords;
+            // Načtení záznamů pro aktuální stránku
+            var LokalityList = await _context.LokalityS
+                .Include(o=>o.Region)
+                .OrderBy(o => o.Id) // Nebo jiný řadící sloupec
+        .Skip(start)
+        .Take(length)
+        .Select(l => new
+        {
+            l.Id,
+            l.Lokalita,
+            l.Klasifikace,
+            l.Adresa,
+            l.Region.NazevRegionu,
+            l.Baterie,
+            l.Zásuvka,
+            l.DA
+        })
+                .ToListAsync();
+
+            // Vrácení dat ve formátu očekávaném DataTables
+            return Json(new
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = LokalityList // Data aktuální stránky
+            });
+        }
+
        [Authorize(Roles ="Admin")]
        public async Task<IActionResult> Nacteni(OdstavkyViewModel lok)
        {

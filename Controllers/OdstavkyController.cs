@@ -166,6 +166,7 @@ namespace Diesel_modular_application.Controllers
                 .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
 
         }
+
         private async Task<TableDieslovani?> GetHigherPriortiy(TableOdstavky newOdstavka, OdstavkyViewModel odstavky)
         {
             var dieslovani = await _context.DieslovaniS
@@ -427,6 +428,46 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect("/Odstavky/Index");
         }
+
+         public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
+        {
+            // Celkový počet záznamů v tabulce
+            int totalRecords = await _context.OdstavkyS.CountAsync();
+            length = totalRecords;
+            // Načtení záznamů pro aktuální stránku
+            var LokalityList = await _context.OdstavkyS
+                .Include(o=>o.Lokality)
+                .OrderBy(o => o.IdOdstavky) // Nebo jiný řadící sloupec
+                .Skip(start)
+                .Take(length)
+                .Select(l => new
+                {
+                    l.IdOdstavky,
+                    l.Distributor,
+                    l.Lokality.Lokalita,
+                    l.Lokality.Klasifikace,
+                    l.Od,
+                    l.Do,
+                    l.Lokality.Adresa,
+                    l.Lokality.Baterie,
+                    l.Popis,
+                    l.Lokality.Zásuvka,
+                    EmptyColumn = (string)null  
+
+                    
+                })
+                .ToListAsync();
+
+            // Vrácení dat ve formátu očekávaném DataTables
+            return Json(new
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = LokalityList // Data aktuální stránky
+            });
+        }
+
 
 
 

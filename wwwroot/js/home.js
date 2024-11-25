@@ -66,6 +66,7 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     $(document).ready(function() {
         // Inicializace pro tabulku "Upcoming"
         $('#upcomingTable').DataTable({
+        
             paging: true,        
             searching: false,
             ordering: false, 
@@ -79,19 +80,178 @@ document.querySelectorAll('.InputSearching').forEach(input => {
             lengthChange: false,     
             pageLength: 4        // Počet řádků na stránku
         });
-        $('#lokalityTable').DataTable({
-            paging: true,        
-            searching: true,    
-            ordering: false, 
-            lengthChange: true,
-            pageLength: 8           // Počet řádků na stránku
+
+        $('#lokalityTable').DataTable({   // Zobrazí indikátor načítání  // Povolení serverového stránkování
+            ajax: {
+                url: '/Lokality/GetTableData', // Cesta na vaši serverovou metodu
+                type: 'POST',
+                dataSrc: function (json) {
+                    // Zkontrolujte, co se vrací z API
+                    console.log(json);
+                    return json.data;
+                }
+            },  
+            columns: [
+                { data: 'id' },
+        { data: 'lokalita' },
+        {
+            data: 'klasifikace',
+            render: function(data, type, row) {
+                var klasifikacebarva = {
+                    "A1": "#c91829",
+                    "A2": "orange",
+                    "B1": "yellow",
+                    "B2": "lightgreen",
+                    "B": "green",
+                    "C": "green",
+                    "D1": "blue"
+                };
+                var barva = klasifikacebarva[data] || '#fff';  // Defaultní barva
+                return '<span class="badge badge-phoenix fs-10" style="background-color: ' + barva + '; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">' +
+                    '<span class="badge-label" style="color: black; padding: 3px; font-size: medium;">' + data + '</span></span>';
+            }
+        },
+        { data: 'adresa' },
+        { data: 'nazevRegionu' },
+        { data: 'baterie' },
+        {
+            data: 'zásuvka',
+            render: function(data) {
+                if (data === "TRUE") {
+                    return '<i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>';
+                }
+                else
+                return '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+            }
+        },
+        {
+            data: 'da',
+            render: function(data) {
+                if (data === "TRUE") {
+                    return '<i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>';
+                }
+                return '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+            }
+        }
+    ],
+    pageLength: 7,
+            ordering: false,  
+                     // Počet řádků na stránku
         });
-        $('#odstavkyTable').DataTable({
+
+
+
+
+
+
+
+        $('#odTable').DataTable({
+            ajax: {
+                url: '/Odstavky/GetTableData', // Cesta na vaši serverovou metodu
+                type: 'POST',
+                dataSrc: function (json) {
+                    // Zkontrolujte, co se vrací z API
+                    console.log(json);
+                    return json.data;
+                }
+            },  
+            columns: [
+                { data: 'idOdstavky' },  // ID
+                {
+                    data: 'distributor',
+                    render: function (data, type, row) {
+                        var logo = '';
+                        if (data === 'ČEZ') {
+                            logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                        } else if (data === 'EGD') {
+                            logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                        } else if (data === 'PRE') {
+                            logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                        }
+                        return logo; }
+                },
+                {
+                    data: 'lokalita',
+                    render: function (data, type, row) {
+                        var klasifikaceHtml = data;
+                        if (row.Klasifikace === 'A1') {
+                            klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                        } else if (row.Klasifikace === 'A2') {
+                            klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                        } else if (row.Klasifikace === 'B1') {
+                            klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                        } else if (row.Klasifikace === 'B2') {
+                            klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                        } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                            klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                        } else if (row.Klasifikace === 'D1') {
+                            klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                        }
+                        return klasifikaceHtml;
+                    }
+                },
+                {
+                    data: 'klasifikace',
+                    render: function (data, type, row) {
+                        var klasifikaceBadge = '';
+                        var colorMap = {
+                            'A1': '#c91829',
+                            'A2': 'orange',
+                            'B1': 'yellow',
+                            'B2': 'lightgreen',
+                            'B': 'green',
+                            'C': 'green',
+                            'D1': 'blue'
+                        };
+                        if (colorMap[data]) {
+                            klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                            </span>`;
+                        }
+                        return klasifikaceBadge;
+                    }
+                },
+                { data: 'od' },
+                { data: 'do' },
+                { data: 'adresa' },
+                { data: 'baterie' },
+                { data: 'popis' },
+                {
+                    data: 'zásuvka',
+                    render: function (data, type, row) {
+                        var zasuvkaHtml = '';
+                        if (data === "TRUE") {
+                            zasuvkaHtml = '<i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>';
+                        } else if (data === "FALSE") {
+                            zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+                        }
+                        return zasuvkaHtml;
+                    }
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `
+                            <div class="button-conteiner">
+                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                <div class="hidden-buttons">
+                                    <form asp-action="Delete" asp-controller="Odstavky">
+                                        <input type="hidden" asp-for="IdOdstavky" value="${row.IdOdstavky}" />
+                                        <button class="button Edit delete"><i class="fa-solid fa-trash" style="color:black"></i></button>
+                                    </form>
+                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            ],
+
             paging: true,        
             searching: true,
             ordering: false, 
             lengthChange: false,        
-            pageLength: 8       // Počet řádků na stránku
+            pageLength: 7       // Počet řádků na stránku
         });
 
         $('#runningTable').DataTable({
