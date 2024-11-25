@@ -79,6 +79,20 @@ document.querySelectorAll('.InputSearching').forEach(input => {
             lengthChange: false,     
             pageLength: 4        // Počet řádků na stránku
         });
+        $('#lokalityTable').DataTable({
+            paging: true,        
+            searching: true,    
+            ordering: false, 
+            lengthChange: true,
+            pageLength: 8           // Počet řádků na stránku
+        });
+        $('#odstavkyTable').DataTable({
+            paging: true,        
+            searching: true,
+            ordering: false, 
+            lengthChange: false,        
+            pageLength: 8       // Počet řádků na stránku
+        });
 
         $('#runningTable').DataTable({
             paging: true,        

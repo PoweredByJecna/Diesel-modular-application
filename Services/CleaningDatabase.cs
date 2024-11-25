@@ -31,15 +31,31 @@ namespace Diesel_modular_application.Services
         {
             using (var scope = _scopeFactory.CreateScope())
             {
+            
                 var _context = scope.ServiceProvider.GetRequiredService<DAdatabase>();
                 var outdatedRecordsOdstavky= await _context.OdstavkyS
                 .Where(d=>d.Do.Date<DateTime.Today).ToListAsync();
-                var outdatedRecordsDieslovani = await _context.DieslovaniS
+
+                var outdatedRecordsDieslovani = await _context.DieslovaniS.Include(d=>d.Technik)
                 .Where(d=>d.Odstavka.Do.Date<DateTime.Today).ToListAsync();
+
                 if(outdatedRecordsOdstavky.Any())
                 {
+                    
                     _context.OdstavkyS.RemoveRange(outdatedRecordsOdstavky);
+
                     await _context.SaveChangesAsync();
+                }
+                foreach (var dieslovani in outdatedRecordsDieslovani)
+                {
+                    if (dieslovani.Technik != null)
+                    {
+                        dieslovani.Technik.Taken = false;
+                
+                        _context.TechniS.Update(dieslovani.Technik);
+                        
+                         await _context.SaveChangesAsync();
+                    }
                 }
                
 

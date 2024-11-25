@@ -65,6 +65,7 @@ namespace Diesel_modular_application.Controllers
             .ToListAsync();
 
 
+            #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             odstavky.TechnikLokalitaMap = await _context.DieslovaniS
             .Where(d => d.Technik.Taken) // Pouze technici, kteří jsou právě na dieslování
             .GroupBy(d => d.IdTechnik)  // Seskupení podle IdTechnika
@@ -72,6 +73,7 @@ namespace Diesel_modular_application.Controllers
                 group => group.Key,
                 group => group.Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
             );
+            #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
 
             odstavky.CurrentPage = page;
             odstavky.TotalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
@@ -182,7 +184,7 @@ namespace Diesel_modular_application.Controllers
                 Zpravy.Add("Dieslovani nenalezeno ");
                 return null;
             }
-            if (dieslovani != null)
+            else
             {
                 int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
                 int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
@@ -207,12 +209,16 @@ namespace Diesel_modular_application.Controllers
                 }
                 else
                 {
-                    var novyTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794464");
-                    if (novyTechnik != null) { await CreateNewDielovaniAsync(newOdstavka, novyTechnik, novyTechnik.Firma, odstavky); }
+
+                    var novyTechnik = await _context.TechniS.Where(t=>t.IdTechnika=="606794494").FirstOrDefaultAsync();
+                    
+                    if(novyTechnik==null){Zpravy.Add("Pokus o přivázání nového fiktivního technika"); return null;}
+
+                    var NewDieslovani = await CreateNewDielovaniAsync(newOdstavka, novyTechnik, novyTechnik.Firma, odstavky);  return NewDieslovani;
+                    
                 }
             }
-
-            return null;
+      
 
 
         }
@@ -334,7 +340,7 @@ namespace Diesel_modular_application.Controllers
             }
 
         }
-        private async Task CreateNewDielovaniAsync(TableOdstavky newOdstavky, TableTechnici technik, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
+        private async Task<TableDieslovani> CreateNewDielovaniAsync(TableOdstavky newOdstavky, TableTechnici technik, TableFirma firmaVRegionu, OdstavkyViewModel odstavky)
         {
             var NewDieslovani = new TableDieslovani
             {
@@ -348,7 +354,10 @@ namespace Diesel_modular_application.Controllers
             technik.Taken = true;
             _context.TechniS.Update(technik);
             await _context.SaveChangesAsync();
+
+            return NewDieslovani;
         }
+    
 
 
 
