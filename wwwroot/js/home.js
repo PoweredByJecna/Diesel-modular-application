@@ -232,6 +232,7 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                     data: null,
                     render: function (data, type, row) {
                         return `
+                            
                             <div class="button-conteiner">
                                 <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                                 <div class="hidden-buttons">
@@ -253,6 +254,13 @@ document.querySelectorAll('.InputSearching').forEach(input => {
             lengthChange: false,        
             pageLength: 7       // Počet řádků na stránku
         });
+
+        $('#lokalityTable tbody').on('mouseenter', '.table-row', function () {
+            $(this).find('.hidden-buttons').css('display', 'flex');
+        }).on('mouseleave', '.table-row', function () {
+            $(this).find('.hidden-buttons').css('display', 'none');
+        });
+        
 
         $('#runningTable').DataTable({
             paging: true,        
