@@ -221,7 +221,7 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                     render: function (data, type, row) {
                         var zasuvkaHtml = '';
                         if (data === "TRUE") {
-                            zasuvkaHtml = '<i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>';
+                            zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
                         } else if (data === "FALSE") {
                             zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
                         }
@@ -229,25 +229,23 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                     }
                 },
                 {
-                    data: null,
-                    render: function (data, type, row) {
-                        return `
-                            
-                            <div class="button-conteiner">
-                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                <div class="hidden-buttons">
-                                    <form asp-action="Delete" asp-controller="Odstavky">
-                                        <input type="hidden" asp-for="IdOdstavky" value="${row.IdOdstavky}" />
-                                        <button class="button Edit delete"><i class="fa-solid fa-trash" style="color:black"></i></button>
-                                    </form>
-                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                                </div>
+                data: null,
+                render: function (data, type, row) {
+                    return `       
+                        <div class="button-conteiner">
+                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                            <div class="hidden-buttons">
+                                <form asp-action="Delete" asp-controller="Odstavky" method="post">
+                                    <input type="hidden" asp-for="IdOdstavky" value="${row.IdOdstavky}" />
+                                    <button type="submit" class="button Edit delete"><i class="fa-solid fa-trash" style="color:black"></i></button>
+                                </form>
+                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
                             </div>
-                        `;
-                    }
+                        </div>
+                    `;
                 }
+                }, 
             ],
-
             paging: true,        
             searching: true,
             ordering: false, 

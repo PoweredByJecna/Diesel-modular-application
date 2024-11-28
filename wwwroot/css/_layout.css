@@ -279,30 +279,31 @@ nav input {
    
    
 }
-.button.Edit{
-    width: 40px;
-    height: 33px;
-    margin-left: 5px;
-    background-color:#b5b9bd3d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.table-row:hover .content-cell span {
-    display: none;
-}
-.hidden-buttons {
-    display: none; /* Skryje další tlačítka */
-    position: absolute; /* Umožní umístění vedle tlačítka */
-   
-}
-.table-row:hover  .hidden-buttons{
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    transition: 0.3s;
-    margin-right: 45px;
-}
+    .button.Edit{
+        width: 40px;
+        height: 33px;
+        margin-left: 5px;
+        background-color:#b5b9bd3d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .odd:hover .socket-icon{
+        display: none;
+    }
+    .hidden-buttons {
+        display: none; /* Skryje další tlačítka */
+        position: absolute; /* Umožní umístění vedle tlačítka */
+    
+    }
+    .odd:hover .hidden-buttons,
+    .even:hover .hidden-buttons{
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        transition: 0.3s;
+        margin-right: 45px;
+    }
 .badge {
     display: inline-flex;
     align-items: center;

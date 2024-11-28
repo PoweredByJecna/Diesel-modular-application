@@ -516,146 +516,146 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach (var dieslovani in Model.DieslovaniList)
-                            {
-                                @if(dieslovani.Odstavka.Od.Date==DateTime.Today)
-                                {                                
-                                    <tr class="table-row">
-                                        <td id="td-stav">
-                                            @if(dieslovani.Odstavka.ZadanOdchod==true && dieslovani.Odstavka.ZadanVstup==false)
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
-                                                    <i class="fa-solid fa-x" style="color: Black;"></i>
-                                                </span> 
-                                            }
-                                            @if (dieslovani.Odstavka.Od > DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
-                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
-                                                </span>                                            
-                                            }
-                                            @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
-                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.ZadanVstup==true)
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
-                                                    <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
-                                                </span>    
-                                            }
-                                        </td>
-                                        <td id="td-lokalita">@dieslovani.Odstavka.Lokality.Lokalita</td>
-                                   <td>@if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="B")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
-                                                </span> 
-                                            }
-                                               @if(dieslovani.Odstavka.Lokality.Klasifikace=="C")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
-                                                </span> 
-                                            }
-                                            @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
-                                            {
-                                                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px; ">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
-                                                </span> 
-                                            }
-                                         
-                                        </td>
-                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Adresa))
-                                        {
-                                            <td>@dieslovani.Odstavka.Lokality.Adresa</td>
-                                        }
-                                        <td id="td-firma">
-                                            @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
-                                        </td>
-                                        <td>@dieslovani.Technik.Jmeno</td>
-                                        <td>@dieslovani.Odstavka.Lokality.Region.NazevRegionu</td>
-                                        <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
-                                        <td id="td-vstup">@if(dieslovani.Vstup==DateTime.MinValue)
-                                            {
-                                                <a>-</a>
-                                            }
-                                            else
-                                            @dieslovani.Vstup
-                                        </td>
-                                        <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
-                                            {
-                                                <a>-</a>
-                                            }
-                                            else
-                                            @dieslovani.Odchod
-                                        </td>
-                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Baterie))
-                                        {
-                                            <td>@dieslovani.Odstavka.Lokality.Baterie</td>
-                                        }
-                                        <td>@dieslovani.Odstavka.Popis</td>
-                                        @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
-                                        {
-                                            <td class="content-cell"><span>
-                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                            <tbody>
+                                @foreach (var dieslovani in Model.DieslovaniList)
+                                {
+                                    @if(dieslovani.Odstavka.Od.Date==DateTime.Today)
+                                    {                                
+                                        <tr class="table-row">
+                                            <td id="td-stav">
+                                                @if(dieslovani.Odstavka.ZadanOdchod==true && dieslovani.Odstavka.ZadanVstup==false)
                                                 {
-                                                    <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px;">
+                                                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončené</span>
+                                                        <i class="fa-solid fa-x" style="color: Black;"></i>
+                                                    </span> 
                                                 }
-                                                @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                @if (dieslovani.Odstavka.Od > DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
                                                 {
-                                                    <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
+                                                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                    </span>                                            
                                                 }
-                                            </span></td>
-                                        }
-                                        <td>
-                                            <div class="button-conteiner">
-                                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                                <div class="hidden-buttons">
-                                                    <form asp-action="Delete" asp-controller="Dieslovani">
-                                                        <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
-                                                        <button class="button Edit delete"><i class="fa-solid fa-trash" style="color: black;"></i></button>
-                                                    </form>
-                                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                                                @if(dieslovani.Odstavka.Od<DateTime.Now && dieslovani.Odstavka.ZadanVstup==false && dieslovani.Odstavka.ZadanOdchod==false)
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                                                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.ZadanVstup==true)
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                                                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
+                                                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                                                    </span>    
+                                                }
+                                            </td>
+                                            <td id="td-lokalita">@dieslovani.Odstavka.Lokality.Lokalita</td>
+                                    <td>@if(dieslovani.Odstavka.Lokality.Klasifikace=="A1")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #c91829; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A1</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="A2")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">A2</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="B1")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B1</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="B2")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: lightgreen; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B2</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="B")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">B</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="C")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">C</span>
+                                                    </span> 
+                                                }
+                                                @if(dieslovani.Odstavka.Lokality.Klasifikace=="D1")
+                                                {
+                                                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: blue; border-radius: 5px; padding: 3px; width: 25px; height: 30px; ">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">D1</span>
+                                                    </span> 
+                                                }
+                                            
+                                            </td>
+                                            @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Adresa))
+                                            {
+                                                <td>@dieslovani.Odstavka.Lokality.Adresa</td>
+                                            }
+                                            <td id="td-firma">
+                                                @dieslovani.Odstavka.Lokality.Region.Firma.NázevFirmy
+                                            </td>
+                                            <td>@dieslovani.Technik.Jmeno</td>
+                                            <td>@dieslovani.Odstavka.Lokality.Region.NazevRegionu</td>
+                                            <td id="td-objednano">@dieslovani.Odstavka.Od</td>  
+                                            <td id="td-vstup">@if(dieslovani.Vstup==DateTime.MinValue)
+                                                {
+                                                    <a>-</a>
+                                                }
+                                                else
+                                                @dieslovani.Vstup
+                                            </td>
+                                            <td id="td-vstup">@if(dieslovani.Odchod==DateTime.MinValue)
+                                                {
+                                                    <a>-</a>
+                                                }
+                                                else
+                                                @dieslovani.Odchod
+                                            </td>
+                                            @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Baterie))
+                                            {
+                                                <td>@dieslovani.Odstavka.Lokality.Baterie</td>
+                                            }
+                                            <td>@dieslovani.Odstavka.Popis</td>
+                                            @if(dieslovani.Odstavka.Lokality != null && !string.IsNullOrEmpty(dieslovani.Odstavka.Lokality.Zásuvka))
+                                            {
+                                                <td class="content-cell"><span>
+                                                    @if(dieslovani.Odstavka.Lokality.Zásuvka=="TRUE")
+                                                    {
+                                                        <i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>
+                                                    }
+                                                    @if(dieslovani.Odstavka.Lokality.Zásuvka=="FALSE")
+                                                    {
+                                                        <i class="fa-solid fa-ban" style="color: #ea0606;"></i>
+                                                    }
+                                                </span></td>
+                                            }
+                                            <td>
+                                                <div class="button-conteiner">
+                                                    <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                                    <div class="hidden-buttons">
+                                                        <form asp-action="Delete" asp-controller="Dieslovani">
+                                                            <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                                            <button class="button Edit delete"><i class="fa-solid fa-trash" style="color: black;"></i></button>
+                                                        </form>
+                                                        <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                    </tr>
-                                } 
-                            }           
-                        </tbody>
+                                        </tr>
+                                    } 
+                                }           
+                            </tbody>
                     </table>
 
               
