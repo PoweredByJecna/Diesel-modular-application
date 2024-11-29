@@ -60,6 +60,25 @@ document.querySelectorAll('.InputSearching').forEach(input => {
             }
         };
     });
+
+    function deleteRecord(idOdstavky) {
+        console.log("Mazání záznamu s ID:", idOdstavky); // Ladicí výstup
+        $.ajax({
+            url: '/Odstavky/Delete',
+            type: 'POST',
+            data: { idOdstavky: idOdstavky },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#odTable').DataTable().ajax.reload();
+                } 
+                else {
+                    alert('Mazání záznamu se nezdařilo: ' + response.message);
+                }
+            },
+           
+        });
+    }
     
    
 
@@ -235,10 +254,9 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                         <div class="button-conteiner">
                             <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                             <div class="hidden-buttons">
-                                <form asp-action="Delete" asp-controller="Odstavky" method="post">
-                                    <input type="hidden" asp-for="IdOdstavky" value="${row.IdOdstavky}" />
-                                    <button type="submit" class="button Edit delete"><i class="fa-solid fa-trash" style="color:black"></i></button>
-                                </form>
+                                <button class="button Edit delete" onclick="deleteRecord(${row.idOdstavky})">
+                                    <i class="fa-solid fa-trash" style="color:black"></i>
+                                </button>
                                 <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
                             </div>
                         </div>
