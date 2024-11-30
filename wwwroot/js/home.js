@@ -33,6 +33,26 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.a-sidebar');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            // Odstranit 'active' ze všech <li> prvků
+            document.querySelectorAll('.li-sidebar').forEach(li => {
+                li.classList.remove('active');
+            });
+
+            // Přidat 'active' na rodičovský <li> kliknutého odkazu
+            const parentLi = link.closest('li.li-sidebar');
+            if (parentLi) {
+                parentLi.classList.add('active');
+            }
+        });
+    });
+});
+
+
 
 
 
@@ -71,6 +91,27 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                 if (response.success) {
                     alert(response.message);
                     $('#odTable').DataTable().ajax.reload();
+                } 
+                else {
+                    alert('Mazání záznamu se nezdařilo: ' + response.message);
+                }
+            },
+           
+        });
+    }
+    function deleteRecordDieslovani(idDieslovani) {
+        console.log("Mazání záznamu s ID:", idDieslovani); // Ladicí výstup
+        $.ajax({
+            url: '/Dieslovani/Delete',
+            type: 'POST',
+            data: { idDieslovani: idDieslovani },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#allTable').DataTable().ajax.reload();
+                    $('#upcomingTable').DataTable().ajax.reload();
+                    $('#endTable').DataTable().ajax.reload();
+                    $('#runningTable').DataTable().ajax.reload();
                 } 
                 else {
                     alert('Mazání záznamu se nezdařilo: ' + response.message);
@@ -223,9 +264,11 @@ document.querySelectorAll('.InputSearching').forEach(input => {
                             'D1': 'blue'
                         };
                         if (colorMap[data]) {
-                            klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
-                                            </span>`;
+                            klasifikaceBadge =
+                            `
+                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                            <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                            </span>`;
                         }
                         return klasifikaceBadge;
                     }
@@ -279,6 +322,125 @@ document.querySelectorAll('.InputSearching').forEach(input => {
         
 
         $('#runningTable').DataTable({
+            ajax: {
+                
+
+                url: '/Dieslovani/GetTableDataRunningTable', // Cesta na vaši serverovou metodu
+                type: 'POST',
+                dataSrc: function (json) {
+                    // Zkontrolujte, co se vrací z API
+                    console.log(json);
+                    return json.data;
+                }
+            },
+            columns: [
+                {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                            <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
+                            <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                        </span>
+                    `;
+                }
+                },
+                {data: 'idDieslovani'},
+                {
+                    data: 'distributor',
+                    render: function (data, type, row) {
+                        var logo = '';
+                        if (data === 'ČEZ') {
+                            logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                        } else if (data === 'EGD') {
+                            logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                        } else if (data === 'PRE') {
+                            logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                        }
+                        return logo; }
+                },
+                {
+                    data: 'lokalita',
+                    render: function (data, type, row) {
+                        var klasifikaceHtml = data;
+                        if (row.Klasifikace === 'A1') {
+                            klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                        } else if (row.Klasifikace === 'A2') {
+                            klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                        } else if (row.Klasifikace === 'B1') {
+                            klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                        } else if (row.Klasifikace === 'B2') {
+                            klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                        } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                            klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                        } else if (row.Klasifikace === 'D1') {
+                            klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                        }
+                        return klasifikaceHtml;
+                    }
+                },
+                {
+                    data: 'klasifikace',
+                    render: function (data, type, row) {
+                        var klasifikaceBadge = '';
+                        var colorMap = {
+                            'A1': '#c91829',
+                            'A2': 'orange',
+                            'B1': 'yellow',
+                            'B2': 'lightgreen',
+                            'B': 'green',
+                            'C': 'green',
+                            'D1': 'blue'
+                        };
+                        if (colorMap[data]) {
+                            klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                            </span>`;
+                        }
+                        return klasifikaceBadge;
+                    }
+                },
+                {data: 'jmeno'},
+                {data: 'vstup'},
+                {
+                    data: 'zásuvka',
+                    render: function (data, type, row) {
+                        var zasuvkaHtml = '';
+                        if (data === "TRUE") {
+                            zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
+                        } else if (data === "FALSE") {
+                            zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+                        }
+                        return zasuvkaHtml;
+                    }
+                },
+                {
+                data: null,
+                render: function (data, type, row) {
+                    return `       
+                        <div class="button-conteiner">
+                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                            <div class="hidden-buttons">
+                                <form asp-action="Odchod" asp-controller="Dieslovani">
+                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
+                                    <input  asp-for="DieslovaniMod.Odchod" type="hidden">
+                                    <button class="button Edit delete" title="odchod"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
+                                </form>
+                                <form asp-action="TemporaryLeave" asp-controller="Dieslovani">
+                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani"/>
+                                    <button class="button Edit ed" title="dočasný odchod">
+                                        @if(dieslovani.Technik.Taken){<i class="fa-solid fa-person-walking-arrow-right" style="color: black;"></i>}
+                                        @if(dieslovani.Technik.Taken==false){<i class="fa-solid fa-person-walking-arrow-loop-left" style="color: black;"></i>}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    `;
+                }
+                }, 
+                
+
+            ],  
             paging: true,        
             searching: false,
             ordering: false,  
@@ -288,6 +450,122 @@ document.querySelectorAll('.InputSearching').forEach(input => {
 
         // Inicializace pro tabulku "All"
         $('#allTable').DataTable({
+            ajax: {
+                url: '/Dieslovani/GetTableDataAllTable', // Cesta na vaši serverovou metodu
+                type: 'POST',
+                dataSrc: function (json) {
+                    // Zkontrolujte, co se vrací z API
+                    console.log(json);
+                    return json.data;
+                }
+            },  
+            columns: [
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                            <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
+                            <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                        </span>
+                    `;
+                }
+            },
+            {data: 'idDieslovani'},
+            {
+                data: 'distributor',
+                render: function (data, type, row) {
+                    var logo = '';
+                    if (data === 'ČEZ') {
+                        logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                    } else if (data === 'EGD') {
+                        logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                    } else if (data === 'PRE') {
+                        logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                    }
+                    return logo; }
+            },
+            {
+                data: 'lokalita',
+                render: function (data, type, row) {
+                    var klasifikaceHtml = data;
+                    if (row.Klasifikace === 'A1') {
+                        klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                    } else if (row.Klasifikace === 'A2') {
+                        klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                    } else if (row.Klasifikace === 'B1') {
+                        klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                    } else if (row.Klasifikace === 'B2') {
+                        klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                    } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                        klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                    } else if (row.Klasifikace === 'D1') {
+                        klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                    }
+                    return klasifikaceHtml;
+                }
+            },
+            {
+                data: 'klasifikace',
+                render: function (data, type, row) {
+                    var klasifikaceBadge = '';
+                    var colorMap = {
+                        'A1': '#c91829',
+                        'A2': 'orange',
+                        'B1': 'yellow',
+                        'B2': 'lightgreen',
+                        'B': 'green',
+                        'C': 'green',
+                        'D1': 'blue'
+                    };
+                    if (colorMap[data]) {
+                        klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                            <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                        </span>`;
+                    }
+                    return klasifikaceBadge;
+                }
+            },
+            {data:'adresa'},
+            {data: 'názevFirmy'},
+            {data: 'jmeno'},    
+            {data: 'nazevRegionu'},
+            {data: 'od'},
+            {data: 'do'},
+            {data:'vstup'},
+            {data: 'odchod'},
+            {data:'popis'},
+            {data: 'baterie'},
+            {
+                data: 'zásuvka',
+                render: function (data, type, row) {
+                    var zasuvkaHtml = '';
+                    if (data === "TRUE") {
+                        zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
+                    } else if (data === "FALSE") {
+                        zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+                    }
+                    return zasuvkaHtml;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `       
+                        <div class="button-conteiner">
+                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                            <div class="hidden-buttons">
+                                <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                                    <i class="fa-solid fa-trash" style="color:black"></i>
+                                </button>
+                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }
+                }, 
+
+            ],
             paging: true,        
             searching: true,
             ordering: false,     

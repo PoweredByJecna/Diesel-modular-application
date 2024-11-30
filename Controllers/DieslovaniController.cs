@@ -93,25 +93,177 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect ("/Home/Index");
         }
-        public async Task<IActionResult> Delete (OdstavkyViewModel dieslovani)
+        public async Task<IActionResult> GetTableDataRunningTable(int start = 0, int length = 0)
+        {
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+            length = totalRecords;
+            var DieslovaniRunningList = await _context.DieslovaniS
+            .Include(o=>o.Odstavka)
+            .ThenInclude(o=>o.Lokality)
+            .Include(t=>t.Technik)
+            .Where(i=>i.Odstavka.ZadanVstup==true)
+            .Skip(start)
+            .Take(length)
+            .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
+                l.Odstavka.Lokality.Lokalita,
+                l.Odstavka.Lokality.Klasifikace,
+                l.Technik.Jmeno,
+                l.Vstup,
+                l.Odstavka.Lokality.Zásuvka,
+                EmptyColumn1 = (string)null
+            })
+            .ToListAsync();
+
+            return Json(new 
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = DieslovaniRunningList // Data aktuální stránky
+            });
+            
+        }
+            public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
+        {
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Where(o=>o.Odstavka.Od.Date==DateTime.Today).Count();
+            length = totalRecords;
+            var DieslovaniRunningList = await _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Where(o=>o.Odstavka.Od.Date==DateTime.Today)
+            .Skip(start)
+            .Take(length)
+            .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
+                l.Odstavka.Lokality.Lokalita,
+                l.Odstavka.Lokality.Klasifikace,
+                l.Odstavka.Lokality.Adresa,
+                l.Technik.Firma.NázevFirmy,
+                l.Technik.Jmeno,
+                l.Odstavka.Lokality.Region.NazevRegionu,
+                l.Odstavka.Od,
+                l.Odstavka.Do,
+                l.Vstup,
+                l.Odchod,
+                l.Odstavka.Popis,
+                l.Odstavka.Lokality.Baterie,
+                l.Odstavka.Lokality.Zásuvka,
+                EmptyColumn1 = (string)null
+            })
+            .ToListAsync();
+
+           
+            return Json(new 
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = DieslovaniRunningList // Data aktuální stránky
+            });
+            
+        }
+            public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
+        {
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+            length = totalRecords;
+            var DieslovaniRunningList = await _context.DieslovaniS
+            .Include(o=>o.Odstavka)
+            .ThenInclude(o=>o.Lokality)
+            .Include(t=>t.Technik)
+            .Where(i=>i.Odstavka.ZadanVstup==true)
+            .Skip(start)
+            .Take(length)
+            .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
+                l.Odstavka.Lokality.Lokalita,
+                l.Odstavka.Lokality.Klasifikace,
+                l.Technik.Jmeno,
+                l.Vstup,
+                l.Odstavka.Lokality.Zásuvka,
+                EmptyColumn1 = (string)null
+            })
+            .ToListAsync();
+
+            return Json(new 
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = DieslovaniRunningList // Data aktuální stránky
+            });
+            
+        }
+            public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
+        {
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+            length = totalRecords;
+            var DieslovaniRunningList = await _context.DieslovaniS
+            .Include(o=>o.Odstavka)
+            .ThenInclude(o=>o.Lokality)
+            .Include(t=>t.Technik)
+            .Where(i=>i.Odstavka.ZadanVstup==true)
+            .Skip(start)
+            .Take(length)
+            .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
+                l.Odstavka.Lokality.Lokalita,
+                l.Odstavka.Lokality.Klasifikace,
+                l.Technik.Jmeno,
+                l.Vstup,
+                l.Odstavka.Lokality.Zásuvka,
+                EmptyColumn1 = (string)null
+            })
+            .ToListAsync();
+
+            return Json(new 
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = DieslovaniRunningList // Data aktuální stránky
+            });
+            
+        }
+        public async Task<IActionResult> Delete (int iDdieslovani)
         {
             
-            var dis = await _context.DieslovaniS
-            .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
-            .FirstAsync(d=>d.IdDieslovani==dieslovani.DieslovaniMod.IdDieslovani);
-             if(dis.Technik.Taken)
+           try
             {
-                dis.Technik.Taken=false;
-                _context.Update(dis);
+                var dieslovani = await _context.DieslovaniS.FindAsync(iDdieslovani);
+                if (dieslovani == null)
+                {
+                    return Json(new { success = false, message = "Záznam nebyl nalezen." });
+                }
+                
+    
+                if (dieslovani != null)
+                {
+                    var technik = await _context.TechniS.Where(p => p.IdTechnika == dieslovani.IdTechnik).FirstOrDefaultAsync();
+                    if (technik != null)
+                    {
+                        technik.Taken = false;
+                        _context.TechniS.Update(technik);
+                    }
+                    _context.DieslovaniS.Remove(dieslovani);
+                    await _context.SaveChangesAsync();
+
+                    return Json(new { success = true, message = "Záznam byl úspěšně smazán." });
+
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Chyba při mazání záznamu: "  });
+                }
+             
             }
-            else
+            catch (Exception ex)
             {
-                dis.Technik.Taken=true;
-                _context.Update(dis);
+                return Json(new { success = false, message = "Chyba při mazání záznamu: " + ex.Message });
             }
-             _context.DieslovaniS.Remove(dis);
-            await _context.SaveChangesAsync();
-            return Redirect ("/Home/Index");
         } 
+
     }
 }

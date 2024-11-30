@@ -288,9 +288,11 @@ nav input {
         align-items: center;
         justify-content: center;
     }
-    .odd:hover .socket-icon{
+    .odd:hover .socket-icon,
+    .even:hover .socket-icon{
         display: none;
     }
+ 
     .hidden-buttons {
         display: none; /* Skryje další tlačítka */
         position: absolute; /* Umožní umístění vedle tlačítka */
@@ -509,13 +511,19 @@ transform: scale(0);
 
 .ul-sidebar{
     list-style: none;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 0px;
     margin-top: 0px;
     padding-left: 19px;
+    margin-bottom: 10px;
 }
 .li-sidebar{
+    display: flex;
+    align-items: baseline;
     padding: 9px;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .li-sidebar:hover{
     background-color: #0057ff;
@@ -527,7 +535,23 @@ transform: scale(0);
     text-decoration: none;
     display: flex;
     flex-direction: row;
+    height: auto;
+    width: auto;
     align-items: baseline;
+}
+.navA{
+    display: flex; 
+    justify-content:flex-end; 
+    width: 20px; color: white;
+}
+
+.li-sidebar.active {
+    background-color: #0057ff;
+  
+}
+
+.li-sidebar.active a {
+    color: inherit; /* Zachová barvu textu od rodiče */
 }
 
 

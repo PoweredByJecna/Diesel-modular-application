@@ -405,36 +405,36 @@ namespace Diesel_modular_application.Controllers
 
 
         public async Task<IActionResult> Delete(int idodstavky)
-{
-    try
-    {
-        var odstavka = await _context.OdstavkyS.FindAsync(idodstavky);
-        if (odstavka == null)
         {
-            return Json(new { success = false, message = "Záznam nebyl nalezen." });
-        }
-
-        var dieslovani = await _context.DieslovaniS.Where(p => p.IDodstavky == odstavka.IdOdstavky).FirstOrDefaultAsync();
-        if (dieslovani != null)
-        {
-            var technik = await _context.TechniS.Where(p => p.IdTechnika == dieslovani.IdTechnik).FirstOrDefaultAsync();
-            if (technik != null)
+            try
             {
-                technik.Taken = false;
-                _context.TechniS.Update(technik);
+                var odstavka = await _context.OdstavkyS.FindAsync(idodstavky);
+                if (odstavka == null)
+                {
+                    return Json(new { success = false, message = "Záznam nebyl nalezen." });
+                }
+
+                var dieslovani = await _context.DieslovaniS.Where(p => p.IDodstavky == odstavka.IdOdstavky).FirstOrDefaultAsync();
+                if (dieslovani != null)
+                {
+                    var technik = await _context.TechniS.Where(p => p.IdTechnika == dieslovani.IdTechnik).FirstOrDefaultAsync();
+                    if (technik != null)
+                    {
+                        technik.Taken = false;
+                        _context.TechniS.Update(technik);
+                    }
+                }
+
+                _context.OdstavkyS.Remove(odstavka);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Záznam byl úspěšně smazán." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Chyba při mazání záznamu: " + ex.Message });
             }
         }
-
-        _context.OdstavkyS.Remove(odstavka);
-        await _context.SaveChangesAsync();
-
-        return Json(new { success = true, message = "Záznam byl úspěšně smazán." });
-    }
-    catch (Exception ex)
-    {
-        return Json(new { success = false, message = "Chyba při mazání záznamu: " + ex.Message });
-    }
-}
 
          public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
         {

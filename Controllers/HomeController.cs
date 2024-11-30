@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using System.Diagnostics;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -49,13 +50,9 @@ namespace Diesel_modular_application.Controllers
             odstavky.LokalityList=await _context.LokalityS.ToListAsync();
             
        
-            return View("Index", odstavky);
-            
-      
-
-            
+            return View("Index", odstavky);    
         }
-
+       
 
        
         public IActionResult Privacy()

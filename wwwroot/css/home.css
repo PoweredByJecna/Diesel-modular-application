@@ -116,7 +116,7 @@ th, td {
     border: 1px solid #e0e0e0;
     text-align: center;
     transition: background-color 0.5s, color 0.5s;
-    max-width: 200px;
+    min-width: 70px !important;
     max-height: 40px;
     cursor: pointer;
     text-align: center;
@@ -358,6 +358,7 @@ th.dark-mode {
 	justify-content: space-around;
 	position: relative;
     max-width: 95%;
+    height: 130px;
     overflow-y: auto;
 }
 
