@@ -228,10 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                             <div class="hidden-buttons">
                                 <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
-                                    <i class="fa-solid fa-trash" style="color:black"></i>
+                                    <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
                                 </button>
-                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                            </div>
+                                </div>
                         </div>
                     `;
                     }
