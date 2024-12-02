@@ -123,16 +123,135 @@ document.addEventListener('DOMContentLoaded', () => {
     
    
 
-    $(document).ready(function() {
-        // Inicializace pro tabulku "Upcoming"
+    $(document).ready(function() 
+    {
+
+        /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
+
         $('#upcomingTable').DataTable({
-        
+            ajax: {
+                
+
+                url: '/Dieslovani/GetTableUpcomingTable', // Cesta na vaši serverovou metodu
+                type: 'POST',
+                dataSrc: function (json) {
+                    // Zkontrolujte, co se vrací z API
+                    console.log(json);
+                    return json.data;
+                }
+            },
+            columns:[
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `
+                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
+                                <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                            </span>
+                        `;
+                    }
+                    },
+                    {data: 'idDieslovani'},
+                    {
+                        data: 'distributor',
+                        render: function (data, type, row) {
+                            var logo = '';
+                            if (data === 'ČEZ') {
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                            } else if (data === 'EGD') {
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                            } else if (data === 'PRE') {
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                            }
+                            return logo; }
+                    },
+                    {
+                        data: 'lokalita',
+                        render: function (data, type, row) {
+                            var klasifikaceHtml = data;
+                            if (row.Klasifikace === 'A1') {
+                                klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                            } else if (row.Klasifikace === 'A2') {
+                                klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                            } else if (row.Klasifikace === 'B1') {
+                                klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                            } else if (row.Klasifikace === 'B2') {
+                                klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                            } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                                klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                            } else if (row.Klasifikace === 'D1') {
+                                klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                            }
+                            return klasifikaceHtml;
+                        }
+                    },
+                    {
+                        data: 'klasifikace',
+                        render: function (data, type, row) {
+                            var klasifikaceBadge = '';
+                            var colorMap = {
+                                'A1': '#c91829',
+                                'A2': 'orange',
+                                'B1': 'yellow',
+                                'B2': 'lightgreen',
+                                'B': 'green',
+                                'C': 'green',
+                                'D1': 'blue'
+                            };
+                            if (colorMap[data]) {
+                                klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                                </span>`;
+                            }
+                            return klasifikaceBadge;
+                        }
+                    },
+                    {data: 'date'}, //objednano(odstavky od)
+                    {
+                        data: 'zásuvka',
+                        render: function (data, type, row) {
+                            var zasuvkaHtml = '';
+                            if (data === "TRUE") {
+                                zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
+                            } else if (data === "FALSE") {
+                                zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+                            }
+                            return zasuvkaHtml;
+                        }
+                    },
+                    {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `       
+                        <div class="button-conteiner">
+                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                            <div class="hidden-buttons">
+                                <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                                    <i class="fa-solid fa-trash" style="color:black"></i>
+                                </button>
+                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    }, 
+                    
+    
+                ],  
             paging: true,        
             searching: false,
             ordering: false, 
             lengthChange: false,    
             pageLength: 4        
         });
+          /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
+
+
+
+
+
+          /////////////////////////////////////////////END TABLE////////////////////////////////////////////////
         $('#endTable').DataTable({
             paging: true,        
             searching: false,
@@ -141,6 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
             pageLength: 4        // Počet řádků na stránku
         });
 
+
+
+          /////////////////////////////////////////////END TABLE////////////////////////////////////////////////
+
+
+
+
+
+          /////////////////////////////////////////////LOKALITY TABLE////////////////////////////////////////////////
         $('#lokalityTable').DataTable({   // Zobrazí indikátor načítání  // Povolení serverového stránkování
             ajax: {
                 url: '/Lokality/GetTableData', // Cesta na vaši serverovou metodu
@@ -200,11 +328,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+          /////////////////////////////////////////////LOKALITY TABLE////////////////////////////////////////////////
 
 
 
 
 
+          /////////////////////////////////////////////OD TABLE////////////////////////////////////////////////
         $('#odTable').DataTable({
             ajax: {
                 url: '/Odstavky/GetTableData', // Cesta na vaši serverovou metodu
@@ -314,12 +444,16 @@ document.addEventListener('DOMContentLoaded', () => {
             pageLength: 7       // Počet řádků na stránku
         });
 
+          /////////////////////////////////////////////OD TABLE////////////////////////////////////////////////
+
         $('#lokalityTable tbody').on('mouseenter', '.table-row', function () {
             $(this).find('.hidden-buttons').css('display', 'flex');
         }).on('mouseleave', '.table-row', function () {
             $(this).find('.hidden-buttons').css('display', 'none');
         });
         
+
+          /////////////////////////////////////////////RUNNING TABLE////////////////////////////////////////////////
 
         $('#runningTable').DataTable({
             ajax: {
@@ -417,22 +551,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                 data: null,
                 render: function (data, type, row) {
-                    return `       
+                    return`
                         <div class="button-conteiner">
+                            <!-- Hlavní tlačítko -->
                             <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                             <div class="hidden-buttons">
-                                <form asp-action="Odchod" asp-controller="Dieslovani">
-                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani" />
-                                    <input  asp-for="DieslovaniMod.Odchod" type="hidden">
-                                    <button class="button Edit delete" title="odchod"><i class="fa-solid fa-arrow-right" style="color: black;"></i></button>
-                                </form>
-                                <form asp-action="TemporaryLeave" asp-controller="Dieslovani">
-                                    <input type="hidden" asp-for="DieslovaniMod.IdDieslovani" value="@dieslovani.IdDieslovani"/>
-                                    <button class="button Edit ed" title="dočasný odchod">
-                                        @if(dieslovani.Technik.Taken){<i class="fa-solid fa-person-walking-arrow-right" style="color: black;"></i>}
-                                        @if(dieslovani.Technik.Taken==false){<i class="fa-solid fa-person-walking-arrow-loop-left" style="color: black;"></i>}
-                                    </button>
-                                </form>
+                                <!-- Tlačítko pro Odchod -->
+                                <button class="button Edit delete" onclick="sendOdchod(${row.idDieslovani})" title="odchod">
+                                    <i class="fa-solid fa-arrow-right" style="color: black;"></i>
+                                </button>
+                                <!-- Tlačítko pro Dočasný odchod -->
+                                <button class="button Edit ed" onclick="sendTemporaryLeave(${row.idDieslovani}, ${row.taken})" title="dočasný odchod">
+                                    <i class="fa-solid ${row.taken ? 'fa-person-walking-arrow-right' : 'fa-person-walking-arrow-loop-left'}" style="color: black;"></i>
+                                </button>
                             </div>
                         </div>
                     `;
@@ -447,6 +578,14 @@ document.addEventListener('DOMContentLoaded', () => {
             lengthChange: false,    
             pageLength: 4         // Počet řádků na stránku
         });
+
+              /////////////////////////////////////////////RUNNING TABLE////////////////////////////////////////////////
+
+
+
+              
+              /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////
+
 
         // Inicializace pro tabulku "All"
         $('#allTable').DataTable({
@@ -592,6 +731,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+
+        /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////
 
         $('.dataTables_filter label').contents().filter(function () {
             return this.nodeType === 3; // Textové uzly

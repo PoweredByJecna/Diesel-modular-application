@@ -165,13 +165,13 @@ namespace Diesel_modular_application.Controllers
         }
             public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today).Count();
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
-            .Where(i=>i.Odstavka.ZadanVstup==true)
+            .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -179,8 +179,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Distributor,
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
-                l.Technik.Jmeno,
-                l.Vstup,
+                l.Odstavka.Od.AddHours(2).Date,
                 l.Odstavka.Lokality.Zásuvka,
                 EmptyColumn1 = (string)null
             })
@@ -188,10 +187,10 @@ namespace Diesel_modular_application.Controllers
 
             return Json(new 
             {
-                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
-                recordsTotal = totalRecords, // Celkový počet záznamů
-                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
-                data = DieslovaniRunningList // Data aktuální stránky
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), 
+                recordsTotal = totalRecords, 
+                recordsFiltered = totalRecords, 
+                data = DieslovaniRunningList 
             });
             
         }

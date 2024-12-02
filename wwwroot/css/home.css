@@ -116,7 +116,6 @@ th, td {
     border: 1px solid #e0e0e0;
     text-align: center;
     transition: background-color 0.5s, color 0.5s;
-    min-width: 70px !important;
     max-height: 40px;
     cursor: pointer;
     text-align: center;

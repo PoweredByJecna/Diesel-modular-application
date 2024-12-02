@@ -105,6 +105,8 @@ width: 70%;
 .table-div.odstavkyTable{
     box-shadow: none;
     border-radius: 0px;
+    width: 95%;
+    overflow-y: auto;
 }
 .table-div.import.C.odstavky{
     width: 100%;
