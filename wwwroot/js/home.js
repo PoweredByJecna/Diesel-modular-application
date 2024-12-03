@@ -33,6 +33,11 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
+document.getElementById('toggleMenu').addEventListener('click', function () {
+    const sidemenu = document.getElementById('sidemenu');
+    sidemenu.classList.toggle('open');
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.a-sidebar');
 
@@ -120,6 +125,50 @@ document.addEventListener('DOMContentLoaded', () => {
            
         });
     }
+    function Vstup(idDieslovani) {
+        console.log("Vstup na lokalitu ID:", idDieslovani); // Ladicí výstup
+        $.ajax({
+            url: '/Dieslovani/Vstup',
+            type: 'POST',
+            data: { idDieslovani: idDieslovani },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#upcomingTable').DataTable().ajax.reload();
+                    $('#allTable').DataTable().ajax.reload();
+                    $('#endTable').DataTable().ajax.reload();
+                    $('#runningTable').DataTable().ajax.reload();
+                } 
+                else {
+                    alert('Vstup se nezdařil: ' + response.message);
+                }
+            },
+            
+        });
+    }
+    function Odchod(idDieslovani) {
+        console.log("Odchod z lokality ID:", idDieslovani); // Ladicí výstup
+        $.ajax({
+            url: '/Dieslovani/Odchod',
+            type: 'POST',
+            data: { idDieslovani: idDieslovani },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#upcomingTable').DataTable().ajax.reload();
+                    $('#allTable').DataTable().ajax.reload();
+                    $('#endTable').DataTable().ajax.reload();
+                    $('#runningTable').DataTable().ajax.reload();
+                } 
+                else {
+                    alert('Odchod se nezdařil: ' + response.message);
+                }
+            },
+            
+        });
+    }
+
+    
     
    
 
@@ -227,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="button-conteiner">
                             <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                             <div class="hidden-buttons">
-                                <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                                <button class="button Edit delete" onclick="Vstup(${row.idDieslovani})">
                                     <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
                                 </button>
                                 </div>
@@ -251,7 +300,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
           /////////////////////////////////////////////END TABLE////////////////////////////////////////////////
-        $('#endTable').DataTable({
+        $('#endTable').DataTable({ajax: {
+            url: '/Dieslovani/GetTableDataEndTable', // Cesta na vaši serverovou metodu
+            type: 'POST',
+            dataSrc: function (json) {
+                // Zkontrolujte, co se vrací z API
+                console.log(json);
+                return json.data;
+            }
+        },
+        columns:[
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: red; border-radius: 5px;">
+                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončeno</span>
+                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                    </span>
+                `;
+            }
+        },
+        {
+            data: 'lokalita',
+            render: function (data, type, row) {
+                var klasifikaceHtml = data;
+                if (row.Klasifikace === 'A1') {
+                    klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                } else if (row.Klasifikace === 'A2') {
+                    klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                } else if (row.Klasifikace === 'B1') {
+                    klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                } else if (row.Klasifikace === 'B2') {
+                    klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                    klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                } else if (row.Klasifikace === 'D1') {
+                    klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                }
+                return klasifikaceHtml;
+            }
+        },
+        {
+            data: 'klasifikace',
+            render: function (data, type, row) {
+                var klasifikaceBadge = '';
+                var colorMap = {
+                    'A1': '#c91829',
+                    'A2': 'orange',
+                    'B1': 'yellow',
+                    'B2': 'lightgreen',
+                    'B': 'green',
+                    'C': 'green',
+                    'D1': 'blue'
+                };
+                if (colorMap[data]) {
+                    klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                        <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                    </span>`;
+                }
+                return klasifikaceBadge;
+            }
+        },
+        {
+            data: 'odchod'
+        }
+
+
+        ],
             paging: true,        
             searching: false,
             ordering: false, 
@@ -555,14 +671,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <!-- Hlavní tlačítko -->
                             <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                             <div class="hidden-buttons">
-                                <!-- Tlačítko pro Odchod -->
-                                <button class="button Edit delete" onclick="sendOdchod(${row.idDieslovani})" title="odchod">
+                                <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})" title="odchod">
                                     <i class="fa-solid fa-arrow-right" style="color: black;"></i>
                                 </button>
-                                <!-- Tlačítko pro Dočasný odchod -->
-                                <button class="button Edit ed" onclick="sendTemporaryLeave(${row.idDieslovani}, ${row.taken})" title="dočasný odchod">
-                                    <i class="fa-solid ${row.taken ? 'fa-person-walking-arrow-right' : 'fa-person-walking-arrow-loop-left'}" style="color: black;"></i>
-                                </button>
+                                
                             </div>
                         </div>
                     `;
@@ -601,10 +713,35 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 data: null,
                 render: function (data, type, row) {
+                    let badgeClass = "badge-phoenix-success";
+                    let badgeStyle = "background-color: yellow; border-radius: 5px;";
+                    let labelStyle = "color: black; padding: 1px; font-size: small;";
+                    let labelText = "Čekající";
+                    let iconClass = "fa-clock-rotate-left";
+                    let iconColor = "Black";
+                
+                    // Pokud je zadán ZadanOdchod, nastav "Ukončené"
+                    if (row.ZadanOdchod) {
+                        badgeClass = "badge-phoenix-danger";
+                        badgeStyle = "background-color: red; border-radius: 5px;";
+                        labelStyle = "color: white; padding: 1px; font-size: small;";
+                        labelText = "Ukončené";
+                        iconClass = "fa-check-circle";
+                        iconColor = "black";
+                    }
+                    // Pokud je zadán ZadanVstup, nastav "Aktivní"
+                    else if (row.ZadanVstup) {
+                        badgeClass = "badge-phoenix-primary";
+                        badgeStyle = "background-color: green; border-radius: 5px;";
+                        labelStyle = "color: white; padding: 1px; font-size: small;";
+                        labelText = "Aktivní";
+                        iconClass = "fa-play-circle";
+                        iconColor = "black";
+                    }
                     return `
-                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
-                            <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
-                            <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                        <span class="badge fs-10 ${badgeClass}" style="${badgeStyle}">
+                        <span class="badge-label" style="${labelStyle}">${labelText}</span>
+                        <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
                         </span>
                     `;
                 }

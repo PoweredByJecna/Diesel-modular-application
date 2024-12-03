@@ -22,56 +22,65 @@ namespace Diesel_modular_application.Controllers
 
         }
 
-        public async Task<IActionResult> Vstup (OdstavkyViewModel dieslovani)
+        public async Task<IActionResult> Vstup (int IdDieslovani)
         {
-           var dis= await _context.DieslovaniS.FindAsync(dieslovani.DieslovaniMod.IdDieslovani);
-           if(dis !=null)
-           {    
-                
-                dis.Vstup=DateTime.Now;
-                _context.Update(dis);
+            try
+            {
+                var dis= await _context.DieslovaniS.FindAsync(IdDieslovani);
+                if(dis !=null)
+                {    
+                        
+                        dis.Vstup=DateTime.Now;
+                        _context.Update(dis);
+                        await _context.SaveChangesAsync();
+                        ViewBag.Message="vstup";
+                }
+                var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+                if (odstavka != null)
+                {
+                    // Nastav ZadanVstup na true
+                    odstavka.ZadanVstup = true;
+                    _context.Update(odstavka);
+                    
+                }    
                 await _context.SaveChangesAsync();
-                ViewBag.Message="vstup";
-           }
-            var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
-            if (odstavka != null)
+                 return Json(new { success = true, message = "Byl zadán vstup na lokalitu." });
+            }
+            catch(Exception ex)
             {
-                // Nastav ZadanVstup na true
-                odstavka.ZadanVstup = true;
-                _context.Update(odstavka);
-                
-            }    
-               
-          
-            await _context.SaveChangesAsync();
-          return Redirect ("/Home/Index");
+                return Json(new { success = false, message = "Chyba při zadávání vstupu " + ex.Message });
+            }
         }
-        public async Task<IActionResult> Odchod (OdstavkyViewModel dieslovani)
+        public async Task<IActionResult> Odchod (int IdDieslovani)
         {
-            var dis = await _context.DieslovaniS
-            .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
-            .FirstAsync(d=>d.IdDieslovani==dieslovani.DieslovaniMod.IdDieslovani);
-
-           if(dis !=null)
-           {    
-                dis.Technik.Taken=false;
-                dis.Odchod=DateTime.Now;
-                 _context.Update(dis);
-                ViewBag.Message="vstup";
-           }
-               var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
-            if (odstavka != null)
+           try
             {
-                // Nastav ZadanVstup na true
-                odstavka.ZadanOdchod=true;
-                odstavka.ZadanVstup=false;
-               
-                _context.Update(odstavka);
-                TempData["Message"] = dis.Technik.Jmeno+" je ted volny";
+                var dis = await _context.DieslovaniS
+                .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
+                .FirstAsync(d=>d.IdDieslovani==IdDieslovani);
 
-            }    
-            await _context.SaveChangesAsync();
-          return Redirect ("/Home/Index");
+                if(dis !=null)
+                {    
+                    dis.Technik.Taken=false;
+                    dis.Odchod=DateTime.Now;
+                    _context.Update(dis);
+                }
+                var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+                if (odstavka != null)
+                {
+                    // Nastav ZadanVstup na true
+                    odstavka.ZadanOdchod=true;
+                    odstavka.ZadanVstup=false;
+                
+                    _context.Update(odstavka);
+                }    
+                await _context.SaveChangesAsync();
+                return Json(new { success = true, message = "Byl zadán odchod z lokality." });
+            }
+           catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Chyba při zadávání odchodu " + ex.Message });
+            }
 
             
         }
@@ -196,24 +205,19 @@ namespace Diesel_modular_application.Controllers
         }
             public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false).Count();
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
-            .Where(i=>i.Odstavka.ZadanVstup==true)
+            .Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
-                l.IdDieslovani,
-                l.Odstavka.Distributor,
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
-                l.Technik.Jmeno,
-                l.Vstup,
-                l.Odstavka.Lokality.Zásuvka,
-                EmptyColumn1 = (string)null
+                l.Odchod,
             })
             .ToListAsync();
 
