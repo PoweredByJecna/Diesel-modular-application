@@ -154,104 +154,41 @@
                             </form>
                         </div>
 
-                        <div class="main-container OdstavkyView">       
-                        @{
-                                int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today && (d.ZadanVstup == true || d.Od.Date == DateTime.Today) && d.Lokality.DA=="FALSE").Count();
-                                int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date <= DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-                                int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-                                int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-                                int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-                                int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morava" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-                                int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
-
-
-
-                                double percentA = (double)regionA / totalOdstavky * 100;
-                                double percentB = (double)regionB / totalOdstavky * 100;
-                                double percentC = (double)regionC / totalOdstavky * 100;
-                                double percentD = (double)regionD / totalOdstavky * 100;
-                                double percentE = (double)regionE / totalOdstavky * 100;
-                                double percentF = (double)regionF / totalOdstavky * 100;
-
-                                double startB = percentA;
-                                double startC = startB + percentB;
-                                double startD = startC + percentC;
-                                double startE = startD + percentD;
-                                double startF = startE + percentE;
+                        <div class="main-container">
+                            <div class="year-stats">
+                                @foreach (var region in Model.RegionStats.Regions)
+                                {
+                                    <div class="month-group">
+                                        <div title="@region.Percentage%" class="bar h-50" style="background-color: red; height:@region.Percentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
+                                        <p class="month" style="margin:0px">@region.RegionName</p>                       
+                                    </div>
                                 }
-                                <div class="year-stats">
-                                    <div class="month-group">
-                                        <div title="@percentF%" class="bar h-50" style="background-color: red; height:@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
-                                        <p class="month" style="margin:0px">Severní Čechy</p>                       
-                                    </div>
-                                    <div class="month-group">                          
-                                        <div title="@percentE%" class="bar h-50" style="background-color:#4cc790; height: @percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
-                                        <p class="month" style="margin:0px">Jižní Morava</p>  
-                                    </div>
-                                    <div class="month-group">
-                                        <div title="@regionD%" class="bar h-50" style="background-color: #0f1783; height: @percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                                  
-                                        <p class="month" style="margin:0px">Severní Morava</p>  
-                                    </div>    
-                                    <div class="month-group" style="max-width: 165px;">                
-                                        <div title="@regionC%" class="bar h-50" style="background-color: #5397d6; height:@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
-                                        <p class="month" style="margin:0px">Praha + Střední Čechy</p>  
-                                    </div>  
-                                    <div class="month-group" >
-                                        <div title="@regionB%" class="bar h-50" style="background-color: #e59f3c; height: @percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);"></div>                                              
-                                        <p class="month" style="margin:0px">Jižní Čechy</p>  
-                                    </div>
-                                    <div class="month-group" > 
-                                        <div title="@regionA%" class="bar h-50" style="background-color: #915db1; height: @percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)"></div>                                 
-                                        <p class="month" style="margin:0px">Západní Čechy</p>  
-                                    </div>  
-                                </div>
-                            
+                            </div>
 
-                                <div class="stats-info">
-                                    <div class="graph-container">
-                                        <div class="percent">
-                                            <svg viewBox="0 0 36 36" class="circular-chart">
-                                                <path class="circle" stroke-dasharray="@percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="@percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="@percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="@percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                                <path class="circle" stroke-dasharray="@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
-                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            </svg>
-                                        </div>
-                                        <p class="OdstavkyView">Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
-                                        </div>
-                                        <div class="info">
-                                            <div class="region-sctn">
-                                                <p>Praha:<span>@regionC</span></p>
-                                                <p>Jížní Čechy<span>@regionB</span></p>
-                                                <p>Severní Čechy:<span>@regionF</span></p>
-                                            </div>
-                                            <div class="region-sctn">
-                                                <p>Západní Čechy:<span>@regionA</span></p>    
-                                                <p>Severní Morava<span>@regionD</span></p>
-                                                <p>Jížní Morava:<span>@regionE</span></p>
-                                            </div>
-                                            
-                                    
-                                        </div>
-                                    
-                            
+                            <div class="stats-info">
+                                <div class="graph-container">
+                                    <div class="percent">
+                                        Total: @Model.RegionStats.TotalOdstavky
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    @foreach (var region in Model.RegionStats.Regions)
+                                    {
+                                        <p>@region.RegionName: <span>@region.Count</span></p>
+                                    }
                                 </div>
                             </div>
-                </div>
+
+                            <div class="odstavky-list">
+                                <h3>Seznam Odstávek</h3>
+                                <ul>
+                                    @foreach (var odstavka in Model.OdstavkyList)
+                                    {
+                                        <li>@odstavka.Lokality.Lokalita - @odstavka.Od.Date.ToShortDateString()</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
                     
             </div>
         </div>

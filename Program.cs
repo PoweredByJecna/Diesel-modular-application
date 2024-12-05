@@ -40,6 +40,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHostedService<CleaningDatabase>();
+builder.Services.AddScoped<OdstavkyService>();
 
 
 var app = builder.Build();

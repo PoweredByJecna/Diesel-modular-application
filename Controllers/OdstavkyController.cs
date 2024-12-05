@@ -12,16 +12,18 @@ using Microsoft.IdentityModel.Tokens;
 using Diesel_modular_application.KlasifikaceRule;
 using DocumentFormat.OpenXml.Office.CustomUI;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Diesel_modular_application.Services;
 
 namespace Diesel_modular_application.Controllers
 {
     public class OdstavkyController : Controller
     {
         private readonly DAdatabase _context;
-
-        public OdstavkyController(DAdatabase context)
+        private readonly OdstavkyService _odstavkyService;
+        public OdstavkyController(DAdatabase context, OdstavkyService odstavkyService)
         {
             _context = context;
+            _odstavkyService = odstavkyService;
         }
         private List<string> Zpravy { get; set; } = new List<string>();
 
@@ -57,13 +59,14 @@ namespace Diesel_modular_application.Controllers
                 .Take(pagesize)
                 .ToListAsync();
 
+            odstavky.RegionStats = _odstavkyService.GetRegionStats();
+
 
             var id = await _context.DieslovaniS
             .Include(o => o.Technik)
             .Where(static o => o.Technik.Taken == true)
             .Select(o => o.IdTechnik)
             .ToListAsync();
-
 
             #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             odstavky.TechnikLokalitaMap = await _context.DieslovaniS
@@ -74,9 +77,6 @@ namespace Diesel_modular_application.Controllers
                 group => group.Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
             );
             #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
-
-            odstavky.CurrentPage = page;
-            odstavky.TotalPages = (int)Math.Ceiling(await odstavkyQuery.CountAsync() / (double)pagesize);
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Search(OdstavkyViewModel search, string query, int page = 1)

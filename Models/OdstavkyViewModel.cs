@@ -9,6 +9,10 @@ namespace Diesel_modular_application.Models
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public string TechnikLokalita{get;set;}
+
+        public StatsViewModel RegionStats { get; set; }
+
+
         public Dictionary<string, string> TechnikLokalitaMap { get; set; } = new Dictionary<string, string>();
 
         public IEnumerable<TableOdstavky> OdstavkyList { get; set; }

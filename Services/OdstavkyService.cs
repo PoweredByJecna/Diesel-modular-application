@@ -1,33 +1,20 @@
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
-using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.InkML;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Diagnostics;
-using System.Numerics;
-using System.Security.Cryptography;
 
-namespace Diesel_modular_application.Controllers
+namespace Diesel_modular_application.Services
 {
-
-    public class OdstavkyServiceController : Controller
+    public class OdstavkyService
     {
         private readonly DAdatabase _context;
-        
-        public OdstavkyServiceController( DAdatabase context)
+
+        public OdstavkyService(DAdatabase context)
         {
-            
             _context = context;
-           
         }
 
         public StatsViewModel GetRegionStats()
         {
-            var odstavkyList = _context.OdstavkyS.ToList(); // Nahraďte skutečným zdrojem dat
+            var odstavkyList = _context.OdstavkyS.ToList();
             var today = DateTime.Today;
 
             var regions = new List<string>
@@ -65,6 +52,4 @@ namespace Diesel_modular_application.Controllers
             };
         }
     }
-
-
 }
