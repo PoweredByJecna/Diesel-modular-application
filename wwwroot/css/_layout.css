@@ -16,10 +16,21 @@
         padding: 10px 0px 0px;
     }
     
-    #sidemenu.open {
+    .table-div.odstavkyTable{
+        width: 97% !important;
+    }
+    
+
+    .sidemenu.visible {
+        display: block !important;
+        width: 100%;
+        z-index: 1000;
         width: 250px; /* Nebo jiná šířka, kterou potřebujete */
     }
-   
+   .login-section{
+    width: 325px;
+    height: 300px;
+   }
 
 }
 @media(max-width:760px) {
@@ -536,6 +547,7 @@ transform: scale(0);
     top: 81px;
     display: flex;
     justify-content: center;
+    z-index: 1000;
 }
 .sidebar{
     padding: 5px;

@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-around;
     background-color: 227, 230, 237;
+    flex-direction: column;
     
 }
 
@@ -93,7 +94,7 @@ width: 70%;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 70%;
+    width: 100%;
 }
 .table-div.pohotovosti{
     width: 100%;
@@ -105,8 +106,15 @@ width: 70%;
 .table-div.odstavkyTable{
     box-shadow: none;
     border-radius: 0px;
-    width: 95%;
+    width: 580px;
     overflow-y: auto;
+}
+
+.table-div.odstavkyTable.Lokality_Odstavky{
+    width: 100%;
+}
+.table-div.odstavkyTable.end{
+    width: 450px;
 }
 .table-div.import.C.odstavky{
     width: 100%;
@@ -173,4 +181,18 @@ tbody{
     table-layout: auto;
     max-height: 100px;
     overflow: auto;
+}
+.main-container.OdstavkyView{
+
+    height: 475px;
+    width: 60%;
+    background-color: white;
+    color: black;
+}
+.graph-container.p.OdstavkyView{
+    color: black;
+}
+.section.small.OdstavkyView{
+    justify-content: space-around;
+    margin-top: 30px;
 }

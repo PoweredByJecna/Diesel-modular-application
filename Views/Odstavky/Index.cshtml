@@ -2,156 +2,258 @@
 @using PagedList.Core.Mvc;
 <html>
     <body>
-        <div class="table-div import C odstavky">
-            <section class="sctn search odstavkyTable">
-                <h2 style="display: flex;justify-content: center;">Odstávky</h2>               
-            </section>
-            <div class="table-div odstavkyTable">
-                <table id="odTable">
-                    <thead>
+        <div class="conteiner">
+            <div class="table-div import C odstavky">
+                <div class="table-div odstavkyTable Lokality_Odstavky">
+                    <table id="odTable">
+                        <thead>
 
-                        <tr>
-                            <th>Id<i class="fa-solid fa-id-badge"></i></th>
-                            <th>Distributor<i class="fa-solid fa-bolt"></i></th>
-                            <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                            <th>Klasifikace<i class="fa-solid fa-star"></i></th>
-                            <th>Od<i class="fa-solid fa-clock"></i></th>
-                            <th>Do<i class="fa-solid fa-clock"></i></th>
-                            <th>Adresa<i class="fa-solid fa-house"></i></th>
-                            <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
-                            <th>Popis</th>
-                            <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
-                            <th></th>
-                            
-                        </tr>
-                    </thead>
-                 
-                    <tbody id="table-body">     
-                        
-                    </tbody>
-                
-                    
-                    
-                </table>
-                
-            </div>
-        </div>
-        <div class="menu">
-            <ul class="ul-footer">
-               
-            </ul>
-        </div>
-        <div class="odstavky-section">
-            <div class="div-odstavka-create">
-                
-                <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
-                    <div class="form">
-                        <h2>Vytvořit odstávku:</h2>
-                        <label>Lokalita:</label>
-                        <div class="div-form">
-                            <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
-                        </div>
-                    </div>
-                    <div class="form">
-                        <label>Od:</label>
-                        <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
-                    </div>
-                    <div class="form">
-                        <label>Do:</label>
-                        <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
-                    </div>
-                    <div class="form">
-                        <label>Popis:</label>
-                       
-                        <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                    <div class="alert alert-success">
-                    @TempData["Zprava"]
-                    </div>
-                </form>
-            </div>
-            <section class="tables" id="tablepohotovosti">
-               
-                <div class="table-div pohotovosti">
-                
-                    <form asp-action="Zapis" asp-controller="Pohotovosti"> 
-                        <h2 style="display: flex; justify-content: center;">Pohotovosti:</h2>                  
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Jmeno</th>
-                                    <th>Tel</th>
-                                    <th>Firma</th>
-                                    <th>Začátek</th>
-                                    <th>Konec</th>
-                                    <th>Obsazenost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(var pohotovost in Model.PohotovostList)
-                                {
-                                    <tr>
-                                        <td>@pohotovost.Technik.Jmeno</td>
-                                        <td>@pohotovost.User.PhoneNumber</td>
-                                        <td>@pohotovost.Technik.Firma.NázevFirmy</td>
-                                        <td>@pohotovost.Začátek</td>
-                                        <td>@pohotovost.Konec</td>
-                                       <td>
-                                            @if (pohotovost.Technik.Taken)
-                                            {
-                                                if (Model.TechnikLokalitaMap.TryGetValue(pohotovost.Technik.IdTechnika, out var lokalita))
-                                                {
-                                                    <span>Právě je objednán, na lokalitě: @lokalita</span>
-                                                }
-                                                else
-                                                {
-                                                    <span>Právě je objednán, ale nemá přiřazenou lokalitu.</span>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <span>Právě je volný</span>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
-                        <div class="buttondiv">
-                            <div>
-                                <a>Technik:</a>
-                                <select asp-for="TechnikMod.IdTechnika">
-                                    @foreach(var Technik in Model.TechnikList)
-                                    {
-                                    <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
-                                    }
-                                </select>
+                            <tr>
+                                <th>Id<i class="fa-solid fa-id-badge"></i></th>
+                                <th>Distributor<i class="fa-solid fa-bolt"></i></th>
+                                <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                                <th>Klasifikace<i class="fa-solid fa-star"></i></th>
+                                <th>Od<i class="fa-solid fa-clock"></i></th>
+                                <th>Do<i class="fa-solid fa-clock"></i></th>
+                                <th>Adresa<i class="fa-solid fa-house"></i></th>
+                                <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
+                                <th>Popis</th>
+                                <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
+                                <th></th>
                                 
-                            </div>
-                            <div>
-                                <a>Začátek</a><br>
-                                <input asp-for="PohotovostMod.Začátek" type="datetime-local">    
-                            </div>    
-                            <div>
-                                <a>Konec</a><br>
-                                <input asp-for="PohotovostMod.Konec" type="datetime-local">    
-                            </div>   
-                            <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
+                            </tr>
+                        </thead>
+                    
+                        <tbody id="table-body">     
+                            
+                        </tbody>
+                    
+                        
+                        
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="menu">
+                <ul class="ul-footer">
+                
+                </ul>
+            </div>
+                <div class="odstavky-section">
+                    <section class="tables" id="tablepohotovosti">
+                
+                        <div class="table-div pohotovosti">
+                        
+                            <form asp-action="Zapis" asp-controller="Pohotovosti"> 
+                                <h2 style="display: flex; justify-content: center;">Pohotovosti:</h2>                  
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Jmeno</th>
+                                            <th>Tel</th>
+                                            <th>Firma</th>
+                                            <th>Začátek</th>
+                                            <th>Konec</th>
+                                            <th>Obsazenost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var pohotovost in Model.PohotovostList)
+                                        {
+                                            <tr>
+                                                <td>@pohotovost.Technik.Jmeno</td>
+                                                <td>@pohotovost.User.PhoneNumber</td>
+                                                <td>@pohotovost.Technik.Firma.NázevFirmy</td>
+                                                <td>@pohotovost.Začátek</td>
+                                                <td>@pohotovost.Konec</td>
+                                            <td>
+                                                    @if (pohotovost.Technik.Taken)
+                                                    {
+                                                        if (Model.TechnikLokalitaMap.TryGetValue(pohotovost.Technik.IdTechnika, out var lokalita))
+                                                        {
+                                                            <span>Právě je objednán, na lokalitě: @lokalita</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Právě je objednán, ale nemá přiřazenou lokalitu.</span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Právě je volný</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
+                                <div class="buttondiv">
+                                    <div>
+                                        <a>Technik:</a>
+                                        <select asp-for="TechnikMod.IdTechnika">
+                                            @foreach(var Technik in Model.TechnikList)
+                                            {
+                                            <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
+                                            }
+                                        </select>
+                                        
+                                    </div>
+                                    <div>
+                                        <a>Začátek</a><br>
+                                        <input asp-for="PohotovostMod.Začátek" type="datetime-local">    
+                                    </div>    
+                                    <div>
+                                        <a>Konec</a><br>
+                                        <input asp-for="PohotovostMod.Konec" type="datetime-local">    
+                                    </div>   
+                                    <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
+                                </div>
+                            </form>    
+                        </div> 
+                          @if(User.IsInRole("Admin"))
+                            {
+                                <form asp-action="Nacteni" asp-controller="Lokality">
+                                    <button type="submit">VYTVOŘ</button>
+                                </form>
+                            }
+                    </section>
+
+
+
+
+                    <div class="section small OdstavkyView" style="flex-direction: row;">
+
+                        <div class="div-odstavka-create">
+                            <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky">
+                                <div class="form">
+                                    <h2>Vytvořit odstávku:</h2>
+                                    <label>Lokalita:</label>
+                                    <div class="div-form">
+                                        <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
+                                    </div>
+                                </div>
+                                <div class="form">
+                                    <label>Od:</label>
+                                    <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
+                                </div>
+                                <div class="form">
+                                    <label>Do:</label>
+                                    <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
+                                </div>
+                                <div class="form">
+                                    <label>Popis:</label>
+                                
+                                    <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
+                                <div class="alert alert-success">
+                                @TempData["Zprava"]
+                                </div>
+                            </form>
                         </div>
-                    </form>    
-                </div> 
-                @if(User.IsInRole("Admin"))
-                {
-                    <form asp-action="Nacteni" asp-controller="Lokality">
-                        <button type="submit">VYTVOŘ</button>
-                    </form>
-                }
-               
-            </section>     
+
+                        <div class="main-container OdstavkyView">       
+                        @{
+                                int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today && (d.ZadanVstup == true || d.Od.Date == DateTime.Today) && d.Lokality.DA=="FALSE").Count();
+                                int regionA = Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu == "Západní Čechy" && o.Od.Date <= DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                                int regionB = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                                int regionC = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Praha + Střední Čechy" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                                int regionD = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Severní Morava" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                                int regionE = Model.OdstavkyList.Where(o=>o.Lokality.Region.NazevRegionu=="Jižní Morava" && o.Od.Date==DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+                                int regionF =Model.OdstavkyList.Where(o => o.Lokality.Region.NazevRegionu =="Severní Čechy" && o.Od.Date == DateTime.Today && (o.ZadanVstup == true || o.Od.Date == DateTime.Today)).Count();
+
+
+
+                                double percentA = (double)regionA / totalOdstavky * 100;
+                                double percentB = (double)regionB / totalOdstavky * 100;
+                                double percentC = (double)regionC / totalOdstavky * 100;
+                                double percentD = (double)regionD / totalOdstavky * 100;
+                                double percentE = (double)regionE / totalOdstavky * 100;
+                                double percentF = (double)regionF / totalOdstavky * 100;
+
+                                double startB = percentA;
+                                double startC = startB + percentB;
+                                double startD = startC + percentC;
+                                double startE = startD + percentD;
+                                double startF = startE + percentE;
+                                }
+                                <div class="year-stats">
+                                    <div class="month-group">
+                                        <div title="@percentF%" class="bar h-50" style="background-color: red; height:@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
+                                        <p class="month" style="margin:0px">Severní Čechy</p>                       
+                                    </div>
+                                    <div class="month-group">                          
+                                        <div title="@percentE%" class="bar h-50" style="background-color:#4cc790; height: @percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
+                                        <p class="month" style="margin:0px">Jižní Morava</p>  
+                                    </div>
+                                    <div class="month-group">
+                                        <div title="@regionD%" class="bar h-50" style="background-color: #0f1783; height: @percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                                  
+                                        <p class="month" style="margin:0px">Severní Morava</p>  
+                                    </div>    
+                                    <div class="month-group" style="max-width: 165px;">                
+                                        <div title="@regionC%" class="bar h-50" style="background-color: #5397d6; height:@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>                                              
+                                        <p class="month" style="margin:0px">Praha + Střední Čechy</p>  
+                                    </div>  
+                                    <div class="month-group" >
+                                        <div title="@regionB%" class="bar h-50" style="background-color: #e59f3c; height: @percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);"></div>                                              
+                                        <p class="month" style="margin:0px">Jižní Čechy</p>  
+                                    </div>
+                                    <div class="month-group" > 
+                                        <div title="@regionA%" class="bar h-50" style="background-color: #915db1; height: @percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)"></div>                                 
+                                        <p class="month" style="margin:0px">Západní Čechy</p>  
+                                    </div>  
+                                </div>
+                            
+
+                                <div class="stats-info">
+                                    <div class="graph-container">
+                                        <div class="percent">
+                                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                                <path class="circle" stroke-dasharray="@percentA.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="@percentB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startB.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="@percentC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startC.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="@percentD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startD.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="@percentE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startE.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                <path class="circle" stroke-dasharray="@percentF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),100" stroke-dashoffset="-@startF.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            </svg>
+                                        </div>
+                                        <p class="OdstavkyView">Total:@Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today).Count()</p>
+                                        </div>
+                                        <div class="info">
+                                            <div class="region-sctn">
+                                                <p>Praha:<span>@regionC</span></p>
+                                                <p>Jížní Čechy<span>@regionB</span></p>
+                                                <p>Severní Čechy:<span>@regionF</span></p>
+                                            </div>
+                                            <div class="region-sctn">
+                                                <p>Západní Čechy:<span>@regionA</span></p>    
+                                                <p>Severní Morava<span>@regionD</span></p>
+                                                <p>Jížní Morava:<span>@regionE</span></p>
+                                            </div>
+                                            
+                                    
+                                        </div>
+                                    
+                            
+                                </div>
+                            </div>
+                </div>
+                    
+            </div>
         </div>
-         
     </body>
 </html>

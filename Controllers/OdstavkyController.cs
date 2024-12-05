@@ -106,45 +106,46 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis)
         {
-            if (lokalitaSearch == null)
+            try
             {
-                ViewBag.Message = "Zadaná lokalita neexistuje";
-                return View("Index", odstavky);
-            }
+                if (lokalitaSearch == null)
+                {
+                    ViewBag.Message = "Zadaná lokalita neexistuje";
+                    return View("Index", odstavky);
+                }
 
-            string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
-            var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
+                string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
+                var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
 
-            if (ExistingOdstavka(newOdstavka.LokalitaId, newOdstavka.Do)) { }
-            else
-            {
+                if (ExistingOdstavka(newOdstavka.LokalitaId, newOdstavka.Do))
+                {
+                    TempData["Zprava"] = $"Odstávka na tento den: {newOdstavka.Od} lokalitu: {newOdstavka.LokalitaId}(Id) je již vypsána";
+                    return Redirect("/Home/Index");
+                }
 
-                TempData["Zprava"] = "Odstávka na tento den: " + newOdstavka.Od + " lokalitu: " + newOdstavka.LokalitaId + "(Id), je již vypsána";
-                return Redirect("/Home/Index");
-            }
+                if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
+                {
+                    TempData["Zprava"] = "Špatně zadané datum";
+                    return Redirect("/Home/Odstavky");
+                }
 
-            if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
-            {
-                TempData["Zprava"] = "Špatně zadané datum";
-                return Redirect("/Home/Odstavky");
-            }
-            else
-            {
                 await _context.OdstavkyS.AddAsync(newOdstavka);
                 await _context.SaveChangesAsync();
-            }
 
-            var technikSearch = await AssignTechnikAsync(newOdstavka, lokalitaSearch, odstavky);
+                var technikSearch = await AssignTechnikAsync(newOdstavka, lokalitaSearch, odstavky);
+                if (technikSearch == null)
+                {
+                    Zpravy.Add("Technik nebyl nalezen.");
+                    TempData["Zprava"] = string.Join("; ", Zpravy);
+                    return Redirect("/Home/Index");
+                }
 
-            if (technikSearch == null)
-            {
-                Zpravy.Add("Technik nebyl nalezen.");
-                TempData["Zprava"] = string.Join("; ", Zpravy);
+                TempData["Zprava"] = string.Join("; ", $"Technik: {technikSearch.Jmeno} je objednán na dieslovaní", Zpravy);
                 return Redirect("/Home/Index");
             }
-            else
+            catch (Exception ex)
             {
-                TempData["Zprava"] = string.Join("Technik: " + technikSearch.Jmeno + " je objednán na dieslovaní; ", Zpravy);
+                TempData["Error"] = "Došlo k chybě při zpracování dieslování: " + ex.Message;
                 return Redirect("/Home/Index");
             }
         }
@@ -274,12 +275,6 @@ namespace Diesel_modular_application.Controllers
         {
             var firmaVRegionu = await GetFirmaVRegionuAsync(lokalitaSearch.Region.IdRegion);
 
-
-
-
-
-
-
             Zpravy.Add(firmaVRegionu.NázevFirmy);
             if (firmaVRegionu != null)
             {
@@ -380,15 +375,42 @@ namespace Diesel_modular_application.Controllers
         {
             for (int i = 1; i <= 1; i++)
             {
-                var number = await _context.LokalityS.CountAsync();
-                var IdNumber = RandomNumberGenerator.GetInt32(1, number);
-                var lokalitaSearch = await _context.LokalityS.Include(o => o.Region).ThenInclude(p => p.Firma).FirstOrDefaultAsync(i => i.Id == IdNumber);
-                if (lokalitaSearch != null)
+                try
                 {
+                    var number = await _context.LokalityS.CountAsync();
+                    if (number == 0)
+                    {
+                        return Json(new { success = false, message = "Chyba při zakládání." });
+                    }
+
+                    var IdNumber = RandomNumberGenerator.GetInt32(1, number);
+                    var lokalitaSearch = await _context.LokalityS
+                    .Include(o => o.Region)
+                    .ThenInclude(p => p.Firma)
+                    .FirstOrDefaultAsync(i => i.Id == IdNumber);
+
+                    if (lokalitaSearch != null)
+                    {
                     var hours = RandomNumberGenerator.GetInt32(1, 50);
                     string popis = "test";
-                    return await HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours + 2), DateTime.Today.AddHours(hours + 8), odstavky, popis);
+
+                    return await HandleOdstavkyDieslovani(
+                    lokalitaSearch,
+                    DateTime.Today.AddHours(hours + 2),
+                    DateTime.Today.AddHours(hours + 8),
+                    odstavky,
+                    popis
+                    );
+                    }
+
+                    return Json(new { success = true, message = "Dieslování objednáno." });
                 }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = "Chyba při objednání dieslování: " + ex.Message });
+                }
+
+
             }
             return Redirect("/Home/Index");
         }

@@ -33,28 +33,13 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
-document.getElementById('toggleMenu').addEventListener('click', function () {
-    const sidemenu = document.getElementById('sidemenu');
-    sidemenu.classList.toggle('open');
-});
+const menuToggle = document.getElementById('menu-toggle');
+const sideMenu = document.getElementById('sidemenu');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.a-sidebar');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            // Odstranit 'active' ze všech <li> prvků
-            document.querySelectorAll('.li-sidebar').forEach(li => {
-                li.classList.remove('active');
-            });
-
-            // Přidat 'active' na rodičovský <li> kliknutého odkazu
-            const parentLi = link.closest('li.li-sidebar');
-            if (parentLi) {
-                parentLi.classList.add('active');
-            }
-        });
-    });
+// Přidání event listeneru pro kliknutí na tlačítko
+menuToggle.addEventListener('click', () => {
+    // Přepni třídu 'visible' pro zobrazení nebo skrytí menu
+    sideMenu.classList.toggle('visible');
 });
 
 
