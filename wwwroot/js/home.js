@@ -33,6 +33,12 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
+
+
+
+
+
+
 const menuToggle = document.getElementById('menu-toggle');
 const sideMenu = document.getElementById('sidemenu');
 

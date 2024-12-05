@@ -26,7 +26,12 @@
 }
 .sctn{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+
 
 }
 .sctn.import{
