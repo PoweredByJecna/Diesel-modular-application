@@ -1,0 +1,39 @@
+.bar.lok{
+    background-color: blue;
+    width: 10px;    
+    border-radius: 1px;
+    margin: 0;
+
+}
+.reg{
+    height: 260px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.year-stats.lok{
+    align-items: center;
+    flex-direction: column;
+    height: 95%;
+    width: 95%;
+}
+.p-lok{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.regions.odstavky{
+    display: flex
+    ;
+        flex-direction: row;
+        align-items: flex-end;
+        height: 330px;
+        overflow-x: auto;
+        width: 95%;
+        flex-wrap: nowrap;
+        border-bottom: 1px solid grey;
+}
+.month-group.odstavky{
+    height: 260px;
+}

@@ -138,7 +138,7 @@ html {
     scroll-behavior: smooth;
 }
 body.dark-mode {
-    background-color: #2c2c2c;
+    background-color: grey;
     color: #e0e0e0;
 }
 
@@ -798,4 +798,9 @@ p{
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
+}
+.dataTables_paginate {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
 }

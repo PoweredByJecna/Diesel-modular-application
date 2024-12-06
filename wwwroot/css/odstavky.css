@@ -1,3 +1,5 @@
+
+
 .odstavky-section{
     display: flex;
     justify-content: space-around;
@@ -12,6 +14,8 @@
     align-items: center;
     flex-direction: column;
     width: 30%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 5px;
 }
 .form-odstavky{
     display: flex;
@@ -107,6 +111,11 @@ width: 70%;
     border-radius: 0px;
     width: 580px;
     overflow-y: auto;
+    
+}
+.table-div.odstavkyTable.Home{
+    height: 320px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .table-div.odstavkyTable.Lokality_Odstavky{
@@ -156,6 +165,7 @@ width: 70%;
     justify-content: center;
     margin-bottom: 105px;
     margin-top: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .div-odstavky{
     margin-top: 25px;
@@ -184,9 +194,10 @@ tbody{
 .main-container.OdstavkyView{
 
     height: 475px;
-    width: 60%;
+    width: 67%;
     background-color: white;
     color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .graph-container.p.OdstavkyView{
     color: black;

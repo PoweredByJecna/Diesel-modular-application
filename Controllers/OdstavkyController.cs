@@ -118,10 +118,7 @@ namespace Diesel_modular_application.Controllers
                 var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
 
                 if (ExistingOdstavka(newOdstavka.LokalitaId, newOdstavka.Do))
-                {
-                    TempData["Zprava"] = $"Odstávka na tento den: {newOdstavka.Od} lokalitu: {newOdstavka.LokalitaId}(Id) je již vypsána";
-                    return Redirect("/Home/Index");
-                }
+               
 
                 if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
                 {

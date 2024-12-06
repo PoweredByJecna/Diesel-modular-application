@@ -282,7 +282,15 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false, 
             lengthChange: false,    
-            pageLength: 4        
+            pageLength: 4,
+            }).on('draw', function () {
+            $('.dataTables_paginate').css({
+                position: 'absolute',
+                bottom: '-190px',
+                right: '10px'
+            });
+           
+           
         });
           /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
 
@@ -428,8 +436,9 @@ menuToggle.addEventListener('click', () => {
             }
         }
     ],
-    pageLength: 7,
-            ordering: false,  
+        pageLength: 5,
+        lengthChange: false,  
+        ordering: false,  
                      // Počet řádků na stránku
         });
 
@@ -678,7 +687,7 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false,  
             lengthChange: false,    
-            pageLength: 4         // Počet řádků na stránku
+            pageLength: 4,        // Počet řádků na stránku
         });
 
               /////////////////////////////////////////////RUNNING TABLE////////////////////////////////////////////////
@@ -834,29 +843,10 @@ menuToggle.addEventListener('click', () => {
             ],
             paging: true,        
             searching: true,
-            ordering: false,     
-            pageLength: 4,
-            paginate: {
-                previous: '<i class="fa-solid fa-chevron-left"></i>',
-                next: '<i class="fa-solid fa-chevron-right"></i>'
-            },
-            drawCallback: function () {
-                // Upravit styl stránkování
-                $('.dataTables_paginate a').css({
-                    'color': '#0011ff',
-                    'background': 'none',
-                    'border': 'none',
-                    'padding': '5px',
-                    'font-weight': 'bold',
-                    'text-decoration': 'none'
-                });
-    
-                $('.dataTables_paginate span a.current').css({
-                    'color': '#0011ff',
-                    'font-weight': 'bold',
-                    'text-decoration': 'none'
-                });
-            }
+            ordering: false,
+            lengthChange:false,
+            pageLength: 5,
+            
         });
 
         /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////
