@@ -1,3 +1,39 @@
+@media (max-width: 900px) {
+    /* Skrytí sloupců pro #runningTable */
+    #runningTable th:nth-child(3), /* Skryje Distributor */
+    #runningTable th:nth-child(5), /* Skryje Klasifikace */
+    #runningTable th:nth-child(6), /* Skryje Technik */
+    #runningTable th:nth-child(8), /* Skryje Zásuvka */
+    #upcomingTable th:nth-child(3), /* Skryje Distributor */
+    #upcomingTable th:nth-child(5), /* Skryje Klasifikace */
+    #upcomingTable th:nth-child(7) { /* Skryje Zásuvka */
+        display: none;
+    }
+
+    /* Skrytí odpovídajících buněk pro #runningTable a #upcomingTable */
+    #runningTable td:nth-child(3), /* Skryje Distributor */
+    #runningTable td:nth-child(5), /* Skryje Klasifikace */
+    #runningTable td:nth-child(6), /* Skryje Technik */
+    #runningTable td:nth-child(8), /* Skryje Zásuvka */
+    #upcomingTable td:nth-child(3), /* Skryje Distributor */
+    #upcomingTable td:nth-child(5), /* Skryje Klasifikace */
+    #upcomingTable td:nth-child(7) { /* Skryje Zásuvka */
+        display: none;
+    }
+    #runningTable, #upcomingTable, #endTable{
+        width: 360px !important;
+    }
+
+    #runningTable td, #endTable{
+        padding: 3px 7px !important;
+    }
+    #upcomingTable td{
+        padding: 3px 5px !important;
+    }
+
+}
+
+
 @media(max-width:1200px)
 {
     .sidemenu{
@@ -25,7 +61,6 @@
         display: block !important;
         width: 100%;
         z-index: 1000;
-        width: 250px; /* Nebo jiná šířka, kterou potřebujete */
     }
    .login-section{
     width: 325px;

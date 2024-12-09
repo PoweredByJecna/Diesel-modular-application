@@ -34,7 +34,29 @@ document.querySelectorAll('.InputSearching').forEach(input => {
 });
 
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
+}
+
+// Příklad použití při plnění tabulky
+const data = [
+    { date: '2024-12-08T17:18:36.3655145' },
+    { date: '2024-11-30T10:45:12.1234567' }
+];
+
+// Vykreslování dat do tabulky
+data.forEach(item => {
+    const formattedDate = formatDate(item.date);
+    console.log(formattedDate); // Pro ukázku: 08.12.2024 17:18
+    // Zde vložte `formattedDate` do tabulky
+});
 
 
 
@@ -247,7 +269,10 @@ menuToggle.addEventListener('click', () => {
                             return klasifikaceBadge;
                         }
                     },
-                    {data: 'date'}, //objednano(odstavky od)
+                    { data: 'date', 
+                        render: function(data) {
+                            return formatDate(data);
+                        } }, //objednano(odstavky od)
                     {
                         data: 'zásuvka',
                         render: function (data, type, row) {
@@ -284,10 +309,14 @@ menuToggle.addEventListener('click', () => {
             lengthChange: false,    
             pageLength: 4,
             }).on('draw', function () {
-            $('.dataTables_paginate').css({
+            $('#upcomingTable_wrapper .dataTables_paginate').css({
                 position: 'absolute',
-                bottom: '-190px',
+                bottom: '4px',
                 right: '10px'
+            });
+            $('#upcomingTable_wrapper').css({
+                position: 'relative',
+                height: '350px' // Výška pro #upcomingTable
             });
            
            
@@ -362,7 +391,12 @@ menuToggle.addEventListener('click', () => {
             }
         },
         {
-            data: 'odchod'
+            
+                data: 'odchod', 
+                render: function(data) {
+                    return formatDate(data);
+                } 
+            
         }
 
 
@@ -371,9 +405,18 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false, 
             lengthChange: false,     
-            pageLength: 4        // Počet řádků na stránku
-        });
-
+            pageLength: 4
+            }).on('draw', function () {
+                $('#endTable_wrapper .dataTables_paginate').css({
+                    position: 'absolute',
+                    bottom: '4px',
+                    right: '10px'
+                });
+                $('#endTable_wrapper').css({
+                    position: 'relative',
+                    height: '350px' // Výška pro #allTable
+                });
+            }); 
 
 
           /////////////////////////////////////////////END TABLE////////////////////////////////////////////////
@@ -438,10 +481,18 @@ menuToggle.addEventListener('click', () => {
     ],
         pageLength: 5,
         lengthChange: false,  
-        ordering: false,  
-                     // Počet řádků na stránku
-        });
-
+        ordering: false
+        }).on('draw', function () {
+                $('#lokalityTable_wrapper .dataTables_paginate').css({
+                    position: 'absolute',
+                    bottom: '4px',
+                    right: '10px'
+                });
+                $('#lokalityTable_wrapper').css({
+                    position: 'relative',
+                    height: '455px' // Výška pro #allTable
+                });
+        }); 
 
           /////////////////////////////////////////////LOKALITY TABLE////////////////////////////////////////////////
 
@@ -556,7 +607,18 @@ menuToggle.addEventListener('click', () => {
             searching: true,
             ordering: false, 
             lengthChange: false,        
-            pageLength: 7       // Počet řádků na stránku
+            pageLength: 7   
+                // Počet řádků na stránku
+            }).on('draw', function () {
+                $('#odTable_wrapper .dataTables_paginate').css({
+                    position: 'absolute',
+                    bottom: '4px',
+                    right: '10px'
+                });
+                $('#odTable_wrapper').css({
+                    position: 'relative',
+                    height: '450px' // Výška pro #allTable
+                });
         });
 
           /////////////////////////////////////////////OD TABLE////////////////////////////////////////////////
@@ -650,7 +712,10 @@ menuToggle.addEventListener('click', () => {
                     }
                 },
                 {data: 'jmeno'},
-                {data: 'vstup'},
+                { data: 'vstup', 
+                    render: function(data) {
+                        return formatDate(data);
+                    } },
                 {
                     data: 'zásuvka',
                     render: function (data, type, row) {
@@ -687,8 +752,19 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false,  
             lengthChange: false,    
-            pageLength: 4,        // Počet řádků na stránku
-        });
+            pageLength: 4,
+            }).on('draw', function () {
+                $('#runningTable_wrapper .dataTables_paginate').css({
+                    position: 'absolute',
+                    bottom: '4px',
+                    right: '10px'
+                });
+                $('#runningTable_wrapper').css({
+                    position: 'relative',
+                    height: '350px' // Výška pro #allTable
+                });
+            });        // Počet řádků na stránku
+        
 
               /////////////////////////////////////////////RUNNING TABLE////////////////////////////////////////////////
 
@@ -846,7 +922,16 @@ menuToggle.addEventListener('click', () => {
             ordering: false,
             lengthChange:false,
             pageLength: 5,
-            
+            }).on('draw', function () {
+            $('#allTable_wrapper .dataTables_paginate').css({
+                position: 'absolute',
+                bottom: '4px',
+                right: '10px'
+            });
+            $('#allTable_wrapper').css({
+                position: 'relative',
+                height: '455px' // Výška pro #allTable
+            });
         });
 
         /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////

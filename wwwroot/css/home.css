@@ -266,10 +266,10 @@ th.dark-mode {
 }
 
 .main-container {
-	background: #444e80;
-	color: #abafc6;
+	background: white;
+	color: black;
 	border-radius: 5px;
-	width: 95%;
+	width: 97%;
 	height: 320px;
     font-family: "Roboto", sans-serif;
 	display: flex;
@@ -392,7 +392,7 @@ th.dark-mode {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	font-size: 12px;
-	color: #fff;
+	color: black;
 	text-align: center;
 }
 
