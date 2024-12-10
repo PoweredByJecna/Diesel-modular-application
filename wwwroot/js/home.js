@@ -406,10 +406,10 @@ menuToggle.addEventListener('click', () => {
         },
         {
             
-                data: 'odchod', 
-                render: function(data) {
-                    return formatDate(data);
-                } 
+            data: 'odchod', 
+            render: function(data) {
+                return formatDate(data);
+            } 
             
         },
         {
@@ -424,23 +424,6 @@ menuToggle.addEventListener('click', () => {
                 return zasuvkaHtml;
             }
         },
-        {
-            data: null,
-            render: function (data, type, row) {
-                return`
-                    <div class="button-conteiner">
-                        <!-- Hlavní tlačítko -->
-                        <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                        <div class="hidden-buttons">
-                            <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})" title="odchod">
-                                <i class="fa-solid fa-arrow-right" style="color: black;"></i>
-                            </button>
-                            
-                        </div>
-                    </div>
-                `;
-            }
-            }, 
 
         ],
             paging: true,        
@@ -611,8 +594,14 @@ menuToggle.addEventListener('click', () => {
                         return klasifikaceBadge;
                     }
                 },
-                { data: 'od' },
-                { data: 'do' },
+                { data: 'od', 
+                    render: function(data) {
+                        return formatDate(data);
+                    }  },
+                { data: 'do', 
+                    render: function(data) {
+                        return formatDate(data);
+                    }  },
                 { data: 'adresa' },
                 { data: 'baterie' },
                 { data: 'popis' },
@@ -923,10 +912,22 @@ menuToggle.addEventListener('click', () => {
             {data: 'názevFirmy'},
             {data: 'jmeno'},    
             {data: 'nazevRegionu'},
-            {data: 'od'},
-            {data: 'do'},
-            {data:'vstup'},
-            {data: 'odchod'},
+            {data: 'od', 
+                render: function(data) {
+                    return formatDate(data);
+                } },
+            {data: 'do', 
+                render: function(data) {
+                    return formatDate(data);
+                } },
+            {data: 'vstup', 
+                render: function(data) {
+                    return formatDate(data);
+                } },
+            {data: 'odchod', 
+                render: function(data) {
+                    return formatDate(data);
+                } },
             {data:'popis'},
             {data: 'baterie'},
             {

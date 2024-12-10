@@ -39,6 +39,7 @@ main.dark-mode {
     flex-direction: column;
     align-items: center;
     width: 50%;
+    min-width: 300px;
     
 }
 
@@ -398,9 +399,7 @@ th.dark-mode {
 	margin-bottom: 10px;
 }
 
-.info span {
-	color: #fff;
-}
+
 
 .info{
     display: flex;

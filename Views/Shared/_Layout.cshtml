@@ -31,7 +31,6 @@
                     </div>
                     <div class="s2">
                         <div style="display: flex; flex-direction: column;width: 97%;">
-
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
                                     <a asp-action="Index" asp-controller="Home" class="a-sidebar">
@@ -41,25 +40,25 @@
                                 </li>
                                 <ul class="ul-sidebar">
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="aktual" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" asp-fragment="runningTable" class="a-sidebar">
                                             <i class="fa-solid fa-person-running fa-sm navA"></i>
                                             <span class="sb">Dnešní Aktuální</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="upcoming" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" asp-fragment="upcomingTable" class="a-sidebar">
                                             <i class="fa-solid fa-hourglass-end fa-sm navA"></i>
                                             <span class="sb">Dnešní nadcházející</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="end" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" asp-fragment="endTable" class="a-sidebar">
                                             <i class="fa-regular fa-circle-xmark fa-sm navA"></i>
                                             <span class="sb">Dnešní ukončené</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="search" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Home" asp-fragment="allTable" class="a-sidebar">
                                             <i class="fa-solid fa-globe fa-sm navA"></i>
                                             <span class="sb">Všechna dieslovaní</span> 
                                         </a>
@@ -164,7 +163,10 @@
                                 <form asp-action="Test" asp-controller="Odstavky" method="post">
                                     <button class="navdiv add" type="submit" style="color: white;">Test</button>
                                 </form>
-                            </div>   
+                            </div>  
+                            <div class="navdiv">
+                                <i class="fa-solid fa-user"></i>
+                            </div> 
                         
                                
                             

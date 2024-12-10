@@ -64,16 +64,16 @@
                         <table id="odTable" style="margin-bottom: 15px;">
                             <thead>
                                 <tr>
-                                    <th>Id<i class="fa-solid fa-id-badge"></i></th>
-                                    <th>Distributor<i class="fa-solid fa-bolt"></i></th>
-                                    <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                                    <th>Klasifikace<i class="fa-solid fa-star"></i></th>
-                                    <th>Od<i class="fa-solid fa-clock"></i></th>
-                                    <th>Do<i class="fa-solid fa-clock"></i></th>
-                                    <th>Adresa<i class="fa-solid fa-house"></i></th>
-                                    <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
+                                    <th>Id</th>
+                                    <th>Distributor</th>
+                                    <th>Lokalita</th>
+                                    <th>Klasifikace</th>
+                                    <th>Od</th>
+                                    <th>Do</th>
+                                    <th>Adresa</th>
+                                    <th>Baterie</th>
                                     <th>Popis</th>
-                                    <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
+                                    <th>Zásuvka</th>
                                     <th></th>
                                     
                                 </tr>
@@ -133,16 +133,19 @@
                             </table>
                             <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
                             <div class="buttondiv">
-                                <div>
-                                    <a>Technik:</a>
-                                    <select asp-for="TechnikMod.IdTechnika">
-                                        @foreach(var Technik in Model.TechnikList)
-                                        {
-                                        <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
-                                        }
-                                    </select>
-                                    
-                                </div>
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <div>
+                                        <a>Technik:</a>
+                                        <select asp-for="TechnikMod.IdTechnika">
+                                            @foreach(var Technik in Model.TechnikList)
+                                            {
+                                            <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
+                                            }
+                                        </select>
+                                        
+                                    </div>
+                                }
                                 <div>
                                     <a>Začátek</a><br>
                                     <input asp-for="PohotovostMod.Začátek" type="datetime-local">    

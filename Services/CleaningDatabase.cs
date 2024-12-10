@@ -39,6 +39,8 @@ namespace Diesel_modular_application.Services
                 var outdatedRecordsDieslovani = await _context.DieslovaniS.Include(d=>d.Technik)
                 .Where(d=>d.Odstavka.Do.Date<DateTime.Today).ToListAsync();
 
+                var outdatedRecordPohotovosti = await _context.Pohotovts.Where(d=>d.Konec.Date<DateTime.Today).ToListAsync();
+
                 if(outdatedRecordsOdstavky.Any())
                 {
                     
@@ -57,9 +59,11 @@ namespace Diesel_modular_application.Services
                          await _context.SaveChangesAsync();
                     }
                 }
-               
-
-
+                if(outdatedRecordPohotovosti.Any())
+                {
+                    _context.Pohotovts.RemoveRange(outdatedRecordPohotovosti);
+                     await _context.SaveChangesAsync();
+                }
             }
         }
 
