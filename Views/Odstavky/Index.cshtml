@@ -3,98 +3,91 @@
 <html>
     <body>
         <div class="conteiner">
-            <div class="section small OdstavkyView" style="flex-direction: row;">
-
-                <div class="div-odstavka-create">
-                    <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky" style="border-radius: 5px;">
-                        <div class="form">
-                            <h2>Vytvořit odstávku:</h2>
-                            <label>Lokalita:</label>
-                            <div class="div-form">
-                                <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
+            <div class="tables-row">
+                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;">
+                    <div class="div-odstavka-create">
+                        <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky" style="border-radius: 5px;">
+                            <div class="form">
+                                <h2>Vytvořit odstávku:</h2>
+                                <label>Lokalita:</label>
+                                <div class="div-form">
+                                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form">
-                            <label>Od:</label>
-                            <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
-                        </div>
-                        <div class="form">
-                            <label>Do:</label>
-                            <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
-                        </div>
-                        <div class="form">
-                            <label>Popis:</label>
-                        
-                            <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                        <div class="alert alert-success">
-                        @TempData["Zprava"]
-                        </div>
-                    </form>
-                </div>
-
-                <div class="main-container OdstavkyView" >
-                    <div class="year-stats lok">
-                    <h3>Všechny odstávky: @Model.OdstavkyList.Count()</h3>
-                    <div class="regions odstavky">
-                        @foreach (var region in Model.RegionStats.Regions)
-                        {
-                            var percentage = region.Percentage;
-                            var remainingPercentage = 100 - percentage; // Spočítáme, kolik zůstává do 100%
+                            <div class="form">
+                                <label>Od:</label>
+                                <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
+                            </div>
+                            <div class="form">
+                                <label>Do:</label>
+                                <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
+                            </div>
+                            <div class="form">
+                                <label>Popis:</label>
                             
-                            <div class="month-group odstavky">
-                                <div class="bar h-50" style="background-color: lightgrey; height:@remainingPercentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>
-                                <div title="@region.Percentage%" class="bar h-50" style="background-color:blue ; height:@region.Percentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
-
-                                <p class="p-lok">@region.RegionName</p>                       
+                                <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
                             </div>
-
-                        }
+                            
+                            <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
+                            <div class="alert alert-success">
+                            @TempData["Zprava"]
+                            </div>
+                        </form>
                     </div>
-                    </div>
-
-
-                  
                 </div>
-                    
-            </div>
-            <div class="table-div import C odstavky">
-                <div class="table-div odstavkyTable Lokality_Odstavky">
-                    <table id="odTable" style="margin-bottom: 15px;">
-                        <thead>
-                            <tr>
-                                <th>Id<i class="fa-solid fa-id-badge"></i></th>
-                                <th>Distributor<i class="fa-solid fa-bolt"></i></th>
-                                <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
-                                <th>Klasifikace<i class="fa-solid fa-star"></i></th>
-                                <th>Od<i class="fa-solid fa-clock"></i></th>
-                                <th>Do<i class="fa-solid fa-clock"></i></th>
-                                <th>Adresa<i class="fa-solid fa-house"></i></th>
-                                <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
-                                <th>Popis</th>
-                                <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
-                                <th></th>
-                                
-                            </tr>
-                        </thead>
-                    
-                        <tbody id="table-body">     
-                        </tbody>          
-                    </table>   
+                <div class="section small OdstavkyView" style="width: 70%">
+                    <div class="main-container OdstavkyView" >
+                        <div class="year-stats lok">
+                            <h3>Všechny odstávky: @Model.OdstavkyList.Count()</h3>
+                            <div class="regions odstavky">
+                                @foreach (var region in Model.RegionStats.Regions)
+                                {
+                                    var percentage = region.Percentage;
+                                    var remainingPercentage = 100 - percentage; // Spočítáme, kolik zůstává do 100%
+                                    
+                                    <div class="month-group odstavky">
+                                        <div class="bar h-50" style="background-color: lightgrey; height:@remainingPercentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>
+                                        <div title="@region.Percentage%" class="bar h-50" style="background-color:blue ; height:@region.Percentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
+
+                                        <p class="p-lok">@region.RegionName</p>                       
+                                    </div>
+
+                                }
+                            </div>
+                        </div>          
+                    </div>   
                 </div>
             </div>
-            <div class="menu">
-                <ul class="ul-footer">
-                
-                </ul>
+            <div class="cnt" style="background-color: white;">
+                <div class="table-div import C odstavky">
+                    <div class="table-div odstavkyTable Lokality_Odstavky">
+                        <table id="odTable" style="margin-bottom: 15px;">
+                            <thead>
+                                <tr>
+                                    <th>Id<i class="fa-solid fa-id-badge"></i></th>
+                                    <th>Distributor<i class="fa-solid fa-bolt"></i></th>
+                                    <th>Lokalita<i class="fa-solid fa-tower-broadcast"></i></th>
+                                    <th>Klasifikace<i class="fa-solid fa-star"></i></th>
+                                    <th>Od<i class="fa-solid fa-clock"></i></th>
+                                    <th>Do<i class="fa-solid fa-clock"></i></th>
+                                    <th>Adresa<i class="fa-solid fa-house"></i></th>
+                                    <th>Baterie<i class="fa-solid fa-battery-full"></i></th>
+                                    <th>Popis</th>
+                                    <th>Zásuvka<i class="fa-solid fa-plug"></i></th>
+                                    <th></th>
+                                    
+                                </tr>
+                            </thead>
+                        
+                            <tbody id="table-body">     
+                            </tbody>          
+                        </table>   
+                    </div>
+                </div>
             </div>
-            <div class="odstavky-section">
+            <div class="cnt" style="background-color: white;">
                 <section class="tables" id="tablepohotovosti">
-            
                     <div class="table-div pohotovosti">
-                    
                         <form asp-action="Zapis" asp-controller="Pohotovosti"> 
                             <h2 style="display: flex; justify-content: center;">Pohotovosti:</h2>                  
                             <table>
@@ -162,12 +155,12 @@
                             </div>
                         </form>    
                     </div> 
-                        @if(User.IsInRole("Admin"))
-                        {
-                            <form asp-action="Nacteni" asp-controller="Lokality">
-                                <button type="submit">VYTVOŘ</button>
-                            </form>
-                        }
+                    @if(User.IsInRole("Admin"))
+                    {
+                        <form asp-action="Nacteni" asp-controller="Lokality">
+                            <button type="submit">VYTVOŘ</button>
+                        </form>
+                    }
                 </section>
             </div>
         </div>

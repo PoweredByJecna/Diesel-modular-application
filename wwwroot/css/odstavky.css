@@ -13,7 +13,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 30%;
+    width: 95%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
 }
@@ -106,10 +106,13 @@ width: 70%;
     box-shadow: none;
     
 }
+.table.td{
+    border-bottom: 1px solid #ddd;
+}
 .table-div.odstavkyTable{
     box-shadow: none;
     border-radius: 0px;
-    width: 580px;
+    width: 95%;
     overflow-y: auto;
     
 }
@@ -194,7 +197,7 @@ tbody{
 .main-container.OdstavkyView{
 
     height: 475px;
-    width: 67%;
+    width: 95%;
     background-color: white;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -203,6 +206,6 @@ tbody{
     color: black;
 }
 .section.small.OdstavkyView{
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 30px;
 }

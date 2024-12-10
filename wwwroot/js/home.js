@@ -349,6 +349,20 @@ menuToggle.addEventListener('click', () => {
                 `;
             }
         },
+        {data: 'idDieslovani'},
+        {
+            data: 'distributor',
+            render: function (data, type, row) {
+                var logo = '';
+                if (data === 'ČEZ') {
+                    logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                } else if (data === 'EGD') {
+                    logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                } else if (data === 'PRE') {
+                    logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                }
+                return logo; }
+        },
         {
             data: 'lokalita',
             render: function (data, type, row) {
@@ -397,8 +411,36 @@ menuToggle.addEventListener('click', () => {
                     return formatDate(data);
                 } 
             
-        }
-
+        },
+        {
+            data: 'zásuvka',
+            render: function (data, type, row) {
+                var zasuvkaHtml = '';
+                if (data === "TRUE") {
+                    zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
+                } else if (data === "FALSE") {
+                    zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
+                }
+                return zasuvkaHtml;
+            }
+        },
+        {
+            data: null,
+            render: function (data, type, row) {
+                return`
+                    <div class="button-conteiner">
+                        <!-- Hlavní tlačítko -->
+                        <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                        <div class="hidden-buttons">
+                            <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})" title="odchod">
+                                <i class="fa-solid fa-arrow-right" style="color: black;"></i>
+                            </button>
+                            
+                        </div>
+                    </div>
+                `;
+            }
+            }, 
 
         ],
             paging: true,        

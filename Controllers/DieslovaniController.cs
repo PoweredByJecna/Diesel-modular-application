@@ -215,9 +215,12 @@ namespace Diesel_modular_application.Controllers
             .Skip(start)
             .Take(length)
             .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Odchod,
+                l.Odstavka.Lokality.Zásuvka,
             })
             .ToListAsync();
 

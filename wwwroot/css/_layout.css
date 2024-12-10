@@ -4,6 +4,9 @@
     #runningTable th:nth-child(5), /* Skryje Klasifikace */
     #runningTable th:nth-child(6), /* Skryje Technik */
     #runningTable th:nth-child(8), /* Skryje Zásuvka */
+    #endTable th:nth-child(3), /* Skryje Distributor */
+    #endTable th:nth-child(5), /* Skryje Klasifikace */
+    #endTable th:nth-child(7), /* Skryje Zásuvka */
     #upcomingTable th:nth-child(3), /* Skryje Distributor */
     #upcomingTable th:nth-child(5), /* Skryje Klasifikace */
     #upcomingTable th:nth-child(7) { /* Skryje Zásuvka */
@@ -15,6 +18,9 @@
     #runningTable td:nth-child(5), /* Skryje Klasifikace */
     #runningTable td:nth-child(6), /* Skryje Technik */
     #runningTable td:nth-child(8), /* Skryje Zásuvka */
+    #endTable td:nth-child(3), /* Skryje Distributor */
+    #endTable td:nth-child(5), /* Skryje Klasifikace */
+    #endTable td:nth-child(7), /* Skryje Zásuvka */
     #upcomingTable td:nth-child(3), /* Skryje Distributor */
     #upcomingTable td:nth-child(5), /* Skryje Klasifikace */
     #upcomingTable td:nth-child(7) { /* Skryje Zásuvka */
@@ -30,6 +36,8 @@
     #upcomingTable td{
         padding: 3px 5px !important;
     }
+
+
 
 }
 
@@ -415,7 +423,7 @@ header.dark-mode {
 }
 /*SIDEBAR*/
 .sidemenu {
-    background: #444e80;
+    background: white;
 	color: #abafc6;
     font-family: "Roboto", sans-serif;
     width: 18%;
@@ -423,6 +431,7 @@ header.dark-mode {
     top: 0; /* Ensures it starts at the top */
     height: 100vh; /* Full height for vertical scrolling */
     overflow-y: auto; /* Scrolls internally if content exceeds */
+    border: 1px solid #ddd;
 }
 .conteiner{
     min-height: 100vh;
@@ -491,7 +500,7 @@ transform: scale(0);
     animation: unset;
   }
 .fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt,.sb {
-    color: #fff;
+    color:#31374a;
   }
 .fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt{
     margin-left: 5px;
@@ -570,7 +579,7 @@ transform: scale(0);
 }
 /*SIDEBAR*/
 .s1{
-    height: 40px;
+    height: 42px;
     border-bottom: 1px solid #ddd;
     padding: 10px 15px;
     position: sticky;
@@ -606,7 +615,7 @@ transform: scale(0);
     margin-bottom: 10px;
 }
 .li-sidebar:hover{
-    background-color: #0057ff;
+    background-color:#a5a9b3;
     transition: all 0.3s;
     transition: background-color 0.5s ease;
     

@@ -2,107 +2,109 @@
 @using PagedList.Core.Mvc;
 <body>
     <div class="conteiner">
-        
-        <section class="section small">
-            <div class="regions">
-                <div class="region">
-                    <h3>Severní Čechy</h3>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                    <p class="p-lok">Zastoupení z celku: 20%</p>
-                </div>
+        <div class="tables-row">
+            <div class="section small">
+                <div class="regions">
                     <div class="region">
-                    <h3>Severní Morava</h3>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                    <p class="p-lok">Zastoupení z celku: 20%</p>
+                        <h3>Severní Čechy</h3>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok">Zastoupení z celku: 20%</p>
+                    </div>
+                        <div class="region">
+                        <h3>Severní Morava</h3>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok">Zastoupení z celku: 20%</p>
+                    </div>
+                    <div class="region">
+                        <h3>Jižní Čechy</h3>
+                        <div class="percent">
+                                    <svg viewBox="0 0 36 36" class="circular-chart">
+                                        <path class="circle" stroke-dasharray="2,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="1,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="1,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="2,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="2,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="2,100
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    </svg>
+                            </div>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok">Zastoupení z celku: 20%</p>
+                    </div>
+                    <div class="region">
+                        <h3>Jižní Morava</h3>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok"> Zastoupení z celku: 20%</p>
+                    </div>
+                    <div class="region">
+                        <h3>Západní Čechy</h3>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok">Zastoupení z celku: 20%</p>
+                    </div>
+                    <div class="region">
+                        <h3>Praha + Střední Čechy</h3>
+                        <p class="p-lok">Počet Lokalit: 55</p>
+                        <p class="p-lok">Zastoupení z celku: 20%</p>
+                    </div>
+
                 </div>
-                <div class="region">
-                    <h3>Jižní Čechy</h3>
-                      <div class="percent">
-                                <svg viewBox="0 0 36 36" class="circular-chart">
-                                    <path class="circle" stroke-dasharray="2,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="1,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="1,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="2,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="2,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="2,100
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                </svg>
+            </div>
+
+            <div class="section small">
+                <div class="regionStats">
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50"></div>
                         </div>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                    <p class="p-lok">Zastoupení z celku: 20%</p>
+                        <p class="p-lok">Region</p>
+                    </div>
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50"></div>
+                        </div>
+                        <p class="p-lok">Region</p>
+                    </div>
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50"></div>
+                        </div>
+                        <p class="p-lok">Region</p>
+                    </div>
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50"></div>
+                        </div>
+                        <p class="p-lok">Region</p>
+                    </div>
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50 "></div>
+                        </div>
+                        <p class="p-lok">Region</p>
+                    </div>
+                    <div class="year-stats lok">
+                        <div class="reg">
+                            <div class="bar lok h-50"></div>
+                        </div>
+                        <p class="p-lok">Region</p>
+                    </div>
                 </div>
-                <div class="region">
-                    <h3>Jižní Morava</h3>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                      <p class="p-lok"> Zastoupení z celku: 20%</p>
-                </div>
-                <div class="region">
-                    <h3>Západní Čechy</h3>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                      <p class="p-lok">Zastoupení z celku: 20%</p>
-                </div>
-                <div class="region">
-                    <h3>Praha + Střední Čechy</h3>
-                    <p class="p-lok">Počet Lokalit: 55</p>
-                    <p class="p-lok">Zastoupení z celku: 20%</p>
-                </div>
-
+                    <div id="map-container"></div>
             </div>
-           
-            <div class="regionStats">
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50"></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50"></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50"></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50"></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50 "></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-                <div class="year-stats lok">
-                    <div class="reg">
-                        <div class="bar lok h-50"></div>
-                    </div>
-                    <p class="p-lok">Region</p>
-                </div>
-            </div>
+        </div>
 
-
-        </section>
-
-        
+        <div class="cnt" style="background-color: white;"></div>
             <div class="table-div import C odstavky">
                 <div class="table-div odstavkyTable Lokality_Odstavky">
                     <table id="lokalityTable" style="margin-bottom: 15px;">
@@ -121,94 +123,37 @@
                         <tbody id="table-body">
                         </tbody>
                     </table>
-    
+
                 </div>
-            </div>          
-            
+            </div>         
+        </div> 
 
-
-            <div class="div-import-lokality"></div>
-
-            <div class="table-div import D">
-                @foreach(var region in Model.RegionyList)
-                {
-                    <div class="regiony">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>@region.NazevRegionu</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        @region.Firma.NázevFirmy
-                                        <div>
-                                            @foreach(var technik in Model.TechnikList.Where(o=>o.Firma.IDFirmy==region.Firma.IDFirmy))
-                                            {
-                                            <div>
-                                            <p>@technik.Jmeno</p>
-                                            </div>
-                                            }
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                }
-            </div>
-
-                </section>
-                <section class="sctn">
-                
-
-                        <div class="table-div import B" id="region">
-                            <h2>Import Lokalit</h2>
-                            <form class="form-import" method="post" asp-controller="Lokality" asp-action="ImportFromExcel"enctype="multipart/form-data">
-                                <input type="file" name="file" class="form-control" />
-                                <button type="submit" name="Upload" class="button-odstavka">Upload</button>
-                            </form>
-                        </div>
-              
-                
-                        <div id="map-container"></div>
-                        <script>
-                            fetch('./assets/czech-republic.svg')
-                            .then(response => {
-                            if (!response.ok) {
-                            throw new Error(`HTTP chyba! Stav: ${response.status}`);
-                            }
-                            return response.text();
-                            })
-                            .then(svgContent => {
-                            document.getElementById('map-container').innerHTML = svgContent;
-                            })
-                            .catch(error => console.error('Chyba při načítání SVG:', error));
-
-                            document.getElementById('map-container').addEventListener('click', function (event) {
-                            if (event.target.tagName === 'path') {
-                            const clickedRegion = event.target;
-                            clickedRegion.style.fill = 'red'; // Změna barvy kliknuté oblasti
-                            alert(`Klikli jste na: ${clickedRegion.id}`);
-                            }
-                            });
-                        </script>
-                  
-                </section>
-        
-                
-            </div>    
-        
-
-
-
-
-
-        
-            
-
+       
     
-      
+
+
+        <script>
+            fetch('./assets/czech-republic.svg')
+            .then(response => {
+            if (!response.ok) {
+            throw new Error(`HTTP chyba! Stav: ${response.status}`);
+            }
+            return response.text();
+            })
+            .then(svgContent => {
+            document.getElementById('map-container').innerHTML = svgContent;
+            })
+            .catch(error => console.error('Chyba při načítání SVG:', error));
+
+            document.getElementById('map-container').addEventListener('click', function (event) {
+            if (event.target.tagName === 'path') {
+            const clickedRegion = event.target;
+            clickedRegion.style.fill = 'red'; // Změna barvy kliknuté oblasti
+            alert(`Klikli jste na: ${clickedRegion.id}`);
+            }
+            });
+        </script>
+                
+
     </div>
 </body>
