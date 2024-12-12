@@ -1,0 +1,96 @@
+.bodybatery{
+    display: flex;
+    width: 100%;
+    height: 45%;
+    justify-content: center;
+}
+
+.diagram {
+    display: flex;
+    align-items: baseline;
+    width: 80%;
+    position: relative;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 30px;
+    
+}
+
+.component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+.component .icon {
+    background-color: #66cc66;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.connector {
+    height: 10px;
+    width: 70%;
+    background-color: #66cc66;
+    position: relative;
+}
+.connector.battery{
+    height: 100%;
+    width: 10px;
+    position: static;
+
+}
+.batteryconnector
+{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0px;
+    right: 5px;
+    height: 81%;
+}
+
+
+.battery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: static;
+    bottom: 0px;
+    right: 5px;
+    transform: translateX(-50%);
+}
+
+.battery .icon {
+    position: relative;
+    width: 60px;
+    height: 100px;
+    background-color: #66cc66;
+    border-radius: 5px;
+}
+
+.battery .icon:before {
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background-color: #66cc66;
+    border-radius: 2px;
+}
+
+.battery .status {
+    margin-top: 5px;
+    color: #ff4444;
+}
+.currentt {
+    position: absolute;
+    top: -40px;
+    background-color: #333;
+    padding: 5px 10px;
+    border: 1px solid #66cc66;
+    border-radius: 5px;
+    left: 50%;
+}

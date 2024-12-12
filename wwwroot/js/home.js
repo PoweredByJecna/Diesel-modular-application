@@ -214,7 +214,16 @@ menuToggle.addEventListener('click', () => {
                         `;
                     }
                     },
-                    {data: 'idDieslovani'},
+                    {
+                        data: 'idDieslovani',
+                        render: function (data, type, row) {
+                            return `
+                                <a href="/Home/DetailDieslovani/${data}">
+                                    ${data}
+                                </a>
+                            `;
+                        }
+                    },
                     {
                         data: 'distributor',
                         render: function (data, type, row) {

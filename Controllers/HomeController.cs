@@ -52,6 +52,18 @@ namespace Diesel_modular_application.Controllers
        
             return View("Index", odstavky);    
         }
+
+        public async Task<IActionResult> DetailDieslovani(int id)
+        {
+        // Načtěte data podle ID
+        var detail = await _context.DieslovaniS
+        .Include(o => o.Odstavka)
+        .ThenInclude(o => o.Lokality)
+        .ThenInclude(o => o.Region)
+        .Include(p => p.Technik)
+        .FirstOrDefaultAsync(o => o.IdDieslovani == id);            
+        return View(detail);
+        }
        
 
        

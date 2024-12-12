@@ -1,5 +1,47 @@
-@model Diesel_modular_application.Models.OdstavkyViewModel
+@model Diesel_modular_application.Models.TableDieslovani
 <div class="conteiner">
-    
+    <div class="tables-row">
+        
+        <div class="section small">
+            <h1>Detail Dieslovani</h1>
+            <p>ID: @Model.IdDieslovani</p>
+            <p>Region: @Model.Odstavka?.Lokality?.Region?.NazevRegionu</p>
+            <p>Technik: @Model.Technik?.Jmeno</p>
 
+        </div>
+        <div class="section small">
+            <div class="bodybatery">
+                <div class="diagram">
+                    <div class="component">
+                        <div class="icon">Mains</div>
+                        <div>233V</div>
+                    </div>
+                    <div class="connector">
+                        <div class="currentt">33A</div>
+                    </div>
+                    <div class="component">
+                        <div class="icon">Rectifier</div>
+                        <div>2kW</div>
+                    </div>
+                    <div class="connector">
+                        <div class="currentt">20.2A</div>
+                
+                    </div>
+                    <div class="component">
+                        <div class="icon">DC</div>
+                    </div>
+                
+                    <div class="batteryconnector">
+                        <div class="connector battery">
+                        </div> 
+                        <div class="battery">
+                            <div class="icon"></div>
+                            <div class="status">Auto EQ Charge 41%</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>  
+        </div>
+    </div>
 </div>
