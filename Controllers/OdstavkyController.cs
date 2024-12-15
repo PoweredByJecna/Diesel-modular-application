@@ -408,7 +408,7 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 try
                 {
@@ -447,7 +447,7 @@ namespace Diesel_modular_application.Controllers
 
 
             }
-            return Redirect("/Home/Index");
+            return Redirect("/Odstavky/Index");
         }
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
         {

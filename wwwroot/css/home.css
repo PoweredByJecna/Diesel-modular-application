@@ -430,7 +430,7 @@ table.dataTable.no-footer{
 }
 table.dataTable>thead>tr>th,table.dataTable>thead>tr>td{
     border: 0px !important;
-    padding: 0px !important;
+    padding: 0px 12px 0px 0px !important;
     text-align: center !important;
 }
 

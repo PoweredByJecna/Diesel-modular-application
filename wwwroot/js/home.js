@@ -647,7 +647,7 @@ menuToggle.addEventListener('click', () => {
             searching: true,
             ordering: false, 
             lengthChange: false,        
-            pageLength: 7   
+            pageLength: 5   
                 // Počet řádků na stránku
             }).on('draw', function () {
                 $('#odTable_wrapper .dataTables_paginate').css({

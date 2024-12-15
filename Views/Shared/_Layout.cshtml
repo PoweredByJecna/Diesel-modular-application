@@ -156,15 +156,18 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
                             </div>   
-                            <div class="navdiv add">
-                                <i class="fa-solid fa-plus"></i>
-                                <a>Add member</a>
-                            </div>
-                            <div class="buttonTest"> 
-                                <form asp-action="Test" asp-controller="Odstavky" method="post">
-                                    <button class="navdiv add" type="submit" style="color: white;">Test</button>
-                                </form>
-                            </div>  
+                            @if(User.IsInRole("Admin")){
+                                <div class="navdiv add">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <a>Add member</a>
+                                </div>
+                                <div class="buttonTest"> 
+                                    <form asp-action="Test" asp-controller="Odstavky" method="post">
+                                        <button class="navdiv add" type="submit" style="color: white;">Test</button>
+                                    </form>
+                                </div>  
+                            }
+
                             <div class="navdiv">
                                 <i class="fa-solid fa-user"></i>
                             </div> 
