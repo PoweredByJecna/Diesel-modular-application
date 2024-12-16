@@ -136,10 +136,10 @@ namespace Diesel_modular_application.Controllers
         }
             public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Where(o=>o.Odstavka.Od.Date==DateTime.Today).Count();
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Count();
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
-            .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Where(o=>o.Odstavka.Od.Date==DateTime.Today)
+            .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma)
             .Skip(start)
             .Take(length)
             .Select(l=> new{

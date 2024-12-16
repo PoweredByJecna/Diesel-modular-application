@@ -13,6 +13,7 @@ using Diesel_modular_application.KlasifikaceRule;
 using DocumentFormat.OpenXml.Office.CustomUI;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Diesel_modular_application.Services;
+using System.Diagnostics;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -111,7 +112,7 @@ namespace Diesel_modular_application.Controllers
                 if (lokalitaSearch == null)
                 {
                     ViewBag.Message = "Zadaná lokalita neexistuje";
-                    return View("Index", odstavky);
+                    return Redirect("/Home/Index");
                 }
 
                 string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
@@ -120,14 +121,14 @@ namespace Diesel_modular_application.Controllers
                 if (ExistingOdstavka(newOdstavka.LokalitaId, newOdstavka.Od.Date))
                 {
                     TempData["Zprava"] = string.Join("; ", $"Odstávka ne lakolitu: {newOdstavka.Lokality.Lokalita}, je již vytvořena: {newOdstavka.IdOdstavky}", Zpravy);
-                    return View("Index", odstavky);
+                    return Redirect("/Lokality/Index");
                 }
                
 
                 if (!ISvalidDateRange(newOdstavka.Od, newOdstavka.Do))
                 {
                     TempData["Zprava"] = "Špatně zadané datum";
-                    return Redirect("/Home/Odstavky");
+                    return Redirect("/Home/Index");
                 }
 
                 await _context.OdstavkyS.AddAsync(newOdstavka);
@@ -137,11 +138,12 @@ namespace Diesel_modular_application.Controllers
                 if(newOdstavka.Lokality.DA=="TRUE")
                 {
                 TempData["Zprava"] = string.Join("; ", $"Odstávka založena, dieslovaní není třeba, na lokalitě se nachází stacionární diesel agregát", Zpravy);
-                return Redirect("/Home/Index");
+                return Redirect("/Lokality/Index");
                 }
                 else
                 {
                     var technikSearch = await AssignTechnikAsync(newOdstavka);
+                    
                     if (technikSearch == null)
                     {
                         Zpravy.Add("Technik nebyl nalezen.");
@@ -150,15 +152,14 @@ namespace Diesel_modular_application.Controllers
                     }
                     else
                     {
-                        TempData["Zprava"] = string.Join("; ", $"Technik: {technikSearch.Jmeno} je objednán na dieslovaní", Zpravy);
-                        return Redirect("/Home/Index");
+                        return await CreateNewDieslovaniAsync(newOdstavka,technikSearch);
                     }
 
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                TempData["Error"] = "Došlo k chybě při zpracování dieslování: " + ex.Message;
+                TempData["Zprava"] = string.Join("; ", Zpravy); // Tady už spojíme položky seznamu do řetězce
                 return Redirect("/Home/Index");
             }
         }
@@ -181,7 +182,7 @@ namespace Diesel_modular_application.Controllers
 
         }
 
-        private async Task<TableDieslovani?> GetHigherPriortiy(TableOdstavky newOdstavka)
+        private async Task<TableTechnici?> GetHigherPriority(TableOdstavky newOdstavka)
         {
             var dieslovani = await _context.DieslovaniS
             .Include(o => o.Odstavka)
@@ -196,7 +197,7 @@ namespace Diesel_modular_application.Controllers
 
             if (dieslovani == null)
             {
-                Zpravy.Add("Dieslovani nenalezeno ");
+                Zpravy.Add("Dieslovani nenalezeno");
                 return null;
             }
             else
@@ -204,8 +205,7 @@ namespace Diesel_modular_application.Controllers
 
                 if(dieslovani.Odstavka.Do<newOdstavka.Od.AddHours(3) || newOdstavka.Do<dieslovani.Odstavka.Od.AddHours(3))
                 {
-                    var NewDieslovani= await CreateNewDielovaniAsync(newOdstavka,dieslovani.Technik);
-                    return NewDieslovani;
+                    return dieslovani.Technik;
                 }
                 else
                 {
@@ -228,7 +228,7 @@ namespace Diesel_modular_application.Controllers
                             Zpravy.Add("Přiřazen fiktivni technik na lokalitu" + newOdstavka.Lokality.Lokalita);
 
                         }
-                        return dieslovani;
+                        return novyTechnik;
                     }
                     else
                     {
@@ -236,8 +236,7 @@ namespace Diesel_modular_application.Controllers
                         var novyTechnik = await _context.TechniS.Where(t=>t.IdTechnika=="606794494").FirstOrDefaultAsync();
                         
                         if(novyTechnik==null){Zpravy.Add("Pokus o přivázání nového fiktivního technika"); return null;}
-
-                        var NewDieslovani = await CreateNewDielovaniAsync(newOdstavka, novyTechnik);  return NewDieslovani;
+                        return novyTechnik;
                         
                     }
                 }
@@ -301,8 +300,6 @@ namespace Diesel_modular_application.Controllers
             if (firmaVRegionu != null)
             {
 
-
-
                 var technikSearch = await _context.Pohotovts
                 .Include(p => p.Technik.Firma)
                 .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken == false)
@@ -317,16 +314,17 @@ namespace Diesel_modular_application.Controllers
                     if(_context.Pohotovts.Include(p => p.Technik.Firma).Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy).Any()) //kontrola zda ma nějaky technik vubec pohotovost
                     {
                         technikSearch = await CheckTechnikReplacementAsync(newOdstavka); //alespon jeden technik v regionu pohotovost ma, zkus nahradit
+                        Zpravy.Add("alespon jeden technik v regionu pohotovost ma, zkus nahradit.");
 
                         if (technikSearch != null) //technik nahrazen
                         {
-                        await CreateNewDielovaniAsync(newOdstavka, technikSearch); 
-                        return technikSearch;
+                            Zpravy.Add("technik nahrazen");
+                            return technikSearch;
                         }
                         else
                         {
-                        Zpravy.Add("Žádný náhradní technik nebyl nalezen.");
-                        return technikSearch;
+                            Zpravy.Add("Žádný náhradní technik nebyl nalezen.");
+                            return technikSearch;
                         }
 
                     }
@@ -341,14 +339,10 @@ namespace Diesel_modular_application.Controllers
 
                 if (technikSearch != null)
                 {
-                    Zpravy.Add(technikSearch.Jmeno);
-                    await CreateNewDielovaniAsync(newOdstavka, technikSearch);
-
                     return technikSearch;
 
                 }
             }
-            Zpravy.Add("Firma V regionu je null");
 
             return null;
 
@@ -362,15 +356,20 @@ namespace Diesel_modular_application.Controllers
         }
         private async Task<TableTechnici?> CheckTechnikReplacementAsync(TableOdstavky newOdstavka)
         {
-            var dieslovani = await GetHigherPriortiy(newOdstavka);
-            if (dieslovani == null) { Zpravy.Add("Priority je null."); return null; }
+            var technik = await GetHigherPriority(newOdstavka);
+            if (technik == null) 
+            { 
+                Zpravy.Add("Priority je null."); 
+                return null; 
+            }
             else
             {
-                return dieslovani.Technik;
+                Zpravy.Add("Technik byl nalezen, nebo nahrazen"); 
+                return technik;
             }
 
         }
-        private async Task<TableDieslovani> CreateNewDielovaniAsync(TableOdstavky newOdstavky, TableTechnici technik)
+        private async Task<IActionResult> CreateNewDieslovaniAsync(TableOdstavky newOdstavky, TableTechnici technik)
         {
             
             var NewDieslovani = new TableDieslovani
@@ -386,7 +385,7 @@ namespace Diesel_modular_application.Controllers
             _context.TechniS.Update(technik);
             await _context.SaveChangesAsync();
 
-            return NewDieslovani;
+            return Redirect("/Lokality/Index");
         }
     
 
@@ -406,49 +405,51 @@ namespace Diesel_modular_application.Controllers
         }
 
 
-        public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
+ public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
+{
+    try
+    {
+        var number = await _context.LokalityS.CountAsync();
+        if (number == 0)
         {
-            for (int i = 1; i <= 10; i++)
-            {
-                try
-                {
-                    var number = await _context.LokalityS.CountAsync();
-                    if (number == 0)
-                    {
-                        return Json(new { success = false, message = "Chyba při zakládání." });
-                    }
-
-                    var IdNumber = RandomNumberGenerator.GetInt32(1, number);
-                    var lokalitaSearch = await _context.LokalityS
-                    .Include(o => o.Region)
-                    .ThenInclude(p => p.Firma)
-                    .FirstOrDefaultAsync(i => i.Id == IdNumber);
-
-                    if (lokalitaSearch != null)
-                    {
-                    var hours = RandomNumberGenerator.GetInt32(1, 50);
-                    string popis = "test";
-
-                    return await HandleOdstavkyDieslovani(
-                    lokalitaSearch,
-                    DateTime.Today.AddHours(hours + 2),
-                    DateTime.Today.AddHours(hours + 8),
-                    odstavky,
-                    popis
-                    );
-                    }
-
-                    return Json(new { success = true, message = "Dieslování objednáno." });
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false, message = "Chyba při objednání dieslování: " + ex.Message });
-                }
-
-
-            }
-            return Redirect("/Odstavky/Index");
+            TempData["Zprava"] = "Chyba při zakládání.";
+            return Redirect("/Home/Index"); // Tady správně vracíme přesměrování
         }
+
+        var IdNumber = RandomNumberGenerator.GetInt32(1, number);
+        var lokalitaSearch = await _context.LokalityS
+            .Include(o => o.Region)
+            .ThenInclude(p => p.Firma)
+            .FirstOrDefaultAsync(i => i.Id == IdNumber);
+
+        if (lokalitaSearch != null)
+        {
+            var hours = RandomNumberGenerator.GetInt32(1, 50);
+            string popis = "test";
+
+            await HandleOdstavkyDieslovani(
+                lokalitaSearch,
+                DateTime.Today.AddHours(hours + 2),
+                DateTime.Today.AddHours(hours + 8),
+                odstavky,
+                popis
+            );
+            
+            TempData["Zprava"] = "objednání dieslování: "; 
+            return Redirect("/Home/Index"); // Po úspěšném dokončení testu přidat zprávu a provést přesměrování
+        }
+       
+        TempData["Zprava"] = "dieslování: "; 
+        return Redirect("/Home/Index"); // Po úspěšném dokončení testu přidat zprávu a provést přesměrování
+    }
+    catch (Exception ex)
+    {
+        TempData["Zprava"] = "Chyba při objednání dieslování: " + ex.Message;
+        return Redirect("/Home/Index"); // Vracíme přesměrování v případě chyby
+    }
+}
+
+
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
         {
             var SetOdstavka = new TableOdstavky
