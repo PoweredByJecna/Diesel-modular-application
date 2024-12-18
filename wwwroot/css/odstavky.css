@@ -71,11 +71,9 @@ width: 70%;
     height: 100px;
 }
 .button{
-    margin-top: 10px;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
-    margin-bottom: 10px;
     cursor: pointer;
     color: white;
     background-color: rgb(0, 17, 255);
@@ -106,26 +104,27 @@ width: 70%;
     box-shadow: none;
     
 }
-.table.td{
-    border-bottom: 1px solid #ddd;
-}
+
 .table-div.odstavkyTable{
     box-shadow: none;
     border-radius: 0px;
-    width: 95%;
+    width: 100%;
     overflow-y: auto;
+    background-color: white;
     
 }
 .table-div.odstavkyTable.Home{
     height: 360px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 100%;
 }
-
+table.dataTable.tbody.th,table.dataTable.tbody.td {
+    padding: 0px 6px !important;
+}
 .table-div.odstavkyTable.Lokality_Odstavky{
     width: 100%;
 }
 .table-div.odstavkyTable.end{
-    width: 450px;
+    width: 100%;
 }
 .table-div.import.C.odstavky{
     width: 100%;
@@ -168,39 +167,19 @@ width: 70%;
     justify-content: center;
     margin-bottom: 105px;
     margin-top: 30px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
 }
-.div-odstavky{
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    width:85%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-.table-div.odstakvy{
-    width: 98%;
-}
-tr:nth-child(even) {
-    background-color: #d4d4d444;
-}
-th{
-    padding: 10px;
-    
-}
-tbody{
-    table-layout: auto;
-    max-height: 100px;
-    overflow: auto;
-}
+
+
+
+
+
 .main-container.OdstavkyView{
 
     height: 475px;
     width: 95%;
     background-color: white;
     color: black;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .graph-container.p.OdstavkyView{
     color: black;

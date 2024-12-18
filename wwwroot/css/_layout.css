@@ -30,11 +30,11 @@
         width: 360px !important;
     }
 
-    #runningTable td, #endTable{
-        padding: 3px 7px !important;
+    #runningTable td, #endTable td{
+        padding: 0px 7px !important;
     }
     #upcomingTable td{
-        padding: 3px 5px !important;
+        padding: 0px 5px !important;
     }
 
 
@@ -61,7 +61,7 @@
     }
     
     .table-div.odstavkyTable{
-        width: 97% !important;
+        width: 100% !important;
     }
     
 
@@ -123,6 +123,57 @@
         padding-bottom: 3px !important;
         }
 }
+table {
+    width: 100% !important;     /* Tabulka zabírá 100% šířky kontejneru */
+    table-layout: auto;         /* Automatické přizpůsobení šířky sloupců */
+    border-collapse: collapse;  /* Sloučení hranic buněk */
+}
+
+thead, tbody {
+    width: 100%;
+}
+
+th, td {
+    padding: 0px 16px !important;               /* Padding pro buňky */
+    word-wrap: break-word;      /* Umožňuje zalomení textu v buňkách */
+    text-align: left;           /* Zarovnání textu do levé části */
+}
+
+th {
+    background-color: white !important;/* Pozadí pro hlavičky */
+    height: 40px;               /* Výška hlavičky */
+    text-align: left;
+    padding-left: 0px 10px 0px 16px !important;
+}
+
+td {
+    height: 38px;               /* Výška buněk v těle tabulky */
+}
+
+thead th, tbody td {
+    width: 12%;                 /* Šířka sloupců, která bude stejná pro všechny buňky v daném sloupci */
+    white-space: nowrap;        /* Zabráni zalomení textu */
+}
+
+tbody {
+    overflow-y: auto;           /* Povolit vertikální posouvání pro tělo tabulky */
+    max-height: 300px;          /* Maximální výška pro tělo tabulky (lze upravit podle potřeby) */
+}
+
+
+
+#upcomingTable tr{
+    background-color: rgba(255, 255, 0, 0.114) !important;
+}
+#runningTable tr{
+    background-color: rgba(0, 128, 0, 0.108) !important;
+} 
+#endTable tr{
+    background-color: rgba(255, 0, 0, 0.137) !important;
+}
+#allTable tr, #lokalityTable, #odTable{
+    background-color: #0055ff28 !important;
+}
 
 
 .navdiv.bar{
@@ -183,8 +234,9 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
+    font-size: 12px;
     padding: 0;
-    color: #333;
+    color: #5f6368;
     background-color:#f5f7fa;
     min-height: 100vh;
 }
@@ -374,8 +426,8 @@ nav input {
    
 }
     .button.Edit{
-        width: 40px;
-        height: 33px;
+        width: 25px;
+        height: 30px;
         margin-left: 5px;
         background-color:#b5b9bd3d;
         display: flex;

@@ -38,7 +38,7 @@
                 <div class="section small OdstavkyView" style="width: 70%">
                     <div class="main-container OdstavkyView" >
                         <div class="year-stats lok">
-                            <h3>Všechny odstávky: @Model.OdstavkyList.Count()</h3>
+                            <h3>Všechny odstávky: @Model.RegionStats.TotalOdstavky</h3>
                             <div class="regions odstavky">
                                 @foreach (var region in Model.RegionStats.Regions)
                                 {

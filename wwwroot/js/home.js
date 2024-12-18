@@ -272,7 +272,7 @@ menuToggle.addEventListener('click', () => {
                             };
                             if (colorMap[data]) {
                                 klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                                                    <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                                    <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
                                                 </span>`;
                             }
                             return klasifikaceBadge;
@@ -407,7 +407,7 @@ menuToggle.addEventListener('click', () => {
                 };
                 if (colorMap[data]) {
                     klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                                        <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                        <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
                                     </span>`;
                 }
                 return klasifikaceBadge;
@@ -597,7 +597,7 @@ menuToggle.addEventListener('click', () => {
                             klasifikaceBadge =
                             `
                             <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                            <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                            <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
                             </span>`;
                         }
                         return klasifikaceBadge;
@@ -745,7 +745,7 @@ menuToggle.addEventListener('click', () => {
                         };
                         if (colorMap[data]) {
                             klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                                                <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                                <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
                                             </span>`;
                         }
                         return klasifikaceBadge;
@@ -911,7 +911,7 @@ menuToggle.addEventListener('click', () => {
                     };
                     if (colorMap[data]) {
                         klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
-                                            <span class="badge-label" style="color: black; padding: 3px; font-size: medium; margin-right: 0px;">${data}</span>
+                                            <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
                                         </span>`;
                     }
                     return klasifikaceBadge;

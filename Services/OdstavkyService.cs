@@ -16,8 +16,6 @@ namespace Diesel_modular_application.Services
     public StatsViewModel GetRegionStats()
     {
         var odstavkyList = _context.OdstavkyS
-        .Include(o => o.Lokality)
-        .ThenInclude(l => l.Region)
         .ToList();
 
         var today = DateTime.Today;
@@ -34,7 +32,7 @@ namespace Diesel_modular_application.Services
 
         var totalOdstavky = odstavkyList.Count();
 
-       var regionStats = regions.Select(region => new RegionStats
+        var regionStats = regions.Select(region => new RegionStats
         {
         RegionName = region,
         // Počet odstávek pro tento region

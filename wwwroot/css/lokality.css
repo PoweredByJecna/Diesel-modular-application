@@ -130,24 +130,15 @@ thead{
   top:90px;
   position: sticky;
 }
-th,td{
-    border: none;
-    
-}
 
 tr:nth-child(even) {
     background-color: #d4d4d444;
 }
 
-tr:hover{
-    background-color: rgb(138, 138, 182);
-}
 .div-lokality-menu{
     margin-right: 10px;
     
 }
-
-
 
 .lokality-class-menu{
     list-style: none;
@@ -173,20 +164,13 @@ tr:hover{
   justify-content: space-around;
   font-size: small;
 }
-.table-div.import.B{
-  width: 300px;
-  height: 200px;
-}
+
 .table-div.import.C{
   width: 95%;
   height: 100%;
   padding: 10px 0 0 0;
 }
-.table-div.import.D{
-    display: flex;
-    flex-direction: row;
-    width: 60%;
-}
+
 .paging
 {
     display: flex;
@@ -214,11 +198,6 @@ tr:hover{
   align-items: flex-end;
   padding: 10px;
   flex-wrap: wrap;
-}
-.table-div.lokality{
-  width: 95%;
-  margin-bottom: 20px;
-  max-height: 500px;
 }
 .h1-import{
     margin-top: 0;

@@ -28,8 +28,6 @@ main.dark-mode {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    
-    
 }
 
 
@@ -55,34 +53,13 @@ h2.dark-mode {
     border-bottom-color: #c0c0c0;
 }
 
-.table-div{
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    background-color: white;
-    border-radius: 5px;
-    width: 96%;
-    table-layout: auto;
-    border-collapse: collapse;
-}
+
 .table-div.home{
     box-shadow: none;
     display: flex;
     justify-content: center;
-    width: 95%;
-    max-height: 320px;
     flex-direction: column;
     align-items: center;
-}
-.table-home{
-    width: 95%;
-}
-
-.table-div.all{
-    margin-bottom: 85px;
-    max-height: 300px;
-
-}
-.table-div.end, .table-div.now, .table-div.upcoming{
-    max-height: 350px;
 }
 
 table {
@@ -91,7 +68,7 @@ table {
     background-color: white;
     padding: 3px;
     border-radius: 10px;
-    border-collapse: collapse;
+    border-collapse: collapse !important;
 }
 
 table.dark-mode {
@@ -105,163 +82,6 @@ table.dark-mode {
     margin-top: 30px;
     border: 1px solid #ddd;
 
-}
-td
-{
-    height: 50px;
-}
-th, td {
-    padding: 3px;
-    border: 1px solid #e0e0e0;
-    text-align: center;
-    transition: background-color 0.5s, color 0.5s;
-    max-height: 40px;
-    cursor: pointer;
-    text-align: center;
-}
-
-tr, th, td{
-    border: 0px solid white;
-    background-color: white;
-    border-bottom: 1px solid #cbd0dd42;
-}
-table tr:hover {
-    font-weight:400;
- }
-
-tr:nth-child(even) {
-    background-color: #d4d4d444;
-}
-
-
-#stav {
-    max-width: 40px;
-}
-
-#lokalita {
-    max-width: 60px;
-}
-
-#firma, #klasifikace {
-    max-width: 70px;
-}
-
-#objednano, #vstup, #odchod {
-    max-width: 120px;
-}
-
-#com, #arrow, #clock {
-    max-width: 40px;
-}
-
-th.dark-mode {
-    background-color: #444;
-}
-
-.status {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-.status.green {
-    background-color: green;
-}
-.status.yellow {
-    background-color: yellow;
-}
-
-.status.red {
-    background-color: red;
-}
-.status.blue{
-    background-color: blue;
-}
-.status.orange{
-    background-color: orange;
-}
-.status.light-green{
-    background-color: lightgreen;
-}
-.status.purple{
-    background-color: purple;
-}
-.red-arrow {
-    color: red;
-    font-size: 16px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.green-arrow {
-    color: green;
-    font-size: 16px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.red-arrow:hover, .green-arrow:hover {
-    transform: scale(1.2);
-}
-
-
-.fa-regular.fa-comment, .fa-solid.fa-arrow-right.red-arrow, .fa-solid.fa-arrow-right.green-arrow, .fa-solid.fa-xmark.close-comment, .fa-solid.fa-check {
-    cursor: pointer;
-}
-
-.comment-box {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    padding: 10px;
-    border: 1px solid #c0c0c0;
-    border-radius: 10px;
-    z-index: 100;
-}
-
-
-
-#current-datetime {
-    margin-right: 13px;
-}
-
-.comment-box {
-    transform: translate(-185px,-125px);
-    width: 200px;
-    background-color: #ffffff;
-    padding: 10px;
-    border: 1px solid #c0c0c0;
-    border-radius: 10px;
-    z-index: 100;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.comment-box.dark-mode {
-    background-color: #2c2c2c;
-    border-color: #444;
-}
-
-.comment-actions i {
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-}
-
-.comment-actions i:hover {
-    transform: scale(1.1);
-}
-
-.comment-box textarea {
-    width: 100%;
-    height: 50px;
-    border: none;
-}
-
-.comment-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-}
-
-.show-overlay.overlay, .show-comment.comment-box {
-    display: block;
 }
 
 .main-container {
@@ -418,9 +238,7 @@ th.dark-mode {
     width: 100%; 
 }
 
-.dataTables_wrapper .dataTables_length,.dataTables_wrapper .dataTables_filter,.dataTables_wrapper .dataTables_info,.dataTables_wrapper .dataTables_processing,.dataTables_wrapper .dataTables_paginate {
-    font-size: smaller;
-}
+
 .dataTables_info{
     display: none !important;
 }
@@ -428,10 +246,9 @@ table.dataTable.no-footer{
     border: 0px !important;
     padding-top: 20px;
 }
-table.dataTable>thead>tr>th,table.dataTable>thead>tr>td{
-    border: 0px !important;
-    padding: 0px 12px 0px 0px !important;
-    text-align: center !important;
+
+.table.dataTable{
+    border-collapse: separate;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button{
