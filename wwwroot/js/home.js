@@ -325,7 +325,7 @@ menuToggle.addEventListener('click', () => {
             });
             $('#upcomingTable_wrapper').css({
                 position: 'relative',
-                height: '350px' // Výška pro #upcomingTable
+                height: '200px' // Výška pro #upcomingTable
             });
            
            
@@ -801,7 +801,7 @@ menuToggle.addEventListener('click', () => {
                 });
                 $('#runningTable_wrapper').css({
                     position: 'relative',
-                    height: '350px' // Výška pro #allTable
+                    height: '200px' // Výška pro #allTable
                 });
             });        // Počet řádků na stránku
         
