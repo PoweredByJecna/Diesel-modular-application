@@ -108,10 +108,10 @@ width: 70%;
 .table-div.odstavkyTable{
     box-shadow: none;
     border-radius: 0px;
-    width: 97%;
+    width: 99%;
     overflow-y: auto;
     background-color: white;
-    
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .table-div.odstavkyTable.Home{
     height: 360px;

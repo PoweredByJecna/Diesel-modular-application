@@ -22,9 +22,6 @@
     .sidemenu{
         display: none;
     }
-    .navdiv.bar{
-        display: flex !important    ;
-    }
 
     .conteiner{
         width: 100% !important;
@@ -153,10 +150,6 @@ tbody {
     background-color: #0055ff28 !important;
 }
 
-
-.navdiv.bar{
-    display: none;
-}
 #toggle-icon {
     display: none;
 }
