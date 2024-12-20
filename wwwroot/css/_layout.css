@@ -1,31 +1,6 @@
 @media (max-width: 900px) {
-    /* Skrytí sloupců pro #runningTable */
-    #runningTable th:nth-child(3), /* Skryje Distributor */
-    #runningTable th:nth-child(5), /* Skryje Klasifikace */
-    #runningTable th:nth-child(6), /* Skryje Technik */
-    #runningTable th:nth-child(8), /* Skryje Zásuvka */
-    #endTable th:nth-child(3), /* Skryje Distributor */
-    #endTable th:nth-child(5), /* Skryje Klasifikace */
-    #endTable th:nth-child(7), /* Skryje Zásuvka */
-    #upcomingTable th:nth-child(3), /* Skryje Distributor */
-    #upcomingTable th:nth-child(5), /* Skryje Klasifikace */
-    #upcomingTable th:nth-child(7) { /* Skryje Zásuvka */
-        display: none;
-    }
-
-    /* Skrytí odpovídajících buněk pro #runningTable a #upcomingTable */
-    #runningTable td:nth-child(3), /* Skryje Distributor */
-    #runningTable td:nth-child(5), /* Skryje Klasifikace */
-    #runningTable td:nth-child(6), /* Skryje Technik */
-    #runningTable td:nth-child(8), /* Skryje Zásuvka */
-    #endTable td:nth-child(3), /* Skryje Distributor */
-    #endTable td:nth-child(5), /* Skryje Klasifikace */
-    #endTable td:nth-child(7), /* Skryje Zásuvka */
-    #upcomingTable td:nth-child(3), /* Skryje Distributor */
-    #upcomingTable td:nth-child(5), /* Skryje Klasifikace */
-    #upcomingTable td:nth-child(7) { /* Skryje Zásuvka */
-        display: none;
-    }
+   
+    
     #runningTable, #upcomingTable, #endTable{
         width: 360px !important;
     }
@@ -122,6 +97,9 @@
         .ul-sidebar{
         padding-bottom: 3px !important;
         }
+}
+#upcomingTable_wrapper{
+    width: 100%;
 }
 table {
     width: 100% !important;     /* Tabulka zabírá 100% šířky kontejneru */
@@ -311,9 +289,7 @@ body.dark-mode {
     padding: 3px;
     font-family: 'Courier New', Courier, monospace;
 }
-header.dark-mode {
-    background-color: #3A3A3A;
-}
+
 
 .active-link {
     text-decoration: underline;
@@ -409,13 +385,13 @@ nav input {
 
 .header {
     background-color:white;
-    padding: 10px 0px;
     border-bottom: 1px solid #ddd;
     position: fixed;
-    width: 82%;
+    width: 83%;
     top: 0;
     z-index: 1000;
     display: flex;
+    height: 50px;
     right: 0;
     justify-content: flex-end;
 }
@@ -490,7 +466,8 @@ header.dark-mode {
     background: white;
 	color: #abafc6;
     font-family: "Roboto", sans-serif;
-    width: 18%;
+    width: 17%;
+    z-index: 1000;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
     height: 100vh; /* Full height for vertical scrolling */
@@ -499,7 +476,7 @@ header.dark-mode {
 }
 .conteiner{
     min-height: 100vh;
-    width: 82%;
+    width: 83%;
     position: absolute;
     right: 0px; 
     margin-top: 65px;
@@ -643,16 +620,14 @@ transform: scale(0);
 }
 /*SIDEBAR*/
 .s1{
-    height: 41.5px;
+    height: 50px;
     border-bottom: 1px solid #ddd;
-    padding: 10px 15px;
     position: sticky;
     top: 0;
 }
 .s2{
     margin-top: 10px;
     position: sticky;
-    top: 81px;
     display: flex;
     justify-content: center;
     z-index: 1000;

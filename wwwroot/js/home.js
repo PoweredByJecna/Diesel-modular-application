@@ -229,13 +229,14 @@ menuToggle.addEventListener('click', () => {
                         render: function (data, type, row) {
                             var logo = '';
                             if (data === 'ČEZ') {
-                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'EGD') {
-                                logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'PRE') {
-                                logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
                             }
-                            return logo; }
+                            return logo;
+                        }
                     },
                     {
                         data: 'lokalita',
@@ -282,6 +283,8 @@ menuToggle.addEventListener('click', () => {
                         render: function(data) {
                             return formatDate(data);
                         } }, //objednano(odstavky od)
+                    {data:'popis'},
+                    {data: 'baterie'},    
                     {
                         data: 'zásuvka',
                         render: function (data, type, row) {
@@ -295,18 +298,18 @@ menuToggle.addEventListener('click', () => {
                         }
                     },
                     {
-                    data: null,
-                    render: function (data, type, row) {
-                        return `       
-                        <div class="button-conteiner">
-                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                            <div class="hidden-buttons">
-                                <button class="button Edit delete" onclick="Vstup(${row.idDieslovani})">
-                                    <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
-                                </button>
-                                </div>
-                        </div>
-                    `;
+                        data: null,
+                        render: function (data, type, row) {
+                            return `       
+                            <div class="button-conteiner">
+                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                <div class="hidden-buttons">
+                                    <button class="button Edit delete" onclick="Vstup(${row.idDieslovani})">
+                                        <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
+                                    </button>
+                                    </div>
+                            </div>
+                        `;
                     }
                     }, 
                     
@@ -316,7 +319,7 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false, 
             lengthChange: false,    
-            pageLength: 4,
+            pageLength: 3,
             }).on('draw', function () {
             $('#upcomingTable_wrapper .dataTables_paginate').css({
                 position: 'absolute',
@@ -326,9 +329,7 @@ menuToggle.addEventListener('click', () => {
             $('#upcomingTable_wrapper').css({
                 position: 'relative',
                 height: '200px' // Výška pro #upcomingTable
-            });
-           
-           
+            });      
         });
           /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
 
@@ -361,16 +362,17 @@ menuToggle.addEventListener('click', () => {
         {data: 'idDieslovani'},
         {
             data: 'distributor',
-            render: function (data, type, row) {
-                var logo = '';
-                if (data === 'ČEZ') {
-                    logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
-                } else if (data === 'EGD') {
-                    logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
-                } else if (data === 'PRE') {
-                    logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
-                }
-                return logo; }
+                        render: function (data, type, row) {
+                            var logo = '';
+                            if (data === 'ČEZ') {
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'EGD') {
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'PRE') {
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            }
+                            return logo;
+                        }
         },
         {
             data: 'lokalita',
@@ -439,7 +441,7 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false, 
             lengthChange: false,     
-            pageLength: 4
+            pageLength: 6
             }).on('draw', function () {
                 $('#endTable_wrapper .dataTables_paginate').css({
                     position: 'absolute',
@@ -513,7 +515,7 @@ menuToggle.addEventListener('click', () => {
             }
         }
     ],
-        pageLength: 5,
+        pageLength: 9,
         lengthChange: false,  
         ordering: false
         }).on('draw', function () {
@@ -549,16 +551,17 @@ menuToggle.addEventListener('click', () => {
                 { data: 'idOdstavky' },  // ID
                 {
                     data: 'distributor',
-                    render: function (data, type, row) {
-                        var logo = '';
-                        if (data === 'ČEZ') {
-                            logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
-                        } else if (data === 'EGD') {
-                            logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
-                        } else if (data === 'PRE') {
-                            logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                        render: function (data, type, row) {
+                            var logo = '';
+                            if (data === 'ČEZ') {
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'EGD') {
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'PRE') {
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            }
+                            return logo;
                         }
-                        return logo; }
                 },
                 {
                     data: 'lokalita',
@@ -699,16 +702,17 @@ menuToggle.addEventListener('click', () => {
                 {data: 'idDieslovani'},
                 {
                     data: 'distributor',
-                    render: function (data, type, row) {
-                        var logo = '';
-                        if (data === 'ČEZ') {
-                            logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
-                        } else if (data === 'EGD') {
-                            logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
-                        } else if (data === 'PRE') {
-                            logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                        render: function (data, type, row) {
+                            var logo = '';
+                            if (data === 'ČEZ') {
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'EGD') {
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            } else if (data === 'PRE') {
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            }
+                            return logo;
                         }
-                        return logo; }
                 },
                 {
                     data: 'lokalita',
@@ -756,6 +760,8 @@ menuToggle.addEventListener('click', () => {
                     render: function(data) {
                         return formatDate(data);
                     } },
+                {data:'popis'},
+                {data: 'baterie'},    
                 {
                     data: 'zásuvka',
                     render: function (data, type, row) {
@@ -792,7 +798,7 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false,  
             lengthChange: false,    
-            pageLength: 4,
+            pageLength: 3,
             }).on('draw', function () {
                 $('#runningTable_wrapper .dataTables_paginate').css({
                     position: 'absolute',
@@ -973,7 +979,7 @@ menuToggle.addEventListener('click', () => {
             searching: true,
             ordering: false,
             lengthChange:false,
-            pageLength: 5,
+            pageLength: 9,
             }).on('draw', function () {
             $('#allTable_wrapper .dataTables_paginate').css({
                 position: 'absolute',

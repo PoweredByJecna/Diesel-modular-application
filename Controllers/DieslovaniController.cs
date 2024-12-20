@@ -120,6 +120,8 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Klasifikace,
                 l.Technik.Jmeno,
                 l.Vstup,
+                l.Odstavka.Popis,
+                l.Odstavka.Lokality.Baterie,
                 l.Odstavka.Lokality.Zásuvka,
                 EmptyColumn1 = (string)null
             })
@@ -189,8 +191,9 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Odstavka.Od.AddHours(2).Date,
+                l.Odstavka.Popis,
+                l.Odstavka.Lokality.Baterie,
                 l.Odstavka.Lokality.Zásuvka,
-                EmptyColumn1 = (string)null
             })
             .ToListAsync();
 
