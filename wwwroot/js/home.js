@@ -226,17 +226,17 @@ menuToggle.addEventListener('click', () => {
                     },
                     {
                         data: 'distributor',
-                        render: function (data, type, row) {
-                            var logo = '';
-                            if (data === 'ČEZ') {
-                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
-                            } else if (data === 'EGD') {
-                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
-                            } else if (data === 'PRE') {
-                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                            render: function (data, type, row) {
+                                var logo = '';
+                                if (data === 'ČEZ') {
+                                    logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                } else if (data === 'EGD') {
+                                    logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                } else if (data === 'PRE') {
+                                    logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                }
+                                return logo;
                             }
-                            return logo;
-                        }
                     },
                     {
                         data: 'lokalita',
@@ -320,16 +320,7 @@ menuToggle.addEventListener('click', () => {
             ordering: false, 
             lengthChange: false,    
             pageLength: 3,
-            }).on('draw', function () {
-            $('#upcomingTable_wrapper .dataTables_paginate').css({
-                position: 'absolute',
-                bottom: '4px',
-                right: '10px'
-            });
-            $('#upcomingTable_wrapper').css({
-                position: 'relative',
-                height: '200px' // Výška pro #upcomingTable
-            });      
+            
         });
           /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
 
@@ -362,17 +353,17 @@ menuToggle.addEventListener('click', () => {
         {data: 'idDieslovani'},
         {
             data: 'distributor',
-                        render: function (data, type, row) {
-                            var logo = '';
-                            if (data === 'ČEZ') {
-                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
-                            } else if (data === 'EGD') {
-                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
-                            } else if (data === 'PRE') {
-                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
-                            }
-                            return logo;
-                        }
+                render: function (data, type, row) {
+                    var logo = '';
+                    if (data === 'ČEZ') {
+                        logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    } else if (data === 'EGD') {
+                        logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    } else if (data === 'PRE') {
+                        logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    }
+                    return logo;
+                }
         },
         {
             data: 'lokalita',
@@ -442,16 +433,6 @@ menuToggle.addEventListener('click', () => {
             ordering: false, 
             lengthChange: false,     
             pageLength: 6
-            }).on('draw', function () {
-                $('#endTable_wrapper .dataTables_paginate').css({
-                    position: 'absolute',
-                    bottom: '4px',
-                    right: '10px'
-                });
-                $('#endTable_wrapper').css({
-                    position: 'relative',
-                    height: '350px' // Výška pro #allTable
-                });
             }); 
 
 
@@ -554,11 +535,11 @@ menuToggle.addEventListener('click', () => {
                         render: function (data, type, row) {
                             var logo = '';
                             if (data === 'ČEZ') {
-                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'EGD') {
-                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'PRE') {
-                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             }
                             return logo;
                         }
@@ -650,18 +631,8 @@ menuToggle.addEventListener('click', () => {
             searching: true,
             ordering: false, 
             lengthChange: false,        
-            pageLength: 5   
+            pageLength: 10   
                 // Počet řádků na stránku
-            }).on('draw', function () {
-                $('#odTable_wrapper .dataTables_paginate').css({
-                    position: 'absolute',
-                    bottom: '4px',
-                    right: '10px'
-                });
-                $('#odTable_wrapper').css({
-                    position: 'relative',
-                    height: '450px' // Výška pro #allTable
-                });
         });
 
           /////////////////////////////////////////////OD TABLE////////////////////////////////////////////////
@@ -692,7 +663,7 @@ menuToggle.addEventListener('click', () => {
                 data: null,
                 render: function (data, type, row) {
                     return `
-                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #008000a1; border-radius: 5px;">
                             <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Aktivní</span>
                             <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                         </span>
@@ -705,11 +676,11 @@ menuToggle.addEventListener('click', () => {
                         render: function (data, type, row) {
                             var logo = '';
                             if (data === 'ČEZ') {
-                                logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'EGD') {
-                                logo = '<img src="/Images/EGD-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             } else if (data === 'PRE') {
-                                logo = '<img src="/Images/PRE-Logo.jpg" width="30" height="30" style="border-radius: 20px; border: 0.5px solid grey;">';
+                                logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
                             }
                             return logo;
                         }
@@ -798,17 +769,7 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false,  
             lengthChange: false,    
-            pageLength: 3,
-            }).on('draw', function () {
-                $('#runningTable_wrapper .dataTables_paginate').css({
-                    position: 'absolute',
-                    bottom: '4px',
-                    right: '10px'
-                });
-                $('#runningTable_wrapper').css({
-                    position: 'relative',
-                    height: '200px' // Výška pro #allTable
-                });
+            pageLength: 3
             });        // Počet řádků na stránku
         
 
@@ -871,16 +832,17 @@ menuToggle.addEventListener('click', () => {
             {data: 'idDieslovani'},
             {
                 data: 'distributor',
-                render: function (data, type, row) {
-                    var logo = '';
-                    if (data === 'ČEZ') {
-                        logo = '<img src="/Images/CEZ-Logo.jpg" width="30" height="30">';
-                    } else if (data === 'EGD') {
-                        logo = '<img src="/Images/EGD-Logo.jpg" width="60" height="40">';
-                    } else if (data === 'PRE') {
-                        logo = '<img src="/Images/PRE-Logo.jpg" width="50" height="30">';
+                    render: function (data, type, row) {
+                        var logo = '';
+                        if (data === 'ČEZ') {
+                            logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                        } else if (data === 'EGD') {
+                            logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                        } else if (data === 'PRE') {
+                            logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                        }
+                        return logo;
                     }
-                    return logo; }
             },
             {
                 data: 'lokalita',
@@ -980,16 +942,6 @@ menuToggle.addEventListener('click', () => {
             ordering: false,
             lengthChange:false,
             pageLength: 9,
-            }).on('draw', function () {
-            $('#allTable_wrapper .dataTables_paginate').css({
-                position: 'absolute',
-                bottom: '4px',
-                right: '10px'
-            });
-            $('#allTable_wrapper').css({
-                position: 'relative',
-                height: '455px' // Výška pro #allTable
-            });
         });
 
         /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////

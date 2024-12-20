@@ -235,23 +235,17 @@ body.dark-mode {
 }
 
 .navdiv{
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #ddd;
     margin: 4px;
-    width: 33px;
-    height: 33px;
-    transition: background-color 0.3s;
+    height: 30px;
     display: flex;
     align-items: center;
     width: auto;
     cursor: pointer;
-    z-index: 1;
     
 }
-.navdiv:hover{
-    scale: 1.05;
-    transition: 0.4s;
-}
+
 .a-username{
     position: fixed;
     top: -1px;
@@ -266,10 +260,14 @@ body.dark-mode {
 }
 .navdiv.add{
     background-color: rgb(0, 17, 255);
+    color: white;
+    height: 32px;
+    font-size: 12px;
    
 }
 .navdiv.add i, .navdiv.add a{
     color: white;
+    font-size: 12px;
 }
 .navdiv.signout{
     background-color: yellow;
@@ -384,17 +382,24 @@ nav input {
 
 
 .header {
-    background-color:white;
+    background-color: white;
     border-bottom: 1px solid #ddd;
     position: fixed;
-    width: 83%;
+    width: 100%;
     top: 0;
     z-index: 1000;
     display: flex;
     height: 50px;
     right: 0;
-    justify-content: flex-end;
+    box-shadow: 0 2px 10px #00000042;
+    align-items: center;
+    justify-content: space-between;
 }
+.navbarcontent{
+    display: flex;
+    flex-direction: row;
+}
+
 .button-conteiner{
     display: flex;
     flex-direction: row-reverse;
@@ -466,7 +471,7 @@ header.dark-mode {
     background: white;
 	color: #abafc6;
     font-family: "Roboto", sans-serif;
-    width: 17%;
+    width: 12%;
     z-index: 1000;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
@@ -476,148 +481,14 @@ header.dark-mode {
 }
 .conteiner{
     min-height: 100vh;
-    width: 83%;
+    width: 88%;
     position: absolute;
     right: 0px; 
     margin-top: 65px;
 }
-.options-sidebar{
-    display: block;
-}
-.option-sidebar{
-    display: block;
-}
-#sidebaroption {
-    position: relative;
-    margin: 0;
-    top: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    border-radius: 4px;
-    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
-}
-
-.sidebaroption {
-    position: relative;
-    line-height: 1;
-    transition: 0.3s ease all;
-    z-index: 2;
-    height: 40px;
-    
-}
-.sidebaroption i{
-    width: 16px;
-    height: 16px;
-    padding:  12px 0;
-}
-
-.sidebaroption, .sb{
-    font-size: 16px;
-}
-
-.sb {
-margin-left: 3px
-
-}
-
-.sb-val {
-position: absolute;
-left: 14px;
-width: 217px;
-height: 21px;
-opacity: 0;
-background-color: #fff;
-transform: scale(0);
-}
-.sidebaroption input:hover ~ .opt-val {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .sidebaroption input:hover ~ i {
-    top: 0;
-    bottom: auto;
-    opacity: 1;
-    animation: unset;
-  }
-.fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt,.sb {
-    color:#31374a;
-  }
-.fa-solid.fa-house-chimney-window ,.fa-solid.fa-tower-broadcast,.fa-solid.fa-bolt{
-    margin-left: 5px;
-}  
 
 
-
-
-
-
-  .sidebaroption input:hover
-  ~ .sb-val {
-  top: -30px;
-  }
-  .sidebaroption:nth-child(1):hover ~ .sb:before {
-    background-color: #000;
-    border-radius: 4px 4px 0 0;
-  }
-  
-  .sidebaroption:nth-child(1):hover ~ .sb-val {
-    top: -31px;
-  }
-  .sidebaroption:nth-child(2):hover ~ .sb:before {
-    background-color: #ea4c89;
-  }
-  
-  .sidebaroption:nth-child(2):hover ~ .sb-val {
-    top: -71px;
-  }
-  .sidebaroption:nth-child(3):hover ~ .sb:before {
-    background-color: #0057ff;
-  }
-  
-  .sidebaroption:nth-child(3):hover ~ .sb-val {
-    top: -111px;
-  }
-  
-
-
-
-/* Zachováme hover efekty na položky menu */
-.sidebaroption:hover .sb {
-    color: #fff;
-}
-
-/* Efekt při hover na každou položku */
-.sidebaroption:nth-child(1):hover ~ #sidebaroption-bg {
-    top: 0;
-    background-color: #000;
-    border-radius: 4px 4px 0 0;
-}
-
-.sidebaroption:nth-child(2):hover ~ #sidebaroption-bg {
-    top: 40px;
-    background-color: #ea4c89;
-}
-
-.sidebaroption:nth-child(3):hover ~ #sidebaroption-bg {
-    top: 80px;
-    background-color: #0057ff;
-    border-radius: 0 0 4px 4px;
-}
-
-
-
-/* #sidebaroption-bg pro zvýraznění pozadí při hover */
-#sidebaroption-bg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 40px;
-    transition: 0.3s ease all;
-    z-index: 1;
-    display: block;
-}
+ 
 /*SIDEBAR*/
 .s1{
     height: 50px;
@@ -632,29 +503,31 @@ transform: scale(0);
     justify-content: center;
     z-index: 1000;
 }
-.sidebar{
-    padding: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
 
 .ul-sidebar{
-    list-style: none;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    padding-left: 19px;
-    margin-bottom: 10px;
+    height: auto;
+    width: auto;
+    color: #5f6368;
+    align-items: baseline;
+    padding: 0px;
+    overflow: hidden;
+    list-style: none;
+   
 }
 .li-sidebar{
     display: flex;
     align-items: baseline;
-    padding: 9px;
-    border-radius: 10px;
     margin-bottom: 10px;
+    font-size: 14px;
+    width: 100%;
+
+
 }
 .li-sidebar:hover{
-    background-color:#a5a9b3;
+    background-color:#bfc1c5;
     transition: all 0.3s;
     transition: background-color 0.5s ease;
     
@@ -663,14 +536,18 @@ transform: scale(0);
     text-decoration: none;
     display: flex;
     flex-direction: row;
+    color: #5f6368;
     height: auto;
-    width: auto;
+    width: 100%;
     align-items: baseline;
+    padding: 7px 10px 7px 16px;
+
+
 }
 .navA{
     display: flex; 
-    justify-content:flex-end; 
-    width: 20px; color: white;
+    justify-content:flex-end;
+    margin-right: 10px;
 }
 
 .li-sidebar.active {
@@ -682,122 +559,6 @@ transform: scale(0);
     color: inherit; /* Zachová barvu textu od rodiče */
 }
 
-
-.theme-toggle {
-    position: fixed;
-    bottom: 1px;
-    right: 20px;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 39px;
-    height: 39px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.theme-toggle i {
-    font-size: 24px;
-}
-
-.theme-toggle:hover {
-    background-color: #3A3A3A;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-}
-
-.fa-solid.fa-caret-down.dropdown-toggle-icon {
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    display: none;
-}
-
-.dropdown-menu.show {
-    display: block;
-    position: absolute;
-    z-index: 1000;
-    width: 150px;
-    height: 140px;
-    margin: 0px;
-    transform: translate(0px,23px);
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: 10px;
-    background-color: #f7f8fa;
-}
-
-.dropdown-menu.dark-mode {
-    background-color: #3A3A3A;
-}
-
-.dropdown-item.list {
-    cursor: pointer;
-    width: 100%;
-    margin-top: .3rem !important;
-    margin-bottom: .3rem !important;
-}
-
-
-a.dropdown-item {
-    padding-top: .5rem !important;
-    padding-bottom: .5rem !important;
-    color: black;
-}
-
-.dropdown-item.list:hover {
-    background-color: #6e8085;
-}
-
-
-.fa-solid.fa-circle.fa-2xs {
-    margin: 5px;
-}
-
-.dropdown-menu.user.show {
-    max-height: 210px;
-    transform: translate(185%,47px);
-}
-
-li.dropdown-divider {
-    height: 1px;
-    opacity: 1;
-    background-color: #1e1e1e;
-    width: 100%;
-}
-
-
-.footer {
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    bottom: 0px;
-    position: sticky;
-    width: 100%;
-    height: 40px;
-    margin-bottom:-2px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.footer.dark-mode {
-       background-color: #2c2c2c;
-       color: #ffffff;
-}
-.ul-footer{
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-
-}
 .container {
     width: 100%;
 }
@@ -806,13 +567,9 @@ li.dropdown-divider {
 }
 .a-text{
     text-decoration: none;
-    color: grey;
-    font-size: 16px;
     transition: color 0.3s;
 }
-.a-text.dark-mode{
-    color: #ffffff;
-}
+
 p{
     margin: 0;
     display: flex;
@@ -882,8 +639,4 @@ p{
     font-size: 20px;
     font-weight: bold;
 }
-.dataTables_paginate {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-}
+

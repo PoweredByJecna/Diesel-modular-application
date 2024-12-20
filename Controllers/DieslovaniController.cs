@@ -123,7 +123,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
                 l.Odstavka.Lokality.Zásuvka,
-                EmptyColumn1 = (string)null
+                
             })
             .ToListAsync();
 
@@ -160,7 +160,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
                 l.Odstavka.Lokality.Zásuvka,
-                EmptyColumn1 = (string)null
+              
             })
             .ToListAsync();
 

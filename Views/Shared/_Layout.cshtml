@@ -29,13 +29,13 @@
             <div class="Content">
                 <div class="sidemenu" id="sidemenu">
                     <div class="s1">
-                        <i class="fa-solid fa-bars"></i>
+                        
                     </div>
                     <div class="s2">
                         <div style="display: flex; flex-direction: column;width: 97%;">
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
-                                    <a asp-action="Index" asp-controller="Home" class="a-sidebar">
+                                    <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="padding-left: 0px;">
                                         <i class="fa-solid fa-house-chimney-window navA"></i>
                                         <span class="sb">Dieslovaní</span>  
                                     </a>
@@ -71,7 +71,7 @@
                         
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
-                                    <a asp-action="Index" asp-controller="Lokality" class="a-sidebar"> 
+                                    <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" style="padding-left: 0px;"> 
                                         <i class="fa-solid fa-tower-broadcast navA"></i>
                                         <span class="sb">Lokality</span>  
                                     </a>
@@ -110,7 +110,7 @@
                         
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
-                                    <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar"> 
+                                    <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="padding-left: 0px;"> 
                                         <i class="fa-solid fa-bolt navA"></i>
                                         <span class="sb">Odstávky</span>  
                                     </a>
@@ -144,11 +144,13 @@
                 <div class="main">
 
                     <div class="header">
-                        <nav id="navbar">
+                        <div class="navbarcontent" style="margin-left: 15px;">
+                            <i class="fa-solid fa-bars fa-2xl"></i>
+                        </div>
+                        <div class="navbarcontent">
                             <div class="navdiv bar" id="menu-toggle" style="background-color: white; border: 0;">
                                 <i class="fa-solid fa-bars fa-2xl" style="color:black; "></i>
                             </div>
-                          
                             <div class="navdiv settings">
                                 <i class="fa-solid fa-gear"></i>
                             </div>
@@ -164,21 +166,14 @@
                                 </div>
                                 <div class="buttonTest"> 
                                     <form asp-action="Test" asp-controller="Odstavky" method="post">
-                                        <button class="navdiv add" type="submit" style="color: white;">Test</button>
+                                        <button class="navdiv add" type="submit" style="color: white; height: 33px;">Test</button>
                                     </form>
                                 </div>  
                             }
-
-                            <div class="navdiv">
+                            <div class="navdiv" style="width: 30px; justify-content: center;">
                                 <i class="fa-solid fa-user"></i>
                             </div> 
-                        
-                               
-                            
-
-                           
-
-                        </nav>
+                        </div>
                     </div> 
                     <!-- Modal Window HTML -->
                     @if (TempData["Zprava"] != null)

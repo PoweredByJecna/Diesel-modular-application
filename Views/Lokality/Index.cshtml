@@ -2,6 +2,7 @@
 @using PagedList.Core.Mvc;
 <body>
     <div class="conteiner">
+
         <div class="tables-row">
             <div class="section small">
                 <div class="regions">
@@ -104,29 +105,28 @@
             </div>
         </div>
 
-        <div class="cnt" style="background-color: white;"></div>
-            <div class="table-div import C odstavky">
-                <div class="table-div odstavkyTable Lokality_Odstavky">
-                    <table id="lokalityTable" style="margin-bottom: 15px;">
-                        <thead>
-                            <tr>
-                                <th id="Id">Id</th>
-                                <th id="lokalita">Lokalita</th>
-                                <th id="klasifikace">Klasifikace</th>
-                                <th id="adresa">Adresa</th>
-                                <th>Region</th>
-                                <th id="baterie">Baterie<a> [min]</a></th>
-                                <th id="zasuvka">Zásuvka</th>
-                                <th id="da">DA</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>         
+        <div class="tables-row" style="justify-content: center"></div>
+            <div class="table-div odstavkyTable">
+                <table id="lokalityTable" style="margin-bottom: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Lokalita</th>
+                            <th>Klasifikace</th>
+                            <th>Adresa</th>
+                            <th>Region</th>
+                            <th>Baterie<a> [min]</a></th>
+                            <th>Zásuvka</th>
+                            <th>DA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
         </div> 
+   
+        
 
        
     
@@ -155,5 +155,5 @@
         </script>
                 
 
-    </div>
+   
 </body>

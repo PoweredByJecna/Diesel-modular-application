@@ -68,7 +68,6 @@ table {
     border-spacing: 0;
     background-color: white;
     padding: 3px;
-    border-radius: 10px;
     border-collapse: collapse !important;
 }
 
@@ -253,14 +252,27 @@ table.dataTable.no-footer{
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button{
-    color:rgb(0, 17, 255);
+    color:rgb(0, 17, 255) !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
-    color:rgb(0, 17, 255);
+    color:rgb(0, 17, 255) !important;
 }
-.dataTables_filter .dataTables_wrapper {
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    border:0px;
-    margin: 0px;
+.dataTables_filter {
+    padding: 15px 15px  0px 0px !important;
 }
+.dataTables_wrapper{
+    background-color: white;
+    padding-bottom: 5px;
+}
+.paginate_button.current{
+    border: none !important;
+    color: blue !important;
+    background-color: white !important;
+}
+
+.paginate_button.current:hover{
+    background-color: white;
+    border: none;
+}
+
