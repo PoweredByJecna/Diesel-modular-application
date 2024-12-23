@@ -174,15 +174,17 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
-            public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
+
+        public async Task<IActionResult> GetTableDatathrashTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today).Count();
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.Od.Date == DateTime.Today  && o.Technik.IdTechnika == "606794464").Count();
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
+            .ThenInclude(o=>o.Region)
             .Include(t=>t.Technik)
-            .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today)
+            .Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -190,6 +192,39 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Distributor,
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
+                l.Odstavka.Lokality.Region.Firma.NázevFirmy
+          
+            })
+            .ToListAsync();
+
+            return Json(new 
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                recordsTotal = totalRecords, // Celkový počet záznamů
+                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                data = DieslovaniRunningList // Data aktuální stránky
+            });  
+        } 
+
+
+
+        public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
+        {
+            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794464").Count();
+            length = totalRecords;
+            var DieslovaniRunningList = await _context.DieslovaniS
+            .Include(o=>o.Odstavka)
+            .ThenInclude(o=>o.Lokality)
+            .Include(t=>t.Technik)
+            .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794464")
+            .Skip(start)
+            .Take(length)
+            .Select(l=> new{
+                l.IdDieslovani,
+                l.Odstavka.Distributor,
+                l.Odstavka.Lokality.Lokalita,
+                l.Odstavka.Lokality.Klasifikace,
+                l.Technik.Jmeno,
                 l.Odstavka.Od.AddHours(2).Date,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,

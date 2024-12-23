@@ -96,21 +96,10 @@
 .fa-solid.fa-id-badge, .fa-solid.fa-tower-broadcast, .fa-solid.fa-star, .fa-solid.fa-clock,.fa-solid.fa-house,.fa-solid.fa-battery-full, .fa-solid.fa-plug{
     margin-left: 3px;
 }
-::-webkit-scrollbar{
-    width: 5px;
-    height: 5px;
 
-}
-::-webkit-scrollbar-track{
-    border-radius: 5px;
-    box-shadow: inset 0 0 10px rgb(0,0, 0);
-}
-::-webkit-scrollbar-thumb{
- border-radius: 5px;
- background-color: rgb(180, 187, 187);
-}
+
+
 .table-lokality{
- 
    border-radius: 10px;  
    width: 100%;
    overflow: auto;

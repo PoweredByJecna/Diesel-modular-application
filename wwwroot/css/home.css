@@ -106,30 +106,6 @@ table.dark-mode {
 }
 
 
-
-/* SCROLL BAR STYLE (ONLY WORKS IN CHROME) */
-/* Width */
-::-webkit-scrollbar {
-	height: 4px;
-	width: 100%;
-    
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-	background: #444e80;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: #abafc6;
-	border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #5397d6;
-}
-
 .month-group {
 	cursor: pointer;
 	height: 110px;
@@ -251,13 +227,6 @@ table.dataTable.no-footer{
     border-collapse: separate;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button{
-    color:rgb(0, 17, 255) !important;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
-    color:rgb(0, 17, 255) !important;
-}
 .dataTables_filter {
     padding: 15px 15px  0px 0px !important;
 }
@@ -265,14 +234,10 @@ table.dataTable.no-footer{
     background-color: white;
     padding-bottom: 5px;
 }
-.paginate_button.current{
-    border: none !important;
-    color: blue !important;
-    background-color: white !important;
-}
 
-.paginate_button.current:hover{
+.paginate_button.current :hover{
     background-color: white;
     border: none;
+
 }
 

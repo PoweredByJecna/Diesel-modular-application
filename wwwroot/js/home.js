@@ -279,6 +279,7 @@ menuToggle.addEventListener('click', () => {
                             return klasifikaceBadge;
                         }
                     },
+                    {data: 'jmeno'},
                     { data: 'date', 
                         render: function(data) {
                             return formatDate(data);
@@ -432,17 +433,115 @@ menuToggle.addEventListener('click', () => {
             searching: false,
             ordering: false, 
             lengthChange: false,     
-            pageLength: 6
-            }); 
+            pageLength: 2
+        }); 
 
 
           /////////////////////////////////////////////END TABLE////////////////////////////////////////////////
 
+        /////////////////////////////////////////////THRASH TABLE////////////////////////////////////////////////
+
+
+
+        $('#thrashTable').DataTable({ajax: {
+        url: '/Dieslovani/GetTableDatathrashTable', // Cesta na vaši serverovou metodu
+        type: 'POST',
+        dataSrc: function (json) {
+            // Zkontrolujte, co se vrací z API
+            console.log(json);
+            return json.data;
+        }
+        },
+        columns:[
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: red; border-radius: 5px;">
+                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončeno</span>
+                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                    </span>
+                `;
+            }
+        },
+        {data: 'idDieslovani'},
+        {
+            data: 'distributor',
+                render: function (data, type, row) {
+                    var logo = '';
+                    if (data === 'ČEZ') {
+                        logo = '<img src="/Images/CEZ-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    } else if (data === 'EGD') {
+                        logo = '<img src="/Images/EGD-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    } else if (data === 'PRE') {
+                        logo = '<img src="/Images/PRE-Logo.jpg" width="25" height="25" style="border-radius: 20px; border: 0.5px solid grey;">';
+                    }
+                    return logo;
+                }
+        },
+        {
+            data: 'lokalita',
+            render: function (data, type, row) {
+                var klasifikaceHtml = data;
+                if (row.Klasifikace === 'A1') {
+                    klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
+                } else if (row.Klasifikace === 'A2') {
+                    klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
+                } else if (row.Klasifikace === 'B1') {
+                    klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
+                } else if (row.Klasifikace === 'B2') {
+                    klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
+                } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
+                    klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
+                } else if (row.Klasifikace === 'D1') {
+                    klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
+                }
+                return klasifikaceHtml;
+            }
+        },
+        {
+            data: 'klasifikace',
+            render: function (data, type, row) {
+                var klasifikaceBadge = '';
+                var colorMap = {
+                    'A1': '#c91829',
+                    'A2': 'orange',
+                    'B1': 'yellow',
+                    'B2': 'lightgreen',
+                    'B': 'green',
+                    'C': 'green',
+                    'D1': 'blue'
+                };
+                if (colorMap[data]) {
+                    klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                        <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
+                                    </span>`;
+                }
+                return klasifikaceBadge;
+            }
+        },
+        {data: 'nazevRegionu'},
+       
+
+        ],
+            paging: true,        
+            searching: false,
+            ordering: false, 
+            lengthChange: false,     
+            pageLength: 2
+        });    
+
+        /////////////////////////////////////////////THRASH TABLE////////////////////////////////////////////////
 
 
 
 
-          /////////////////////////////////////////////LOKALITY TABLE////////////////////////////////////////////////
+
+
+
+
+
+        /////////////////////////////////////////////LOKALITY TABLE////////////////////////////////////////////////
         $('#lokalityTable').DataTable({   // Zobrazí indikátor načítání  // Povolení serverového stránkování
             ajax: {
                 url: '/Lokality/GetTableData', // Cesta na vaši serverovou metodu
@@ -458,19 +557,23 @@ menuToggle.addEventListener('click', () => {
         { data: 'lokalita' },
         {
             data: 'klasifikace',
-            render: function(data, type, row) {
-                var klasifikacebarva = {
-                    "A1": "#c91829",
-                    "A2": "orange",
-                    "B1": "yellow",
-                    "B2": "lightgreen",
-                    "B": "green",
-                    "C": "green",
-                    "D1": "blue"
+            render: function (data, type, row) {
+                var klasifikaceBadge = '';
+                var colorMap = {
+                    'A1': '#c91829',
+                    'A2': 'orange',
+                    'B1': 'yellow',
+                    'B2': 'lightgreen',
+                    'B': 'green',
+                    'C': 'green',
+                    'D1': 'blue'
                 };
-                var barva = klasifikacebarva[data] || '#fff';  // Defaultní barva
-                return '<span class="badge badge-phoenix fs-10" style="background-color: ' + barva + '; border-radius: 5px; padding: 3px; width: 25px; height: 30px;">' +
-                    '<span class="badge-label" style="color: black; padding: 3px; font-size: medium;">' + data + '</span></span>';
+                if (colorMap[data]) {
+                    klasifikaceBadge = `<span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: ${colorMap[data]}; border-radius: 5px;">
+                                        <span class="badge-label" style="color: black; padding: 2px; margin-right: 0px;">${data}</span>
+                                    </span>`;
+                }
+                return klasifikaceBadge;
             }
         },
         { data: 'adresa' },

@@ -146,6 +146,10 @@ tbody {
 #endTable tr{
     background-color: rgba(255, 0, 0, 0.137) !important;
 }
+#thrashTable tr{
+    background-color: rgba(255, 166, 0, 0.116) !important;
+}
+
 #allTable tr, #lokalityTable, #odTable{
     background-color: #0055ff28 !important;
 }
@@ -469,9 +473,10 @@ header.dark-mode {
     position: fixed;
     top: 0; /* Ensures it starts at the top */
     height: 100vh; /* Full height for vertical scrolling */
-    overflow-y: auto; /* Scrolls internally if content exceeds */
+    overflow: hidden;
     border: 1px solid #ddd;
 }
+
 .conteiner{
     min-height: 100vh;
     width: 88%;

@@ -2,7 +2,28 @@
 @using PagedList.Core.Mvc;
 <body>
     <div class="conteiner">
-
+        <div class="tables-row" style="justify-content: center">
+            <h2>Lokality:</h2>
+            <div class="table-div odstavkyTable">
+                <table id="lokalityTable" style="margin-bottom: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Lokalita</th>
+                            <th>Klasifikace</th>
+                            <th>Adresa</th>
+                            <th>Region</th>
+                            <th>Baterie<a> [min]</a></th>
+                            <th>Zásuvka</th>
+                            <th>DA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+   
         <div class="tables-row">
             <div class="section small">
                 <div class="regions">
@@ -105,27 +126,7 @@
             </div>
         </div>
 
-        <div class="tables-row" style="justify-content: center"></div>
-            <div class="table-div odstavkyTable">
-                <table id="lokalityTable" style="margin-bottom: 15px;">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Lokalita</th>
-                            <th>Klasifikace</th>
-                            <th>Adresa</th>
-                            <th>Region</th>
-                            <th>Baterie<a> [min]</a></th>
-                            <th>Zásuvka</th>
-                            <th>DA</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                    </tbody>
-                </table>
-            </div>
-        </div> 
-   
+      
         
 
        

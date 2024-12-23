@@ -467,10 +467,6 @@ namespace Diesel_modular_application.Controllers
         if(HandleOdstavkyDieslovani !=null)
         {
             TempData["Zprava"] = "dieslování objednáno: "; 
-
-
-             Debug.WriteLine($"Chyba při ukládání do databáze: {HandleOdstavkyDieslovani}");
-
             return Redirect("/Home/Index"); // Po úspěšném dokončení testu přidat zprávu a provést přesměrování
         }
         else
