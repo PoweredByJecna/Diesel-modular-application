@@ -148,7 +148,7 @@ namespace Diesel_modular_application.Controllers
                             if (technikSearch == null)
                             {
                                 Zpravy.Add("Technik nebyl nalezen.");
-                                TempData["Zprava"] = string.Join("; ", Zpravy);
+                              
                                 return null;
                             }
                             else
@@ -265,12 +265,12 @@ namespace Diesel_modular_application.Controllers
 
         public string GetTechnikLokalita(string technikId)
         {
-#pragma warning disable CS8603 // Possible null reference return.
+            #pragma warning disable CS8603 // Possible null reference return.
             return _context.DieslovaniS
             .Where(d => d.IdTechnik == technikId)
             .Select(d => d.Odstavka.Lokality.Lokalita)
             .FirstOrDefault();
-#pragma warning restore CS8603 // Possible null reference return.
+            #pragma warning restore CS8603 // Possible null reference return.
         }
 
         private TableOdstavky CreateNewOdstavka(OdstavkyViewModel odstavky, TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
@@ -466,12 +466,12 @@ namespace Diesel_modular_application.Controllers
         }
         if(HandleOdstavkyDieslovani !=null)
         {
-            TempData["Zprava"] = "dieslování objednáno: "; 
+            TempData["Zprava"] = "dieslování objednáno: " + Zpravy; 
             return Redirect("/Home/Index"); // Po úspěšném dokončení testu přidat zprávu a provést přesměrování
         }
         else
         {
-            TempData["Zprava"] = "dieslování objednáno z důvodu: "; 
+            TempData["Zprava"] = "dieslování selhalo z důvodu: " + Zpravy; 
             return Redirect("/Home/Index"); // Po úspěšném dokončení testu přidat zprávu a provést přesměrování
         }
         
