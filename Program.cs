@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
 using Diesel_modular_application.Services;
+using Diesel_modular_application.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
+builder.Services.AddScoped<DieslovaniController>();
 
 
 var app = builder.Build();

@@ -473,9 +473,13 @@ header.dark-mode {
     position: fixed;
     top: 0; /* Ensures it starts at the top */
     height: 100vh; /* Full height for vertical scrolling */
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid #ddd;
 }
+
+
+
 
 .conteiner{
     min-height: 100vh;
@@ -500,7 +504,9 @@ header.dark-mode {
     display: flex;
     justify-content: center;
     z-index: 1000;
+   
 }
+
 
 .ul-sidebar{
     text-decoration: none;
@@ -614,6 +620,9 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
+    
+      
+    
 }
 
 .modal-content {
@@ -627,7 +636,9 @@ p{
     height: 160px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: auto;
 }
+
 
 .close {
     position: absolute;

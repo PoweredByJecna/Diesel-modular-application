@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Office2010.Excel;
@@ -14,6 +15,8 @@ namespace Diesel_modular_application.Controllers
     {
         private readonly DAdatabase _context;
         private readonly UserManager<IdentityUser> _userManager;
+
+        
 
         public DieslovaniController(DAdatabase context, UserManager<IdentityUser> userManager)
         {
@@ -136,7 +139,7 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
-            public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
+        public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
             int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Count();
             length = totalRecords;
@@ -241,7 +244,7 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
-            public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
+        public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
         {
             int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false).Count();
             length = totalRecords;
@@ -271,6 +274,7 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
+
         public async Task<IActionResult> Delete (int iDdieslovani)
         {
             
@@ -308,6 +312,27 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = false, message = "Chyba při mazání záznamu: " + ex.Message });
             }
         } 
+
+        public async Task<IActionResult> CreateNewDieslovaniAsync(TableOdstavky newOdstavky, TableTechnici technik)
+        {   
+            var NewDieslovani = new TableDieslovani
+            {
+                Vstup = DateTime.MinValue,
+                Odchod = DateTime.MinValue,
+                IDodstavky = newOdstavky.IdOdstavky,
+                IdTechnik = technik.IdTechnika,
+                FirmaId = newOdstavky.Lokality.Region.IdRegion
+            };
+            _context.DieslovaniS.Add(NewDieslovani);
+            await _context.SaveChangesAsync();
+            technik.Taken = true;
+            _context.TechniS.Update(technik);
+            await _context.SaveChangesAsync();
+            Debug.WriteLine($"Dieslovani s fiktiviním technikem: {NewDieslovani.IdDieslovani}");
+
+            return Redirect("/Lokality/Index");
+        }
+    
 
     }
 }
