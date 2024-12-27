@@ -63,11 +63,13 @@ data.forEach(item => {
 
 const menuToggle = document.getElementById('menu-toggle');
 const sideMenu = document.getElementById('sidemenu');
+const con = document.getElementById('con');
 
 // Přidání event listeneru pro kliknutí na tlačítko
 menuToggle.addEventListener('click', () => {
     // Přepni třídu 'visible' pro zobrazení nebo skrytí menu
     sideMenu.classList.toggle('visible');
+    con.classList.toggle('visible');
 });
 
 
@@ -987,17 +989,19 @@ menuToggle.addEventListener('click', () => {
 
             ],
             rowCallback: function(row, data, index) {
-                console.log(data); // Pro debugging, zkontroluj strukturu dat
-            
-                // Přidání třídy pro pozadí řádku na základě stavu
-                if (data.zadanOdchod == true) {
+                var today = new Date().setHours(0, 0, 0, 0); 
+                var startDate = new Date(data.Od).setHours(0, 0, 0, 0); 
+
+                if (data.zadanOdchod == true && data.zadanVstup==false) {
                     $(row).addClass('row-ukoncene');
-                } else if (data.zadanVstup == true) {
+                } else if (data.zadanVstup == true && data.zadanOdchod==false) {
                     $(row).addClass('row-aktivni');
                 } else if (data.zadanVstup == false && data.zadanOdchod == false && data.idTechnika == "606794494") {
-                    $(row).addClass('row-neprirazeno'); // Oranžová barva pro "Nepřiřazeno"
-                } else {
-                    $(row).addClass('row-cekajici'); // Pokud je "Čekající"
+                    $(row).addClass('row-neprirazeno'); 
+                } else if(data.zadanOdchod == false && data.zadanVstup ==false && startDate==today) {
+                    $(row).addClass('row-cekajici');
+                }else {
+                    $(row).addClass('row-standart');
                 }
             },
             paging: true,        
@@ -1010,8 +1014,8 @@ menuToggle.addEventListener('click', () => {
         /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////
 
         $('.dataTables_filter label').contents().filter(function () {
-            return this.nodeType === 3; // Textové uzly
-        }).remove(); // Odstraní text "Search:"
+            return this.nodeType === 3; 
+        }).remove(); 
         $('.dataTables_filter input').attr('placeholder', 'Hledat...'); 
 
         

@@ -19,9 +19,7 @@
 
 @media(max-width:1200px)
 {
-    .sidemenu{
-        display: none;
-    }
+
 
     .conteiner{
         width: 100% !important;
@@ -36,13 +34,8 @@
         width: 100% !important;
     }
     
-
-    .sidemenu.visible {
-        display: block !important;
-        width: 100%;
-        z-index: 1000;
-    }
-   .login-section{
+   .login-section
+   {
     width: 325px;
     height: 300px;
    }
@@ -150,27 +143,24 @@ tbody {
     background-color: rgba(255, 166, 0, 0.521) !important;
 }
 
-/* Oranžová barva pro "Nepřiřazeno" */
-.row-neprirazeno {
-    background-color: orange !important;
-    color: black; /* Volitelně změnit barvu textu */
-}
 
-/* Další stavy (Čekající, Aktivní, Ukončené) */
+.row-neprirazeno {
+    background-color: rgba(255, 166, 0, 0.521) !important;
+}
 .row-cekajici {
-    background-color: yellow !important;
+    background-color: rgba(255, 255, 0, 0.321) !important;
 }
 
 .row-aktivni {
-    background-color: green !important;
-    color: white;
+    background-color: rgba(0, 128, 0, 0.371) !important;
 }
 
 .row-ukoncene {
-    background-color: red !important;
-    color: white;
+    background-color: rgba(255, 0, 0, 0.382) !important;
 }
-
+.row-standart{
+    background-color: #0055ff28 ;
+}
 
 #allTable tr, #lokalityTable, #odTable{
     background-color: #0055ff28 ;
@@ -489,10 +479,10 @@ header.dark-mode {
 }
 /*SIDEBAR*/
 .sidemenu {
+    display: none;
     background: white;
 	color: #abafc6;
     font-family: "Roboto", sans-serif;
-    width: 19%;
     z-index: 1000;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
@@ -502,18 +492,27 @@ header.dark-mode {
     border: 1px solid #ddd;
 }
 
-
+.sidemenu.visible 
+{
+    display: block !important;
+    width: 19%;
+    z-index: 1000;
+}
 
 
 .conteiner{
     min-height: 100vh;
-    width: 81%;
+    width: 100%;
     position: absolute;
     right: 0px; 
     margin-top: 65px;
+    transition: 0.3s;
 }
 
-
+.conteiner.visible{
+    width: 81% !important;
+    transition: 0.3s;
+}
  
 /*SIDEBAR*/
 .s1{
