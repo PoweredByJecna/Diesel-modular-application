@@ -20,7 +20,7 @@ namespace Diesel_modular_application.KlasifikaceRule
         }
 
 
-         public static int ZiskejCasVypadku(this string Klasifikace)
+        public static int ZiskejCasVypadku(this string Klasifikace)
         {
             var klasifikaceVaha =  new Dictionary<string,int>
             {

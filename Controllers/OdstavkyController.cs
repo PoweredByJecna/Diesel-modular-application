@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Diesel_modular_application.Services;
 using System.Diagnostics;
 using AspNetCoreGeneratedDocument;
+using Humanizer;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -150,7 +151,20 @@ namespace Diesel_modular_application.Controllers
                             Zpravy.Add("<br>Na lokalitě je DA");
                             Debug.WriteLine($"Na lokalitě se nachází stacionární generátor {newOdstavka.Lokality.Lokalita}");
 
-                            return null;
+                            return Redirect("/Home/Index");
+                        }
+                        if(IsDieselRequired(newOdstavka.Lokality.Klasifikace,newOdstavka.Od, newOdstavka.Do, newOdstavka.Lokality.Baterie))
+                        {
+                            var technikSearch = await AssignTechnikAsync(newOdstavka); 
+                            if (technikSearch == null)
+                            {
+                                Zpravy.Add("<br>Něco je špatně"); 
+                                return null;
+                            }
+                            else
+                            {
+                             return  await _dieslovani.CreateNewDieslovaniAsync(newOdstavka, technikSearch);
+                            }
                         }
                         else
                         {
@@ -297,6 +311,47 @@ namespace Diesel_modular_application.Controllers
             };
             
         }
+        private bool Battery(DateTime od, DateTime Do, string baterie)
+        {
+
+            var rozdil = (Do - od).TotalMinutes;
+
+            if (rozdil > Convert.ToInt32(baterie))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private bool IsDieselRequired(string Klasifikace, DateTime Od, DateTime Do, string Baterie)
+        {
+            var CasVypadku = Klasifikace.ZiskejCasVypadku();
+            var rozdil = (Do - Od).TotalMinutes;
+
+            if(CasVypadku*60>rozdil)
+            {
+                Zpravy.Add("<br>Lokalita s klasifikací: " + Klasifikace + "může být 12h dole");
+                return false;
+            }
+            else
+            {
+                if(Battery(Od, Do, Baterie))
+                {
+                    Zpravy.Add("<br>Baterie vydrží: " + Baterie + "min, čas doby odstávky je: " + (Od-Do).TotalMinutes);
+                    return false;
+                }
+                else
+                {
+                    Zpravy.Add("<br>Dieslovaní je potřeba");
+                    return true;
+                }
+            }
+
+
+        }
+
         private bool ISvalidDateRange(DateTime od, DateTime Do)
         {
             return od.Date >= DateTime.Today && od < Do;
