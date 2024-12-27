@@ -114,6 +114,7 @@ namespace Diesel_modular_application.Controllers
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
             .Where(i=>i.Odstavka.ZadanVstup==true)
+            .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -145,6 +146,7 @@ namespace Diesel_modular_application.Controllers
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
             .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma)
+            .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -155,6 +157,9 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Adresa,
                 l.Technik.Firma.NázevFirmy,
                 l.Technik.Jmeno,
+                l.Odstavka.ZadanVstup,    // Zajistíme, že ZadanVstup je v datech
+                l.Odstavka.ZadanOdchod,  // Zajistíme, že ZadanOdchod je v datech
+                l.Technik.IdTechnika, 
                 l.Odstavka.Lokality.Region.NazevRegionu,
                 l.Odstavka.Od,
                 l.Odstavka.Do,
@@ -180,14 +185,15 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> GetTableDatathrashTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.Od.Date == DateTime.Today  && o.Technik.IdTechnika == "606794464").Count();
+            int totalRecords = _context.DieslovaniS.Include(o => o.Technik).Where(o => o.Technik.IdTechnika == "606794494").Count();
             length = totalRecords;
             var DieslovaniRunningList = await _context.DieslovaniS
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .ThenInclude(o=>o.Region)
             .Include(t=>t.Technik)
-            .Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false)
+            .Where(o => o.Odstavka.ZadanOdchod==false && o.Odstavka.ZadanVstup==false && o.Technik.IdTechnika =="606794494")
+            .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -220,6 +226,7 @@ namespace Diesel_modular_application.Controllers
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
             .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794464")
+            .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -253,6 +260,7 @@ namespace Diesel_modular_application.Controllers
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
             .Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false)
+            .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
@@ -261,7 +269,6 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Odchod,
-                l.Odstavka.Lokality.Zásuvka,
             })
             .ToListAsync();
 

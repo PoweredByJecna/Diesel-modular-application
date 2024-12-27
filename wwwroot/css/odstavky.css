@@ -107,9 +107,11 @@ width: 70%;
 
 .table-div.odstavkyTable{
     border-radius: 0px;
+    padding-top: 20px;
+    padding-bottom: 30px;
     width: 99%;
-    overflow: auto;
     background-color: white;
+    position: relative;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 

@@ -138,20 +138,42 @@ tbody {
 
 
 #upcomingTable tr{
-    background-color: rgba(255, 255, 0, 0.114) !important;
+    background-color: rgba(255, 255, 0, 0.321) !important;
 }
 #runningTable tr{
-    background-color: rgba(0, 128, 0, 0.108) !important;
+    background-color: rgba(0, 128, 0, 0.371) !important;
 } 
 #endTable tr{
-    background-color: rgba(255, 0, 0, 0.137) !important;
+    background-color: rgba(255, 0, 0, 0.382) !important;
 }
 #thrashTable tr{
-    background-color: rgba(255, 166, 0, 0.116) !important;
+    background-color: rgba(255, 166, 0, 0.521) !important;
 }
 
+/* Oranžová barva pro "Nepřiřazeno" */
+.row-neprirazeno {
+    background-color: orange !important;
+    color: black; /* Volitelně změnit barvu textu */
+}
+
+/* Další stavy (Čekající, Aktivní, Ukončené) */
+.row-cekajici {
+    background-color: yellow !important;
+}
+
+.row-aktivni {
+    background-color: green !important;
+    color: white;
+}
+
+.row-ukoncene {
+    background-color: red !important;
+    color: white;
+}
+
+
 #allTable tr, #lokalityTable, #odTable{
-    background-color: #0055ff28 !important;
+    background-color: #0055ff28 ;
 }
 
 #toggle-icon {
@@ -420,6 +442,8 @@ nav input {
     .hidden-buttons {
         display: none; /* Skryje další tlačítka */
         position: absolute; /* Umožní umístění vedle tlačítka */
+        right: 5px;
+
     
     }
     .odd:hover .hidden-buttons,
@@ -468,7 +492,7 @@ header.dark-mode {
     background: white;
 	color: #abafc6;
     font-family: "Roboto", sans-serif;
-    width: 12%;
+    width: 19%;
     z-index: 1000;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
@@ -483,7 +507,7 @@ header.dark-mode {
 
 .conteiner{
     min-height: 100vh;
-    width: 88%;
+    width: 81%;
     position: absolute;
     right: 0px; 
     margin-top: 65px;
@@ -505,6 +529,17 @@ header.dark-mode {
     justify-content: center;
     z-index: 1000;
    
+}
+.s3{
+    position: sticky;
+    bottom: 0px;
+    left: 0px;
+    height: 50px;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    border-top: 1px solid #e9ecef;
+
 }
 
 

@@ -241,21 +241,7 @@ menuToggle.addEventListener('click', () => {
                     {
                         data: 'lokalita',
                         render: function (data, type, row) {
-                            var klasifikaceHtml = data;
-                            if (row.Klasifikace === 'A1') {
-                                klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                            } else if (row.Klasifikace === 'A2') {
-                                klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                            } else if (row.Klasifikace === 'B1') {
-                                klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                            } else if (row.Klasifikace === 'B2') {
-                                klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                            } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                                klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                            } else if (row.Klasifikace === 'D1') {
-                                klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                            }
-                            return klasifikaceHtml;
+                            return `<span style="font-weight: 700;">${data}</span>`;
                         }
                     },
                     {
@@ -351,7 +337,15 @@ menuToggle.addEventListener('click', () => {
                 `;
             }
         },
-        {data: 'idDieslovani'},
+        { data: 'idDieslovani',
+            render: function (data, type, row) {
+                return `
+                    <a href="/Home/DetailDieslovani/${data}">
+                        ${data}
+                    </a>
+                `;
+            }
+        },
         {
             data: 'distributor',
                 render: function (data, type, row) {
@@ -369,21 +363,7 @@ menuToggle.addEventListener('click', () => {
         {
             data: 'lokalita',
             render: function (data, type, row) {
-                var klasifikaceHtml = data;
-                if (row.Klasifikace === 'A1') {
-                    klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                } else if (row.Klasifikace === 'A2') {
-                    klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                } else if (row.Klasifikace === 'B1') {
-                    klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                } else if (row.Klasifikace === 'B2') {
-                    klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                    klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                } else if (row.Klasifikace === 'D1') {
-                    klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                }
-                return klasifikaceHtml;
+                return `<span style="font-weight: 700;">${data}</span>`;
             }
         },
         {
@@ -415,18 +395,7 @@ menuToggle.addEventListener('click', () => {
             } 
             
         },
-        {
-            data: 'zásuvka',
-            render: function (data, type, row) {
-                var zasuvkaHtml = '';
-                if (data === "TRUE") {
-                    zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
-                } else if (data === "FALSE") {
-                    zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
-                }
-                return zasuvkaHtml;
-            }
-        },
+      
 
         ],
             paging: true,        
@@ -457,14 +426,22 @@ menuToggle.addEventListener('click', () => {
             data: null,
             render: function (data, type, row) {
                 return `
-                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: red; border-radius: 5px;">
-                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončeno</span>
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
+                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Nepřižazeno</span>
                         <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                     </span>
                 `;
             }
         },
-        {data: 'idDieslovani'},
+        { data: 'idDieslovani',
+            render: function (data, type, row) {
+                return `
+                    <a href="/Home/DetailDieslovani/${data}">
+                        ${data}
+                    </a>
+                `;
+            }
+        },
         {
             data: 'distributor',
                 render: function (data, type, row) {
@@ -482,21 +459,7 @@ menuToggle.addEventListener('click', () => {
         {
             data: 'lokalita',
             render: function (data, type, row) {
-                var klasifikaceHtml = data;
-                if (row.Klasifikace === 'A1') {
-                    klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                } else if (row.Klasifikace === 'A2') {
-                    klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                } else if (row.Klasifikace === 'B1') {
-                    klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                } else if (row.Klasifikace === 'B2') {
-                    klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                    klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                } else if (row.Klasifikace === 'D1') {
-                    klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                }
-                return klasifikaceHtml;
+                return `<span style="font-weight: 700;">${data}</span>`;
             }
         },
         {
@@ -552,7 +515,10 @@ menuToggle.addEventListener('click', () => {
             },  
             columns: [
                 { data: 'id' },
-        { data: 'lokalita' },
+        { data: 'lokalita',
+            render: function (data, type, row) {
+                return `<span style="font-weight: 700;">${data}</span>`;
+            } },
         {
             data: 'klasifikace',
             render: function (data, type, row) {
@@ -648,21 +614,7 @@ menuToggle.addEventListener('click', () => {
                 {
                     data: 'lokalita',
                     render: function (data, type, row) {
-                        var klasifikaceHtml = data;
-                        if (row.Klasifikace === 'A1') {
-                            klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                        } else if (row.Klasifikace === 'A2') {
-                            klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                        } else if (row.Klasifikace === 'B1') {
-                            klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                        } else if (row.Klasifikace === 'B2') {
-                            klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                        } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                            klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                        } else if (row.Klasifikace === 'D1') {
-                            klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                        }
-                        return klasifikaceHtml;
+                        return `<span style="font-weight: 700;">${data}</span>`;
                     }
                 },
                 {
@@ -771,7 +723,15 @@ menuToggle.addEventListener('click', () => {
                     `;
                 }
                 },
-                {data: 'idDieslovani'},
+                { data: 'idDieslovani',
+                    render: function (data, type, row) {
+                        return `
+                            <a href="/Home/DetailDieslovani/${data}">
+                                ${data}
+                            </a>
+                        `;
+                    }
+                },
                 {
                     data: 'distributor',
                         render: function (data, type, row) {
@@ -789,21 +749,7 @@ menuToggle.addEventListener('click', () => {
                 {
                     data: 'lokalita',
                     render: function (data, type, row) {
-                        var klasifikaceHtml = data;
-                        if (row.Klasifikace === 'A1') {
-                            klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                        } else if (row.Klasifikace === 'A2') {
-                            klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                        } else if (row.Klasifikace === 'B1') {
-                            klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                        } else if (row.Klasifikace === 'B2') {
-                            klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                        } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                            klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                        } else if (row.Klasifikace === 'D1') {
-                            klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                        }
-                        return klasifikaceHtml;
+                        return `<span style="font-weight: 700;">${data}</span>`;
                     }
                 },
                 {
@@ -847,22 +793,21 @@ menuToggle.addEventListener('click', () => {
                     }
                 },
                 {
-                data: null,
-                render: function (data, type, row) {
-                    return`
-                        <div class="button-conteiner">
-                            <!-- Hlavní tlačítko -->
-                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                            <div class="hidden-buttons">
-                                <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})" title="odchod">
-                                    <i class="fa-solid fa-arrow-right" style="color: black;"></i>
-                                </button>
-                                
+                    data: null,
+                    render: function (data, type, row) {
+                        return `       
+                            <div class="button-conteiner">
+                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                                <div class="hidden-buttons">
+                                    <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                                        <i class="fa-solid fa-trash" style="color:black"></i>
+                                    </button>
+                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                }
-                }, 
+                        `;
+                    }
+                    },
                 
 
             ],  
@@ -902,8 +847,8 @@ menuToggle.addEventListener('click', () => {
                     let labelStyle = "color: black; padding: 1px; font-size: small;";
                     let labelText = "Čekající";
                     let iconClass = "fa-clock-rotate-left";
-                    let iconColor = "Black";
-                
+                    let iconColor = "black";
+    
                     // Pokud je zadán ZadanOdchod, nastav "Ukončené"
                     if (row.ZadanOdchod) {
                         badgeClass = "badge-phoenix-danger";
@@ -922,15 +867,32 @@ menuToggle.addEventListener('click', () => {
                         iconClass = "fa-play-circle";
                         iconColor = "black";
                     }
+                    // Pokud je technik "606794494" a stav je "Nepřiřazeno"
+                    else if (row.ZadanVstup === false && row.ZadanOdchod === false) {
+                        badgeClass = "badge-phoenix-warning";
+                        badgeStyle = "background-color: orange; border-radius: 5px;"; // Oranžová barva pro "Nepřiřazeno"
+                        labelText = "Nepřiřazeno";
+                        iconClass = "fa-clock-rotate-left"; // Můžeš změnit ikonu
+                        iconColor = "black";
+                    }
+    
                     return `
                         <span class="badge fs-10 ${badgeClass}" style="${badgeStyle}">
-                        <span class="badge-label" style="${labelStyle}">${labelText}</span>
-                        <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
+                            <span class="badge-label" style="${labelStyle}">${labelText}</span>
+                            <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
                         </span>
                     `;
                 }
             },
-            {data: 'idDieslovani'},
+            { data: 'idDieslovani',
+                render: function (data, type, row) {
+                    return `
+                        <a href="/Home/DetailDieslovani/${data}">
+                            ${data}
+                        </a>
+                    `;
+                }
+            },
             {
                 data: 'distributor',
                     render: function (data, type, row) {
@@ -948,21 +910,7 @@ menuToggle.addEventListener('click', () => {
             {
                 data: 'lokalita',
                 render: function (data, type, row) {
-                    var klasifikaceHtml = data;
-                    if (row.Klasifikace === 'A1') {
-                        klasifikaceHtml += '<span title="Kritická priorita" class="status red"></span>';
-                    } else if (row.Klasifikace === 'A2') {
-                        klasifikaceHtml += '<span title="Vysoká priorita" class="status orange"></span>';
-                    } else if (row.Klasifikace === 'B1') {
-                        klasifikaceHtml += '<span title="Středně-vysoká priorita" class="status yellow"></span>';
-                    } else if (row.Klasifikace === 'B2') {
-                        klasifikaceHtml += '<span title="Středně-nízká priorita" class="status light-green"></span>';
-                    } else if (row.Klasifikace === 'B' || row.Klasifikace === 'C') {
-                        klasifikaceHtml += '<span title="Nízká priorita" class="status green"></span>';
-                    } else if (row.Klasifikace === 'D1') {
-                        klasifikaceHtml += '<span title="Velmi-nízká priorita" class="status blue"></span>';
-                    }
-                    return klasifikaceHtml;
+                    return `<span style="font-weight: 700;">${data}</span>`;
                 }
             },
             {
@@ -1038,6 +986,20 @@ menuToggle.addEventListener('click', () => {
                 }, 
 
             ],
+            rowCallback: function(row, data, index) {
+                console.log(data); // Pro debugging, zkontroluj strukturu dat
+            
+                // Přidání třídy pro pozadí řádku na základě stavu
+                if (data.zadanOdchod == true) {
+                    $(row).addClass('row-ukoncene');
+                } else if (data.zadanVstup == true) {
+                    $(row).addClass('row-aktivni');
+                } else if (data.zadanVstup == false && data.zadanOdchod == false && data.idTechnika == "606794494") {
+                    $(row).addClass('row-neprirazeno'); // Oranžová barva pro "Nepřiřazeno"
+                } else {
+                    $(row).addClass('row-cekajici'); // Pokud je "Čekající"
+                }
+            },
             paging: true,        
             searching: true,
             ordering: false,
