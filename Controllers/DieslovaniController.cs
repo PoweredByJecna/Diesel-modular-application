@@ -330,7 +330,7 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             Debug.WriteLine($"Dieslovani s fiktiviním technikem: {NewDieslovani.IdDieslovani}");
 
-            return Redirect("/Lokality/Index");
+            return Redirect ("/Home/Index");
         }
     
 

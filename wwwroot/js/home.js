@@ -520,9 +520,18 @@ menuToggle.addEventListener('click', () => {
                 return klasifikaceBadge;
             }
         },
-        {data: 'nazevRegionu'},
-       
-
+        {data: 'názevFirmy'},
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px;">
+                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Převzít</span>
+                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                    </span>
+                `;
+            }
+        }
         ],
             paging: true,        
             searching: false,
