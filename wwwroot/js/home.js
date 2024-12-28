@@ -989,7 +989,7 @@ menuToggle.addEventListener('click', () => {
 
             ],
             rowCallback: function(row, data, index) {
-                var today = new Date().setHours(0, 0, 0, 0); 
+                var today = new Date(today).setHours(0, 0, 0, 0); 
                 var startDate = new Date(data.Od).setHours(0, 0, 0, 0); 
 
                 if (data.zadanOdchod == true && data.zadanVstup==false) {
@@ -998,7 +998,7 @@ menuToggle.addEventListener('click', () => {
                     $(row).addClass('row-aktivni');
                 } else if (data.zadanVstup == false && data.zadanOdchod == false && data.idTechnika == "606794494") {
                     $(row).addClass('row-neprirazeno'); 
-                } else if(data.zadanOdchod == false && data.zadanVstup ==false && startDate==today) {
+                } else if(data.zadanOdchod == false && data.zadanVstup ==false) {
                     $(row).addClass('row-cekajici');
                 }else {
                     $(row).addClass('row-standart');

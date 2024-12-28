@@ -225,7 +225,7 @@ namespace Diesel_modular_application.Controllers
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
-            .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794464")
+            .Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794494")
             .OrderBy(o=>o.Odstavka.Od)
             .Skip(start)
             .Take(length)
