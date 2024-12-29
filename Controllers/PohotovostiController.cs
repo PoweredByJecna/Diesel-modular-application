@@ -87,5 +87,60 @@
 
 
         }
+        public async Task<IActionResult> GetTableDatapohotovostiTable(int start = 0, int length = 0)
+        {
+            int totalRecords = await _context.Pohotovts.CountAsync();
+            length = totalRecords;
+
+            var pohotovostTechnikIds = await _context.Pohotovts
+            .Select(p => p.Technik.IdTechnika)
+            .Distinct()
+            .ToListAsync();
+
+            // Vytvoření mapy techniků a jejich lokalit (TechnikLokalitaMap) pouze pro techniky v pohotovosti
+            var technikLokalitaMap = await _context.DieslovaniS
+            .Include(o => o.Odstavka)
+            .ThenInclude(l => l.Lokality)
+            .Where(d => pohotovostTechnikIds.Contains(d.IdTechnik)) // Pouze technici, kteří jsou v pohotovosti a na dieslování
+            .GroupBy(d => d.IdTechnik)
+            .ToDictionaryAsync(
+            group => group.Key,
+            group => group
+            .OrderBy(o=>o.Odstavka.Od)
+            .Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
+            );
+
+   
+            var pohotovostList = await _context.Pohotovts
+            .Include(o => o.Technik)
+            .ThenInclude(o => o.User)
+            .Include(o => o.Technik)
+            .ThenInclude(o => o.Firma)
+            .OrderBy(o => o.Začátek)
+            .Skip(start)
+            .Take(length)
+            .Select(l => new
+            {
+                l.Technik.Jmeno,
+                PhoneNumber = l.Technik.User.PhoneNumber,
+                Firma = l.Technik.Firma.NázevFirmy,
+                l.Začátek,
+                l.Konec,
+                l.Technik.Taken,
+                Lokalita = technikLokalitaMap.ContainsKey(l.Technik.IdTechnika)
+                    ? technikLokalitaMap[l.Technik.IdTechnika] 
+                    : "Nemá přiřazenou lokalitu" 
+            })
+            .ToListAsync();
+
+        return Json(new
+        {
+            draw = HttpContext.Request.Query["draw"].FirstOrDefault(), 
+            recordsTotal = totalRecords, 
+            recordsFiltered = totalRecords, 
+            data = pohotovostList 
+        });
+        }
+
     }
 }

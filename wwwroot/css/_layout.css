@@ -123,12 +123,6 @@ thead th, tbody td {
     white-space: nowrap;        /* Zabráni zalomení textu */
 }
 
-tbody {
-    overflow-y: auto;           /* Povolit vertikální posouvání pro tělo tabulky */
-    max-height: 300px;          /* Maximální výška pro tělo tabulky (lze upravit podle potřeby) */
-}
-
-
 
 #upcomingTable tr{
     background-color: rgba(255, 255, 0, 0.321) !important;
@@ -151,6 +145,7 @@ tbody {
     background-color: rgba(255, 255, 0, 0.321) !important;
 }
 
+
 .row-aktivni {
     background-color: rgba(0, 128, 0, 0.371) !important;
 }
@@ -159,11 +154,14 @@ tbody {
     background-color: rgba(255, 0, 0, 0.382) !important;
 }
 .row-standart{
-    background-color: #0055ff28 ;
+    background-color: #0055ff28 !important;
 }
 
-#allTable tr, #lokalityTable, #odTable{
-    background-color: #0055ff28 ;
+.row-obsazeny{
+    background-color: rgba(255, 0, 0, 0.382) !important;
+}
+.row-volny{
+    background-color: rgba(0, 128, 0, 0.371) !important;
 }
 
 #toggle-icon {

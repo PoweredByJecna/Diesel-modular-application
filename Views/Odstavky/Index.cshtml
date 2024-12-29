@@ -4,8 +4,35 @@
     <body>
         <div class="conteiner" id="con">
             <div class="tables-row" style="justify-content:center">
-                <h2>Všechny odstávky:</h2>
-                <div class="table-div odstavkyTable">
+                <div class="table-div odstavkyTable" style="padding-top: 40px;">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Všechny odstávky <i class="fa-solid fa-bolt"></i></h2>
+                        <div>
+                            <span class="legenda">
+                                Aktivní :
+                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                            </span>
+                            <span class="legenda">
+                                Ukončené :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                            </span>
+                            <span class="legenda">
+                                Nekativni :
+                                <i class="fa-solid fa-square" style="color: #0055ff28"></i>
+                            </span>
+                            <span class="legenda">
+                                Nepřižazeno :
+                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                            </span>
+                            <span class="legenda">
+                                Čekající :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 255, 0, 0.321"></i>
+                            </span>
+                            
+                            
+
+                        </div>
+                    </div>
                     <table id="odTable" style="margin-bottom: 15px;">
                         <thead>
                             <tr>
@@ -28,7 +55,7 @@
                 </div>
             </div>
             <div class="tables-row">
-                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;">
+                <div class="section small OdstavkyView" style="flex-direction: row; width: 20%; flex: none;">
                     <div class="div-odstavka-create">
                         <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky" style="border-radius: 5px;">
                             <div class="form">
@@ -82,86 +109,40 @@
                     </div>   
                 </div>
             </div>
-            <div class="cnt" style="background-color: white;">
-                <section class="tables" id="tablepohotovosti">
-                    <div class="table-div pohotovosti">
-                        <form asp-action="Zapis" asp-controller="Pohotovosti"> 
-                            <h2 style="display: flex; justify-content: center;">Pohotovosti:</h2>                  
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Jmeno</th>
-                                        <th>Tel</th>
-                                        <th>Firma</th>
-                                        <th>Začátek</th>
-                                        <th>Konec</th>
-                                        <th>Obsazenost</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach(var pohotovost in Model.PohotovostList)
-                                    {
-                                        <tr>
-                                            <td>@pohotovost.Technik.Jmeno</td>
-                                            <td>@pohotovost.User.PhoneNumber</td>
-                                            <td>@pohotovost.Technik.Firma.NázevFirmy</td>
-                                            <td>@pohotovost.Začátek</td>
-                                            <td>@pohotovost.Konec</td>
-                                        <td>
-                                                @if (pohotovost.Technik.Taken)
-                                                {
-                                                    if (Model.TechnikLokalitaMap.TryGetValue(pohotovost.Technik.IdTechnika, out var lokalita))
-                                                    {
-                                                        <span>Právě je objednán, na lokalitě: @lokalita</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>Právě je objednán, ale nemá přiřazenou lokalitu.</span>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <span>Právě je volný</span>
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            <h2 style=" display:flex; justify-content: center;">Zapsat se</h2>
-                            <div class="buttondiv">
-                                @if(User.IsInRole("Admin"))
-                                {
-                                    <div>
-                                        <a>Technik:</a>
-                                        <select asp-for="TechnikMod.IdTechnika">
-                                            @foreach(var Technik in Model.TechnikList)
-                                            {
-                                            <option value="@Technik.IdTechnika">@Technik.Jmeno</option>
-                                            }
-                                        </select>
-                                        
-                                    </div>
-                                }
-                                <div>
-                                    <a>Začátek</a><br>
-                                    <input asp-for="PohotovostMod.Začátek" type="datetime-local">    
-                                </div>    
-                                <div>
-                                    <a>Konec</a><br>
-                                    <input asp-for="PohotovostMod.Konec" type="datetime-local">    
-                                </div>   
-                                <button type="submit" class="button"><a class="text-button">Zapsat se</a></button>
-                            </div>
-                        </form>    
-                    </div> 
-                    @if(User.IsInRole("Admin"))
-                    {
-                        <form asp-action="Nacteni" asp-controller="Lokality">
-                            <button type="submit">VYTVOŘ</button>
-                        </form>
-                    }
-                </section>
+            <div class="tables-row" style="justify-content:center; margin-top: 20px; margin-bottom: 20px;">
+                <div class="table-div odstavkyTable" id="tablepohotovosti" style="padding-top: 40px;">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Potovosti <i class="fa-solid fa-table"></i></h2>
+                        <div>
+                            <span class="legenda">
+                                Volný :
+                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                            </span>
+                            <span class="legenda">
+                                Obsazený :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                            </span> 
+                              <span class="legenda">
+                                Fiktivní technik :
+                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                            </span>    
+                        </div>
+                    </div>                
+                    <table id="pohotovostTable">
+                        <thead>
+                            <tr>
+                                <th>Jmeno</th>
+                                <th>Tel</th>
+                                <th>Firma</th>
+                                <th>Začátek</th>
+                                <th>Konec</th>
+                                <th>Obsazenost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>       
+                </div>          
             </div>
         </div>
     </body>

@@ -114,15 +114,24 @@ width: 70%;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-
-
-
-.table-div.odstavkyTable.Home{
-    height: 360px;
-    width: 100%;
+.name{
+    position: absolute;
+    flex-direction: row;
+    align-items: baseline;
+    display: flex;
+    top: 0;
+    left:5px;
 }
-table.dataTable.tbody.th,table.dataTable.tbody.td {
+.legenda{
+    margin-left: 5px;
+}
+
+
+table.dataTable tbody th,table.dataTable tbody td {
     padding: 0px 6px !important;
+}
+table.dataTable tbody tr{
+    border-bottom: 1px inset !important;
 }
 .table-div.odstavkyTable.Lokality_Odstavky{
     width: 100%;
@@ -180,7 +189,7 @@ table.dataTable.tbody.th,table.dataTable.tbody.td {
 
 .main-container.OdstavkyView{
 
-    height: 475px;
+    height: 413px;
     width: 95%;
     background-color: white;
     color: black;

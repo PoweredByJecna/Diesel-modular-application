@@ -132,6 +132,7 @@ menuToggle.addEventListener('click', () => {
                     $('#upcomingTable').DataTable().ajax.reload();
                     $('#endTable').DataTable().ajax.reload();
                     $('#runningTable').DataTable().ajax.reload();
+                    $('#thrashTable').DataTable().ajax.reload();
                 } 
                 else {
                     alert('Mazání záznamu se nezdařilo: ' + response.message);
@@ -497,10 +498,50 @@ menuToggle.addEventListener('click', () => {
         /////////////////////////////////////////////THRASH TABLE////////////////////////////////////////////////
 
 
+        /////////////////////////////////////////////POHOTOVOSTI TABLE////////////////////////////////////////////////
+
+        $('#pohotovostTable').DataTable({ajax: {
+            url: '/Pohotovosti/GetTableDatapohotovostiTable', // Cesta na vaši serverovou metodu
+            type: 'POST',
+            dataSrc: function (json) {
+                // Zkontrolujte, co se vrací z API
+                console.log(json);
+                return json.data;
+            }
+            },
+            columns:[
+            {   data: 'jmeno'},
+            {   data: 'phoneNumber'},
+            {   data: 'firma'},
+            {   data: 'začátek'},
+            {   data: 'konec'},
+            {
+                data: 'lokalita', // Toto je vaše nová hodnota pro Lokalitu
+                render: function (data, type, row) {
+                    // Zobrazení lokalitu nebo výchozí text
+                    return data || 'Není přiřazeno';
+                }
+            }
+        ],
+        rowCallback: function(row, data, index) {
+            if (data.taken == true) {
+                $(row).addClass('row-obsazeny');
+            }else if(data.jmeno == "FiktivniTechnik") {
+                $(row).addClass('row-neprirazeno');
+            }else {
+                $(row).addClass('row-volny');
+            }
+        },
+            paging: true,        
+            searching: true,
+            ordering: false, 
+            lengthChange: false,     
+            pageLength: 15
+        });    
 
 
 
-
+        /////////////////////////////////////////////POHOTOVOSTI TABLE////////////////////////////////////////////////
 
 
 
@@ -682,6 +723,20 @@ menuToggle.addEventListener('click', () => {
                 }
                 }, 
             ],
+            rowCallback: function(row, data, index) {
+                var today = new Date().setHours(0, 0, 0, 0); 
+                var startDate = new Date(data.od).setHours(0, 0, 0, 0); 
+
+                if (data.zadanOdchod == true && data.zadanVstup==false) {
+                    $(row).addClass('row-ukoncene');
+                } else if (data.zadanVstup == true && data.zadanOdchod==false) {
+                    $(row).addClass('row-aktivni');
+                } else if(data.zadanOdchod == false && data.zadanVstup ==false && today==startDate) {
+                    $(row).addClass('row-cekajici');
+                }else {
+                    $(row).addClass('row-standart');
+                }
+            },
             paging: true,        
             searching: true,
             ordering: false, 
@@ -852,7 +907,7 @@ menuToggle.addEventListener('click', () => {
                     let iconColor = "black";
     
                     // Pokud je zadán ZadanOdchod, nastav "Ukončené"
-                    if (row.ZadanOdchod) {
+                    if (row.zadanOdchod == true && row.zadanVstup == false) {
                         badgeClass = "badge-phoenix-danger";
                         badgeStyle = "background-color: red; border-radius: 5px;";
                         labelStyle = "color: white; padding: 1px; font-size: small;";
@@ -861,16 +916,16 @@ menuToggle.addEventListener('click', () => {
                         iconColor = "black";
                     }
                     // Pokud je zadán ZadanVstup, nastav "Aktivní"
-                    else if (row.ZadanVstup) {
+                    else if (row.zadanVstup ==true && row.zadanOdchod==false)  {
                         badgeClass = "badge-phoenix-primary";
                         badgeStyle = "background-color: green; border-radius: 5px;";
                         labelStyle = "color: white; padding: 1px; font-size: small;";
                         labelText = "Aktivní";
-                        iconClass = "fa-play-circle";
+                        iconClass = "fa-clock-rotate-left";
                         iconColor = "black";
                     }
                     // Pokud je technik "606794494" a stav je "Nepřiřazeno"
-                    else if (row.ZadanVstup === false && row.ZadanOdchod === false) {
+                    else if (row.zadanVstup == false && row.zadanOdchod == false && row.idTechnika == "606794494")  {
                         badgeClass = "badge-phoenix-warning";
                         badgeStyle = "background-color: orange; border-radius: 5px;"; // Oranžová barva pro "Nepřiřazeno"
                         labelText = "Nepřiřazeno";
@@ -989,8 +1044,8 @@ menuToggle.addEventListener('click', () => {
 
             ],
             rowCallback: function(row, data, index) {
-                var today = new Date(today).setHours(0, 0, 0, 0); 
-                var startDate = new Date(data.Od).setHours(0, 0, 0, 0); 
+                var today = new Date().setHours(0, 0, 0, 0); 
+                var startDate = new Date(data.od).setHours(0, 0, 0, 0); 
 
                 if (data.zadanOdchod == true && data.zadanVstup==false) {
                     $(row).addClass('row-ukoncene');
@@ -998,7 +1053,7 @@ menuToggle.addEventListener('click', () => {
                     $(row).addClass('row-aktivni');
                 } else if (data.zadanVstup == false && data.zadanOdchod == false && data.idTechnika == "606794494") {
                     $(row).addClass('row-neprirazeno'); 
-                } else if(data.zadanOdchod == false && data.zadanVstup ==false) {
+                } else if(data.zadanOdchod == false && data.zadanVstup ==false && today==startDate) {
                     $(row).addClass('row-cekajici');
                 }else {
                     $(row).addClass('row-standart');

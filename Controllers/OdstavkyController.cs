@@ -74,15 +74,6 @@ namespace Diesel_modular_application.Controllers
             .Select(o => o.IdTechnik)
             .ToListAsync();
 
-            #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
-            odstavky.TechnikLokalitaMap = await _context.DieslovaniS
-            .Where(d => d.Technik.Taken) // Pouze technici, kteří jsou právě na dieslování
-            .GroupBy(d => d.IdTechnik)  // Seskupení podle IdTechnika
-            .ToDictionaryAsync(
-                group => group.Key,
-                group => group.Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
-            );
-            #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Search(OdstavkyViewModel search, string query, int page = 1)
@@ -591,6 +582,8 @@ namespace Diesel_modular_application.Controllers
                 {
                     l.IdOdstavky,
                     l.Distributor,
+                    l.ZadanOdchod,
+                    l.ZadanVstup,
                     l.Lokality.Lokalita,
                     l.Lokality.Klasifikace,
                     l.Od,
