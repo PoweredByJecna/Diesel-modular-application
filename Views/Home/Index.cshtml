@@ -6,9 +6,10 @@
 <body>
     <div class="conteiner" id="con">
         <div class="tables-row" style="justify-content: center;">
-            
-            <h2>Aktuální dieslování:</h2>
             <div class="table-div odstavkyTable">
+                <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Dnešní Aktuální <i class="fa-solid fa-person-running"></i></h2>
+                </div>
                 <table id="runningTable">
                     <thead>
                         <tr>
@@ -30,9 +31,11 @@
                 </table>
             </div>
             
-            
-            <h2>Dnešní nadcházející:</h2>
-            <div class="table-div odstavkyTable">
+
+            <div class="table-div odstavkyTable" style="margin-top: 20px;">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Dnešní nadcházející <i class="fa-solid fa-hourglass-end"></i></h2>
+                    </div>
                 <table id="upcomingTable">  
                     <thead>
                         <tr>
@@ -58,8 +61,10 @@
 
         <div class="tables-row">
             <div class="section small">
-                <h2>Dnešní ukončené:</h2>
                 <div class="table-div odstavkyTable" style="width: 98%">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Dnešní ukončené <i class="fa-regular fa-circle-xmark"></i></h2>
+                    </div> 
                     <table id="endTable">
                         <thead>
                             <tr>
@@ -77,6 +82,9 @@
                 </div> 
                 <h2>Koš:</h2>
                 <div class="table-div odstavkyTable" style="width: 98%;">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Všechna nepřiřazená <i class="fa-solid fa-trash"></i></h2>
+                    </div>   
                     <table id="thrashTable">
                         <thead>
                             <tr>
@@ -95,7 +103,6 @@
                 </div>   
             </div>
             <div class="section small">
-                <h2>Aktuální vytížení:</h2>
                 <div class="main-container" style="width: 98%;">       
             @{
                     int totalOdstavky = Model.OdstavkyList.Where(d=>d.Od.Date==DateTime.Today && (d.ZadanVstup == true || d.Od.Date == DateTime.Today) && d.Lokality.DA=="FALSE").Count();
@@ -196,8 +203,32 @@
             </div>
         </div>
         <div class="tables-row" style="justify-content: center; margin-bottom: 15px;">
-                <h2>Všechna dieslovaní:</h2>
                 <div class="table-div odstavkyTable" id="all-table">
+                     <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Všechna dieslovaní <i class="fa-solid fa-globe"></i></h2>
+                        <div>
+                            <span class="legenda">
+                                Aktivní :
+                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                            </span>
+                            <span class="legenda">
+                                Ukončené :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                            </span>
+                            <span class="legenda">
+                                Nekativni :
+                                <i class="fa-solid fa-square" style="color: #0055ff28"></i>
+                            </span>
+                            <span class="legenda">
+                                Nepřižazeno :
+                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                            </span>
+                            <span class="legenda">
+                                Čekající :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 255, 0, 0.321"></i>
+                            </span>
+                        </div>
+                    </div>
                     <table id="allTable">
                         <thead>
                             <tr>
