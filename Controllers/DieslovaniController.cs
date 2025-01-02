@@ -320,7 +320,7 @@ namespace Diesel_modular_application.Controllers
             }
         } 
 
-        public async Task<IActionResult> CreateNewDieslovaniAsync(TableOdstavky newOdstavky, TableTechnici technik)
+        public async Task<TableDieslovani> CreateNewDieslovaniAsync(TableOdstavky newOdstavky, TableTechnici technik)
         {   
             var NewDieslovani = new TableDieslovani
             {
@@ -337,7 +337,7 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             Debug.WriteLine($"Dieslovani s fiktiviním technikem: {NewDieslovani.IdDieslovani}");
 
-            return Redirect ("/Home/Index");
+            return NewDieslovani;
         }
     
 

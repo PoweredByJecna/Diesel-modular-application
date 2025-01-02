@@ -306,10 +306,10 @@ menuToggle.addEventListener('click', () => {
     
                 ],  
             paging: true,        
-            searching: false,
+            searching: true,
             ordering: false, 
             lengthChange: false,    
-            pageLength: 3,
+            pageLength: 4,
             
         });
           /////////////////////////////////////////////UPCOMING TABLE////////////////////////////////////////////////
@@ -402,10 +402,10 @@ menuToggle.addEventListener('click', () => {
 
         ],
             paging: true,        
-            searching: false,
+            searching: true,
             ordering: false, 
             lengthChange: false,     
-            pageLength: 2
+            pageLength: 4
         }); 
 
 
@@ -489,10 +489,10 @@ menuToggle.addEventListener('click', () => {
         {data: 'názevFirmy'}
         ],
             paging: true,        
-            searching: false,
+            searching: true,
             ordering: false, 
             lengthChange: false,     
-            pageLength: 2
+            pageLength: 4
         });    
 
         /////////////////////////////////////////////THRASH TABLE////////////////////////////////////////////////
@@ -869,7 +869,7 @@ menuToggle.addEventListener('click', () => {
 
             ],  
             paging: true,        
-            searching: false,
+            searching: true,
             ordering: false,  
             lengthChange: false,    
             pageLength: 3

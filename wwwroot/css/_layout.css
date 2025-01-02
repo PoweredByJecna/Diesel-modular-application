@@ -563,9 +563,8 @@ header.dark-mode {
 
 }
 .li-sidebar:hover{
-    background-color:#bfc1c5;
-    transition: all 0.3s;
-    transition: background-color 0.5s ease;
+    background-color:#bfc1c59c;
+    transition: 0.3s;
     
 }
 .a-sidebar{

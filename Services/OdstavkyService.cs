@@ -35,15 +35,15 @@ namespace Diesel_modular_application.Services
         var regionStats = regions.Select(region => new RegionStats
         {
         RegionName = region,
-        // Počet odstávek pro tento region
+    
         Count = odstavkyList.Count(o =>
         o.Lokality.Region.NazevRegionu == region), 
 
-        // Výpočet procenta odstávek v regionu vůči celkovým odstávkám
+      
         Percentage = totalOdstavky == 0 ? 0 : (double)odstavkyList.Count(o =>
         o.Lokality.Region.NazevRegionu == region) / totalOdstavky * 100,
 
-        // Nastavení barvy na základě počtu
+
         StatusColor = totalOdstavky == 0 ? "gray" : "green" // Změňte na podmínky pro jiné barvy podle potřeby
         }).ToList();
 

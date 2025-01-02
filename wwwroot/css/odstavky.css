@@ -126,6 +126,7 @@ table.dataTable tbody th,table.dataTable tbody td {
 }
 table.dataTable tbody tr{
     border-bottom: 1px inset !important;
+    position: relative;
 }
 .table-div.odstavkyTable.Lokality_Odstavky{
     width: 100%;
