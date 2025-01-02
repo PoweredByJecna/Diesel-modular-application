@@ -47,7 +47,7 @@ namespace Diesel_modular_application.Controllers
                     
                 }    
                 await _context.SaveChangesAsync();
-                 return Json(new { success = true, message = "Byl zadán vstup na lokalitu." });
+                return Json(new { success = true, message = "Byl zadán vstup na lokalitu." });
             }
             catch(Exception ex)
             {
@@ -105,6 +105,34 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect ("/Home/Index");
         }
+        public async Task<IActionResult> Take(int id)
+        {
+            try
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                var dieslovaniTaken = await _context.DieslovaniS
+                .FirstAsync(d=>d.IdDieslovani==id);
+                if(currentUser!=null)
+                {
+                    dieslovaniTaken.Technik.IdTechnika=currentUser.Id;
+                    _context.Update(dieslovaniTaken);
+                    return Json(new { success = true, message = "Dielolovaní si převzal." + dieslovaniTaken.Technik.Jmeno });
+
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Chyba při převzetí " + ex.Message });
+            }
+            
+        }
+
+
         public async Task<IActionResult> GetTableDataRunningTable(int start = 0, int length = 0)
         {
             int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();

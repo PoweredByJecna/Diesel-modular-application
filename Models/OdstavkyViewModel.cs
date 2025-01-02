@@ -8,7 +8,7 @@ namespace Diesel_modular_application.Models
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
-        public string TechnikLokalita{get;set;}
+        public string Barva {get;set;}
 
         public StatsViewModel RegionStats { get; set; }
 

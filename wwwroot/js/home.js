@@ -183,6 +183,28 @@ menuToggle.addEventListener('click', () => {
             
         });
     }
+    function Take(idDieslovani) {
+        console.log("Prevzeti dieslovani ID:", idDieslovani); // Ladicí výstup
+        $.ajax({
+            url: '/Dieslovani/Take',
+            type: 'POST',
+            data: { idDieslovani: idDieslovani },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#upcomingTable').DataTable().ajax.reload();
+                    $('#allTable').DataTable().ajax.reload();
+                    $('#endTable').DataTable().ajax.reload();
+                    $('#runningTable').DataTable().ajax.reload();
+                    $('#thrashTable').DataTable().ajax.reload();
+                } 
+                else {
+                    alert('Odchod se nezdařil: ' + response.message);
+                }
+            },
+            
+        });
+    }
 
     
     
@@ -486,7 +508,22 @@ menuToggle.addEventListener('click', () => {
                 return klasifikaceBadge;
             }
         },
-        {data: 'názevFirmy'}
+        {data: 'názevFirmy'},
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `       
+                <div class="button-conteiner">
+                    <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
+                    <div class="hidden-buttons">
+                        <button class="button Edit delete" onclick="Take(${row.idDieslovani})">
+                            <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
+                        </button>
+                        </div>
+                </div>
+            `;
+        }
+        }, 
         ],
             paging: true,        
             searching: true,
@@ -856,8 +893,8 @@ menuToggle.addEventListener('click', () => {
                             <div class="button-conteiner">
                                 <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
                                 <div class="hidden-buttons">
-                                    <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
-                                        <i class="fa-solid fa-trash" style="color:black"></i>
+                                    <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})">
+                                        <i class="fa-solid fa-door-closed" style="color:black"></i>
                                     </button>
                                     <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
                                 </div>

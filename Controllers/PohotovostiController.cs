@@ -40,7 +40,6 @@
                     if(technikSearch!=null)
                     {
                        
-                        ViewBag.Message=technikSearch.Jmeno;
                         if(pohotovosti.PohotovostMod.Konec>pohotovosti.PohotovostMod.Začátek && pohotovosti.PohotovostMod.Začátek>=DateTime.Today)
                         {
                         var Zapis = new TablePohotovosti

@@ -641,13 +641,10 @@ p{
 
 .modal {
     display: none;
-    position: fixed;
+    position: relative;
     z-index: 1000;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -657,17 +654,17 @@ p{
 }
 
 .modal-content {
-    background-color: white;
-    padding: 50px;
-    border-radius: 8px;
+    color: white;
+    padding: 25px 5px 10px 5px;
+    border-radius: 5px;
     position: fixed;
-    width: 155px;
-    left: 50%;
-    top: 30%;
-    height: 160px;
+    width: 380px;
+    right: 0;
+    top: 10%;
+    height: 75px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: auto;
+    overflow: hidden;
 }
 
 
