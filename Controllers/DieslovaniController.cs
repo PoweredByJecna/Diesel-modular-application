@@ -47,7 +47,15 @@ namespace Diesel_modular_application.Controllers
                     
                 }    
                 await _context.SaveChangesAsync();
-                return Json(new { success = true, message = "Byl zadán vstup na lokalitu." });
+
+                TempData["Zprava"] = "Byl zadán vstup na lokalitu.";  // Example message
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Byl zadán vstup na lokalitu.",
+                    tempMessage = TempData["Zprava"]  // Return the message for the modal
+                });
             }
             catch(Exception ex)
             {
@@ -105,32 +113,47 @@ namespace Diesel_modular_application.Controllers
             await _context.SaveChangesAsync();
             return Redirect ("/Home/Index");
         }
-        public async Task<IActionResult> Take(int id)
+        public async Task<IActionResult> Take(int IdDieslovani)
         {
             try
             {
                 var currentUser = await _userManager.GetUserAsync(User);
+
+                var technik = await _context.TechniS.FirstAsync(d=>d.IdUser==currentUser.Id);
                 var dieslovaniTaken = await _context.DieslovaniS
-                .FirstAsync(d=>d.IdDieslovani==id);
-                if(currentUser!=null)
+               
+                .Include(d=>d.Technik)
+                .FirstOrDefaultAsync(d=>d.IdDieslovani==IdDieslovani);
+
+                if(dieslovaniTaken!=null)
                 {
-                    dieslovaniTaken.Technik.IdTechnika=currentUser.Id;
+                    if(technik.Taken==true)
+                    {
+                        TempData["Zprava"] = "Již máte dieslovaní převzaté";
+                    }
+
+                    dieslovaniTaken.Technik=technik;
+                    technik.Taken=true;
+                    _context.Update(technik);
                     _context.Update(dieslovaniTaken);
-                    return Json(new { success = true, message = "Dielolovaní si převzal." + dieslovaniTaken.Technik.Jmeno });
+
+                    await _context.SaveChangesAsync();
+                    
+                    TempData["Zprava"] = "Dieslování bylo úspěšně zadano.";
 
                 }
-                else
+                return Json(new
                 {
-                    return null;
-                }
+                    success = true,
+                    message = "Lokalitu si převzal: " + dieslovaniTaken.Technik.Jmeno + " " + dieslovaniTaken.Technik.Prijemni,
+                    tempMessage = TempData["Zprava"]  // Return the message for the modal
+                });
+
 
             }
             catch (Exception ex)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                var dieslovaniTaken = await _context.DieslovaniS
-                .FirstAsync(d=>d.IdDieslovani==id);
-                return Json(new { success = false, message = "Chyba při převzetí " +  dieslovaniTaken.Technik.Jmeno});
+                return Json(new { success = false, message = "Chyba při převzetí "});
             }
             
         }

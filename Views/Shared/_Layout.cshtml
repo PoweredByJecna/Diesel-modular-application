@@ -164,7 +164,8 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
                             </div>   
-                            @if(User.IsInRole("Admin")){
+                            @if(User.IsInRole("Admin"))
+                            {
                                 <div class="navdiv add">
                                     <i class="fa-solid fa-plus"></i>
                                     <a>Add member</a>
@@ -181,16 +182,16 @@
                         </div>
                     </div> 
 
-                    @if (TempData["Zprava"] != null)
-                    {
-                        <div id="messageModal" class="modal" style="display: none;">
-                            <div class="modal-content" style="background-color:red">
-                                <span id="closeModal" class="close">&times;</span>
-                                <a>@Model.Barva</a>
-                                <p id="modalText" style="margin: 0px;">@Html.Raw(TempData["Zprava"])</p>
-                            </div>
+                    
+                    <div id="messageModal" class="modal">
+                        <div class="modal-content" style="background-color:red">
+                        <span id="closeModal" class="close">&times;</span>
+                        <a>@Model.Barva</a>
+                        <p id="modalText" style="margin: 0px;"></p>
                         </div>
-                    }
+                    </div>
+
+                    
 
 
                             

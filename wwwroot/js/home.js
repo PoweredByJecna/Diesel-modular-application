@@ -33,6 +33,10 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
+$('#closeModal').click(function() {
+    $('#messageModal').hide();
+});
+
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -149,7 +153,9 @@ menuToggle.addEventListener('click', () => {
             data: { idDieslovani: idDieslovani },
             success: function (response) {
                 if (response.success) {
-                    alert(response.message);
+                    $('#modalText').html(response.tempMessage);  // Set the message in the modal
+                    $('#messageModal').fadeIn();  // Make the modal visible (fadeIn for smooth transition)
+
                     $('#upcomingTable').DataTable().ajax.reload();
                     $('#allTable').DataTable().ajax.reload();
                     $('#endTable').DataTable().ajax.reload();
@@ -191,7 +197,8 @@ menuToggle.addEventListener('click', () => {
             data: { idDieslovani: idDieslovani },
             success: function (response) {
                 if (response.success) {
-                    alert(response.message);
+                    $('#modalText').html(response.tempMessage);  // Set the message in the modal
+                    $('#messageModal').fadeIn();
                     $('#upcomingTable').DataTable().ajax.reload();
                     $('#allTable').DataTable().ajax.reload();
                     $('#endTable').DataTable().ajax.reload();
@@ -199,7 +206,7 @@ menuToggle.addEventListener('click', () => {
                     $('#thrashTable').DataTable().ajax.reload();
                 } 
                 else {
-                    alert('Odchod se nezdařil: ' + response.message);
+                    alert('Prevzeti se nezdařilo: ' + response.message);
                 }
             },
             
@@ -452,9 +459,10 @@ menuToggle.addEventListener('click', () => {
             render: function (data, type, row) {
                 return `
                     <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
-                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Nepřižazeno</span>
-                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
-                    </span>
+                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Nepřiřazeno</span>
+                        <i class="fa-solid fa-clock-rotate-left" style="black: white;"></i>
+                    </span> 
+
                 `;
             }
         },
@@ -513,15 +521,13 @@ menuToggle.addEventListener('click', () => {
             data: null,
             render: function (data, type, row) {
                 return `       
-                <div class="button-conteiner">
-                    <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                    <div class="hidden-buttons">
-                        <button class="button Edit delete" onclick="Take(${row.idDieslovani})">
-                            <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
-                        </button>
-                        </div>
-                </div>
+                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Take(${row.idDieslovani})">
+                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Převzít</span>
+                    <i class="fa-solid fa-clock-rotate-left" style="color: white;"></i>
+                </span>  
             `;
+
+            
         }
         }, 
         ],
@@ -561,10 +567,11 @@ menuToggle.addEventListener('click', () => {
             }
         ],
         rowCallback: function(row, data, index) {
-            if (data.taken == true) {
-                $(row).addClass('row-obsazeny');
-            }else if(data.jmeno == "FiktivniTechnik") {
+            if(data.firma =='Fiktivni') {
                 $(row).addClass('row-neprirazeno');
+            }
+            else if (data.taken == true) {
+                $(row).addClass('row-obsazeny');
             }else {
                 $(row).addClass('row-volny');
             }
