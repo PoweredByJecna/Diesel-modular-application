@@ -38,16 +38,20 @@ namespace Diesel_modular_application.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             var userId = currentUser?.Id; // 
 
-            
-            odstavky.OdstavkyList = await _context.OdstavkyS
+            if(User.IsInRole("Admin"))
+            {
+                odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ThenInclude(l => l.Region)
                 .ThenInclude(l=>l.Firma)
                 .ToListAsync();
-            odstavky.DieslovaniList =await _context.DieslovaniS
+                odstavky.DieslovaniList =await _context.DieslovaniS
                 .Include(o=>o.Technik)
                 .ToListAsync();
-            odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+                odstavky.LokalityList=await _context.LokalityS.ToListAsync();
+            }
+            
+       
             
        
             return View("Index", odstavky);    

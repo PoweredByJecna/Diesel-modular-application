@@ -127,7 +127,10 @@ namespace Diesel_modular_application.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Chyba při převzetí " + ex.Message });
+                var currentUser = await _userManager.GetUserAsync(User);
+                var dieslovaniTaken = await _context.DieslovaniS
+                .FirstAsync(d=>d.IdDieslovani==id);
+                return Json(new { success = false, message = "Chyba při převzetí " +  dieslovaniTaken.Technik.Jmeno});
             }
             
         }

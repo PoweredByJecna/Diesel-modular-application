@@ -36,6 +36,9 @@ namespace Diesel_modular_application.Controllers
         [Authorize]
         public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page = 1)
         {
+
+         if(User.IsInRole("Admin"))
+         {    
             int pagesize = 10;
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
@@ -73,7 +76,7 @@ namespace Diesel_modular_application.Controllers
             .Where(static o => o.Technik.Taken == true)
             .Select(o => o.IdTechnik)
             .ToListAsync();
-
+            }
             return View("Index", odstavky);
         }
         public async Task<IActionResult> Search(OdstavkyViewModel search, string query, int page = 1)
