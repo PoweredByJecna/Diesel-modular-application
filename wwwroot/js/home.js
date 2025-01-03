@@ -33,9 +33,7 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
-$('#closeModal').click(function() {
-    $('#messageModal').hide();
-});
+
 
 
 function formatDate(dateString) {
@@ -69,12 +67,26 @@ const menuToggle = document.getElementById('menu-toggle');
 const sideMenu = document.getElementById('sidemenu');
 const con = document.getElementById('con');
 
+// Načtení stavu z localStorage při načtení stránky
+document.addEventListener('DOMContentLoaded', () => {
+    const isVisible = localStorage.getItem('sidebarVisible');
+    if (isVisible === 'true') {
+        sideMenu.classList.add('visible');
+        con.classList.add('visible');
+    }
+});
+
 // Přidání event listeneru pro kliknutí na tlačítko
 menuToggle.addEventListener('click', () => {
     // Přepni třídu 'visible' pro zobrazení nebo skrytí menu
     sideMenu.classList.toggle('visible');
     con.classList.toggle('visible');
+
+    // Ulož stav do localStorage
+    const isVisible = sideMenu.classList.contains('visible');
+    localStorage.setItem('sidebarVisible', isVisible);
 });
+
 
 
 
@@ -190,28 +202,60 @@ menuToggle.addEventListener('click', () => {
         });
     }
     function Take(idDieslovani) {
-        console.log("Prevzeti dieslovani ID:", idDieslovani); // Ladicí výstup
+        console.log("Převzetí dieslování ID:", idDieslovani); // Ladicí výstup
         $.ajax({
             url: '/Dieslovani/Take',
             type: 'POST',
             data: { idDieslovani: idDieslovani },
             success: function (response) {
                 if (response.success) {
-                    $('#modalText').html(response.tempMessage);  // Set the message in the modal
-                    $('#messageModal').fadeIn();
-                    $('#upcomingTable').DataTable().ajax.reload();
-                    $('#allTable').DataTable().ajax.reload();
-                    $('#endTable').DataTable().ajax.reload();
-                    $('#runningTable').DataTable().ajax.reload();
-                    $('#thrashTable').DataTable().ajax.reload();
-                } 
-                else {
-                    alert('Prevzeti se nezdařilo: ' + response.message);
+                    showModal(response.tempMessage, true);
+                    reloadTables();
+                } else {
+                    showModal('Převzetí se nezdařilo: ' + response.message, false);
                 }
             },
-            
+            error: function () {
+                showModal('Došlo k chybě při komunikaci se serverem.', false);
+            }
         });
     }
+    
+    function showModal(message, isSuccess) {
+        const modal = $('#messageModal');
+        const modalContent = $('#modalContent');
+        const modalText = $('#modalText');
+    
+        modalText.text(message);
+        modalContent.removeClass('success error');
+    
+        if (isSuccess) {
+            modalContent.addClass('success');
+        } else {
+            modalContent.addClass('error');
+        }
+    
+        modal.fadeIn();
+    
+        $('#closeModal').on('click', function () {
+            modal.fadeOut();
+        });
+    
+        $(window).on('click', function (event) {
+            if ($(event.target).is(modal)) {
+                modal.fadeOut();
+            }
+        });
+    }
+    
+    function reloadTables() {
+        $('#upcomingTable').DataTable().ajax.reload();
+        $('#allTable').DataTable().ajax.reload();
+        $('#endTable').DataTable().ajax.reload();
+        $('#runningTable').DataTable().ajax.reload();
+        $('#thrashTable').DataTable().ajax.reload();
+    }
+    
 
     
     
@@ -297,7 +341,12 @@ menuToggle.addEventListener('click', () => {
                             return klasifikaceBadge;
                         }
                     },
-                    {data: 'jmeno'},
+                    { 
+                        data: null, 
+                        render: function(data, type, row) {
+                            return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                        }
+                    },
                     { data: 'date', 
                         render: function(data) {
                             return formatDate(data);
@@ -553,7 +602,12 @@ menuToggle.addEventListener('click', () => {
             }
             },
             columns:[
-            {   data: 'jmeno'},
+                { 
+                    data: null, 
+                    render: function(data, type, row) {
+                        return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                    }
+                },
             {   data: 'phoneNumber'},
             {   data: 'firma'},
             {   data: 'začátek'},
@@ -874,7 +928,12 @@ menuToggle.addEventListener('click', () => {
                         return klasifikaceBadge;
                     }
                 },
-                {data: 'jmeno'},
+                { 
+                    data: null, 
+                    render: function(data, type, row) {
+                        return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                    }
+                },
                 { data: 'vstup', 
                     render: function(data) {
                         return formatDate(data);
@@ -1037,7 +1096,12 @@ menuToggle.addEventListener('click', () => {
             },
             {data:'adresa'},
             {data: 'názevFirmy'},
-            {data: 'jmeno'},    
+            { 
+                data: null, 
+                render: function(data, type, row) {
+                    return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                }
+            },    
             {data: 'nazevRegionu'},
             {data: 'od', 
                 render: function(data) {

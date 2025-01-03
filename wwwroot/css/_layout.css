@@ -643,28 +643,31 @@ p{
     display: none; /* Hide by default */
     position: fixed; /* Fixed position to cover the entire viewport */
     top: 0;
-    left: 0;
+    right: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     z-index: 1000; /* Ensures the modal is on top */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */  
+
 }
 
 .modal-content {
     color: white;
     padding: 25px 5px 10px 5px;
     border-radius: 5px;
-    position: fixed;
     width: 380px;
-    right: 0;
-    top: 51px;
     height: 75px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
+.modal-content.success {
+    background-color: green;
+}
+
+.modal-content.error {
+    background-color: red;
+}
 
 .close {
     position: absolute;

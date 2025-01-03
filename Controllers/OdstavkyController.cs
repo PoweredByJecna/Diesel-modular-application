@@ -516,13 +516,11 @@ namespace Diesel_modular_application.Controllers
             if (result == null)
             {
                 TempData["Zprava"] = "Založení odstávky nebo dieslovaní selhalo z důvodu:<br> " + string.Join("", Zpravy);
-                odstavky.Barva="red";
                 return Redirect("/Home/Index"); 
             }
             else
             {
                 TempData["Zprava"] = "Dieslování objednáno:<br>" + string.Join("", Zpravy); 
-                odstavky.Barva="green";
                 return Redirect("/Home/Index");
             }
             
@@ -530,7 +528,6 @@ namespace Diesel_modular_application.Controllers
         else
         {
             TempData["Zprava"] = "Lokalita nenalezena" + string.Join("", Zpravy); 
-            odstavky.Barva="red";
             return Redirect("/Home/Index");
 
 

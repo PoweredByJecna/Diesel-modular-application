@@ -177,6 +177,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Technik.Jmeno,
+                l.Technik.Prijemni,
                 l.Vstup,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
@@ -211,6 +212,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Adresa,
                 l.Technik.Firma.NázevFirmy,
                 l.Technik.Jmeno,
+                l.Technik.Prijemni,
                 l.Odstavka.ZadanVstup,    // Zajistíme, že ZadanVstup je v datech
                 l.Odstavka.ZadanOdchod,  // Zajistíme, že ZadanOdchod je v datech
                 l.Technik.IdTechnika, 
@@ -289,6 +291,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Technik.Jmeno,
+                l.Technik.Prijemni,
                 l.Odstavka.Od.AddHours(2).Date,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
