@@ -638,17 +638,17 @@ p{
     text-align: center;
 }
 
-
 .modal {
-    display: none; /* Hide by default */
-    position: fixed; /* Fixed position to cover the entire viewport */
+    position: fixed;
     top: 0;
     right: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    z-index: 1000; /* Ensures the modal is on top */
-
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    outline: 0;
 }
+
+
 
 .modal-content {
     color: white;
@@ -656,18 +656,23 @@ p{
     border-radius: 5px;
     width: 380px;
     height: 75px;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    z-index: 2;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
-.modal-content.success {
-    background-color: green;
+.success {
+   background-color: lightgreen;
 }
 
-.modal-content.error {
-    background-color: red;
+.error {
+   background-color: lightcoral;
 }
+
 
 .close {
     position: absolute;

@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Přidání event listeneru pro kliknutí na tlačítko
 menuToggle.addEventListener('click', () => {
-    // Přepni třídu 'visible' pro zobrazení nebo skrytí menu
+
     sideMenu.classList.toggle('visible');
     con.classList.toggle('visible');
 
@@ -88,118 +88,58 @@ menuToggle.addEventListener('click', () => {
 });
 
 
-
-
-
-
-
-    document.addEventListener("DOMContentLoaded", function() {
-        var modal = document.getElementById("messageModal");
-        var closeModal = document.getElementById("closeModal");
-    
-        // Zobrazí modální okno, pokud existuje
-        if (modal) {
-            modal.style.display = "block";
-        }
-    
-        // Zavře modální okno při kliknutí na X
-        if (closeModal) {
-            closeModal.onclick = function() {
-                modal.style.display = "none";
-            };
-        }
-    
-        // Zavře modální okno při kliknutí mimo obsah
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+    function ajaxAction(url, data, successTables) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    showModal(response.message, true);
+                    reloadTables(successTables);
+                } else {
+                    showModal(response.message || 'Akce se nezdařila.', false);
+                }
+            },
+            error: function () {
+                showModal('Došlo k chybě při komunikaci se serverem.', false);
             }
-        };
-    });
+        });
+    }
+
 
     function deleteRecord(idOdstavky) {
-        console.log("Mazání záznamu s ID:", idOdstavky); // Ladicí výstup
-        $.ajax({
-            url: '/Odstavky/Delete',
-            type: 'POST',
-            data: { idOdstavky: idOdstavky },
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                    $('#odTable').DataTable().ajax.reload();
-                } 
-                else {
-                    alert('Mazání záznamu se nezdařilo: ' + response.message);
-                }
-            },
-           
-        });
+        console.log("Mazání záznamu s ID:", idOdstavky);
+        ajaxAction('/Odstavky/Delete', { idOdstavky: idOdstavky }, ['#odTable']);
     }
-    function deleteRecordDieslovani(idDieslovani) {
-        console.log("Mazání záznamu s ID:", idDieslovani); // Ladicí výstup
-        $.ajax({
-            url: '/Dieslovani/Delete',
-            type: 'POST',
-            data: { idDieslovani: idDieslovani },
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                    $('#allTable').DataTable().ajax.reload();
-                    $('#upcomingTable').DataTable().ajax.reload();
-                    $('#endTable').DataTable().ajax.reload();
-                    $('#runningTable').DataTable().ajax.reload();
-                    $('#thrashTable').DataTable().ajax.reload();
-                } 
-                else {
-                    alert('Mazání záznamu se nezdařilo: ' + response.message);
-                }
-            },
-           
-        });
+
+   function deleteRecordDieslovani(idDieslovani) {
+        console.log("Mazání záznamu s ID:", idDieslovani);
+        ajaxAction('/Dieslovani/Delete', { idDieslovani: idDieslovani }, [
+            '#allTable',
+            '#upcomingTable',
+            '#endTable',
+            '#runningTable',
+            '#thrashTable'
+        ]);
     }
     function Vstup(idDieslovani) {
-        console.log("Vstup na lokalitu ID:", idDieslovani); // Ladicí výstup
-        $.ajax({
-            url: '/Dieslovani/Vstup',
-            type: 'POST',
-            data: { idDieslovani: idDieslovani },
-            success: function (response) {
-                if (response.success) {
-                    $('#modalText').html(response.tempMessage);  // Set the message in the modal
-                    $('#messageModal').fadeIn();  // Make the modal visible (fadeIn for smooth transition)
-
-                    $('#upcomingTable').DataTable().ajax.reload();
-                    $('#allTable').DataTable().ajax.reload();
-                    $('#endTable').DataTable().ajax.reload();
-                    $('#runningTable').DataTable().ajax.reload();
-                } 
-                else {
-                    alert('Vstup se nezdařil: ' + response.message);
-                }
-            },
-            
-        });
+        console.log("Vstup na lokalitu ID:", idDieslovani);
+        ajaxAction('/Dieslovani/Vstup', { idDieslovani: idDieslovani }, [
+            '#allTable',
+            '#upcomingTable',
+            '#endTable',
+            '#runningTable'
+        ]);
     }
     function Odchod(idDieslovani) {
-        console.log("Odchod z lokality ID:", idDieslovani); // Ladicí výstup
-        $.ajax({
-            url: '/Dieslovani/Odchod',
-            type: 'POST',
-            data: { idDieslovani: idDieslovani },
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                    $('#upcomingTable').DataTable().ajax.reload();
-                    $('#allTable').DataTable().ajax.reload();
-                    $('#endTable').DataTable().ajax.reload();
-                    $('#runningTable').DataTable().ajax.reload();
-                } 
-                else {
-                    alert('Odchod se nezdařil: ' + response.message);
-                }
-            },
-            
-        });
+        console.log("Odchod z lokality ID:", idDieslovani);
+        ajaxAction('/Dieslovani/Odchod', { idDieslovani: idDieslovani }, [
+            '#allTable',
+            '#upcomingTable',
+            '#endTable',
+            '#runningTable'
+        ]);
     }
     function Take(idDieslovani) {
         console.log("Převzetí dieslování ID:", idDieslovani); // Ladicí výstup
