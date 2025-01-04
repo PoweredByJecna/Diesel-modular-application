@@ -372,8 +372,8 @@ menuToggle.addEventListener('click', () => {
             render: function (data, type, row) {
                 return `
                     <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: red; border-radius: 5px;">
-                        <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Ukončeno</span>
-                        <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                        <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Ukončeno</span>
+                        <i class="fa-check-circle" style="color: Black;"></i>
                     </span>
                 `;
             }
@@ -469,7 +469,7 @@ menuToggle.addEventListener('click', () => {
                 return `
                     <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: orange; border-radius: 5px;">
                         <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Nepřiřazeno</span>
-                        <i class="fa-solid fa-clock-rotate-left" style="black: white;"></i>
+                        <i class="fa-solid fa-clock-rotate-left" style="color: black;"></i>
                     </span> 
 
                 `;
