@@ -103,77 +103,88 @@ namespace Diesel_modular_application.Controllers
             }
             return PartialView("_LokalityListPartial", search);
         }
-        public async Task<TableDieslovani> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis)
+        public class HandleOdstavkyDieslovaniResult
         {
-            try
-            {  
-                Zpravy.Add("<br>Od: " + od);
-                Zpravy.Add("<br>Do: " + do_);
+            public bool Success { get; set; } // Určuje, zda metoda uspěla
+            public string Message { get; set; } // Detailní zpráva o výsledku
+            public TableDieslovani? Dieslovani { get; set; } // Vytvořený objekt Dieslovani (pokud existuje)
+            public TableOdstavky? Odstavka { get; set; } // Vytvořená odstávka (pokud existuje)
+        }
+
+
+
+
+        public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis)
+        {
+           
+                var result = new HandleOdstavkyDieslovaniResult();
+
                 string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
                 Debug.WriteLine($"Distributor: {distrib}");
 
                 if (!ExistingOdstavka(lokalitaSearch.Id, od))
                 {
-                    return null;
+                    result.Success = false;
+                    result.Message = "Již existuje jiná odstávka.";
+                    return result;
                 }
-                else
+                if (!ISvalidDateRange(od, do_))
                 {
-                    Debug.WriteLine($"není jiná odstávka");
-                    if (!ISvalidDateRange(od, do_))
+                    result.Success = false;
+                    result.Message = "Špatně zadané datum.";
+                    return result;
+                }
+                
+                var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
+                try
+                {
+                    _context.Add(newOdstavka);
+                    await _context.SaveChangesAsync();
+                    result.Odstavka = newOdstavka;
+                    result.Message = "Odstávka byla úspěšně vytvořena.";
+                    Debug.WriteLine($"Id odstavky: {newOdstavka.IdOdstavky}");
+                }
+                catch (Exception ex)
+                {
+                    result.Success = false;
+                    Debug.WriteLine($"Chyba při ukládání do databáze: {ex.Message}");
+                    return result;
+
+                }
+                if(newOdstavka.Lokality.DA=="TRUE")
+                {
+                    result.Success = false;
+                    result.Message = "Na lokalitě se nachází stacionární generátor.";
+                    return result;
+                }
+                if(IsDieselRequired(newOdstavka.Lokality.Klasifikace,newOdstavka.Od, newOdstavka.Do, newOdstavka.Lokality.Baterie))
+                {
+                    var technikSearch = await AssignTechnikAsync(newOdstavka); 
+
+                    if (technikSearch == null)
                     {
-                        Debug.WriteLine($"špatně zadané datum");
-                        return null;
+                        result.Success = false;
+                        result.Message = "Nepodařilo se přiřadit technika.";
+                        return result;
                     }
                     else
                     {
-                        var newOdstavka = CreateNewOdstavka(odstavky, lokalitaSearch, distrib, od, do_, popis);
-                        try
-                        {
-                            _context.Add(newOdstavka);
-                            await _context.SaveChangesAsync();
-                            Zpravy.Add("<br>Jiná odstávka nenalezena.");
-                            Zpravy.Add("<br>Založená odstávka: " + newOdstavka.IdOdstavky);
-                            Debug.WriteLine($"Id odstavky: {newOdstavka.IdOdstavky}");
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Chyba při ukládání do databáze: {ex.Message}");
-                        }
-                        if(newOdstavka.Lokality.DA=="TRUE")
-                        {
-                            Zpravy.Add("<br>Na lokalitě je DA");
-                            Debug.WriteLine($"Na lokalitě se nachází stacionární generátor {newOdstavka.Lokality.Lokalita}");
-
-                            return null;
-                        }
-                        if(IsDieselRequired(newOdstavka.Lokality.Klasifikace,newOdstavka.Od, newOdstavka.Do, newOdstavka.Lokality.Baterie))
-                        {
-                            var technikSearch = await AssignTechnikAsync(newOdstavka); 
-                            if (technikSearch == null)
-                            {
-                                Zpravy.Add("<br>Něco je špatně"); 
-                                return null;
-                            }
-                            else
-                            {
-                                Zpravy.Add("<br> Dieslovani vytvořeno");
-                                var dieslovani = await _dieslovani.CreateNewDieslovaniAsync(newOdstavka, technikSearch);
-                                return dieslovani;
-                            }
-                        }
-                        else
-                        {
-                           Zpravy.Add("<br>Dielsovani neni potřeba");
-                           return null;
-
-                        }
+                        var dieslovani = await _dieslovani.CreateNewDieslovaniAsync(newOdstavka, technikSearch);
+                        result.Dieslovani = dieslovani;
+                        result.Message = "Dieslování bylo úspěšně vytvořeno.";
                     }
                 }
-            }
-            catch
-            {
-                return null;;
-            }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Dieslovani neni potřeba";
+                    return result;
+
+                }
+                
+                result.Success = true;
+                return result;
+          
         }
         public async Task<TableDieslovani> Create(OdstavkyViewModel odstavky)
         {
@@ -184,7 +195,7 @@ namespace Diesel_modular_application.Controllers
 
 
             var dieslovani = await HandleOdstavkyDieslovani(lokalitaSearch, odstavky.AddOdstavka.Od, odstavky.AddOdstavka.Do, odstavky, odstavky.AddOdstavka.Popis);
-            return dieslovani;
+            return null; //upravit
         }
         private async Task<TableLokality?> GetLokalitaAsync(OdstavkyViewModel odstavky)
         {
@@ -483,26 +494,27 @@ namespace Diesel_modular_application.Controllers
         }
 
 
- public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
-{
-    try
+    public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
     {
-        var number = await _context.LokalityS.CountAsync();
-        if (number == 0)
+        try
         {
-            TempData["Zprava"] = "Chyba při zakládání.";
-            return Redirect("/Home/Index"); 
-        }
+            var number = await _context.LokalityS.CountAsync();
+            if (number == 0)
+            {
+                return Json(new { success = false, message = "Chyba při zakladání." });
+            }
 
-        var IdNumber = RandomNumberGenerator.GetInt32(1, number);
-        var lokalitaSearch = await _context.LokalityS
-            .Include(o => o.Region)
-            .ThenInclude(p => p.Firma)
-            .FirstOrDefaultAsync(i => i.Id == IdNumber);
+            var IdNumber = RandomNumberGenerator.GetInt32(1, number);
+            var lokalitaSearch = await _context.LokalityS
+                .Include(o => o.Region)
+                .ThenInclude(p => p.Firma)
+                .FirstOrDefaultAsync(i => i.Id == IdNumber);
 
 
-        if (lokalitaSearch != null)
-        {
+            if (lokalitaSearch == null)
+            {
+                return Json(new { success = false, message = "Lokalita nenalezena." });
+            }
             Zpravy.Add("<br>Lokalita: "+ lokalitaSearch.Lokalita);
             Debug.WriteLine($"Vybraná lokalita: {lokalitaSearch.Lokalita}, Region: {lokalitaSearch.Region.NazevRegionu}");
 
@@ -511,38 +523,24 @@ namespace Diesel_modular_application.Controllers
 
             var result = await HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours + 2), DateTime.Today.AddHours(hours + 8), odstavky, popis);
 
-            Zpravy.Add("<br>Result: " + result);
-
-            if (result == null)
+            if (!result.Success)
             {
-                TempData["Zprava"] = "Založení odstávky nebo dieslovaní selhalo z důvodu:<br> " + string.Join("", Zpravy);
-                return Redirect("/Home/Index"); 
-            }
-            else
-            {
-                TempData["Zprava"] = "Dieslování objednáno:<br>" + string.Join("", Zpravy); 
-                return Redirect("/Home/Index");
+                return Json(new { success = false, message = result.Message });
             }
             
+            return Json(new
+            {
+                success = true,
+                message = result.Message,
+                odstavkaId = result.Odstavka?.IdOdstavky,
+                dieslovaniId = result.Dieslovani?.IdDieslovani
+            });                          
         }
-        else
+        catch (Exception ex)
         {
-            TempData["Zprava"] = "Lokalita nenalezena" + string.Join("", Zpravy); 
-            return Redirect("/Home/Index");
-
-
+            return Json(new { success = false, message = $"Neočekávaná chyba: {ex.Message}" });
         }
-
-        
-
     }
-    catch (Exception ex)
-    {
-        TempData["Zprava"] = "Chyba při objednání dieslování " + ex.Message;
-        odstavky.Barva="red";
-        return Redirect("/Home/Index"); 
-    }
-}
 
 
         public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)

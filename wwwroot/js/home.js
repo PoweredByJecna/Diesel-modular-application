@@ -160,6 +160,26 @@ menuToggle.addEventListener('click', () => {
             }
         });
     }
+    $(document).ready(function () {
+        $('#testButton').on('click', function () {
+            $.ajax({
+                url: '/Odstavky/Test', // URL akce v kontroleru
+                type: 'POST', // Typ HTTP požadavku
+                success: function (response) {
+                    if (response.success) {
+                        showModal(response.message, true); // Úspěšná hláška
+                    } else {
+                        showModal(response.message, false); // Chybová hláška
+                    }
+                },
+                error: function () {
+                    showModal('Neočekávaná chyba při komunikaci se serverem.', false);
+                }
+            });
+        });
+    });
+    
+    
     
     function showModal(message, isSuccess) {
         const modal = $('#messageModal');
