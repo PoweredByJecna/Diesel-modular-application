@@ -129,7 +129,9 @@ menuToggle.addEventListener('click', () => {
             '#allTable',
             '#upcomingTable',
             '#endTable',
-            '#runningTable'
+            '#runningTable',
+            '#thrashTable'
+            
         ]);
     }
     function Odchod(idDieslovani) {
@@ -138,7 +140,9 @@ menuToggle.addEventListener('click', () => {
             '#allTable',
             '#upcomingTable',
             '#endTable',
-            '#runningTable'
+            '#runningTable',
+            '#thrashTable'
+            
         ]);
     }
     function Take(idDieslovani) {
@@ -168,6 +172,7 @@ menuToggle.addEventListener('click', () => {
                 success: function (response) {
                     if (response.success) {
                         showModal(response.message, true); // Úspěšná hláška
+                        reloadTables(); 
                     } else {
                         showModal(response.message, false); // Chybová hláška
                     }
