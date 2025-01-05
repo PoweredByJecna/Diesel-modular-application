@@ -33,42 +33,51 @@ namespace Diesel_modular_application.Controllers
 
         
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
-        {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var userId = currentUser?.Id; // 
+       public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+{
+    var currentUser = await _userManager.GetUserAsync(User);
+    var userId = currentUser?.Id;
 
-   
-                
-            odstavky.OdstavkyList = await _context.OdstavkyS
-            .Include(o => o.Lokality)
-            .ThenInclude(l => l.Region)
-            .ThenInclude(l=>l.Firma)
-            .ToListAsync();
-            odstavky.DieslovaniList =await _context.DieslovaniS
-            .Include(o=>o.Technik)
-            .ToListAsync();
-            odstavky.LokalityList=await _context.LokalityS.ToListAsync();
-            
-            
-       
-            
-       
-            return View("Index", odstavky);    
-        }
-
-        public async Task<IActionResult> DetailDieslovani(int id)
-        {
-        // Načtěte data podle ID
-        var detail = await _context.DieslovaniS
+    // Načítání seznamů
+    odstavky.OdstavkyList = await _context.OdstavkyS
+        .Include(o => o.Lokality)
+        .ThenInclude(l => l.Region)
+        .ThenInclude(l => l.Firma)
+        .ToListAsync();
+    odstavky.DieslovaniList = await _context.DieslovaniS
         .Include(o => o.Odstavka)
         .ThenInclude(o => o.Lokality)
         .ThenInclude(o => o.Region)
         .Include(p => p.Technik)
-        .FirstOrDefaultAsync(o => o.IdDieslovani == id);            
-        return View(detail);
-        }
+        .ToListAsync();
+    odstavky.LokalityList = await _context.LokalityS.ToListAsync();
+
+    // Předání modelu do zobrazení
+    return View("Index", odstavky);    
+}
+
        
+         public async Task<IActionResult> DetailDieslovani(int id)
+        {
+            // Načítání detailů podle ID
+            var detail = await _context.DieslovaniS
+                .Include(o => o.Odstavka)
+                .ThenInclude(o => o.Lokality)
+                .ThenInclude(o => o.Region)
+                .Include(p => p.Technik)
+                .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+
+            // Vytvoření modelu pro DetailDieslovani
+            var odstavky = new OdstavkyViewModel
+            {
+                DieslovaniMod = detail,
+                // Můžeš také přidat další informace, které chceš zobrazit v detailu
+            };
+
+            // Předání modelu do zobrazení
+            return View(odstavky);
+        }
+
 
        
         public IActionResult Privacy()

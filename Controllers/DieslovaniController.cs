@@ -62,6 +62,8 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = false, message = "Chyba při zadávání vstupu " + ex.Message });
             }
         }
+      
+    
         public async Task<IActionResult> Odchod (int IdDieslovani)
         {
            try

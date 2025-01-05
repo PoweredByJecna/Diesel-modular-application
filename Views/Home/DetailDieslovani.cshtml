@@ -1,12 +1,12 @@
-@model Diesel_modular_application.Models.TableDieslovani
+@model Diesel_modular_application.Models.OdstavkyViewModel
 <div class="conteiner" id="con">
     <div class="tables-row">
         
         <div class="section small" style="flex: none; width: 25%; height: 350px;" >
             <h1>Detail Dieslovani</h1>
-            <p>ID: @Model.IdDieslovani</p>
-            <p>Region: @Model.Odstavka?.Lokality?.Region?.NazevRegionu</p>
-            <p>Technik: @Model.Technik?.Jmeno</p>
+            <p>ID: @Model.DieslovaniMod.IdDieslovani</p>
+            <p>Region: @Model.DieslovaniMod.Odstavka?.Lokality?.Region?.NazevRegionu</p>
+            <p>Technik: @Model.DieslovaniMod.Technik?.Jmeno</p>
 
         </div>
         <div class="section small" style="flex: none; width: 75%; height: 350px;">
