@@ -57,26 +57,26 @@ namespace Diesel_modular_application.Controllers
 }
 
        
-         public async Task<IActionResult> DetailDieslovani(int id)
+        public async Task<IActionResult> DetailDieslovani(int id)
+    {
+        // Načítání detailů podle ID
+        var detail = await _context.DieslovaniS
+            .Include(o => o.Odstavka)
+            .ThenInclude(o => o.Lokality)
+            .ThenInclude(o => o.Region)
+            .Include(p => p.Technik)
+            .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+
+        // Vytvoření modelu pro DetailDieslovani
+        var odstavky = new OdstavkyViewModel
         {
-            // Načítání detailů podle ID
-            var detail = await _context.DieslovaniS
-                .Include(o => o.Odstavka)
-                .ThenInclude(o => o.Lokality)
-                .ThenInclude(o => o.Region)
-                .Include(p => p.Technik)
-                .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+            DieslovaniMod = detail,
+            // Můžeš také přidat další informace, které chceš zobrazit v detailu
+        };
 
-            // Vytvoření modelu pro DetailDieslovani
-            var odstavky = new OdstavkyViewModel
-            {
-                DieslovaniMod = detail,
-                // Můžeš také přidat další informace, které chceš zobrazit v detailu
-            };
-
-            // Předání modelu do zobrazení
-            return View(odstavky);
-        }
+        // Předání modelu do zobrazení
+        return View(odstavky);
+    }
 
 
        
