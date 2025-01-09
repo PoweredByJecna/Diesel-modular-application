@@ -4,9 +4,14 @@
         
         <div class="section small" style="flex: none; width: 25%; height: 350px;" >
             <h1>Detail Dieslovani</h1>
-            <p>ID: @Model.DieslovaniMod.IdDieslovani</p>
+            <p>ID dieslovani: @Model.DieslovaniMod.IdDieslovani</p>
+            <p>ID odstávky: @Model.DieslovaniMod.Odstavka.IdOdstavky</p>
+            <p>Lokalita: @Model.DieslovaniMod.Odstavka.Lokality.Lokalita</p>
+            <p>Klasifikace: @Model.DieslovaniMod.Odstavka.Lokality.Klasifikace </p>
+            <p>Výdrž baterie: @Model.DieslovaniMod.Odstavka.Lokality.Baterie min</p>
             <p>Region: @Model.DieslovaniMod.Odstavka?.Lokality?.Region?.NazevRegionu</p>
-            <p>Technik: @Model.DieslovaniMod.Technik?.Jmeno</p>
+            <p>Technik: @Model.DieslovaniMod.Technik?.Jmeno  @Model.DieslovaniMod.Technik?.Prijemni</p>
+
 
         </div>
         <div class="section small" style="flex: none; width: 75%; height: 350px;">

@@ -124,12 +124,14 @@ namespace Diesel_modular_application.Controllers
 
                 if (!ExistingOdstavka(lokalitaSearch.Id, od))
                 {
+                    Debug.WriteLine($"Již existuje odstávka na " + od);
                     result.Success = false;
                     result.Message = "Již existuje jiná odstávka.";
                     return result;
                 }
                 if (!ISvalidDateRange(od, do_))
                 {
+                    Debug.WriteLine($"Špatně zadané datum");
                     result.Success = false;
                     result.Message = "Špatně zadané datum.";
                     return result;
@@ -153,6 +155,7 @@ namespace Diesel_modular_application.Controllers
                 }
                 if(newOdstavka.Lokality.DA=="TRUE")
                 {
+                    Debug.WriteLine($"Na lokalitě je DA");
                     result.Success = false;
                     result.Message = "Na lokalitě se nachází stacionární generátor.";
                     return result;
@@ -164,6 +167,7 @@ namespace Diesel_modular_application.Controllers
                     if (technikSearch == null)
                     {
                         result.Success = false;
+                        Debug.WriteLine($"Nepodařilo se najít technika");
                         result.Message = "Nepodařilo se přiřadit technika.";
                         return result;
                     }
@@ -178,6 +182,7 @@ namespace Diesel_modular_application.Controllers
                 {
                     result.Success = false;
                     result.Message = "Dieslovani neni potřeba";
+                    Debug.WriteLine($"Dislovani neni potřeba");
                     return result;
 
                 }
@@ -335,6 +340,7 @@ namespace Diesel_modular_application.Controllers
             if(CasVypadku*60>rozdil)
             {
                 Zpravy.Add("<br>Lokalita s klasifikací: " + Klasifikace + " může být 12h dole");
+                Debug.WriteLine($"Lokalita je: {Klasifikace} může být 12h dole" );
                 return false;
             }
             else
@@ -342,6 +348,7 @@ namespace Diesel_modular_application.Controllers
                 if(Battery(Od, Do, Baterie))
                 {
                     Zpravy.Add("<br>Baterie vydrží: " + Baterie + " min, čas doby odstávky je: " + (Do-Od).TotalMinutes + " min");
+                    Debug.WriteLine($"Baterie vydrží:  {Baterie } min, čas doby odstávky je:" + (Do-Od).TotalMinutes + "min" );
                     return false;
                 }
                 else

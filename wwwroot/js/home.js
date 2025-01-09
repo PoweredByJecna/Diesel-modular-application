@@ -111,6 +111,7 @@ menuToggle.addEventListener('click', () => {
     function deleteRecord(idOdstavky) {
         console.log("Mazání záznamu s ID:", idOdstavky);
         ajaxAction('/Odstavky/Delete', { idOdstavky: idOdstavky }, ['#odTable']);
+        reloadTables();
     }
 
    function deleteRecordDieslovani(idDieslovani) {
@@ -129,7 +130,9 @@ menuToggle.addEventListener('click', () => {
             '#allTable',
             '#upcomingTable',
             '#endTable',
-            '#runningTable'
+            '#runningTable',
+            '#thrashTable'
+            
         ]);
     }
     function Odchod(idDieslovani) {
@@ -138,7 +141,9 @@ menuToggle.addEventListener('click', () => {
             '#allTable',
             '#upcomingTable',
             '#endTable',
-            '#runningTable'
+            '#runningTable',
+            '#thrashTable'
+            
         ]);
     }
     function Take(idDieslovani) {
@@ -168,6 +173,7 @@ menuToggle.addEventListener('click', () => {
                 success: function (response) {
                     if (response.success) {
                         showModal(response.message, true); // Úspěšná hláška
+                        reloadTables(); 
                     } else {
                         showModal(response.message, false); // Chybová hláška
                     }
@@ -214,6 +220,7 @@ menuToggle.addEventListener('click', () => {
         $('#endTable').DataTable().ajax.reload();
         $('#runningTable').DataTable().ajax.reload();
         $('#thrashTable').DataTable().ajax.reload();
+        $('#odTable').DataTable().ajax.reload();
     }
     
 
@@ -373,7 +380,7 @@ menuToggle.addEventListener('click', () => {
                 return `
                     <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: red; border-radius: 5px;">
                         <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Ukončeno</span>
-                        <i class="fa-check-circle" style="color: Black;"></i>
+                        <i class="fa-solid fa-circle-check" style="color: Black;"></i>
                     </span>
                 `;
             }
@@ -797,7 +804,7 @@ menuToggle.addEventListener('click', () => {
             },
             paging: true,        
             searching: true,
-            ordering: false, 
+            ordering: true, 
             lengthChange: false,        
             pageLength: 10   
                 // Počet řádků na stránku
@@ -1129,7 +1136,7 @@ menuToggle.addEventListener('click', () => {
             },
             paging: true,        
             searching: true,
-            ordering: false,
+            ordering: true,
             lengthChange:false,
             pageLength: 9,
         });
