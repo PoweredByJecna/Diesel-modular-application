@@ -34,15 +34,16 @@ namespace Diesel_modular_application.Controllers
                 {    
                         
                         dis.Vstup=DateTime.Now;
+                        dis.Technik.Taken=true;
                         _context.Update(dis);
                         await _context.SaveChangesAsync();
-                        ViewBag.Message="vstup";
                 }
                 var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
                 if (odstavka != null)
                 {
                     // Nastav ZadanVstup na true
                     odstavka.ZadanVstup = true;
+                    
                     _context.Update(odstavka);
                     
                 }    
