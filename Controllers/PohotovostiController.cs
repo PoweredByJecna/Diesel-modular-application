@@ -121,7 +121,7 @@
             .Select(l => new
             {
                 l.Technik.Jmeno,
-                l.Technik.Prijemni,
+                l.Technik.Prijmeni,
                 PhoneNumber = l.Technik.User.PhoneNumber,
                 Firma = l.Technik.Firma.NázevFirmy,
                 l.Začátek,

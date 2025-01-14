@@ -12,8 +12,8 @@ namespace Diesel_modular_application.Models
         public string Klasifikace { get; set; }
         public string Adresa { get; set; }
         public string Baterie { get; set; }
-        public string DA { get; set; }
-        public string Zásuvka { get; set; }
+        public bool DA { get; set; }
+        public bool Zasuvka { get; set; }
 
         [ForeignKey("Region")]
         public int? RegionID {get;set;}

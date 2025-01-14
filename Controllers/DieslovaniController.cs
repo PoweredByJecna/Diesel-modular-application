@@ -148,7 +148,7 @@ namespace Diesel_modular_application.Controllers
                 return Json(new
                 {
                     success = true,
-                    message = "Lokalitu si převzal: " + dieslovaniTaken.Technik.Jmeno + " " + dieslovaniTaken.Technik.Prijemni,
+                    message = "Lokalitu si převzal: " + dieslovaniTaken.Technik.Jmeno + " " + dieslovaniTaken.Technik.Prijmeni,
                     tempMessage = TempData["Zprava"]  // Return the message for the modal
                 });
 
@@ -180,11 +180,11 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Technik.Jmeno,
-                l.Technik.Prijemni,
+                l.Technik.Prijmeni,
                 l.Vstup,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
-                l.Odstavka.Lokality.Zásuvka,
+                l.Odstavka.Lokality.Zasuvka,
                 
             })
             .ToListAsync();
@@ -215,7 +215,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Adresa,
                 l.Technik.Firma.NázevFirmy,
                 l.Technik.Jmeno,
-                l.Technik.Prijemni,
+                l.Technik.Prijmeni,
                 l.Odstavka.ZadanVstup,    // Zajistíme, že ZadanVstup je v datech
                 l.Odstavka.ZadanOdchod,  // Zajistíme, že ZadanOdchod je v datech
                 l.Technik.IdTechnika, 
@@ -226,7 +226,7 @@ namespace Diesel_modular_application.Controllers
                 l.Odchod,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
-                l.Odstavka.Lokality.Zásuvka,
+                l.Odstavka.Lokality.Zasuvka,
               
             })
             .ToListAsync();
@@ -294,11 +294,11 @@ namespace Diesel_modular_application.Controllers
                 l.Odstavka.Lokality.Lokalita,
                 l.Odstavka.Lokality.Klasifikace,
                 l.Technik.Jmeno,
-                l.Technik.Prijemni,
+                l.Technik.Prijmeni,
                 l.Odstavka.Od.AddHours(2).Date,
                 l.Odstavka.Popis,
                 l.Odstavka.Lokality.Baterie,
-                l.Odstavka.Lokality.Zásuvka,
+                l.Odstavka.Lokality.Zasuvka,
             })
             .ToListAsync();
 

@@ -84,7 +84,7 @@ namespace Diesel_modular_application.Controllers
             l.Adresa,
             l.Region.NazevRegionu,
             l.Baterie,
-            l.Zásuvka,
+            l.Zasuvka,
             l.DA
         })
                 .ToListAsync();
@@ -132,22 +132,7 @@ namespace Diesel_modular_application.Controllers
 
          return View();
        }
-        public async Task<IActionResult> ImportFromExcel(IFormFile file)
-        {
-            if(file != null && file.Length>0)
-            {
-                ExcelHandling excelFileHandling = new ExcelHandling();
-                var lokalityS = excelFileHandling.ParseExcelFile(file.OpenReadStream());
-
-                await _context.LokalityS.AddRangeAsync(lokalityS);
-                await _context.SaveChangesAsync();
-
-                return View("Index");
-
-
-            }
-            return View("Index");
-        }
+       
     
 
     }

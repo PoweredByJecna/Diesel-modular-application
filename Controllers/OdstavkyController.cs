@@ -153,7 +153,7 @@ namespace Diesel_modular_application.Controllers
                     return result;
 
                 }
-                if(newOdstavka.Lokality.DA=="TRUE")
+                if(newOdstavka.Lokality.DA==true)
                 {
                     Debug.WriteLine($"Na lokalitě je DA");
                     result.Success = false;
@@ -246,7 +246,7 @@ namespace Diesel_modular_application.Controllers
 
                     bool maVyssiPrioritu = novaVaha > staraVaha;
                     bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(3) < DateTime.Now;
-                    bool daPodminka = dieslovani.Odstavka.Lokality.DA == "FALSE";
+                    bool daPodminka = dieslovani.Odstavka.Lokality.DA == false;
 
                     if (maVyssiPrioritu && casovyLimit && daPodminka)
                     {
@@ -304,15 +304,13 @@ namespace Diesel_modular_application.Controllers
 
         private TableOdstavky CreateNewOdstavka(OdstavkyViewModel odstavky, TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
         {
-            Debug.WriteLine($"vytváří se odstávka s parametry: {distrib }, {lokalitaSearch.Region.Firma.NázevFirmy}, {od}, {do_},{odstavky.AddOdstavka.Vstup}, {odstavky.AddOdstavka.Odchod}, {popis}, {lokalitaSearch.Id} ");
+            Debug.WriteLine($"vytváří se odstávka s parametry: {distrib }, {lokalitaSearch.Region.Firma.NázevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id} ");
             return new TableOdstavky
             {
                 Distributor = distrib,
                 Firma = lokalitaSearch.Region.Firma.NázevFirmy,
                 Od = od,
                 Do = do_,
-                Vstup = DateTime.MinValue,
-                Odchod = DateTime.MinValue,
                 Popis = popis,
                 LokalitaId = lokalitaSearch.Id   
             };
@@ -487,18 +485,7 @@ namespace Diesel_modular_application.Controllers
 
 
 
-        public async Task<IActionResult> Vstup(OdstavkyViewModel odstavky)
-        {
-            var SetOdstavka = new TableOdstavky
-            {
-                Vstup = odstavky.AddOdstavka.Vstup
-
-            };
-            _context.OdstavkyS.Add(SetOdstavka);
-            await _context.SaveChangesAsync();
-            return Redirect("/Home/Index");
-
-        }
+    
 
 
     public async Task<IActionResult> Test(OdstavkyViewModel odstavky)
@@ -548,18 +535,6 @@ namespace Diesel_modular_application.Controllers
             return Json(new { success = false, message = $"Neočekávaná chyba: {ex.Message}" });
         }
     }
-
-
-        public async Task<IActionResult> Odchod(OdstavkyViewModel odstavky)
-        {
-            var SetOdstavka = new TableOdstavky
-            {
-                Odchod = odstavky.AddOdstavka.Odchod
-            };
-            _context.OdstavkyS.Add(SetOdstavka);
-            await _context.SaveChangesAsync();
-            return Redirect("/Home/Index");
-        }
 
 
         public async Task<IActionResult> Delete(int idodstavky)
@@ -618,7 +593,7 @@ namespace Diesel_modular_application.Controllers
                     l.Lokality.Adresa,
                     l.Lokality.Baterie,
                     l.Popis,
-                    l.Lokality.Zásuvka,
+                    l.Lokality.Zasuvka,
                     EmptyColumn = (string)null  
 
                     

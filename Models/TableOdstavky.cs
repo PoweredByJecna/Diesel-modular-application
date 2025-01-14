@@ -13,8 +13,6 @@ namespace Diesel_modular_application.Models
         public DateTime Od { get; set; }
         public DateTime Do { get; set; }
         public string Popis { get; set; }
-        public DateTime Vstup { get; set; }
-        public DateTime Odchod { get; set; }
 
         [ForeignKey("Lokalita")]
         public int LokalitaId { get; set; }
