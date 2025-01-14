@@ -43,6 +43,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
 builder.Services.AddScoped<DieslovaniController>();
+builder.Services.AddScoped<TableOdstavky>();
 
 
 var app = builder.Build();
