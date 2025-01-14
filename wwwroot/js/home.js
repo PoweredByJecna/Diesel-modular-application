@@ -311,7 +311,7 @@ menuToggle.addEventListener('click', () => {
                     { 
                         data: null, 
                         render: function(data, type, row) {
-                            return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                            return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
                         }
                     },
                     { data: 'date', 
@@ -321,12 +321,12 @@ menuToggle.addEventListener('click', () => {
                     {data:'popis'},
                     {data: 'baterie'},    
                     {
-                        data: 'zásuvka',
+                        data: 'zasuvka',
                         render: function (data, type, row) {
                             var zasuvkaHtml = '';
-                            if (data === "TRUE") {
+                            if (data == true) {
                                 zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
-                            } else if (data === "FALSE") {
+                            } else if (data == false) {
                                 zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
                             }
                             return zasuvkaHtml;
@@ -572,7 +572,7 @@ menuToggle.addEventListener('click', () => {
                 { 
                     data: null, 
                     render: function(data, type, row) {
-                        return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                        return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
                     }
                 },
             {   data: 'phoneNumber'},
@@ -652,9 +652,9 @@ menuToggle.addEventListener('click', () => {
         { data: 'nazevRegionu' },
         { data: 'baterie' },
         {
-            data: 'zásuvka',
+            data: 'zasuvka',
             render: function(data) {
-                if (data === "TRUE") {
+                if (data == true) {
                     return '<i class="fa-solid fa-circle-check" style="color: #51fe06;"></i>';
                 }
                 else
@@ -760,12 +760,12 @@ menuToggle.addEventListener('click', () => {
                 { data: 'baterie' },
                 { data: 'popis' },
                 {
-                    data: 'zásuvka',
+                    data: 'zasuvka',
                     render: function (data, type, row) {
                         var zasuvkaHtml = '';
-                        if (data === "TRUE") {
+                        if (data == true) {
                             zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
-                        } else if (data === "FALSE") {
+                        } else if (data == false) {
                             zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
                         }
                         return zasuvkaHtml;
@@ -798,6 +798,8 @@ menuToggle.addEventListener('click', () => {
                     $(row).addClass('row-aktivni');
                 } else if(data.zadanOdchod == false && data.zadanVstup ==false && today==startDate) {
                     $(row).addClass('row-cekajici');
+                } else if(data.idTechnika==="606794494") {
+                    $(row).addClass('row-neprirazeno');  
                 }else {
                     $(row).addClass('row-standart');
                 }
@@ -898,7 +900,7 @@ menuToggle.addEventListener('click', () => {
                 { 
                     data: null, 
                     render: function(data, type, row) {
-                        return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                        return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
                     }
                 },
                 { data: 'vstup', 
@@ -908,12 +910,12 @@ menuToggle.addEventListener('click', () => {
                 {data:'popis'},
                 {data: 'baterie'},    
                 {
-                    data: 'zásuvka',
+                    data: 'zasuvka',
                     render: function (data, type, row) {
                         var zasuvkaHtml = '';
-                        if (data === "TRUE") {
+                        if (data == true) {
                             zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
-                        } else if (data === "FALSE") {
+                        } else if (data == false) {
                             zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
                         }
                         return zasuvkaHtml;
@@ -1066,7 +1068,7 @@ menuToggle.addEventListener('click', () => {
             { 
                 data: null, 
                 render: function(data, type, row) {
-                    return data.jmeno + ' ' + data.prijemni; // Combine the two variables into one cell
+                    return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
                 }
             },    
             {data: 'nazevRegionu'},
@@ -1089,12 +1091,12 @@ menuToggle.addEventListener('click', () => {
             {data:'popis'},
             {data: 'baterie'},
             {
-                data: 'zásuvka',
+                data: 'zasuvka',
                 render: function (data, type, row) {
                     var zasuvkaHtml = '';
-                    if (data === "TRUE") {
+                    if (data == true) {
                         zasuvkaHtml = '<i class="fa-solid fa-circle-check socket-icon" style="color: #51fe06;"></i>';
-                    } else if (data === "FALSE") {
+                    } else if (data == false) {
                         zasuvkaHtml = '<i class="fa-solid fa-ban" style="color: #ea0606;"></i>';
                     }
                     return zasuvkaHtml;

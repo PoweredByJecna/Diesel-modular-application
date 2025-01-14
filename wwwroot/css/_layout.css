@@ -102,7 +102,7 @@ thead, tbody {
 }
 
 th, td {
-    padding: 0px 16px !important;               /* Padding pro buňky */
+    padding: 0px 16px 0px 6px !important;              /* Padding pro buňky */
     word-wrap: break-word;      /* Umožňuje zalomení textu v buňkách */
     text-align: left;           /* Zarovnání textu do levé části */
 }
@@ -110,8 +110,8 @@ th, td {
 th {
     background-color: white !important;/* Pozadí pro hlavičky */
     height: 40px;               /* Výška hlavičky */
-    text-align: left;
-    padding-left: 0px 10px 0px 16px !important;
+    text-align: left !important;
+   
 }
 
 td {
