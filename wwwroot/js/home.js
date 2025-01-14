@@ -539,7 +539,7 @@ menuToggle.addEventListener('click', () => {
                 return `       
                 <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Take(${row.idDieslovani})">
                     <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Převzít</span>
-                    <i class="fa-solid fa-clock-rotate-left" style="color: white;"></i>
+                    <i class="fa-solid fa-user-plus"></i>
                 </span>  
             `;
 
@@ -796,8 +796,10 @@ menuToggle.addEventListener('click', () => {
                     $(row).addClass('row-ukoncene');
                 } else if (data.zadanVstup == true && data.zadanOdchod==false) {
                     $(row).addClass('row-aktivni');
-                } else if(data.zadanOdchod == false && data.zadanVstup ==false && today==startDate) {
+                } else if(data.zadanOdchod == false && data.zadanVstup ==false && today==startDate && data.idTechnika !="606794494" && data.idTechnika!=null) {
                     $(row).addClass('row-cekajici');
+                } else if(data.idTechnika==null) {
+                    $(row).addClass('row-nedieslujese');  
                 } else if(data.idTechnika==="606794494") {
                     $(row).addClass('row-neprirazeno');  
                 }else {
@@ -1080,14 +1082,27 @@ menuToggle.addEventListener('click', () => {
                 render: function(data) {
                     return formatDate(data);
                 } },
-            {data: 'vstup', 
+            {
+                data: 'vstup',
                 render: function(data) {
-                    return formatDate(data);
-                } },
+                    // Zkontroluje, jestli je datum ve formátu "01.01.1 00:00" nebo je null/undefined
+                    if (!data || data === "0001-01-01T00:00:00") {
+                        return "-";  // Zobrazí pomlčku
+                    } else {
+                        return formatDate(data);  // Jinak použije formátování
+                    }
+                }
+            },
             {data: 'odchod', 
                 render: function(data) {
-                    return formatDate(data);
-                } },
+                    // Zkontroluje, jestli je datum ve formátu "01.01.1 00:00" nebo je null/undefined
+                    if (!data || data === "0001-01-01T00:00:00") {
+                        return "-";  // Zobrazí pomlčku
+                    } else {
+                        return formatDate(data);  // Jinak použije formátování
+                    }
+                }
+            },
             {data:'popis'},
             {data: 'baterie'},
             {

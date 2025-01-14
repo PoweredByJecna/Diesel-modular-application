@@ -144,7 +144,9 @@ thead th, tbody td {
 .row-cekajici {
     background-color: rgba(255, 255, 0, 0.321) !important;
 }
-
+.row-nedieslujese {
+    background-color: rgb(0 17 255 / 43%) !important;
+}
 
 .row-aktivni {
     background-color: rgba(0, 128, 0, 0.371) !important;
