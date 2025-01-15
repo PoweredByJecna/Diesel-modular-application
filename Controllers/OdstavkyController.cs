@@ -334,11 +334,22 @@ namespace Diesel_modular_application.Controllers
             {
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
                 recordsTotal = totalRecords, // Celkový počet záznamů
-                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
+                recordsFiltered = totalRecords,
                 data = odstavkyList // Data aktuální stránky
             });
         }
 
+        public async Task<IActionResult> GetTableDataOdDetail(int id)
+        {
+
+
+            var odstavkaList =  _context.DieslovaniS.Include(o=>o.Odstavka).Where(i=>i.IdDieslovani==id).Select(o=>o.Odstavka).ToListAsync();
+            return Json(new
+            {
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
+                data = odstavkaList // Data aktuální stránky
+            });
+        }
 
 
 
