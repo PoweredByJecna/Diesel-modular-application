@@ -216,7 +216,7 @@ namespace Diesel_modular_application.Controllers
 
                 if (technikSearch == null) //žádný technik není volný nebo nemá pohotovost
                 {
-                    Debug.WriteLine($"echnici jsou obsazeni<br>,nebo nemají pohotovost");
+                    Debug.WriteLine($"Technici jsou obsazeni,nebo nemají pohotovost");
 
 
                     if(_context.Pohotovts.Include(p => p.Technik.Firma).Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy).Any()) //kontrola zda ma nějaky technik vubec pohotovost
@@ -236,10 +236,7 @@ namespace Diesel_modular_application.Controllers
                     Debug.WriteLine($"Žádný technik nebyl nalezen, bude přiřazen fiktivní");
                     var fiktivniTechnik = await _context.TechniS.FirstOrDefaultAsync(p => p.IdTechnika == "606794494");
 
-                    if (fiktivniTechnik != null)
-                    {
-                    await CreateNewDieslovaniAsync(newOdstavka, fiktivniTechnik);
-                    }
+                   
 
                     return fiktivniTechnik;
 
@@ -302,28 +299,28 @@ namespace Diesel_modular_application.Controllers
         {
             try
             {
-                var dis= await _context.DieslovaniS.FindAsync(IdDieslovani);
+                var dis = await _context.DieslovaniS
+                .Include(d => d.Technik).Include(d=>d.Odstavka)  // Zajišťuje načtení spojeného technika
+                .FirstAsync(d=>d.IdDieslovani==IdDieslovani);
                 if(dis !=null)
                 {    
-                        
-                        dis.Vstup=DateTime.Now;
-                        dis.Technik.Taken=true;
-                        _context.Update(dis);
-                        await _context.SaveChangesAsync();
+                    Debug.WriteLine($"Dieslovani: {IdDieslovani}");
+                    dis.Vstup=DateTime.Now;
+                    Debug.WriteLine($"Technik: {dis.Technik.Jmeno}");
+                    Debug.WriteLine($"Odstavka: {dis.IDodstavky}");
+                    dis.Technik.Taken=true;
+                    _context.DieslovaniS.Update(dis);
                 }
-                var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
+                var odstavka = await _context.OdstavkyS.FindAsync(dis.Odstavka.IdOdstavky);
                 if (odstavka != null)
                 {
-                    // Nastav ZadanVstup na true
-                    odstavka.ZadanVstup = true;
-                    
-                    _context.Update(odstavka);
+
+                    Debug.WriteLine($"Odstavka: {dis.IDodstavky}");
+                    odstavka.ZadanVstup = true;  
+                    _context.OdstavkyS.Update(odstavka);
                     
                 }    
                 await _context.SaveChangesAsync();
-
-                TempData["Zprava"] = "Byl zadán vstup na lokalitu.";  // Example message
-
                 return Json(new
                 {
                     success = true,
@@ -668,7 +665,6 @@ namespace Diesel_modular_application.Controllers
                 FirmaId = newOdstavky.Lokality.Region.IdRegion
             };
             _context.DieslovaniS.Add(NewDieslovani);
-            await _context.SaveChangesAsync();
             technik.Taken = true;
             _context.TechniS.Update(technik);
             await _context.SaveChangesAsync();
