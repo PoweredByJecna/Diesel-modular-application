@@ -164,7 +164,7 @@ namespace Diesel_modular_application.Controllers
                 var do_ = DateTime.Today.AddHours(hours + 8);
 
                 Debug.WriteLine($"Odstavka kontrola");    
-                result = await OdstavkyCheck(lokalitaSearch,od,do_, result);
+                result = OdstavkyCheck(lokalitaSearch,od,do_, result);
 
                 if (!result.Success)
                 {
@@ -268,7 +268,7 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = false, message = "Chyba při mazání záznamu: " + ex.Message });
             }
         }
-        private async Task<HandleOdstavkyDieslovaniResult> OdstavkyCheck(TableLokality lokalitaSearch, DateTime od, DateTime do_, HandleOdstavkyDieslovaniResult result)
+        private HandleOdstavkyDieslovaniResult OdstavkyCheck(TableLokality lokalitaSearch, DateTime od, DateTime do_, HandleOdstavkyDieslovaniResult result)
         {
             if (!ExistingOdstavka(lokalitaSearch.Id, od))
             {
@@ -288,11 +288,11 @@ namespace Diesel_modular_application.Controllers
             }
             else
             {
-                result.Success=true;
+                result.Success = true;
                 return result;
             }
-        } 
-         public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
+        }
+        public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
         {
             // Celkový počet záznamů v tabulce
             int totalRecords = await _context.OdstavkyS.CountAsync();
@@ -343,7 +343,23 @@ namespace Diesel_modular_application.Controllers
         {
 
 
-            var odstavkaList =  _context.DieslovaniS.Include(o=>o.Odstavka).Where(i=>i.IdDieslovani==id).Select(o=>o.Odstavka).ToListAsync();
+            var odstavkaList = await _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality)
+            .Where(i => i.IdDieslovani == id) // Filtrace podle ID Dieslování
+            .Select(o => new
+            {
+                idOdstavky = o.Odstavka.IdOdstavky,
+                distributor = o.Odstavka.Distributor,
+                lokalita = o.Odstavka.Lokality.Lokalita,
+                klasifikace = o.Odstavka.Lokality.Klasifikace,
+                od = o.Odstavka.Od,
+                do_ = o.Odstavka.Do,
+                adresa = o.Odstavka.Lokality.Adresa,
+                baterie = o.Odstavka.Lokality.Baterie,
+                popis = o.Odstavka.Popis,
+                zasuvka = o.Odstavka.Lokality.Zasuvka
+            }).ToListAsync();
+
             return Json(new
             {
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku

@@ -33,7 +33,10 @@ document.querySelectorAll('.InputSearching').forEach(input => {
     });
 });
 
-
+function getDieslovaniIdFromUrl() {
+    const urlParts = window.location.pathname.split('/'); // Rozdělit URL podle "/"
+    return urlParts[urlParts.length - 1]; // Poslední část URL je ID dieslování
+}
 
 
 function formatDate(dateString) {
@@ -368,7 +371,6 @@ menuToggle.addEventListener('click', () => {
             url: '/Dieslovani/GetTableDataEndTable', // Cesta na vaši serverovou metodu
             type: 'POST',
             dataSrc: function (json) {
-                // Zkontrolujte, co se vrací z API
                 console.log(json);
                 return json.data;
             }
@@ -955,12 +957,14 @@ menuToggle.addEventListener('click', () => {
               /////////////////////////////////////////////OdDetail TABLE////////////////////////////////////////////////
               $('#OdDetail').DataTable({
                 ajax: {
-                    url: '/Odstavky/GetTableData', // Cesta na vaši serverovou metodu
+                    url: '/Odstavky/GetTableDataOdDetail', // Cesta na vaši serverovou metodu
                     type: 'POST',
+                    data: function (d) {
+                        d.id = getDieslovaniIdFromUrl(); // Získá ID dieslování z URL a pošle ho serveru
+                    },
                     dataSrc: function (json) {
-                        // Zkontrolujte, co se vrací z API
-                        console.log(json);
-                        return json.data;
+                        console.log(json); // Pro ladění – zobrazení dat vrácených serverem
+                        return json.data;  // Vrácení dat do DataTables
                     }
                 },  
                 columns: [
@@ -1067,7 +1071,7 @@ menuToggle.addEventListener('click', () => {
                     }
                 },
                 paging: true,        
-                searching: true,
+                searching: false,
                 ordering: true, 
                 lengthChange: false,        
                 pageLength: 10   
