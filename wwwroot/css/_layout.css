@@ -115,7 +115,7 @@ th {
 }
 
 td {
-    height: 38px;               /* Výška buněk v těle tabulky */
+    height: 32px;               /* Výška buněk v těle tabulky */
 }
 
 thead th, tbody td {
@@ -124,39 +124,45 @@ thead th, tbody td {
 }
 
 
-#upcomingTable tr{
-    background-color: rgba(255, 255, 0, 0.321) !important;
-}
-#runningTable tr{
-    background-color: rgba(0, 128, 0, 0.371) !important;
-} 
-#endTable tr{
-    background-color: rgba(255, 0, 0, 0.382) !important;
-}
-#thrashTable tr{
-    background-color: rgba(255, 166, 0, 0.521) !important;
-}
+
 
 
 .row-neprirazeno {
     background-color: rgba(255, 166, 0, 0.521) !important;
 }
+.row-neprirazeno:hover{
+    background-color: rgba(255, 166, 0, 0.638) !important;
+}
 .row-cekajici {
     background-color: rgba(255, 255, 0, 0.321) !important;
+}
+.row-cekajici:hover {
+    background-color: rgba(255, 255, 0, 0.453) !important;
 }
 .row-nedieslujese {
     background-color: rgb(0 17 255 / 43%) !important;
 }
-
+.row-nedieslujese:hover {
+    background-color: rgba(0, 17, 255, 0.525) !important;
+}
 .row-aktivni {
     background-color: rgba(0, 128, 0, 0.371) !important;
+}
+.row-aktivni:hover {
+    background-color: rgba(0, 128, 0, 0.514) !important;
 }
 
 .row-ukoncene {
     background-color: rgba(255, 0, 0, 0.382) !important;
 }
+.row-ukoncene:hover {
+    background-color: rgba(255, 0, 0, 0.56) !important;
+}
 .row-standart{
     background-color: #0055ff28 !important;
+}
+.row-standart:hover{
+    background-color: #0055ff49 !important;
 }
 
 .row-obsazeny{
@@ -424,10 +430,8 @@ nav input {
         align-items: center;
         justify-content: center;
     }
-    .odd:hover .socket-icon,
-    .even:hover .socket-icon{
-        display: none;
-    }
+
+    
  
     .hidden-buttons {
         display: none; /* Skryje další tlačítka */

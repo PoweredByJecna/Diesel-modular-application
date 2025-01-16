@@ -121,8 +121,8 @@ width: 70%;
 }
 
 
-table.dataTable tbody th,table.dataTable tbody td {
-    padding: 0px 6px !important;
+table.dataTable thead th,table.dataTable tbody td {
+    padding: 0px 30px 0px 5px !important
 }
 table.dataTable tbody tr{
     border-bottom: 1px inset !important;

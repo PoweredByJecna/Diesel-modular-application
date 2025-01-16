@@ -261,6 +261,18 @@ menuToggle.addEventListener('click', () => {
                     }
                     },
                     {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `       
+                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Vstup(${row.idDieslovani})">
+                                <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Vstup</span>
+                                <i class="fa-solid fa-person-walking-arrow-right fa-flip-horizontal"></i>
+                            </span>  
+                        `;
+                        
+                    }
+                    },
+                    {
                         data: 'idDieslovani',
                         render: function (data, type, row) {
                             return `
@@ -335,24 +347,13 @@ menuToggle.addEventListener('click', () => {
                             return zasuvkaHtml;
                         }
                     },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return `       
-                            <div class="button-conteiner">
-                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                <div class="hidden-buttons">
-                                    <button class="button Edit delete" onclick="Vstup(${row.idDieslovani})">
-                                        <i class="fa-solid fa-right-to-bracket" style="color: black;"></i>
-                                    </button>
-                                    </div>
-                            </div>
-                        `;
-                    }
-                    }, 
+                   
                     
     
                 ],  
+            rowCallback: function(row, data, index) {
+                $(row).addClass('row-cekajici');
+            },
             paging: true,        
             searching: true,
             ordering: false, 
@@ -386,6 +387,18 @@ menuToggle.addEventListener('click', () => {
                     </span>
                 `;
             }
+        },
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `       
+                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
+                    <i class="fa-solid fa-xmark"></i>
+                </span>  
+            `;
+            
+        }
         },
         { data: 'idDieslovani',
             render: function (data, type, row) {
@@ -448,6 +461,9 @@ menuToggle.addEventListener('click', () => {
       
 
         ],
+        rowCallback: function(row, data, index) {
+            $(row).addClass('row-ukoncene');
+        },
             paging: true,        
             searching: true,
             ordering: false, 
@@ -484,6 +500,19 @@ menuToggle.addEventListener('click', () => {
                 `;
             }
         },
+        {
+            data: null,
+            render: function (data, type, row) {
+                return `       
+                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Take(${row.idDieslovani})">
+                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Převzít</span>
+                    <i class="fa-solid fa-user-plus"></i>
+                </span>  
+            `;
+
+            
+        }
+        }, 
         { data: 'idDieslovani',
             render: function (data, type, row) {
                 return `
@@ -535,20 +564,10 @@ menuToggle.addEventListener('click', () => {
             }
         },
         {data: 'názevFirmy'},
-        {
-            data: null,
-            render: function (data, type, row) {
-                return `       
-                <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Take(${row.idDieslovani})">
-                    <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Převzít</span>
-                    <i class="fa-solid fa-user-plus"></i>
-                </span>  
-            `;
-
-            
-        }
-        }, 
         ],
+        rowCallback: function(row, data, index) {
+            $(row).addClass('row-neprirazeno');
+        },
             paging: true,        
             searching: true,
             ordering: false, 
@@ -706,6 +725,17 @@ menuToggle.addEventListener('click', () => {
                 }
             },  
             columns: [
+                {
+                data: null,
+                render: function (data, type, row) {
+                    return `       
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecord(${row.idOdstavky})">
+                        <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>  
+                `;
+                }
+                },
                 { data: 'idOdstavky' },  // ID
                 {
                     data: 'distributor',
@@ -773,22 +803,8 @@ menuToggle.addEventListener('click', () => {
                         return zasuvkaHtml;
                     }
                 },
-                {
-                data: null,
-                render: function (data, type, row) {
-                    return `       
-                        <div class="button-conteiner">
-                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                            <div class="hidden-buttons">
-                                <button class="button Edit delete" onclick="deleteRecord(${row.idOdstavky})">
-                                    <i class="fa-solid fa-trash" style="color:black"></i>
-                                </button>
-                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                            </div>
-                        </div>
-                    `;
-                }
-                }, 
+                
+               
             ],
             rowCallback: function(row, data, index) {
                 var today = new Date().setHours(0, 0, 0, 0); 
@@ -849,6 +865,18 @@ menuToggle.addEventListener('click', () => {
                             <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
                         </span>
                     `;
+                }
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `       
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="Odchod(${row.idDieslovani})">
+                            <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Odchod</span>
+                            <i class="fa-solid fa-person-walking-arrow-right"></i>
+                        </span>  
+                    `;
+                    
                 }
                 },
                 { data: 'idDieslovani',
@@ -925,25 +953,13 @@ menuToggle.addEventListener('click', () => {
                         return zasuvkaHtml;
                     }
                 },
-                {
-                    data: null,
-                    render: function (data, type, row) {
-                        return `       
-                            <div class="button-conteiner">
-                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                <div class="hidden-buttons">
-                                    <button class="button Edit delete" onclick="Odchod(${row.idDieslovani})">
-                                        <i class="fa-solid fa-door-closed" style="color:black"></i>
-                                    </button>
-                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    },
+               
                 
 
             ],  
+            rowCallback: function(row, data, index) {
+            $(row).addClass('row-aktivni');
+            },
             paging: true,        
             searching: true,
             ordering: false,  
@@ -968,6 +984,17 @@ menuToggle.addEventListener('click', () => {
                     }
                 },  
                 columns: [
+                    {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `       
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecord(${row.idOdstavky})">
+                            <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>  
+                    `;
+                    }
+                    },
                     { data: 'idOdstavky' },  // ID
                     {
                         data: 'distributor',
@@ -1035,22 +1062,8 @@ menuToggle.addEventListener('click', () => {
                             return zasuvkaHtml;
                         }
                     },
-                    {
-                    data: null,
-                    render: function (data, type, row) {
-                        return `       
-                            <div class="button-conteiner">
-                                <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                                <div class="hidden-buttons">
-                                    <button class="button Edit delete" onclick="deleteRecord(${row.idOdstavky})">
-                                        <i class="fa-solid fa-trash" style="color:black"></i>
-                                    </button>
-                                    <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    }, 
+                    
+                    
                 ],
                 rowCallback: function(row, data, index) {
                     var today = new Date().setHours(0, 0, 0, 0); 
@@ -1070,11 +1083,11 @@ menuToggle.addEventListener('click', () => {
                         $(row).addClass('row-standart');
                     }
                 },
-                paging: true,        
+                paging: false,        
                 searching: false,
-                ordering: true, 
+                ordering: false, 
                 lengthChange: false,        
-                pageLength: 10   
+                pageLength: 1
                     // Počet řádků na stránku
             });
               
@@ -1086,7 +1099,6 @@ menuToggle.addEventListener('click', () => {
              /////////////////////////////////////////////ALL TABLE////////////////////////////////////////////////
 
 
-        // Inicializace pro tabulku "All"
         $('#allTable').DataTable({
             ajax: {
                 url: '/Dieslovani/GetTableDataAllTable', // Cesta na vaši serverovou metodu
@@ -1143,6 +1155,20 @@ menuToggle.addEventListener('click', () => {
                     `;
                 }
             },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `       
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                        <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>  
+                `;
+    
+                
+            }
+            },
+            
             { data: 'idDieslovani',
                 render: function (data, type, row) {
                     return `
@@ -1245,22 +1271,8 @@ menuToggle.addEventListener('click', () => {
                     return zasuvkaHtml;
                 }
             },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return `       
-                        <div class="button-conteiner">
-                            <button class="button Edit"><i class="fa-solid fa-ellipsis" style="color: black;"></i></button>
-                            <div class="hidden-buttons">
-                                <button class="button Edit delete" onclick="deleteRecordDieslovani(${row.idDieslovani})">
-                                    <i class="fa-solid fa-trash" style="color:black"></i>
-                                </button>
-                                <button class="button Edit ed"><i class="fa-solid fa-pen" style="color: black;"></i></button>
-                            </div>
-                        </div>
-                    `;
-                }
-                }, 
+            
+              
 
             ],
             rowCallback: function(row, data, index) {
