@@ -35,19 +35,16 @@ namespace Diesel_modular_application.Controllers
         private List<string> Zpravy { get; set; } = new List<string>();
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky, int page = 1)
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
         {
 
-   
-            int pagesize = 10;
+
             odstavky.OdstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .ToListAsync();
             odstavky.PohotovostList = await _context.Pohotovts
                 .Include(o => o.Technik)
-                .ToListAsync();
-            odstavky.PohotovostList = await _context.Pohotovts
-                .Include(O => O.User)
+                .ThenInclude(o=>o.User)
                 .ToListAsync();
             odstavky.TechnikList = await _context.TechniS
                 .Include(o => o.Firma)
@@ -63,10 +60,7 @@ namespace Diesel_modular_application.Controllers
                 .Include(o => o.Lokality)
                 .OrderBy(o => o.IdOdstavky);
 
-            odstavky.OdstavkyList = await odstavkyQuery
-                .Skip((page - 1) * pagesize)
-                .Take(pagesize)
-                .ToListAsync();
+    
 
             odstavky.RegionStats = _odstavkyService.GetRegionStats();
 
@@ -103,18 +97,18 @@ namespace Diesel_modular_application.Controllers
             };
         }
 
-        public async Task<TableOdstavky> CreateNewOdstavka(TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
+        public TableOdstavky CreateNewOdstavka(TableLokality lokalitaSearch, string distrib, DateTime od, DateTime do_, string popis)
         {
-           var newOdstavka = new TableOdstavky
+            var newOdstavka = new TableOdstavky
             {
                 Distributor = distrib,
                 Firma = lokalitaSearch.Region.Firma.NázevFirmy,
                 Od = od,
                 Do = do_,
                 Popis = popis,
-                LokalitaId = lokalitaSearch.Id   
-            };   
-            Debug.WriteLine($"vytváří se odstávka s parametry: {distrib }, {lokalitaSearch.Region.Firma.NázevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id} ");
+                LokalitaId = lokalitaSearch.Id
+            };
+            Debug.WriteLine($"vytváří se odstávka s parametry: {distrib}, {lokalitaSearch.Region.Firma.NázevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id} ");
             return newOdstavka;
         }
 
@@ -171,7 +165,7 @@ namespace Diesel_modular_application.Controllers
                     return Json(new { success = false, message = result.Message });
                 }
                 
-                var newOdstavka = await CreateNewOdstavka(lokalitaSearch, distrib, od, do_, popis);
+                var newOdstavka = CreateNewOdstavka(lokalitaSearch, distrib, od, do_, popis);
                 try
                 {
                     _context.OdstavkyS.Add(newOdstavka);

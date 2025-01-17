@@ -151,15 +151,6 @@ namespace Diesel_modular_application.Controllers
             }
 
         }
-        public string GetTechnikLokalita(string technikId)
-        {
-            #pragma warning disable CS8603 // Possible null reference return.
-            return _context.DieslovaniS
-            .Where(d => d.IdTechnik == technikId)
-            .Select(d => d.Odstavka.Lokality.Lokalita)
-            .FirstOrDefault();
-            #pragma warning restore CS8603 // Possible null reference return.
-        }
         private bool IsDieselRequired(string Klasifikace, DateTime Od, DateTime Do, string Baterie)
         {
             var CasVypadku = Klasifikace.ZiskejCasVypadku();
@@ -271,8 +262,6 @@ namespace Diesel_modular_application.Controllers
             .Where(r => r.IdRegion == regionId)
                 .Select(r => r.Firma)
                 .FirstOrDefaultAsync();
-
-            
         }
         private async Task<TableTechnici?> CheckTechnikReplacementAsync(TableOdstavky newOdstavka)
         {
@@ -290,10 +279,6 @@ namespace Diesel_modular_application.Controllers
             }
 
         }
-       
-
-
-
 
         public async Task<IActionResult> Vstup (int IdDieslovani)
         {
@@ -304,22 +289,16 @@ namespace Diesel_modular_application.Controllers
                 .FirstAsync(d=>d.IdDieslovani==IdDieslovani);
                 if(dis !=null)
                 {    
-                    Debug.WriteLine($"Dieslovani: {IdDieslovani}");
                     dis.Vstup=DateTime.Now;
-                    Debug.WriteLine($"Technik: {dis.Technik.Jmeno}");
-                    Debug.WriteLine($"Odstavka: {dis.IDodstavky}");
                     dis.Technik.Taken=true;
                     _context.DieslovaniS.Update(dis);
+                    var odstavka = await _context.OdstavkyS.FindAsync(dis.Odstavka.IdOdstavky);
+                    if (odstavka != null)
+                    {
+                        odstavka.ZadanVstup = true;  
+                        _context.OdstavkyS.Update(odstavka);
+                    }   
                 }
-                var odstavka = await _context.OdstavkyS.FindAsync(dis.Odstavka.IdOdstavky);
-                if (odstavka != null)
-                {
-
-                    Debug.WriteLine($"Odstavka: {dis.IDodstavky}");
-                    odstavka.ZadanVstup = true;  
-                    _context.OdstavkyS.Update(odstavka);
-                    
-                }    
                 await _context.SaveChangesAsync();
                 return Json(new
                 {
@@ -333,35 +312,34 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = false, message = "Chyba při zadávání vstupu " + ex.Message });
             }
         }
-      
-
-
-
-
-    
         public async Task<IActionResult> Odchod (int IdDieslovani)
         {
            try
             {
                 var dis = await _context.DieslovaniS
-                .Include(d => d.Technik)  // Zajišťuje načtení spojeného technika
+                .Include(d => d.Technik)
+                .Include(d=>d.Odstavka)
                 .FirstAsync(d=>d.IdDieslovani==IdDieslovani);
-
                 if(dis !=null)
                 {    
-                    dis.Technik.Taken=false;
+                    var odstavka = await _context.OdstavkyS.FindAsync(dis.Odstavka.IdOdstavky);
+                    if (odstavka != null)
+                    {
+                        odstavka.ZadanOdchod=true;
+                        odstavka.ZadanVstup=false;
+                        _context.Update(odstavka);
+                    }   
+                    var anotherDiesel = await _context.DieslovaniS.Include(o=>o.Odstavka).Include(o => o.Technik).Where(o => o.Technik.IdTechnika == dis.Technik.IdTechnika && o.Odstavka.ZadanOdchod==false).FirstOrDefaultAsync();
+                    if(anotherDiesel==null)
+                    {
+
+                        dis.Technik.Taken=false;
+                    }
+                  //  Debug.WriteLine($"Technik je odebrán od tété odstávky: {odstavka.IdOdstavky} a je přivázán k tété {anotherDiesel.Odstavka.IdOdstavky}");
                     dis.Odchod=DateTime.Now;
                     _context.Update(dis);
                 }
-                var odstavka = await _context.OdstavkyS.FindAsync(dis.IDodstavky);
-                if (odstavka != null)
-                {
-                    // Nastav ZadanVstup na true
-                    odstavka.ZadanOdchod=true;
-                    odstavka.ZadanVstup=false;
-                
-                    _context.Update(odstavka);
-                }    
+                 
                 await _context.SaveChangesAsync();
                 return Json(new { success = true, message = "Byl zadán odchod z lokality." });
             }
@@ -372,6 +350,11 @@ namespace Diesel_modular_application.Controllers
 
             
         }
+        
+
+
+
+
         public async Task<IActionResult> TemporaryLeave (OdstavkyViewModel dieslovani)
         {
              var dis = await _context.DieslovaniS
@@ -633,10 +616,21 @@ namespace Diesel_modular_application.Controllers
                     var technik = await _context.TechniS.Where(p => p.IdTechnika == dieslovani.IdTechnik).FirstOrDefaultAsync();
                     if (technik != null)
                     {
-                        technik.Taken = false;
-                        _context.TechniS.Update(technik);
+                        _context.DieslovaniS.Remove(dieslovani);
+                        var anotherDiesel = await _context.DieslovaniS.Include(o => o.Technik).Where(o => o.Technik.IdTechnika == technik.IdTechnika).FirstOrDefaultAsync();
+                        
+                        if(anotherDiesel!=null)
+                        {
+                            technik.Taken = true;
+                            _context.TechniS.Update(technik);
+                        }
+                        else
+                        {
+                            technik.Taken = false;
+                            _context.TechniS.Update(technik);
+                        }
+                        
                     }
-                    _context.DieslovaniS.Remove(dieslovani);
                     await _context.SaveChangesAsync();
 
                     return Json(new { success = true, message = "Záznam byl úspěšně smazán." });

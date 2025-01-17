@@ -106,6 +106,7 @@
             group => group.Key,
             group => group
             .OrderBy(o=>o.Odstavka.Od)
+            .Where(o=>o.Odstavka.ZadanOdchod==false)
             .Select(d => d.Odstavka.Lokality.Lokalita).FirstOrDefault()
             );
 

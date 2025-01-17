@@ -57,6 +57,7 @@ namespace Diesel_modular_application.Controllers
 }
 
        
+
         public async Task<IActionResult> DetailDieslovani(int id)
     {
         // Načítání detailů podle ID
@@ -78,19 +79,7 @@ namespace Diesel_modular_application.Controllers
         return View(odstavky);
     }
 
-
        
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
          
     }
 }

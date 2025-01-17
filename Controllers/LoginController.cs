@@ -38,6 +38,7 @@ namespace Diesel_modular_application.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Redirect("/Home/Index");
                 }
             }
             return View("Index", model);
