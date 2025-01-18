@@ -473,9 +473,8 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
-        public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
+        public async Task<TableDieslovani> FitleredData(IQueryable<TableDieslovani> query)
         {
-           
             var currentUser = await _userManager.GetUserAsync(User);
             var userId = currentUser?.Id;
             
@@ -483,7 +482,7 @@ namespace Diesel_modular_application.Controllers
             bool isTechnik = await _userManager.IsInRoleAsync(currentUser, "Engineer");
 
 
-            IQueryable<TableDieslovani> query = _context.DieslovaniS
+             query = _context.DieslovaniS
             .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
             .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t=>t.Technik).ThenInclude(t=>t.User);
 
@@ -494,6 +493,12 @@ namespace Diesel_modular_application.Controllers
 
             }
 
+            return query.ToListAsync();
+        }
+        public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
+        {
+           
+            FitleredData();  
 
 
             int totalRecords = await query.CountAsync();    
