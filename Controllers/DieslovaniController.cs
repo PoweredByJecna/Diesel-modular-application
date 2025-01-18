@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.KlasifikaceRule;
 using Diesel_modular_application.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using static Diesel_modular_application.Controllers.OdstavkyController;
 
 namespace Diesel_modular_application.Controllers
@@ -34,8 +36,22 @@ namespace Diesel_modular_application.Controllers
 
         }
         [Authorize]
-        public IActionResult IndexAsync()
+        public async Task<IActionResult> IndexAsync()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id;
+            string Name= "";
+
+            if( await _userManager.IsInRoleAsync(currentUser, "Engineer"))
+            {   
+                TempData["TableName"] = "Moje";
+                
+            }
+            else
+            {   
+                TempData["TableName"] = "";
+                
+            } 
             return View();    
         }
 
@@ -439,9 +455,18 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> GetTableDataRunningTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == true).Count();
+
+            var query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User).AsQueryable();
+
+            query = await FilteredData(query);
+
+            int totalRecords = await query.CountAsync();    
             length = totalRecords;
-            var DieslovaniRunningList = await _context.DieslovaniS
+
+
+            var DieslovaniRunningList = await query
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
@@ -473,32 +498,29 @@ namespace Diesel_modular_application.Controllers
             });
             
         }
-        public async Task<TableDieslovani> FitleredData(IQueryable<TableDieslovani> query)
+        public async Task<IQueryable<TableDieslovani>> FilteredData(IQueryable<TableDieslovani> query)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var userId = currentUser?.Id;
-            
-            
-            bool isTechnik = await _userManager.IsInRoleAsync(currentUser, "Engineer");
 
+            bool isEngineer = await _userManager.IsInRoleAsync(currentUser, "Engineer");
 
-             query = _context.DieslovaniS
-            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t=>t.Technik).ThenInclude(t=>t.User);
-
-            if (isTechnik)
+            if (isEngineer)
             {
                 query = query.Where(d => d.Technik.User.Id == userId);
-                Debug.WriteLine($"Filtrování: {query}");
-
             }
 
-            return query.ToListAsync();
+            return query;
         }
         public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
            
-            FitleredData();  
+            var query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User).AsQueryable();
+
+
+            query = await FilteredData(query);
 
 
             int totalRecords = await query.CountAsync();    
@@ -545,9 +567,37 @@ namespace Diesel_modular_application.Controllers
 
         public async Task<IActionResult> GetTableDatathrashTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Technik).Where(o => o.Technik.IdTechnika == "606794494").Count();
-            length = totalRecords;
-            var DieslovaniRunningList = await _context.DieslovaniS
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id;
+
+        
+            bool isEngineer = await _userManager.IsInRoleAsync(currentUser, "Engineer");
+
+            var technik = await _context.TechniS
+                .Include(t => t.Firma)
+                .FirstOrDefaultAsync(t => t.IdUser == userId);
+
+            var firmaId = technik?.Firma?.IDFirmy; 
+
+            var validRegions = await _context.ReginoS
+            .Where(r => r.Firma.IDFirmy == firmaId)
+            .Select(r => r.IdRegion) 
+            .ToListAsync();
+
+            IQueryable<TableDieslovani> query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User);
+
+
+            if (isEngineer)
+            {
+                query = query.Where(d => validRegions.Contains(d.Odstavka.Lokality.Region.IdRegion));
+
+            }
+
+            int totalRecords = await query.CountAsync();
+
+            var DieslovaniRunningList = await query
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .ThenInclude(o=>o.Region)
@@ -575,13 +625,20 @@ namespace Diesel_modular_application.Controllers
             });  
         } 
 
-
-
+ 
         public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanVstup == false && o.Odstavka.ZadanOdchod == false && o.Odstavka.Od.Date==DateTime.Today &&  o.Technik.IdTechnika != "606794464").Count();
+           var query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User).AsQueryable();
+
+
+            query = await FilteredData(query);
+
+            int totalRecords = await query.CountAsync();    
             length = totalRecords;
-            var DieslovaniRunningList = await _context.DieslovaniS
+
+            var DieslovaniRunningList = await query
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)
@@ -614,9 +671,18 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).Where(o => o.Odstavka.ZadanOdchod==true && o.Odstavka.ZadanVstup==false).Count();
+             var query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User).AsQueryable();
+
+
+            query = await FilteredData(query);
+
+
+            int totalRecords = await query.CountAsync();    
             length = totalRecords;
-            var DieslovaniRunningList = await _context.DieslovaniS
+
+            var DieslovaniRunningList = await query
             .Include(o=>o.Odstavka)
             .ThenInclude(o=>o.Lokality)
             .Include(t=>t.Technik)

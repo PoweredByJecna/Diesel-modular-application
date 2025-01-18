@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewData["Title"] - Da_Modular_Application</title>
         <script src="https://kit.fontawesome.com/cd832cb986.js"></script>
-        <link rel="stylesheet" href="~/css/home.css"/>
+        <link rel="stylesheet" href="~/css/dieslovani.css"/>
         <link rel="stylesheet" href="~/css/Login.css"/>
         <link rel="stylesheet" href="~/css/_layout.css"/>
         <link rel="stylesheet" href="~/css/lokality.css">
@@ -36,38 +36,38 @@
                         <div style="display: flex; flex-direction: column;width: 97%;">
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
-                                    <a asp-action="Index" asp-controller="Home" class="a-sidebar" style="padding-left: 0px;">
+                                    <a asp-action="Index" asp-controller="Dieslovani" class="a-sidebar" style="padding-left: 0px;">
                                         <i class="fa-solid fa-house-chimney-window navA"></i>
                                         <span class="sb">Dieslovaní</span>  
                                     </a>
                                 </li>
                                 <ul class="ul-sidebar">
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="runningTable" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Dieslovani" asp-fragment="runningTable" class="a-sidebar">
                                             <i class="fa-solid fa-person-running fa-sm navA"></i>
                                             <span class="sb">Dnešní Aktuální</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="upcomingTable" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Dieslovani" asp-fragment="upcomingTable" class="a-sidebar">
                                             <i class="fa-solid fa-hourglass-end fa-sm navA"></i>
                                             <span class="sb">Dnešní nadcházející</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="endTable" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Dieslovani" asp-fragment="endTable" class="a-sidebar">
                                             <i class="fa-regular fa-circle-xmark fa-sm navA"></i>
                                             <span class="sb">Dnešní ukončené</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="thrashTable" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Dieslovani" asp-fragment="thrashTable" class="a-sidebar">
                                             <i class="fa-solid fa-trash fa-sm navA"></i>
                                             <span class="sb">Všechny nepřiřazené</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Home" asp-fragment="allTable" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Dieslovani" asp-fragment="allTable" class="a-sidebar">
                                             <i class="fa-solid fa-globe fa-sm navA"></i>
                                             <span class="sb">Všechna dieslovaní</span> 
                                         </a>
@@ -206,7 +206,7 @@
              @RenderBody()
             
             @await RenderSectionAsync("Scripts", required: false)
-            <script src="~/js/home.js"></script>
+            <script src="~/js/Home.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
      
     </body>

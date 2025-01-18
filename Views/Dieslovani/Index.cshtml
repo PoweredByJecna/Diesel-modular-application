@@ -9,7 +9,7 @@
         <div class="tables-row" style="justify-content: center;">
             <div class="table-div odstavkyTable">
                 <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Dnešní Aktuální <i class="fa-solid fa-person-running"></i></h2>
+                        <h2 style="padding-right:20px; color: black;">@TempData["TableName"] dnešní aktivní <i class="fa-solid fa-person-running"></i></h2>
                 </div>
                 <table id="runningTable">
                     <thead>
@@ -35,7 +35,7 @@
 
             <div class="table-div odstavkyTable" style="margin-top: 20px;">
                     <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Dnešní nadcházející <i class="fa-solid fa-hourglass-end"></i></h2>
+                        <h2 style="padding-right:20px; color: black;">@TempData["TableName"] dnešní nadcházející <i class="fa-solid fa-hourglass-end"></i></h2>
                     </div>
                 <table id="upcomingTable">  
                     <thead>
@@ -64,7 +64,7 @@
             <div class="section small" style="justify-content: space-between;">
                 <div class="table-div odstavkyTable" style="width: 98%">
                     <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Dnešní ukončené <i class="fa-regular fa-circle-xmark"></i></h2>
+                        <h2 style="padding-right:20px; color: black;">@TempData["TableName"] dnešní ukončené <i class="fa-regular fa-circle-xmark"></i></h2>
                     </div> 
                     <table id="endTable">
                         <thead>
@@ -86,7 +86,7 @@
             <div class="section small">
                 <div class="table-div odstavkyTable" style="width: 98%;">
                     <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Všechna nepřiřazená <i class="fa-solid fa-trash"></i></h2>
+                        <h2 style="padding-right:20px; color: black;">@TempData["TableName"] všechna nepřiřazená <i class="fa-solid fa-trash"></i></h2>
                     </div>   
                     <table id="thrashTable">
                         <thead>
@@ -111,7 +111,7 @@
         <div class="tables-row" style="justify-content: center; margin-bottom: 15px;">
                 <div class="table-div odstavkyTable" id="all-table">
                      <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Všechna dieslovaní <i class="fa-solid fa-globe"></i></h2>
+                        <h2 style="padding-right:20px; color: black;">@TempData["TableName"] všechna dieslovaní <i class="fa-solid fa-globe"></i></h2>
                         <div>
                             <span class="legenda">
                                 Aktivní :
