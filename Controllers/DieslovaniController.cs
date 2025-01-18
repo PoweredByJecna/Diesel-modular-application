@@ -415,15 +415,28 @@ namespace Diesel_modular_application.Controllers
 
                 var technik = await _context.TechniS.FirstAsync(d=>d.IdUser==currentUser.Id);
                 var dieslovaniTaken = await _context.DieslovaniS
-               
                 .Include(d=>d.Technik)
                 .FirstOrDefaultAsync(d=>d.IdDieslovani==IdDieslovani);
 
                 if(dieslovaniTaken!=null)
                 {
+                    var pohotovostTechnik =  await _context.Pohotovts
+                    .Include(t=>t.Technik)
+                    .Where(p=>p.Technik.IdTechnika == technik.IdTechnika)
+                    .Select(p=>p.Technik).AnyAsync();
+                    if(pohotovostTechnik==false)
+                    {
+                        return Json(new{
+                           success = false,    
+                           message= "Nejste zapsán v pohotovosti"    
+                        });
+                    }
                     if(technik.Taken==true)
                     {
-                        TempData["Zprava"] = "Již máte dieslovaní převzaté";
+                        return Json(new{
+                           success = false,    
+                           message= "Již máte převzaté jiné dieslovaní"    
+                        });
                     }
 
                     dieslovaniTaken.Technik=technik;
@@ -539,8 +552,8 @@ namespace Diesel_modular_application.Controllers
                 l.Technik.Firma.NázevFirmy,
                 l.Technik.Jmeno,
                 l.Technik.Prijmeni,
-                l.Odstavka.ZadanVstup,    // Zajistíme, že ZadanVstup je v datech
-                l.Odstavka.ZadanOdchod,  // Zajistíme, že ZadanOdchod je v datech
+                l.Odstavka.ZadanVstup,    
+                l.Odstavka.ZadanOdchod,  
                 l.Technik.IdTechnika, 
                 l.Odstavka.Lokality.Region.NazevRegionu,
                 l.Odstavka.Od,
@@ -557,10 +570,10 @@ namespace Diesel_modular_application.Controllers
            
             return Json(new 
             {
-                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), // Unikátní ID požadavku
-                recordsTotal = totalRecords, // Celkový počet záznamů
-                recordsFiltered = totalRecords, // Může být upraven při vyhledávání
-                data = DieslovaniRunningList // Data aktuální stránky
+                draw = HttpContext.Request.Query["draw"].FirstOrDefault(), 
+                recordsTotal = totalRecords, 
+                recordsFiltered = totalRecords, 
+                data = DieslovaniRunningList 
             });
             
         }
@@ -586,16 +599,17 @@ namespace Diesel_modular_application.Controllers
 
             IQueryable<TableDieslovani> query = _context.DieslovaniS
             .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t => t.Technik).ThenInclude(t => t.User);
+            .Include(t => t.Technik).ThenInclude(t => t.Firma);
+
 
 
             if (isEngineer)
             {
                 query = query.Where(d => validRegions.Contains(d.Odstavka.Lokality.Region.IdRegion));
-
             }
 
             int totalRecords = await query.CountAsync();
+            length = totalRecords;
 
             var DieslovaniRunningList = await query
             .Include(o=>o.Odstavka)
