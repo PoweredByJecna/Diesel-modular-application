@@ -276,7 +276,7 @@ menuToggle.addEventListener('click', () => {
                         data: 'idDieslovani',
                         render: function (data, type, row) {
                             return `
-                                <a href="/Home/DetailDieslovani/${data}">
+                                <a href="/Dieslovani/DetailDieslovani/${data}">
                                     ${data}
                                 </a>
                             `;
@@ -403,7 +403,7 @@ menuToggle.addEventListener('click', () => {
         { data: 'idDieslovani',
             render: function (data, type, row) {
                 return `
-                    <a href="/Home/DetailDieslovani/${data}">
+                    <a href="/Dieslovani/DetailDieslovani/${data}">
                         ${data}
                     </a>
                 `;
@@ -516,7 +516,7 @@ menuToggle.addEventListener('click', () => {
         { data: 'idDieslovani',
             render: function (data, type, row) {
                 return `
-                    <a href="/Home/DetailDieslovani/${data}">
+                    <a href="/Dieslovani/DetailDieslovani/${data}">
                         ${data}
                     </a>
                 `;
@@ -882,7 +882,7 @@ menuToggle.addEventListener('click', () => {
                 { data: 'idDieslovani',
                     render: function (data, type, row) {
                         return `
-                            <a href="/Home/DetailDieslovani/${data}">
+                            <a href="/Dieslovani/DetailDieslovani/${data}">
                                 ${data}
                             </a>
                         `;
@@ -1172,7 +1172,7 @@ menuToggle.addEventListener('click', () => {
             { data: 'idDieslovani',
                 render: function (data, type, row) {
                     return `
-                        <a href="/Home/DetailDieslovani/${data}">
+                        <a href="/Dieslovani/DetailDieslovani/${data}">
                             ${data}
                         </a>
                     `;

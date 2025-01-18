@@ -5,6 +5,7 @@ using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Office2013.PowerPoint.Roaming;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +33,50 @@ namespace Diesel_modular_application.Controllers
             _odstavky = odstavky;
 
         }
+        [Authorize]
+        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id;
 
-     
+            // Načítání seznamů
+            odstavky.OdstavkyList = await _context.OdstavkyS
+                .Include(o => o.Lokality)
+                .ThenInclude(l => l.Region)
+                .ThenInclude(l => l.Firma)
+                .ToListAsync();
+            odstavky.DieslovaniList = await _context.DieslovaniS
+                .Include(o => o.Odstavka)
+                .ThenInclude(o => o.Lokality)
+                .ThenInclude(o => o.Region)
+                .Include(p => p.Technik)
+                .ToListAsync();
+            odstavky.LokalityList = await _context.LokalityS.ToListAsync();
+
+            // Předání modelu do zobrazení
+            return View("Index", odstavky);    
+        }
+
+        public async Task<IActionResult> DetailDieslovani(int id)
+        {
+            // Načítání detailů podle ID
+            var detail = await _context.DieslovaniS
+                .Include(o => o.Odstavka)
+                .ThenInclude(o => o.Lokality)
+                .ThenInclude(o => o.Region)
+                .Include(p => p.Technik)
+                .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+
+            // Vytvoření modelu pro DetailDieslovani
+            var odstavky = new OdstavkyViewModel
+            {
+                DieslovaniMod = detail,
+                // Můžeš také přidat další informace, které chceš zobrazit v detailu
+            };
+
+            // Předání modelu do zobrazení
+            return View(odstavky);
+        }
 
         public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis, TableOdstavky newOdstavka, HandleOdstavkyDieslovaniResult result)
         {
@@ -371,7 +414,7 @@ namespace Diesel_modular_application.Controllers
                 _context.Update(dis);
             }
             await _context.SaveChangesAsync();
-            return Redirect ("/Home/Index");
+            return Redirect ("/Dieslovani/Index");
         }
         public async Task<IActionResult> Take(int IdDieslovani)
         {

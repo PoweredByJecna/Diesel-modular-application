@@ -33,12 +33,12 @@ namespace Diesel_modular_application.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return Redirect("/Home/Index");
+                    return Redirect("/Dieslovani/Index");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Redirect("/Home/Index");
+                    return Redirect("/Dieslovani/Index");
                 }
             }
             return View("Index", model);
@@ -47,7 +47,7 @@ namespace Diesel_modular_application.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out");
-             return Redirect("/Home/Index");
+             return Redirect("/Dieslovani/Index");
         }
     }
 }
