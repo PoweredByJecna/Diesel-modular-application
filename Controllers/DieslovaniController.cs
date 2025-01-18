@@ -34,32 +34,13 @@ namespace Diesel_modular_application.Controllers
 
         }
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+        public IActionResult IndexAsync()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var userId = currentUser?.Id;
-
-            // Načítání seznamů
-            odstavky.OdstavkyList = await _context.OdstavkyS
-                .Include(o => o.Lokality)
-                .ThenInclude(l => l.Region)
-                .ThenInclude(l => l.Firma)
-                .ToListAsync();
-            odstavky.DieslovaniList = await _context.DieslovaniS
-                .Include(o => o.Odstavka)
-                .ThenInclude(o => o.Lokality)
-                .ThenInclude(o => o.Region)
-                .Include(p => p.Technik)
-                .ToListAsync();
-            odstavky.LokalityList = await _context.LokalityS.ToListAsync();
-
-            // Předání modelu do zobrazení
-            return View("Index", odstavky);    
+            return View();    
         }
 
         public async Task<IActionResult> DetailDieslovani(int id)
         {
-            // Načítání detailů podle ID
             var detail = await _context.DieslovaniS
                 .Include(o => o.Odstavka)
                 .ThenInclude(o => o.Lokality)
@@ -67,14 +48,11 @@ namespace Diesel_modular_application.Controllers
                 .Include(p => p.Technik)
                 .FirstOrDefaultAsync(o => o.IdDieslovani == id);
 
-            // Vytvoření modelu pro DetailDieslovani
             var odstavky = new OdstavkyViewModel
             {
                 DieslovaniMod = detail,
-                // Můžeš také přidat další informace, které chceš zobrazit v detailu
             };
 
-            // Předání modelu do zobrazení
             return View(odstavky);
         }
 
@@ -143,8 +121,6 @@ namespace Diesel_modular_application.Controllers
             if (dieslovani == null)
             {
                 Debug.WriteLine($"Dieslovani nenalezeno");
-
-                
                 return null;
             }
             else
@@ -378,7 +354,6 @@ namespace Diesel_modular_application.Controllers
 
                         dis.Technik.Taken=false;
                     }
-                  //  Debug.WriteLine($"Technik je odebrán od tété odstávky: {odstavka.IdOdstavky} a je přivázán k tété {anotherDiesel.Odstavka.IdOdstavky}");
                     dis.Odchod=DateTime.Now;
                     _context.Update(dis);
                 }
@@ -500,11 +475,32 @@ namespace Diesel_modular_application.Controllers
         }
         public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
-            int totalRecords = _context.DieslovaniS.Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma).Count();
+           
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id;
+            
+            
+            bool isTechnik = await _userManager.IsInRoleAsync(currentUser, "Engineer");
+
+
+            IQueryable<TableDieslovani> query = _context.DieslovaniS
+            .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+            .Include(t => t.Technik).ThenInclude(t => t.Firma).Include(t=>t.Technik).ThenInclude(t=>t.User);
+
+            if (isTechnik)
+            {
+                query = query.Where(d => d.Technik.User.Id == userId);
+                Debug.WriteLine($"Filtrování: {query}");
+
+            }
+
+
+
+            int totalRecords = await query.CountAsync();    
             length = totalRecords;
-            var DieslovaniRunningList = await _context.DieslovaniS
-            .Include(o => o.Odstavka).ThenInclude(o=>o.Lokality).ThenInclude(o=>o.Region).Include(t=>t.Technik).ThenInclude(t=>t.Firma)
-            .OrderBy(o=>o.Odstavka.Od)
+
+            var DieslovaniRunningList = await query
+            .OrderBy(o => o.Odstavka.Od)
             .Skip(start)
             .Take(length)
             .Select(l=> new{
