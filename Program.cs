@@ -62,9 +62,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 
+app.UseAuthorization();
 
 app.UseMiddleware<RedirectToLoginMiddleware>();
-app.UseAuthorization();
+
 
 app.MapControllerRoute(
 

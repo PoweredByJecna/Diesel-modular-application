@@ -17,7 +17,7 @@ namespace Diesel_modular_application.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(Login login)
         {
             return View(); 
         }
@@ -37,8 +37,8 @@ namespace Diesel_modular_application.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Redirect("/Dieslovani/Index");
+                     ModelState.AddModelError(string.Empty, "Špatné heslo nebo uživatelské jméno");
+                      return View(model);  
                 }
             }
             return View("Index", model);
