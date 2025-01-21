@@ -128,16 +128,34 @@ menuToggle.addEventListener('click', () => {
         ]);
     }
     function Vstup(idDieslovani) {
-        console.log("Vstup na lokalitu ID:", idDieslovani);
-        ajaxAction('/Dieslovani/Vstup', { idDieslovani: idDieslovani }, [
-            '#allTable',
-            '#upcomingTable',
-            '#endTable',
-            '#runningTable',
-            '#thrashTable'
+        // Zobrazí modal pro potvrzení akce (můžeš použít svůj vlastní modal)
+        $('#confirmModal').modal('show'); // Toto je pro Bootstrap modal, pokud používáš jiný, uprav podle potřeby.
+    
+        // Po kliknutí na tlačítko "Potvrdit" ve tvém modalu
+        $('#confirmButton').off('click').on('click', function() {
+            // Po potvrzení akce odešleme AJAX požadavek na server
+            console.log("Vstup na lokalitu ID:", idDieslovani);
             
-        ]);
+            // Zavoláme AJAX metodu
+            ajaxAction('/Dieslovani/Vstup', { idDieslovani: idDieslovani }, [
+                '#allTable',
+                '#upcomingTable',
+                '#endTable',
+                '#runningTable',
+                '#thrashTable'
+            ]);
+            
+            // Zavře modal po potvrzení
+            $('#confirmModal').modal('hide');
+        });
+    
+        // Pokud uživatel klikne na "Zrušit", zavře se modal a nic se neprovádí
+        $('#cancelButton').off('click').on('click', function() {
+            $('#confirmModal').modal('hide');
+            console.log("Akce byla zrušena.");
+        });
     }
+    
     function Odchod(idDieslovani) {
         console.log("Odchod z lokality ID:", idDieslovani);
         ajaxAction('/Dieslovani/Odchod', { idDieslovani: idDieslovani }, [
