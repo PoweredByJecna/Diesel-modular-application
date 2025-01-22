@@ -66,15 +66,10 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
-
-
-
-
-
-
-
-
+#lokalityTable_wrapper
+{
+  height: 715px !important;
+}
 
 .button-odstavka
 {

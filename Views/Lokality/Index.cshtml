@@ -3,8 +3,10 @@
 <body>
     <div class="conteiner" id="con">
         <div class="tables-row" style="justify-content: center">
-            <h2>Lokality:</h2>
             <div class="table-div odstavkyTable">
+                <div class="name">
+                    <h2 style="padding-right:20px; color: black;">Lokality <i class="fa-solid fa-tower-cell"></i></h2>
+                </div>
                 <table id="lokalityTable" style="margin-bottom: 15px;">
                     <thead>
                         <tr>
@@ -133,28 +135,7 @@
     
 
 
-        <script>
-            fetch('./assets/czech-republic.svg')
-            .then(response => {
-            if (!response.ok) {
-            throw new Error(`HTTP chyba! Stav: ${response.status}`);
-            }
-            return response.text();
-            })
-            .then(svgContent => {
-            document.getElementById('map-container').innerHTML = svgContent;
-            })
-            .catch(error => console.error('Chyba při načítání SVG:', error));
-
-            document.getElementById('map-container').addEventListener('click', function (event) {
-            if (event.target.tagName === 'path') {
-            const clickedRegion = event.target;
-            clickedRegion.style.fill = 'red'; // Změna barvy kliknuté oblasti
-            alert(`Klikli jste na: ${clickedRegion.id}`);
-            }
-            });
-        </script>
-                
+   
 
    
 </body>

@@ -10,21 +10,37 @@
 
 .div-odstavka-create{
     display: flex;
+    height: 100%;
+    background-color: white;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 95%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-radius: 5px;
+
 }
-.form-odstavky{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    background-color: white;
-  
+
+.suggestion-item {
+    padding: 5px;
+    cursor: pointer;
 }
+.lokalita-sugg{
+    position: absolute;
+    background: white;
+    border: 1px solid rgb(203, 208, 221);
+    display: none;
+    top: 44px;
+    right: 0px;
+    z-index: 3;
+    width: 214px;
+    height: 90px;
+    overflow: auto;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+    
 input:focus{
     outline: none;
 }
@@ -38,13 +54,9 @@ input{
     border-radius: 5px;
     border: 1px solid #cbd0dd;;
 }
-.div-form{
-    display: flex;   
-    align-items: baseline;
-    justify-content:center;
-    border-radius: 10px;
-    width: 50%;
-
+form div{
+    display: grid;
+    margin-bottom: 10px;
 }
 .form{
     display: flex;
@@ -71,21 +83,16 @@ width: 70%;
     height: 100px;
 }
 .button{
-    padding: 15px;
+    padding: 10px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     color: white;
+    margin-top: 10px;
     background-color: rgb(0, 17, 255);
 }
 
-.button:hover{
-   
-    border-color: transparent;
-    scale: 1.05;
-    transition: 0.3s;
-    
-}
+
 .text-button{
     font-style:inherit;
     font-size: larger;

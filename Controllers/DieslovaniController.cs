@@ -72,7 +72,7 @@ namespace Diesel_modular_application.Controllers
             return View(odstavky);
         }
 
-        public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableLokality lokalitaSearch, DateTime od, DateTime do_, OdstavkyViewModel odstavky, string popis, TableOdstavky newOdstavka, HandleOdstavkyDieslovaniResult result)
+        public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableOdstavky newOdstavka, HandleOdstavkyDieslovaniResult result)
         {
            
             

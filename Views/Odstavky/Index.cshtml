@@ -58,35 +58,31 @@
                 </div>
             </div>
             <div class="tables-row">
-                <div class="section small OdstavkyView" style="flex-direction: row; width: 20%; flex: none;">
+                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;">
                     <div class="div-odstavka-create">
-                        <form asp-action="Create" asp-controller="Odstavky" class="form-odstavky" style="border-radius: 5px;">
-                            <div class="form">
-                                <h2>Vytvořit odstávku:</h2>
-                                <label>Lokalita:</label>
-                                <div class="div-form">
-                                    <input asp-for="AddOdstavka.Lokality.Lokalita" type="text" class="input odstavky">
+                            <form>
+                                <h2 style="color: black;">Odstávka - ruční založení</h2>
+                                <div style="position: relative;">
+                                    <label>Lokalita:</label>
+                                    <input id="lokalita" type="text" class="input odstavky" onkeyup="suggestLokalita()" autocomplete="off">
+                                    <div id="lokality-suggestions" class="lokalita-sugg"style="position: absolute; background: white; border: 1px solid #cbd0dd; display: none;"></div>  
                                 </div>
-                            </div>
-                            <div class="form">
-                                <label>Od:</label>
-                                <input type="datetime-local" asp-for="AddOdstavka.Od" class="input odstavky"> 
-                            </div>
-                            <div class="form">
-                                <label>Do:</label>
-                                <input type="datetime-local" asp-for="AddOdstavka.Do" class="input odstavky">
-                            </div>
-                            <div class="form">
-                                <label>Popis:</label>
-                            
-                                <textarea type="text" style="border-color:#cbd0dd; border-radius:5px;  "class="input-text" asp-for="AddOdstavka.Popis" class="input odstavky"></textarea>
-                            </div>
-                            
-                            <button type="submit" class="button"><a class="text-button">Vytvořit</a></button>
-                            <div class="alert alert-success">
-                            @TempData["Zprava"]
-                            </div>
-                        </form>
+                                <div>
+                                    <label>Od:</label>
+                                    <input id="od" type="datetime-local"  class="input odstavky"> 
+                                </div>
+                                <div>
+                                    <label>Do:</label>
+                                    <input id="do" type="datetime-local"  class="input odstavky">
+                                </div>
+                                <div>
+                                    <label>Popis:</label>
+                                    <textarea id="popis" type="text" style="border-color:#cbd0dd; border-radius:5px; min-width: 100%;" class="input odstavky"></textarea>
+                                </div>
+                                
+                                <button type="button" class="button" onclick="CreateOdstavku()">Vytvořit</button>
+                            </form>
+                      
                     </div>
                 </div>
                 <div class="section small OdstavkyView" style="width: 70%">

@@ -37,7 +37,7 @@
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
                                     <a asp-action="Index" asp-controller="Dieslovani" class="a-sidebar" style="padding-left: 0px;">
-                                        <i class="fa-solid fa-house-chimney-window navA"></i>
+                                        <i class="fa-solid fa-gas-pump fa-sm navA"></i>
                                         <span class="sb">Dieslovaní</span>  
                                     </a>
                                 </li>
@@ -85,29 +85,26 @@
                                 </li>
                                 
                                  <ul class="ul-sidebar">
-                                    <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="regiony" class="a-sidebar">
-                                            <i class="fa-solid fa-earth-europe fa-sm navA"></i>
-                                            <span class="sb">Regiony</span> 
-                                        </a>
-                                    </li>
+
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="lokality" class="a-sidebar" >
                                             <i class="fa-solid fa-globe fa-sm navA"></i>
                                             <span class="sb">Všechny Lokality</span> 
                                         </a>
                                     </li>
+
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="regiony" class="a-sidebar">
+                                            <i class="fa-solid fa-earth-europe fa-sm navA"></i>
+                                            <span class="sb">Regiony</span> 
+                                        </a>
+                                    </li>
+                               
                                  
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Lokality" asp-fragment="firmy" class="a-sidebar">
                                             <i class="fa-solid fa-building fa-sm navA"></i>
                                             <span class="sb">Firmy</span> 
-                                        </a>
-                                    </li>
-                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" >
-                                            <i class="fa-solid fa-map fa-sm navA"></i>
-                                            <span class="sb">Mapa</span> 
                                         </a>
                                     </li>
                                 </ul>
@@ -132,7 +129,7 @@
                                     <li class="li-sidebar">
                                         <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
                                             <i class="fa-regular fa-square-plus fa-sm navA"></i>
-                                            <span class="sb">Vytvořit odstávku</span> 
+                                            <span class="sb">Odstávka - ruční založení</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
@@ -191,13 +188,12 @@
                 </div>
 
                   
-                <!-- Potvrzovací Modal pro akci -->
-                <div id="confirmActionModal" class="modal">
-                    <div id="modalContent" class="modal-content">
-                        <span id="closeConfirmModal" class="close">&times;</span>
-                        <p>Opravdu chcete provést tuto akci?</p>
-                        <button id="confirmButton">Potvrdit</button>
-                        <button id="cancelButton">Zrušit</button>
+                <div id="confirmModal" class="modal-confirm-modal">
+                    <div id="confirmModalContent" class="modal-content-confirm">
+                        <span id="closeConfirmModal" class="closeConfirm">&times;</span>
+                        <p id="confirmModalText"></p>
+                        <button id="confirmBtn">Potvrdit</button>
+                        <button id="cancelBtn">Zrušit</button>
                     </div>
                 </div>
 

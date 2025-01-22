@@ -73,16 +73,82 @@ namespace Diesel_modular_application.Controllers
             
             return View("Index", odstavky);
         }
- 
-        public async Task<TableDieslovani> Create(OdstavkyViewModel odstavky)
+
+        public async Task<IActionResult> suggestLokalita(string query)
         {
+            var lokalities = await _context.LokalityS
+            .Where(l => l.Lokalita.Contains(query))
+            .Select(l => l.Lokalita)
+            .Take(10)
+            .ToListAsync();
+
+            return Json(lokalities);
+        }
+ 
+        public async Task<IActionResult> Create(string lokalita, DateTime od, DateTime DO, string popis)
+        {
+            try{
+            var result = new HandleOdstavkyDieslovaniResult();
+
+            Debug.WriteLine($"Lokalita je:{lokalita}");
+
             var lokalitaSearch = await _context.LokalityS
             .Include(l => l.Region)
             .ThenInclude(r => r.Firma)
-            .FirstOrDefaultAsync(input => input.Lokalita == odstavky.AddOdstavka.Lokality.Lokalita);
+            .FirstOrDefaultAsync(l=>l.Lokalita==lokalita);
 
-            // var dieslovani = await _dieslovani.HandleOdstavkyDieslovani(lokalitaSearch, odstavky.AddOdstavka.Od, odstavky.AddOdstavka.Do, odstavky, odstavky.AddOdstavka.Popis, newOdstavka, result);
-            return null; //upravit
+            if (lokalitaSearch == null)
+            {
+                return Json(new { success = false, message = "Lokalita nenalezena." });
+            }
+
+            result = OdstavkyCheck(lokalitaSearch,od,DO, result);
+
+            if (!result.Success)
+            {
+                return Json(new { success = false, message = result.Message });
+            }
+                
+
+            string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
+
+
+            var newOdstavka = CreateNewOdstavka(lokalitaSearch, distrib, od, DO, popis);
+            try
+            {
+                _context.OdstavkyS.Add(newOdstavka);
+                await _context.SaveChangesAsync();
+                result.Odstavka = newOdstavka;
+                result.Message = "Odstávka byla úspěšně vytvořena.";
+                Debug.WriteLine($"Id odstavky: {newOdstavka.IdOdstavky}");
+            }
+            catch (Exception)
+            {
+                result.Success = false;
+                result.Message = "Chyba při ukládání do databáze";
+                return Json(new { success = false, message = result.Message });
+
+            }
+            result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
+
+            if (!result.Success)
+                {
+                    return Json(new { success = false, message = result.Message });
+                }
+                
+                return Json(new
+                {
+                    success = true,
+                    message = result.Message,
+                    odstavkaId = result.Odstavka?.IdOdstavky,
+                    dieslovaniId = result.Dieslovani?.IdDieslovani
+                }); 
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Neočekávaná chyba: {ex.Message}" });
+            }
+           
         }
         
 
@@ -158,8 +224,8 @@ namespace Diesel_modular_application.Controllers
                 var do_ = DateTime.Today.AddHours(hours + 8);
 
                 Debug.WriteLine($"Odstavka kontrola");    
-                result = OdstavkyCheck(lokalitaSearch,od,do_, result);
 
+                result = OdstavkyCheck(lokalitaSearch,od,do_, result);
                 if (!result.Success)
                 {
                     return Json(new { success = false, message = result.Message });
@@ -184,7 +250,7 @@ namespace Diesel_modular_application.Controllers
 
 
 
-                result = await _dieslovani.HandleOdstavkyDieslovani(lokalitaSearch, DateTime.Today.AddHours(hours + 2), DateTime.Today.AddHours(hours + 8), odstavky, popis, newOdstavka, result);
+                result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
 
                 if (!result.Success)
                 {
@@ -269,6 +335,7 @@ namespace Diesel_modular_application.Controllers
                 Debug.WriteLine($"Již existuje odstávka na " + od);
                 result.Success = false;
                 result.Message = "Již existuje jiná odstávka.";
+                Debug.WriteLine("result je:" + result);
                 return result;
 
             }

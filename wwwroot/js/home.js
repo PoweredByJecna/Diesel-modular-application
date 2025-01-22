@@ -117,43 +117,39 @@ menuToggle.addEventListener('click', () => {
         reloadTables();
     }
 
-   function deleteRecordDieslovani(idDieslovani) {
-        console.log("Mazání záznamu s ID:", idDieslovani);
-        ajaxAction('/Dieslovani/Delete', { idDieslovani: idDieslovani }, [
+   function deleteRecordDieslovani(element, idDieslovani) {
+    const row = $(element).closest('tr');
+    const offset = row.offset();
+    var cislo1 = 50;
+    var cislo2=100;
+
+    $('#confirmModal').css({
+        top: cislo1 + offset.top + row.height() + 'px',  // Umístění pod řádek
+        left: cislo2 + offset.left + 'px',
+        position: 'absolute'
+    });
+
+    showConfirmModal('Opravdu chcete smazat tento záznam?', function() {
+    console.log("Mazání záznamu s ID:", idDieslovani);
+    ajaxAction('/Dieslovani/Delete', { idDieslovani: idDieslovani }, [
+        '#allTable',
+        '#upcomingTable',
+        '#endTable',
+        '#runningTable',
+        '#thrashTable'
+    ]);
+});
+
+    }
+    function Vstup(idDieslovani) {
+        console.log("Vstup z lokality ID:", idDieslovani);      
+        ajaxAction('/Dieslovani/Vstup', { idDieslovani: idDieslovani }, [
             '#allTable',
             '#upcomingTable',
             '#endTable',
             '#runningTable',
             '#thrashTable'
         ]);
-    }
-    function Vstup(idDieslovani) {
-        // Zobrazí modal pro potvrzení akce (můžeš použít svůj vlastní modal)
-        $('#confirmModal').modal('show'); // Toto je pro Bootstrap modal, pokud používáš jiný, uprav podle potřeby.
-    
-        // Po kliknutí na tlačítko "Potvrdit" ve tvém modalu
-        $('#confirmButton').off('click').on('click', function() {
-            // Po potvrzení akce odešleme AJAX požadavek na server
-            console.log("Vstup na lokalitu ID:", idDieslovani);
-            
-            // Zavoláme AJAX metodu
-            ajaxAction('/Dieslovani/Vstup', { idDieslovani: idDieslovani }, [
-                '#allTable',
-                '#upcomingTable',
-                '#endTable',
-                '#runningTable',
-                '#thrashTable'
-            ]);
-            
-            // Zavře modal po potvrzení
-            $('#confirmModal').modal('hide');
-        });
-    
-        // Pokud uživatel klikne na "Zrušit", zavře se modal a nic se neprovádí
-        $('#cancelButton').off('click').on('click', function() {
-            $('#confirmModal').modal('hide');
-            console.log("Akce byla zrušena.");
-        });
     }
     
     function Odchod(idDieslovani) {
@@ -212,6 +208,71 @@ menuToggle.addEventListener('click', () => {
             });
         });
     });
+
+    function CreateOdstavku() {
+        var lokalita = document.getElementById('lokalita').value;
+        var od = document.getElementById('od').value;
+        var DO = document.getElementById('do').value;
+        var popis = document.getElementById('popis').value;
+    
+        console.log("Převzetí odstávky:", { lokalita, od, DO, popis }); // Ladicí výstup
+    
+        $.ajax({
+            url: '/Odstavky/Create',
+            type: 'POST',
+            data: {
+                lokalita: lokalita,
+                od: od,
+                do: DO,
+                popis: popis
+            },
+            success: function (response) {
+                if (response.success) {
+                    showModal(response.message, true);
+                    reloadTables();
+                } else {
+                    showModal(response.message, false);
+                }
+            },
+            error: function () {
+                showModal('Došlo k chybě při komunikaci se serverem.', false);
+            }
+        });
+    }
+
+    function suggestLokalita() {
+        var lokalita = document.getElementById('lokalita').value;
+        if (lokalita.length <= 1) {
+            document.getElementById('lokality-suggestions').style.display = 'none';
+            return;
+        }
+    
+        $.ajax({
+            url: '/Odstavky/suggestLokalita',
+            type: 'GET',
+            data: { query: lokalita },
+            success: function (data) {
+                var suggestions = document.getElementById('lokality-suggestions');
+                suggestions.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(function (item) {
+                        var div = document.createElement('div');
+                        div.innerHTML = item;
+                        div.classList.add('suggestion-item');
+                        div.onclick = function () {
+                            document.getElementById('lokalita').value = item;
+                            suggestions.style.display = 'none';
+                        };
+                        suggestions.appendChild(div);
+                    });
+                    suggestions.style.display = 'block';
+                } else {
+                    suggestions.style.display = 'none';
+                }
+            }
+        });
+    }
+    
     
     
     
@@ -241,6 +302,37 @@ menuToggle.addEventListener('click', () => {
             }
         });
     }
+
+
+    function showConfirmModal(message, onConfirm) {
+        const confirmModal = $('#confirmModal');
+        const confirmModalText = $('#confirmModalText');
+        
+        confirmModalText.text(message);
+        confirmModal.fadeIn();
+        
+        $('#confirmBtn').off('click').on('click', function () {
+            confirmModal.fadeOut();
+            if (onConfirm && typeof onConfirm === 'function') {
+                onConfirm();
+            }
+        });
+        
+        $('#cancelBtn').off('click').on('click', function () {
+            confirmModal.fadeOut();
+        });
+        
+        $('#closeConfirmModal').on('click', function () {
+            confirmModal.fadeOut();
+        });
+    
+        $(window).on('click', function (event) {
+            if ($(event.target).is(confirmModal)) {
+                confirmModal.fadeOut();
+            }
+        });
+    }
+    
     
     function reloadTables() {
         $('#upcomingTable').DataTable().ajax.reload();
@@ -717,7 +809,7 @@ menuToggle.addEventListener('click', () => {
             }
         }
     ],
-        pageLength: 9,
+        pageLength: 20,
         lengthChange: false,  
         ordering: false
         }).on('draw', function () {
@@ -1184,7 +1276,7 @@ menuToggle.addEventListener('click', () => {
                 data: null,
                 render: function (data, type, row) {
                     return `       
-                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecordDieslovani(${row.idDieslovani})">
+                    <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecordDieslovani(this, ${row.idDieslovani})">
                         <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
                         <i class="fa-solid fa-xmark"></i>
                     </span>  
