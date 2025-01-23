@@ -37,11 +37,11 @@ namespace Diesel_modular_application.Services
         RegionName = region,
     
         Count = odstavkyList.Count(o =>
-        o.Lokality.Region.NazevRegionu == region), 
+        o.Lokality?.Region?.NazevRegionu == region), 
 
       
         Percentage = totalOdstavky == 0 ? 0 : (double)odstavkyList.Count(o =>
-        o.Lokality.Region.NazevRegionu == region) / totalOdstavky * 100,
+        o.Lokality?.Region?.NazevRegionu == region) / totalOdstavky * 100,
 
 
         StatusColor = totalOdstavky == 0 ? "gray" : "green" // Změňte na podmínky pro jiné barvy podle potřeby

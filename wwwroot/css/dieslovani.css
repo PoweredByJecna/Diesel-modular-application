@@ -98,116 +98,65 @@ table.dark-mode {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.year-stats {
-	white-space: nowrap;
-	overflow: hidden;
-    max-width: 95%;
+
+.formDieslovani div{
+    margin: 15px;
     display: flex;
-    overflow-x: auto;
+    padding: 10px;
+    border-bottom: 1px solid grey;
+    justify-content: flex-start;
 }
-
-
-.month-group {
-	cursor: pointer;
-	height: 110px;
-	margin: 10px;
-	display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+.formDieslovani div p{
+    margin: 2px;
+    padding: 5px;
+    display: flex;
+    margin-right: 80px;
     align-items: center;
 }
 
-.bar {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-	width: 11px;
-}
-
-.month-group:hover .bar,
-.selected .bar {
-	background: #5397d6;
-}
-
-.h-0 {
-	height: 1%;
-}
-.h-50 {
-	height: 50%;
-}
-.h-75 {
-	height: 75%;
-}
-
-.stats-info {
-	margin-top: 15px;
-    margin-bottom: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	position: relative;
-    max-width: 95%;
-    height: 160px;
-    overflow-y: auto;
-}
-
-.graph-container {
-	position: relative;
-}
-
-.percent {
-	display: block;
-	width: 120px;
-	height: 120px;
-}
-
-.circle {
-	stroke: white;
-	fill: none;
-	stroke-width: 3;
-}
-.circle:nth-child(1){
-    stroke: #915db1;
-}
-.circle:nth-child(2) {
-	stroke: #e59f3c;
-}
-.circle:nth-child(3) {
-	stroke: #5397d6;
-}
-.circle:nth-child(4) {
-	stroke: #0f1783;
-}
-.circle:nth-child(5) {
-	stroke: #4cc790;
-}
-.circle:nth-child(6) {
-	stroke: red;
-}
-.graph-container p {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 12px;
-	color: black;
-	text-align: center;
-}
-
-.info p {
-	margin-bottom: 10px;
-}
-
-
-
-.info{
+.detail {
+    width: 95%;
+    padding: 5px;
     display: flex;
-    justify-content: center;
-    flex-direction: row;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: center;
 }
-.region-sctn{
+
+.infowrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.info{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
-
+.formInfo div{
+    margin: 5px;
+    display: flex;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+    justify-content: flex-start;
+}
+.formInfo div p{
+    margin: 2px;
+    padding: 5px;
+    display: flex;
+    margin-right: 5px;
+    align-items: center;
+}
+.formInfo{
+    padding: 10px;
+}
 
 /*TABULKY*/
 /* Skrytí výchozích ikon DataTables */

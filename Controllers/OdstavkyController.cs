@@ -26,13 +26,14 @@ namespace Diesel_modular_application.Controllers
         private readonly DieslovaniController _dieslovani;
         private readonly OdstavkyService _odstavkyService;
 
+
+
         public OdstavkyController(DAdatabase context, OdstavkyService odstavkyService, DieslovaniController dieslovani)
         {
             _context = context;
             _odstavkyService = odstavkyService;
             _dieslovani = dieslovani;
         }
-        private List<string> Zpravy { get; set; } = new List<string>();
 
         [Authorize]
         public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
@@ -74,7 +75,7 @@ namespace Diesel_modular_application.Controllers
             return View("Index", odstavky);
         }
 
-        public async Task<IActionResult> suggestLokalita(string query)
+        public async Task<IActionResult> SuggestLokalita(string query)
         {
             var lokalities = await _context.LokalityS
             .Where(l => l.Lokalita.Contains(query))
@@ -271,7 +272,11 @@ namespace Diesel_modular_application.Controllers
             }
         }
 
-        
+        public IActionResult GetOdstavkyData()
+        {
+            var stats = _odstavkyService.GetRegionStats();
+            return Ok(stats);
+        }
 
 
         private bool ISvalidDateRange(DateTime od, DateTime Do)

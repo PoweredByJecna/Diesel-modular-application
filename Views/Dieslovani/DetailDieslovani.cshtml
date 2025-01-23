@@ -2,52 +2,112 @@
 <div class="conteiner" id="con">
     <div class="tables-row">
         
-        <div class="section small" style="flex: none; width: 25%; height: 350px;" >
-            <h1>Detail Dieslovani</h1>
-            <p>ID dieslovani: @Model.DieslovaniMod.IdDieslovani</p>
-            <p>ID odstávky: @Model.DieslovaniMod.Odstavka.IdOdstavky</p>
-            <p>Lokalita: @Model.DieslovaniMod.Odstavka.Lokality.Lokalita</p>
-            <p>Klasifikace: @Model.DieslovaniMod.Odstavka.Lokality.Klasifikace </p>
-            <p>Výdrž baterie: @Model.DieslovaniMod.Odstavka.Lokality.Baterie min</p>
-            <p>Region: @Model.DieslovaniMod.Odstavka?.Lokality?.Region?.NazevRegionu</p>
-            <p>Technik: @Model.DieslovaniMod.Technik?.Jmeno  @Model.DieslovaniMod.Technik?.Prijmeni</p>
-
+        <div class="section small" style="flex: none; width: 30%; display:flex; align-items: center;" >
+            <div class="detail diesel">
+                <h1>Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h1>
+                <div class="formDieslovani">
+                    <div>
+                        <p><i class="fa-solid fa-key fa-lg fa-sm navA"></i>ID dieslovani: @Model.DieslovaniMod.IdDieslovani</p>
+                    </div>
+                    <div>
+                        <p> <i class="fa-solid fa-info fa-lg fa-sm navA"></i> ID odstávky: @Model.DieslovaniMod.Odstavka.IdOdstavky</p>
+                    </div>
+                    <div>
+                        <p><i class="fa-solid fa-tower-broadcast fa-lg fa-sm navA"></i> Lokalita: @Model.DieslovaniMod.Odstavka.Lokality.Lokalita</p>
+                    </div>
+                    <div>
+                        <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Adresa: @Model.DieslovaniMod.Odstavka.Lokality.Adresa </p>
+                    </div>
+                    <div>
+                        <p><i class="fa-solid fa-info fa-lg fa-sm navA"></i> Klasifikace: @Model.DieslovaniMod.Odstavka.Lokality.Klasifikace </p>
+                    </div>
+                    <div>              
+                        <p><i class="fa-solid fa-battery-full fa-lg fa-sm navA"></i> Výdrž baterie: @Model.DieslovaniMod.Odstavka.Lokality.Baterie min</p>
+                    </div>
+                    <div>
+                        <p><i class="fa-solid fa-earth-europe fa-lg fa-sm navA"></i> Region: @Model.DieslovaniMod.Odstavka?.Lokality?.Region?.NazevRegionu</p>
+                    </div>
+                    <div>
+                        <p> <i class="fa-regular fa-circle-user fa-2xl fa-sm navA"></i> Technik: @Model.DieslovaniMod.Technik?.Jmeno  @Model.DieslovaniMod.Technik?.Prijmeni</p>
+                    </div>
+                </div>
+            </div>
 
         </div>
-        <div class="section small" style="flex: none; width: 75%; height: 350px;">
-            <div class="bodybatery">
-                <div class="diagram">
-                    <div class="component">
-                        <div class="icon">Mains</div>
-                        <div>233V</div>
-                    </div>
-                    <div class="connector">
-                        <div class="currentt">33A</div>
-                    </div>
-                    <div class="component">
-                        <div class="icon">Rectifier</div>
-                        <div>2kW</div>
-                    </div>
-                    <div class="connector">
-                        <div class="currentt">20.2A</div>
-                
-                    </div>
-                    <div class="component">
-                        <div class="icon">DC</div>
-                    </div>
-                
-                    <div class="batteryconnector">
-                        <div class="connector battery">
-                        </div> 
-                        <div class="battery">
-                            <div class="icon"></div>
-                            <div class="status">Auto EQ Charge 41%</div>
-                        </div>
-                    </div>
+        <div class="section small" style="flex: none; width: 70%;">
+            <div class="detail energy">
+                <h1>Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h1>
 
+                <div class="infowrapper">
+                    
+                    <div class="info battery">
+                        <h1>Battery info</h1>
+                        <div style="padding: 10px">
+                            <i class="fa-solid fa-battery-full fa-2xl"></i>
+                        </div>
+                        <div class="formInfo">
+                            <div>
+                                <p>battery float charge: 100%</p>
+                            </div>
+                            <div>
+                                <p>Time remains: 125 min</p>
+                            </div>
+                            <div>
+                                <p>Output voltage: 55V</p>
+                            </div>
+                            <div>
+                                <p>Output Current: 17A</p>
+                            </div>
+                        </div>
+                    
+
+                    </div>
+                    <div class="info dc">
+                        <h1>DC info</h1>
+                        <div style="padding: 10px">
+                            <i class="fa-solid fa-power-off fa-2xl"></i>
+                        </div>
+                        <div class="formInfo">  
+                            <div>
+                                <p>L1: 230 V</p>
+                            </div>
+                            <div>    
+                                <p>L2: 230 V</p>
+                            </div>
+                            <div>
+                                <p>L3: 230 V</p>
+                            </div>
+                            <div>
+                                <p>Product model: MB30B</p>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="info DA ">
+                        <h1>DA info</h1>
+                        <div style="padding: 10px"> 
+                            <i class="fa-solid fa-gas-pump fa-2xl"></i>
+                        </div>
+                        <div class="formInfo"> 
+                            <div>
+                                <p>DA-IS-RUNINNG </p>
+                            </div>
+                            <div>
+                                <p>DA-model: </p>
+                            </div>
+                            <div>
+                                <p>Spotřeba: </p>
+                            </div>
+                        </div>
+                       
+                    </div>
                 </div>
-            </div>  
+            </div>
         </div>   
+
+
+
+
         <div class="tables-row" style="width: 100%; justify-content: center;">
             <div class="table-div odstavkyTable">
                 <div class="name">

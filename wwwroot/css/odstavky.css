@@ -19,6 +19,9 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
 }
+#odTable{
+    height: 600px !important;
+}
 
 .suggestion-item {
     padding: 5px;

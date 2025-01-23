@@ -121,13 +121,13 @@
                                 </li>
                                  <ul class="ul-sidebar">
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar">
+                                        <a asp-action="Index" asp-controller="Odstavky" asp-fragment="OdstavkyTable" class="a-sidebar">
                                             <i class="fa-solid fa-globe fa-sm navA"></i>
                                             <span class="sb">Všechny Odstávky</span> 
                                         </a>
                                     </li>
                                     <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
+                                        <a asp-action="Index" asp-controller="Odstavky" asp-fragment="handleOdstavka"  class="a-sidebar" style="text-decoration: none;display: flex; flex-direction: row;">
                                             <i class="fa-regular fa-square-plus fa-sm navA"></i>
                                             <span class="sb">Odstávka - ruční založení</span> 
                                         </a>
@@ -191,24 +191,16 @@
                 <div id="confirmModal" class="modal-confirm-modal">
                     <div id="confirmModalContent" class="modal-content-confirm">
                         <span id="closeConfirmModal" class="closeConfirm">&times;</span>
+                        <span id="infoConfirmModal" class="infoconModal"><i class="fa-solid fa-circle-info"></i></span>
                         <p id="confirmModalText"></p>
-                        <button id="confirmBtn">Potvrdit</button>
-                        <button id="cancelBtn">Zrušit</button>
+                        <button id="confirmBtn">Ano</button>
+                        <button id="cancelBtn">Ne</button>
                     </div>
-                </div>
-
-
-                    
-
-                    
-
-
-                            
-                    @if(User.Identity?.IsAuthenticated==true)
-                    {
-                        @RenderBody()
-                    }
-
+                </div>        
+                @if(User.Identity?.IsAuthenticated==true)
+                {
+                    @RenderBody()
+                }
                 </div>
             </div> 
         }  
@@ -216,6 +208,10 @@
             
             @await RenderSectionAsync("Scripts", required: false)
             <script src="~/js/Home.js"></script>
+            <script src="~/js/upcomingTable.js"></script>
+            <script src="~/js/endTable.js"></script>
+            <script src="~/js/chartOdstavky.js"></script>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
      
     </body>

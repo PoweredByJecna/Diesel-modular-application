@@ -5,7 +5,7 @@
         <div class="conteiner" id="con">
             <div class="tables-row" style="justify-content:center">
                 <div class="table-div odstavkyTable">
-                    <div class="name">
+                    <div class="name" id="OdstavkyTable">
                         <h2 style="padding-right:20px; color: black;">Všechny odstávky <i class="fa-solid fa-bolt"></i></h2>
                         <div>
                             <span class="legenda">
@@ -58,10 +58,10 @@
                 </div>
             </div>
             <div class="tables-row">
-                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;">
-                    <div class="div-odstavka-create">
+                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;" >
+                    <div class="div-odstavka-create" id="handleOdstavka">
                             <form>
-                                <h2 style="color: black;">Odstávka - ruční založení</h2>
+                                <h2 style="color: black;">Odstávka - ruční založení <i class="fa-solid fa-hand"></i></h2>
                                 <div style="position: relative;">
                                     <label>Lokalita:</label>
                                     <input id="lokalita" type="text" class="input odstavky" onkeyup="suggestLokalita()" autocomplete="off">
@@ -86,28 +86,20 @@
                     </div>
                 </div>
                 <div class="section small OdstavkyView" style="width: 70%">
-                    <div class="main-container OdstavkyView" >
-                        <div class="year-stats lok">
-                            <h3>Všechny odstávky: @Model.RegionStats.TotalOdstavky</h3>
-                            <div class="regions odstavky">
-                                @foreach (var region in Model.RegionStats.Regions)
-                                {
-                                    var percentage = region.Percentage;
-                                    var remainingPercentage = 100 - percentage; // Spočítáme, kolik zůstává do 100%
-                                    
-                                    <div class="month-group odstavky">
-                                        <div class="bar h-50" style="background-color: lightgrey; height:@remainingPercentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>
-                                        <div title="@region.Percentage%" class="bar h-50" style="background-color:blue ; height:@region.Percentage.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)%;"></div>  
-
-                                        <p class="p-lok">@region.RegionName</p>                       
-                                    </div>
-
-                                }
-                            </div>
-                        </div>          
+                        <div class="main-container OdstavkyView" >
+                            <div class="year-stats lok">
+                                <h3 id="total-odstavky">Všechny odstávky: Načítání...</h3>
+                                <div class="regions odstavky" id="odstavkyContainer">  
+                                </div>
+                        </div>
                     </div>   
                 </div>
+
+                
             </div>
+
+
+
             <div class="tables-row" style="justify-content:center; margin-top: 20px; margin-bottom: 20px;">
                 <div class="table-div odstavkyTable" id="tablepohotovosti">
                     <div class="name">
