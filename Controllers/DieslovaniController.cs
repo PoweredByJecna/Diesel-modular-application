@@ -18,21 +18,24 @@ namespace Diesel_modular_application.Controllers
 {
     public class DieslovaniController:Controller
     {
+
+        private readonly EmailController _emailService;
+
         private readonly DAdatabase _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        private readonly TableOdstavky _odstavky;
 
 
 
 
         
 
-        public DieslovaniController(DAdatabase context, UserManager<IdentityUser> userManager, TableOdstavky odstavky)
+        public DieslovaniController(DAdatabase context, UserManager<IdentityUser> userManager, EmailController emailServices)
         {
             _context = context;
             _userManager = userManager;
-            _odstavky = odstavky;
+     
+            _emailService = emailServices;
 
         }
         [Authorize]
@@ -87,7 +90,7 @@ namespace Diesel_modular_application.Controllers
             {
                 Debug.WriteLine($"Na lokalitě neni zasuvka");
                 result.Success = false;
-                result.Message = "Na lokalitě se není zásuvka.";
+                result.Message = "Na lokalitě není zásuvka.";
                 return result;
             }
             if(IsDieselRequired(newOdstavka.Lokality.Klasifikace,newOdstavka.Od, newOdstavka.Do, newOdstavka.Lokality.Baterie))
@@ -105,6 +108,7 @@ namespace Diesel_modular_application.Controllers
                 {
                     var dieslovani = await CreateNewDieslovaniAsync(newOdstavka, technikSearch);
                     result.Dieslovani = dieslovani;
+                    _emailService.SendEmail(dieslovani);
                     result.Message = "Dieslování bylo úspěšně vytvořeno.";
                 }
             }

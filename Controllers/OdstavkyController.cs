@@ -153,7 +153,7 @@ namespace Diesel_modular_application.Controllers
         }
         
 
-        private string DetermineDistributor(string NazevRegionu)
+        public string DetermineDistributor(string NazevRegionu)
         {
             return NazevRegionu switch
             {

@@ -17,7 +17,9 @@ public class EmailServices
 
     public async Task SendEmailAsync (string subject, string body)
     {
-        var emailSettings = _config.GetSection("EmailSetting");
+        var emailSettings = _config.GetSection("EmailSettings");
+
+
 
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress(emailSettings["SenderName"], emailSettings["SenderEmail"]));

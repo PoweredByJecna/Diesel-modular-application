@@ -39,12 +39,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DAdatabase>();
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
-builder.Services.AddScoped<DieslovaniController>();
-builder.Services.AddScoped<TableOdstavky>();
 builder.Services.AddSingleton<EmailServices>();
+
+
+
 
 
 
