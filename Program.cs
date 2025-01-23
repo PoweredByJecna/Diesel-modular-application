@@ -44,11 +44,12 @@ builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
 builder.Services.AddScoped<DieslovaniController>();
 builder.Services.AddScoped<TableOdstavky>();
+builder.Services.AddSingleton<EmailServices>();
+
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
