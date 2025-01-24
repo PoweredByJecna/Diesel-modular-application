@@ -2,6 +2,8 @@ using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using static Diesel_modular_application.Services.OdstavkyService;
+
 
 namespace Diesel_modular_application.Controllers
 {
@@ -17,11 +19,11 @@ namespace Diesel_modular_application.Controllers
         }
 
         [HttpPost("send")]
-        public async Task<IActionResult> SendEmail([FromBody] TableDieslovani dieslovani)
+        public async Task<IActionResult> SendEmail([FromBody] TableDieslovani dieslovani,string emailResult)
         {
             // Zavoláme metodu, která v EmailService sestaví 
             // text a předmět a e-mail odešle
-            await _emailService.SendDieslovaniEmailAsync(dieslovani);
+            await _emailService.SendDieslovaniEmailAsync(dieslovani, emailResult);
 
             // Vrátíme 200 OK
             return Ok(new { message = "E‑mail byl odeslán." });

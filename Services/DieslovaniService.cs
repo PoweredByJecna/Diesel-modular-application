@@ -77,8 +77,9 @@ namespace Diesel_modular_application.Services
                     var dieslovani = await CreateNewDieslovaniAsync(newOdstavka, technikSearch);
                     result.Dieslovani = dieslovani;
 
-                    // Odeslat e-mail (pokud je EmailController/Service funkční)
-                    _emailService.SendDieslovaniEmailAsync(dieslovani);
+                    var EmailResult="DA-ok";
+
+                    _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
 
                     result.Message = "Dieslování bylo úspěšně vytvořeno.";
                 }
@@ -320,6 +321,10 @@ namespace Diesel_modular_application.Services
                 }
 
                 await _context.SaveChangesAsync();
+                var EmailResult="da-del";
+                 _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
+
+
                 return (true, "Záznam byl úspěšně smazán.");
             }
             catch (Exception ex)

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Diesel_modular_application.Models; // kvůli TableDieslovani
+using static Diesel_modular_application.Services.OdstavkyService;
+
 
 namespace Diesel_modular_application.Services
 {
@@ -22,19 +24,37 @@ namespace Diesel_modular_application.Services
         /// Veřejná metoda, která bere dieslování a sama sestaví e‑mail
         /// (předmět a tělo) a odešle ho skrze SendEmailAsync
         /// </summary>
-        public async Task SendDieslovaniEmailAsync(TableDieslovani dieslovani)
+        public async Task SendDieslovaniEmailAsync(TableDieslovani dieslovani, string emailResult)
         {
-            // Sestavíme subject a body
-            var subject = $"Objednávka DA č. {dieslovani.IdDieslovani} " +
+            var subject="";
+             var body="";
+            if(emailResult=="DA-ok")
+            {
+                subject = $"Objednávka DA č. {dieslovani.IdDieslovani} " +
                           $"na lokalitu: {dieslovani.Odstavka?.Lokality?.Lokalita}";
 
-            var body = $@"
+            body = $@"
                 <h1>Dobrý den</h1>
                 <p>
                     Toto je objednávka DA na lokalitu: 
                     <strong>{dieslovani.Odstavka?.Lokality?.Lokalita}</strong>
                 </p>
             ";
+            }
+            else{
+                subject = $"Zrušení DA č. {dieslovani.IdDieslovani} " +
+                          $"na lokalitu: {dieslovani.Odstavka?.Lokality?.Lokalita}";
+
+            body = $@"
+                <h1>Dobrý den</h1>
+                <p>
+                    Toto je objednávka DA na lokalitu: 
+                    <strong>{dieslovani.Odstavka?.Lokality?.Lokalita}</strong>
+                </p>
+            ";
+
+            }
+            
 
             // A zavoláme níže uvedenou "obecnou" metodu
             await SendEmailAsync(subject, body);

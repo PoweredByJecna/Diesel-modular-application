@@ -385,6 +385,7 @@ namespace Diesel_modular_application.Services
             public string Message { get; set; } = "";
             public TableDieslovani? Dieslovani { get; set; }
             public TableOdstavky? Odstavka { get; set; }
+            public string EmailResult{get; set;} ="";
         }
     }
 
