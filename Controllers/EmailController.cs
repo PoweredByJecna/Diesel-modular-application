@@ -1,32 +1,30 @@
-using Diesel_modular_application.Controllers;
 using Diesel_modular_application.Models;
+using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-[Route("api/email")]
-[ApiController]
-public class EmailController : ControllerBase
+namespace Diesel_modular_application.Controllers
 {
-    private readonly EmailServices _emailService;
-    private readonly OdstavkyController _odstavky;
-
-    public EmailController(EmailServices emailService, OdstavkyController odstavky)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EmailController : ControllerBase
     {
-        _emailService = emailService;
-        _odstavky = odstavky;
-    }
+        private readonly EmailService _emailService;
 
-    [HttpPost("send")]
-    public async Task<IActionResult> SendEmail(TableDieslovani dieslovani)
-    {
-        
-        await _emailService.SendEmailAsync(
-        $"Objednávka DA č. {dieslovani.IdDieslovani} na lokalitu: {dieslovani.Odstavka.Lokality.Lokalita}",
-        $@"
-            <h1>Dobrý den</h1>
-            <p>Toto je objednávka DA na lokalitu: <strong>{dieslovani.Odstavka.Lokality.Lokalita}</strong></p>
-   
-        ");
-        return Ok();
+        public EmailController(EmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
+        [HttpPost("send")]
+        public async Task<IActionResult> SendEmail([FromBody] TableDieslovani dieslovani)
+        {
+            // Zavoláme metodu, která v EmailService sestaví 
+            // text a předmět a e-mail odešle
+            await _emailService.SendDieslovaniEmailAsync(dieslovani);
+
+            // Vrátíme 200 OK
+            return Ok(new { message = "E‑mail byl odeslán." });
+        }
     }
 }

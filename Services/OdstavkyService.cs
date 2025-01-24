@@ -1,17 +1,19 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 using Diesel_modular_application.Controllers;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using Microsoft.EntityFrameworkCore;
+using static Diesel_modular_application.Services.DieslovaniService;
 
 namespace Diesel_modular_application.Services
 {
     public class OdstavkyService
     {
         private readonly DAdatabase _context;
-        private readonly DieslovaniController _dieslovani; 
+        private readonly DieslovaniService _dieslovani; 
 
-        public OdstavkyService(DAdatabase context, DieslovaniController dieslovani)
+        public OdstavkyService(DAdatabase context, DieslovaniService dieslovani)
         {
             _context = context;
             _dieslovani = dieslovani;
@@ -115,7 +117,7 @@ namespace Diesel_modular_application.Services
                 }
 
                 // Zavoláme dieslování (pokud je potřeba)
-                result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
+                result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka,result);
                 return result;
             }
             catch (Exception ex)

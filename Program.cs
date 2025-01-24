@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
 using Diesel_modular_application.Services;
 using Diesel_modular_application.Controllers;
+using Diesel_modular_application.KlasifikaceRule;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
-builder.Services.AddSingleton<EmailServices>();
+builder.Services.AddSingleton<EmailService>();
+builder.Services.AddScoped<DieslovaniService>();
+
 
 
 
