@@ -11,6 +11,7 @@
 .div-odstavka-create{
     display: flex;
     height: 100%;
+    position: relative;
     background-color: white;
     justify-content: center;
     align-items: center;
@@ -48,26 +49,44 @@ input:focus{
     outline: none;
 }
 input{
-    border-radius: 10px;
-    border: none;
-    padding: 5px;       
+    
+    border: none;    
        
 }
 .input.odstavky{
-    border-radius: 5px;
-    border: 1px solid #cbd0dd;;
+   
+    border-bottom: 1px solid #cbd0dd;
+    padding: 10px
+
 }
-form div{
-    display: grid;
-    margin-bottom: 10px;
+.input.odstavky.textarea{
+    min-width: 95%;
+    min-height: 75px;
+    resize: none;
+    border-bottom: 1px solid #cbd0dd;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: #80808017;
+
 }
-.form{
+
+.creatediv{
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     align-items: center;
     margin-bottom: 15px;
     align-items: center;
+    justify-content: space-around;
+    padding: 50px 0px 25px 0px;
+}
+.cr{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px;
 }
 label{
     font-size: larger;
@@ -86,7 +105,7 @@ width: 70%;
     height: 100px;
 }
 .button{
-    padding: 10px;
+    padding-top: 10px;
     border-radius: 5px;
     border: none;
     cursor: pointer;

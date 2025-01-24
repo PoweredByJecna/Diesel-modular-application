@@ -234,13 +234,34 @@ menuToggle.addEventListener('click', () => {
         });
     });
 
+    function toggleObjednatNa() {
+        const daOption = document.getElementById('daOption').value;
+        const objednatNaInput = document.getElementById('objednatNA');
+
+        if (daOption === "later") {
+            objednatNaInput.style.display = "block";
+        } else {
+            objednatNaInput.style.display = "none";
+        }
+    }
+
     function CreateOdstavku() {
         var lokalita = document.getElementById('lokalita').value;
         var od = document.getElementById('od').value;
         var DO = document.getElementById('do').value;
         var popis = document.getElementById('popis').value;
     
-        console.log("Převzetí odstávky:", { lokalita, od, DO, popis }); // Ladicí výstup
+        const daOption = document.getElementById('daOption').value;  // "default" / "now" / "later"
+        const objednatNa = document.getElementById('objednatNA').value;
+    
+        console.log("Vytvoření odstávky:", {
+            lokalita: lokalita,
+            od: od,
+            DO: DO,
+            popis: popis,
+            daOption: daOption,
+            objednatNa: objednatNa
+        });
     
         $.ajax({
             url: '/Odstavky/Create',
@@ -249,7 +270,9 @@ menuToggle.addEventListener('click', () => {
                 lokalita: lokalita,
                 od: od,
                 do: DO,
-                popis: popis
+                popis: popis,
+                daOption: daOption,
+                objednatNa: objednatNa
             },
             success: function (response) {
                 if (response.success) {
@@ -264,6 +287,7 @@ menuToggle.addEventListener('click', () => {
             }
         });
     }
+    
 
     function SuggestLokalita() {
         var lokalita = document.getElementById('lokalita').value;
@@ -327,6 +351,8 @@ menuToggle.addEventListener('click', () => {
             }
         });
     }
+
+   
 
 
     function showConfirmModal(message, onConfirm) {

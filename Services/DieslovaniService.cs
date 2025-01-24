@@ -298,7 +298,6 @@ namespace Diesel_modular_application.Services
                 var technik = await _context.TechniS
                     .Where(p => p.IdTechnika == dieslovani.IdTechnik)
                     .FirstOrDefaultAsync();
-
                 _context.DieslovaniS.Remove(dieslovani);
 
                 if (technik != null)
@@ -307,23 +306,26 @@ namespace Diesel_modular_application.Services
                     var anotherDiesel = await _context.DieslovaniS
                         .Include(o => o.Technik)
                         .Where(o => o.Technik.IdTechnika == technik.IdTechnika)
+                        .Where(o => o.IdDieslovani != dieslovani.IdDieslovani)
                         .FirstOrDefaultAsync();
 
                     if (anotherDiesel != null)
                     {
                         technik.Taken = true;
+                        Debug.WriteLine("Technik je přivázán k:" + anotherDiesel.IdDieslovani);
                     }
                     else
                     {
                         technik.Taken = false;
+                        Debug.WriteLine("Technik nikde nediesluje");
                     }
                     _context.TechniS.Update(technik);
                 }
 
                 await _context.SaveChangesAsync();
+
                 var EmailResult="da-del";
                  _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
-
 
                 return (true, "Záznam byl úspěšně smazán.");
             }

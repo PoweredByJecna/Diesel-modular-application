@@ -3,7 +3,7 @@ $('#upcomingTable').DataTable({
         
 
         url: '/Dieslovani/GetTableUpcomingTable', 
-        type: 'POST',
+        type: 'GET',
         dataSrc: function (json) {
             console.log(json);
             return json.data;

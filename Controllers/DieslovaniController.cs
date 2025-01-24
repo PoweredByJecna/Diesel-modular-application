@@ -25,6 +25,7 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -42,6 +43,7 @@ namespace Diesel_modular_application.Controllers
         // -------------------------------
         // Zobrazení detailu Dieslovani
         // -------------------------------
+        [HttpGet]
         public async Task<IActionResult> DetailDieslovani(int id)
         {
             var detail = await _dieslovaniService.DetailDieslovaniAsync(id);
@@ -59,6 +61,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Vstup - volá metodu ze servisu
         // ----------------------------------------
+        [HttpPost]
         public async Task<IActionResult> Vstup(int IdDieslovani)
         {
             var (Success, Message) = await _dieslovaniService.VstupAsync(IdDieslovani);
@@ -81,6 +84,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Odchod - volá metodu ze servisu
         // ----------------------------------------
+        [HttpPost]
         public async Task<IActionResult> Odchod(int IdDieslovani)
         {
             var (Success, Message) = await _dieslovaniService.OdchodAsync(IdDieslovani);
@@ -98,6 +102,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Dočasný odchod/obnovení (TemporaryLeave)
         // ----------------------------------------
+        [HttpPost]
         public async Task<IActionResult> TemporaryLeave(int IdDieslovani)
         {
             var (Success, Message) = await _dieslovaniService.TemporaryLeaveAsync(IdDieslovani);
@@ -117,6 +122,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Převzetí dieslování (Take)
         // ----------------------------------------
+        [HttpPost]
         public async Task<IActionResult> Take(int IdDieslovani)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -143,6 +149,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Tabulky (původně GetTableDataRunningTable atd.)
         // ----------------------------------------
+        [HttpGet]
         public async Task<IActionResult> GetTableDataRunningTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -160,6 +167,7 @@ namespace Diesel_modular_application.Controllers
             });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -176,6 +184,7 @@ namespace Diesel_modular_application.Controllers
             });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetTableDatathrashTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -191,7 +200,7 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-
+        [HttpGet]
         public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -207,7 +216,7 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-
+        [HttpGet]
         public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -227,6 +236,7 @@ namespace Diesel_modular_application.Controllers
         // ----------------------------------------
         // Smazání dieslování
         // ----------------------------------------
+        [HttpPost]
         public async Task<IActionResult> Delete(int iDdieslovani)
         {
             var (Success, Message) = await _dieslovaniService.DeleteDieslovaniAsync(iDdieslovani);

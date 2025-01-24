@@ -1,6 +1,6 @@
 $('#endTable').DataTable({ajax: {
     url: '/Dieslovani/GetTableDataEndTable', // Cesta na vaši serverovou metodu
-    type: 'POST',
+    type: 'GET',
     dataSrc: function (json) {
         console.log(json);
         return json.data;

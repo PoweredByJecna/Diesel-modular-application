@@ -1,7 +1,7 @@
 $('#allTable').DataTable({
     ajax: {
         url: '/Dieslovani/GetTableDataAllTable', // Cesta na vaši serverovou metodu
-        type: 'POST',
+        type: 'GET',
         dataSrc: function (json) {
             // Zkontrolujte, co se vrací z API
             console.log(json);

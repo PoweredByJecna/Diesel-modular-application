@@ -1,0 +1,26 @@
+.zapis{
+    display: flex;
+    width: 99%;
+    justify-content: center;
+    padding: 50px 0px 50px 0px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: relative;
+}
+.formzapis{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around
+}
+.input-zapis{
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+}
+.logoForm{
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}

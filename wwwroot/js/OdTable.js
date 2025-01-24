@@ -1,7 +1,7 @@
 $('#odTable').DataTable({
     ajax: {
         url: '/Odstavky/GetTableData', // Cesta na vaši serverovou metodu
-        type: 'POST',
+        type: 'GET',
         dataSrc: function (json) {
             // Zkontrolujte, co se vrací z API
             console.log(json);

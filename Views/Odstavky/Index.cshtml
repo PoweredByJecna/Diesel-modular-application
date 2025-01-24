@@ -57,45 +57,47 @@
                     </table>   
                 </div>
             </div>
-            <div class="tables-row">
-                <div class="section small OdstavkyView" style="flex-direction: row; width: 30%; flex: none;" >
-                    <div class="div-odstavka-create" id="handleOdstavka">
-                            <form>
-                                <h2 style="color: black;">Odstávka - ruční založení <i class="fa-solid fa-hand"></i></h2>
-                                <div style="position: relative;">
-                                    <label>Lokalita:</label>
-                                    <input id="lokalita" type="text" class="input odstavky" onkeyup="SuggestLokalita()" autocomplete="off">
-                                    <div id="lokality-suggestions" class="lokalita-sugg"style="position: absolute; background: white; border: 1px solid #cbd0dd; display: none;"></div>  
-                                </div>
-                                <div>
-                                    <label>Od:</label>
-                                    <input id="od" type="datetime-local"  class="input odstavky"> 
-                                </div>
-                                <div>
-                                    <label>Do:</label>
-                                    <input id="do" type="datetime-local"  class="input odstavky">
-                                </div>
-                                <div>
-                                    <label>Popis:</label>
-                                    <textarea id="popis" type="text" style="border-color:#cbd0dd; border-radius:5px; min-width: 100%;" class="input odstavky"></textarea>
-                                </div>
-                                
-                                <button type="button" class="button" onclick="CreateOdstavku()">Vytvořit</button>
-                            </form>
-                      
-                    </div>
-                </div>
-                <div class="section small OdstavkyView" style="width: 70%">
-                        <div class="main-container OdstavkyView" >
-                            <div class="year-stats lok">
-                                <h3 id="total-odstavky">Všechny odstávky: Načítání...</h3>
-                                <div class="regions odstavky" id="odstavkyContainer">  
-                                </div>
+            <div class="tables-row" style="margin: 20px 0px 20px 0px; justify-content:center;">
+                <div class="div-odstavka-create" id="handleOdstavka" style="width: 99%">
+                       <div class="logoForm">
+                            <h2 style="color: black;">Odstávka - ruční založení <i class="fa-solid fa-hand"></i></h2>
                         </div>
-                    </div>   
-                </div>
+                    <div class="creatediv">
+                        <div class="cr">
+                            <div style="position: relative;">
+                                <label>Lokalita:</label>
+                                <input id="lokalita" type="text" class="input odstavky" onkeyup="SuggestLokalita()" autocomplete="off">
+                                <div id="lokality-suggestions" class="lokalita-sugg"style="position: absolute; background: white; border: 1px solid #cbd0dd; display: none;"></div>  
+                            </div>
+                            <div>
+                                <label>Od:</label>
+                                <input id="od" type="datetime-local"  class="input odstavky"> 
+                            </div>
+                            <div>
+                                <label>Do:</label>
+                                <input id="do" type="datetime-local"  class="input odstavky">
+                            </div>
+                        </div>
+                        <div class="cr">
+                            <div style="width: 50%;">
+                                <label>Popis:</label>
+                                <textarea id="popis" type="text" class="input odstavky textarea"></textarea>
+                            </div>
+                            <div>
+                                <label>DA:</label>
+                                <select id="daOption" onchange="toggleObjednatNa()">
+                                    <option value="default">Default</option>
+                                    <option value="now">Objednat hned</option>
+                                    <option value="later">Objednat na:</option>
+                                     <input id="objednatNA" type="datetime-local" class="input odstavky" style="display: none; margin-top: 5px;" />
+                               </select>
+                            </div>
+                        </div>
+                            <button type="button" class="button" onclick="CreateOdstavku()">Vytvořit</button>
 
-                
+                    </div>
+
+                </div>
             </div>
         </div>
     </body>
