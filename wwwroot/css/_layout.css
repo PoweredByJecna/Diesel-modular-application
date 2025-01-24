@@ -634,7 +634,9 @@ p{
     padding-right: 0.5rem;
 }
 
-
+.badge.badge-phoenix.fs-10.badge-phoenix-success:hover{
+background-color: darkgreen   !important;
+}
 
 .text-body-secondary {
     color: #6c757d;

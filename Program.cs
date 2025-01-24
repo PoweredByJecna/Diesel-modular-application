@@ -44,6 +44,7 @@ builder.Services.AddHostedService<CleaningDatabase>();
 builder.Services.AddScoped<OdstavkyService>();
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddScoped<DieslovaniService>();
+builder.Services.AddScoped<PohotovostiService>();
 
 
 

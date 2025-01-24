@@ -1,0 +1,43 @@
+@model Diesel_modular_application.Models.OdstavkyViewModel
+
+@{
+    ViewData["Title"] = "Pohotovosti Page";
+}
+
+<div class="conteiner" id="con">
+    <div class="tables-row" style="justify-content:center; margin-top: 20px; margin-bottom: 20px;">
+        <div class="table-div odstavkyTable" id="tablepohotovosti">
+            <div class="name">
+                <h2 style="padding-right:20px; color: black;">Potovosti <i class="fa-solid fa-table"></i></h2>
+                <div>
+                    <span class="legenda">
+                        Volný :
+                        <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                    </span>
+                    <span class="legenda">
+                        Obsazený :
+                        <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                    </span> 
+                        <span class="legenda">
+                        Fiktivní technik :
+                        <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                    </span>    
+                </div>
+            </div>                
+            <table id="pohotovostTable">
+                <thead>
+                    <tr>
+                        <th>Jmeno</th>
+                        <th>Tel</th>
+                        <th>Firma</th>
+                        <th>Začátek</th>
+                        <th>Konec</th>
+                        <th>Obsazenost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>       
+        </div>          
+    </div>
+</div>

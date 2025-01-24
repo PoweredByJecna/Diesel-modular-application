@@ -13,7 +13,7 @@ $('#odTable').DataTable({
         data: null,
         render: function (data, type, row) {
             return `       
-            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: green; border-radius: 5px; cursor: pointer" onclick="deleteRecord(this, ${row.idOdstavky})">
+            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: #28a745; border-radius: 5px; cursor: pointer" onclick="deleteRecord(this, ${row.idOdstavky})">
                 <span class="badge-label" style="color: white; padding: 1px; font-size: small;">Uzavřít</span>
                 <i class="fa-solid fa-xmark"></i>
             </span>  
