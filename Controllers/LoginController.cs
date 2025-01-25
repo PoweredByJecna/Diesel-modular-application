@@ -38,7 +38,7 @@ namespace Diesel_modular_application.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Špatné heslo nebo uživatelské jméno");
-                    return Redirect("/Login/Index");
+                    return View("Index", model);
                 }
             }
             return View("Index", model);

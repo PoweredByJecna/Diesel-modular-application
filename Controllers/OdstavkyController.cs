@@ -34,43 +34,9 @@ namespace Diesel_modular_application.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel odstavky)
+        public IActionResult Index()
         {
-
-
-            odstavky.OdstavkyList = await _context.OdstavkyS
-                .Include(o => o.Lokality)
-                .ToListAsync();
-            odstavky.PohotovostList = await _context.Pohotovts
-                .Include(o => o.Technik)
-                .ThenInclude(o=>o.User)
-                .ToListAsync();
-            odstavky.TechnikList = await _context.TechniS
-                .Include(o => o.Firma)
-                .ToListAsync();
-            odstavky.RegionyList = await _context.ReginoS
-                .Include(O => O.Firma)
-                .ToListAsync();
-            odstavky.DieslovaniList = await _context.DieslovaniS
-                .Include(o => o.Technik)
-                .ToListAsync();
-
-            var odstavkyQuery = _context.OdstavkyS
-                .Include(o => o.Lokality)
-                .OrderBy(o => o.IdOdstavky);
-
-    
-
-            odstavky.RegionStats = _odstavkyService.GetRegionStats();
-
-
-            var id = await _context.DieslovaniS
-            .Include(o => o.Technik)
-            .Where(static o => o.Technik.Taken == true)
-            .Select(o => o.IdTechnik)
-            .ToListAsync();
-            
-            return View("Index", odstavky);
+            return View();
         }
 
         public async Task<IActionResult> SuggestLokalita(string query)

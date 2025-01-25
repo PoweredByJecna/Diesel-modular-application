@@ -24,19 +24,17 @@ namespace Diesel_modular_application.Controllers
         // ------------------------
         // 1) IndexAsync
         // ------------------------
-        public async Task<IActionResult> IndexAsync(OdstavkyViewModel pohotovosti)
+        [Authorize]
+        public IActionResult Index()
         {
-            // Načteme pohotovosti ze servisu
-            pohotovosti.PohotovostList = await _pohotovostiService.GetAllPohotovostiAsync();
-
-            return View("Index", pohotovosti);
+            return View();
         }
 
         // ------------------------
         // 2) Zapis
         // ------------------------
         [Authorize(Roles = "Engineer,Admin")]
-        public async Task<IActionResult> Zapis(OdstavkyViewModel pohotovosti)
+        public async Task<IActionResult> Zapis(TablePohotovosti pohotovosti)
         {
             // Zjistíme aktuálního uživatele
             var currentUser = await _userManager.GetUserAsync(User);

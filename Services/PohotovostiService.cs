@@ -34,7 +34,7 @@ namespace Diesel_modular_application.Services
         /// <param name="currentUser">Aktuálně přihlášený uživatel</param>
         /// <returns>Vrací (bool Success, string Message), abychom věděli, zda se zapsání zdařilo.</returns>
         public async Task<(bool Success, string Message)> ZapisPohotovostAsync(
-            OdstavkyViewModel pohotovosti,
+            TablePohotovosti pohotovosti,
             IdentityUser currentUser)
         {
             // Zjistíme, jaké role má aktuální uživatel
@@ -47,8 +47,8 @@ namespace Diesel_modular_application.Services
             }
 
             // Validace základního intervalu
-            if (pohotovosti.PohotovostMod.Konec <= pohotovosti.PohotovostMod.Začátek ||
-                pohotovosti.PohotovostMod.Začátek < DateTime.Today)
+            if (pohotovosti.Začátek <= pohotovosti.Začátek ||
+                pohotovosti.Začátek < DateTime.Today)
             {
                 return (false, "Neplatný interval pohotovosti.");
             }
@@ -68,8 +68,8 @@ namespace Diesel_modular_application.Services
                 var zapis = new TablePohotovosti
                 {
                     IdUser = technikSearch.IdUser,
-                    Začátek = pohotovosti.PohotovostMod.Začátek,
-                    Konec = pohotovosti.PohotovostMod.Konec,
+                    Začátek = pohotovosti.Začátek,
+                    Konec = pohotovosti.Konec,
                     IdTechnik = technikSearch.IdTechnika
                 };
 
@@ -83,7 +83,7 @@ namespace Diesel_modular_application.Services
             {
                 // Najdeme technika podle ID, které je v pohotovosti.TechnikMod
                 var technikSearch = await _context.TechniS
-                    .FirstOrDefaultAsync(input => input.IdTechnika == pohotovosti.TechnikMod.IdTechnika);
+                    .FirstOrDefaultAsync(input => input.IdTechnika == pohotovosti.Technik.IdTechnika);
 
                 if (technikSearch == null)
                 {
@@ -93,8 +93,8 @@ namespace Diesel_modular_application.Services
                 var zapis = new TablePohotovosti
                 {
                     IdUser = technikSearch.IdUser,
-                    Začátek = pohotovosti.PohotovostMod.Začátek,
-                    Konec = pohotovosti.PohotovostMod.Konec,
+                    Začátek = pohotovosti.Začátek,
+                    Konec = pohotovosti.Konec,
                     IdTechnik = technikSearch.IdTechnika
                 };
 

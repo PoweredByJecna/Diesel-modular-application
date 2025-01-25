@@ -49,9 +49,6 @@ namespace Diesel_modular_application.Controllers
             var detail = await _dieslovaniService.DetailDieslovaniAsync(id);
             if (detail == null)
                 return NotFound();
-
-          
-
             return View(detail);
         }
 
