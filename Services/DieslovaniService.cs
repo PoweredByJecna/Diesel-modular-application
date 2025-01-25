@@ -421,7 +421,7 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Lokality.Lokalita,
                     l.Odstavka.Lokality.Klasifikace,
                     l.Odstavka.Lokality.Adresa,
-                    l.Technik.Firma.NázevFirmy,
+                    l.Technik.Firma.NazevFirmy,
                     l.Technik.Jmeno,
                     l.Technik.Prijmeni,
                     l.Odstavka.ZadanVstup,
@@ -489,7 +489,7 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Distributor,
                     l.Odstavka.Lokality.Lokalita,
                     l.Odstavka.Lokality.Klasifikace,
-                    l.Odstavka.Lokality.Region.Firma.NázevFirmy
+                    l.Odstavka.Lokality.Region.Firma.NazevFirmy
                 })
                 .ToListAsync();
 
@@ -574,7 +574,7 @@ namespace Diesel_modular_application.Services
         // --------------------------------------------------------
         // Následují pomocné (soukromé) metody, které dříve byly v controlleru
         // --------------------------------------------------------
-        private bool IsDieselRequired(string klasifikace, DateTime Od, DateTime Do, string baterie)
+        private bool IsDieselRequired(string klasifikace, DateTime Od, DateTime Do, int baterie)
         {
             var casVypadku = klasifikace.ZiskejCasVypadku();
             var rozdil = (Do - Od).TotalMinutes;
@@ -602,10 +602,10 @@ namespace Diesel_modular_application.Services
             }
         }
 
-        private bool Battery(DateTime od, DateTime do_, string baterie)
+        private bool Battery(DateTime od, DateTime do_, int baterie)
         {
             var rozdil = (do_ - od).TotalMinutes;
-            if (!int.TryParse(baterie, out var baterieMinuty))
+            if (!int.TryParse(baterie.ToString(), out var baterieMinuty))
                 baterieMinuty = 0;
 
             return rozdil <= baterieMinuty;
@@ -616,7 +616,7 @@ namespace Diesel_modular_application.Services
             var firmaVRegionu = await GetFirmaVRegionuAsync(newOdstavka.Lokality.Region.IdRegion);
             if (firmaVRegionu != null)
             {
-                Debug.WriteLine($"Vybraná firma: {firmaVRegionu.NázevFirmy}");
+                Debug.WriteLine($"Vybraná firma: {firmaVRegionu.NazevFirmy}");
                 // Najdeme volného technika (který má pohotovost)
                 var technikSearch = await _context.Pohotovts
                     .Include(p => p.Technik.Firma)
@@ -689,7 +689,6 @@ namespace Diesel_modular_application.Services
         {
             var dieslovani = await _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality)
-                .Include(o => o.Firma)
                 .Include(o => o.Technik).ThenInclude(o => o.Firma)
                 .Where(p =>
                     p.Technik.Firma.IDFirmy == newOdstavka.Lokality.Region.Firma.IDFirmy &&
@@ -758,7 +757,6 @@ namespace Diesel_modular_application.Services
                 Odchod = DateTime.MinValue,
                 IDodstavky = newOdstavky.IdOdstavky,
                 IdTechnik = technik.IdTechnika,
-                FirmaId = newOdstavky.Lokality.Region.IdRegion
             };
             _context.DieslovaniS.Add(NewDieslovani);
             technik.Taken = true;

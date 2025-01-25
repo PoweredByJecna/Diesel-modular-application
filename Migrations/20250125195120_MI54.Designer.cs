@@ -4,6 +4,7 @@ using Diesel_modular_application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    partial class DAdatabaseModelSnapshot : ModelSnapshot
+    [Migration("20250125195120_MI54")]
+    partial class MI54
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,9 @@ namespace Diesel_modular_application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDieslovani"));
 
+                    b.Property<int>("FirmaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IDodstavky")
                         .HasColumnType("int");
 
@@ -41,19 +47,16 @@ namespace Diesel_modular_application.Migrations
                     b.Property<DateTime>("Odchod")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TableFirmaIDFirmy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Vstup")
                         .HasColumnType("datetime2");
 
                     b.HasKey("IdDieslovani");
 
+                    b.HasIndex("FirmaId");
+
                     b.HasIndex("IDodstavky");
 
                     b.HasIndex("IdTechnik");
-
-                    b.HasIndex("TableFirmaIDFirmy");
 
                     b.ToTable("TableDieslovani", "Data");
                 });
@@ -66,7 +69,7 @@ namespace Diesel_modular_application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDFirmy"));
 
-                    b.Property<string>("NazevFirmy")
+                    b.Property<string>("NázevFirmy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -87,8 +90,9 @@ namespace Diesel_modular_application.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Baterie")
-                        .HasColumnType("int");
+                    b.Property<string>("Baterie")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("DA")
                         .HasColumnType("bit");
@@ -171,7 +175,7 @@ namespace Diesel_modular_application.Migrations
                     b.Property<DateTime>("Konec")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Zacatek")
+                    b.Property<DateTime>("Začátek")
                         .HasColumnType("datetime2");
 
                     b.HasKey("IdPohotovst");
@@ -441,6 +445,12 @@ namespace Diesel_modular_application.Migrations
 
             modelBuilder.Entity("Diesel_modular_application.Models.TableDieslovani", b =>
                 {
+                    b.HasOne("Diesel_modular_application.Models.TableFirma", "Firma")
+                        .WithMany("DieslovaniList")
+                        .HasForeignKey("FirmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Diesel_modular_application.Models.TableOdstavky", "Odstavka")
                         .WithMany("DieslovaniList")
                         .HasForeignKey("IDodstavky")
@@ -453,9 +463,7 @@ namespace Diesel_modular_application.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Diesel_modular_application.Models.TableFirma", null)
-                        .WithMany("DieslovaniList")
-                        .HasForeignKey("TableFirmaIDFirmy");
+                    b.Navigation("Firma");
 
                     b.Navigation("Odstavka");
 

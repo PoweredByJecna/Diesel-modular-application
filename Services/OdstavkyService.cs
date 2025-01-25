@@ -357,13 +357,12 @@ namespace Diesel_modular_application.Services
             var newOdstavka = new TableOdstavky
             {
                 Distributor = distrib,
-                Firma = lokalitaSearch.Region.Firma.NázevFirmy,
                 Od = od,
                 Do = do_,
                 Popis = popis,
                 LokalitaId = lokalitaSearch.Id
             };
-            Debug.WriteLine($"Vytváří se odstávka s parametry: {distrib}, {lokalitaSearch.Region.Firma.NázevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id}");
+            Debug.WriteLine($"Vytváří se odstávka s parametry: {distrib}, {lokalitaSearch.Region.Firma.NazevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id}");
             return newOdstavka;
         }
 

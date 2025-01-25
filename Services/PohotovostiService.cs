@@ -47,8 +47,8 @@ namespace Diesel_modular_application.Services
             }
 
             // Validace základního intervalu
-            if (pohotovosti.Začátek <= pohotovosti.Začátek ||
-                pohotovosti.Začátek < DateTime.Today)
+            if (pohotovosti.Zacatek <= pohotovosti.Zacatek ||
+                pohotovosti.Zacatek < DateTime.Today)
             {
                 return (false, "Neplatný interval pohotovosti.");
             }
@@ -68,7 +68,7 @@ namespace Diesel_modular_application.Services
                 var zapis = new TablePohotovosti
                 {
                     IdUser = technikSearch.IdUser,
-                    Začátek = pohotovosti.Začátek,
+                    Zacatek = pohotovosti.Zacatek,
                     Konec = pohotovosti.Konec,
                     IdTechnik = technikSearch.IdTechnika
                 };
@@ -93,7 +93,7 @@ namespace Diesel_modular_application.Services
                 var zapis = new TablePohotovosti
                 {
                     IdUser = technikSearch.IdUser,
-                    Začátek = pohotovosti.Začátek,
+                    Zacatek = pohotovosti.Zacatek,
                     Konec = pohotovosti.Konec,
                     IdTechnik = technikSearch.IdTechnika
                 };
@@ -141,7 +141,7 @@ namespace Diesel_modular_application.Services
             var pohotovostList = await _context.Pohotovts
                 .Include(o => o.Technik).ThenInclude(o => o.User)
                 .Include(o => o.Technik).ThenInclude(o => o.Firma)
-                .OrderBy(o => o.Začátek)
+                .OrderBy(o => o.Zacatek)
                 .Skip(start)
                 .Take(length)
                 .Select(l => new
@@ -149,8 +149,8 @@ namespace Diesel_modular_application.Services
                     l.Technik.Jmeno,
                     l.Technik.Prijmeni,
                     PhoneNumber = l.Technik.User.PhoneNumber,
-                    Firma = l.Technik.Firma.NázevFirmy,
-                    l.Začátek,
+                    Firma = l.Technik.Firma.NazevFirmy,
+                    l.Zacatek,
                     l.Konec,
                     l.Technik.Taken,
                     Lokalita = technikLokalitaMap.ContainsKey(l.Technik.IdTechnika)

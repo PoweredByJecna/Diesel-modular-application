@@ -119,7 +119,7 @@ $('#allTable').DataTable({
         }
     },
     {data:'adresa'},
-    {data: 'názevFirmy'},
+    {data: 'nazevFirmy'},
     { 
         data: null, 
         render: function(data, type, row) {

@@ -9,7 +9,6 @@ namespace Diesel_modular_application.Models
         [Key]
         public int IdOdstavky { get; set; }
         public string Distributor { get; set; }
-        public string Firma { get; set; }
         public DateTime Od { get; set; }
         public DateTime Do { get; set; }
         public string Popis { get; set; }

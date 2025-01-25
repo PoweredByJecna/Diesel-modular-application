@@ -11,7 +11,7 @@ namespace Diesel_modular_application.Models
         public string Lokalita { get; set; }
         public string Klasifikace { get; set; }
         public string Adresa { get; set; }
-        public string Baterie { get; set; }
+        public int Baterie { get; set; }
         public bool DA { get; set; }
         public bool Zasuvka { get; set; }
 

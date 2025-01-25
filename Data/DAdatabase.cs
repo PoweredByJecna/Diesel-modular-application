@@ -96,11 +96,7 @@ namespace Diesel_modular_application.Data
                     .WithMany()
                     .HasForeignKey(o=>o.IdUser);
                 
-                builder.Entity<TableDieslovani>()
-                    .HasOne(o=>o.Firma)
-                    .WithMany(i=>i.DieslovaniList)
-                    .HasForeignKey(o=>o.FirmaId);
-
+   
                 builder.Entity<TableDieslovani>()
                     .HasOne(o=>o.Technik)
                     .WithMany(i=>i.DieslovaniList)

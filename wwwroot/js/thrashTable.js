@@ -84,7 +84,7 @@ $('#thrashTable').DataTable({ajax: {
             return klasifikaceBadge;
         }
     },
-    {data: 'názevFirmy'},
+    {data: 'nazevFirmy'},
     ],
     rowCallback: function(row, data, index) {
         $(row).addClass('row-neprirazeno');
