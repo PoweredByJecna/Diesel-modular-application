@@ -50,12 +50,9 @@ namespace Diesel_modular_application.Controllers
             if (detail == null)
                 return NotFound();
 
-            var odstavky = new OdstavkyViewModel
-            {
-                DieslovaniMod = detail,
-            };
+          
 
-            return View(odstavky);
+            return View(detail);
         }
 
         // ----------------------------------------

@@ -20,7 +20,5 @@ namespace Diesel_modular_application.Models
         public string IdTechnik {get;set;}
         public virtual TableTechnici Technik {get;set;}
      
-       
-
     }
 }

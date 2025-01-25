@@ -21,8 +21,6 @@ namespace Diesel_modular_application.Models{
         public string IdUser{get;set;}
         public virtual IdentityUser User {get;set;}
         public virtual ICollection<TableDieslovani> DieslovaniList {get;set;}
-
-
     }
 
    }
