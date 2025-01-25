@@ -120,15 +120,6 @@ namespace Diesel_modular_application.Controllers
             });
         }
 
-        public IActionResult GetOdstavkyData()
-        {
-            var stats = _odstavkyService.GetRegionStats();
-            return Ok(stats);
-        }
-
-
-
-
     }
 
 }
