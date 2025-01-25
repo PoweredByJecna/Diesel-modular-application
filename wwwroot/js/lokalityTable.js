@@ -1,7 +1,7 @@
 $('#lokalityTable').DataTable({   // Zobrazí indikátor načítání  // Povolení serverového stránkování
     ajax: {
         url: '/Lokality/GetTableData', // Cesta na vaši serverovou metodu
-        type: 'POST',
+        type: 'GET',
         dataSrc: function (json) {
             // Zkontrolujte, co se vrací z API
             console.log(json);

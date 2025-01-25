@@ -34,6 +34,7 @@ namespace Diesel_modular_application.Controllers
         // 2) Zapis
         // ------------------------
         [Authorize(Roles = "Engineer,Admin")]
+        [HttpPost]
         public async Task<IActionResult> Zapis(TablePohotovosti pohotovosti)
         {
             // Zjistíme aktuálního uživatele
@@ -58,7 +59,8 @@ namespace Diesel_modular_application.Controllers
 
         // ------------------------
         // 3) GetTableDatapohotovostiTable
-        // ------------------------
+        // ------------------------¨
+        [HttpGet]
         public async Task<IActionResult> GetTableDatapohotovostiTable(int start = 0, int length = 0)
         {
             var (totalRecords, data) = 

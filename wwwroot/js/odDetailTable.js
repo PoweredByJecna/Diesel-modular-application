@@ -1,7 +1,7 @@
 $('#OdDetail').DataTable({
     ajax: {
         url: '/Odstavky/GetTableDataOdDetail', // Cesta na vaši serverovou metodu
-        type: 'POST',
+        type: 'GET',
         data: function (d) {
             d.id = getDieslovaniIdFromUrl(); // Získá ID dieslování z URL a pošle ho serveru
         },

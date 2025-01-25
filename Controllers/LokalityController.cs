@@ -27,7 +27,7 @@ namespace Diesel_modular_application.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
         {
             // Celkový počet záznamů v tabulce

@@ -231,6 +231,7 @@ namespace Diesel_modular_application.Controllers
         // Smazání dieslování
         // ----------------------------------------
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int iDdieslovani)
         {
             var (Success, Message) = await _dieslovaniService.DeleteDieslovaniAsync(iDdieslovani);
