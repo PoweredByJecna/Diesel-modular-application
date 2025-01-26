@@ -16,7 +16,7 @@ $('#pohotovostTable').DataTable({ajax: {
         },
     {   data: 'phoneNumber'},
     {   data: 'firma'},
-    {   data: 'začátek'},
+    {   data: 'zacatek'},
     {   data: 'konec'},
     {
         data: 'lokalita', // Toto je vaše nová hodnota pro Lokalitu

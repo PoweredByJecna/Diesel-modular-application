@@ -76,44 +76,7 @@
                                     </li>
                                 </ul>
                             </div>
-                                 
-                        
-                            <div class="sidebar">
-                                <li class="li-sidebar" style="list-style: none;">
-                                    <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" style="padding-left: 0px;"> 
-                                        <i class="fa-solid fa-tower-broadcast navA"></i>
-                                        <span class="sb">Lokality</span>  
-                                    </a>
-                                </li>
-                                
-                                 <ul class="ul-sidebar">
 
-                                    <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="lokality" class="a-sidebar" >
-                                            <i class="fa-solid fa-globe fa-sm navA"></i>
-                                            <span class="sb">Všechny Lokality</span> 
-                                        </a>
-                                    </li>
-
-                                    <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="regiony" class="a-sidebar">
-                                            <i class="fa-solid fa-earth-europe fa-sm navA"></i>
-                                            <span class="sb">Regiony</span> 
-                                        </a>
-                                    </li>
-                               
-                                 
-                                    <li class="li-sidebar">
-                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="firmy" class="a-sidebar">
-                                            <i class="fa-solid fa-building fa-sm navA"></i>
-                                            <span class="sb">Firmy</span> 
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        
-                                 
-                        
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
                                     <a asp-action="Index" asp-controller="Odstavky" class="a-sidebar" style="padding-left: 0px;"> 
@@ -136,7 +99,26 @@
                                     </li>
                                 </ul>
                             </div>
+                                 
+                        
+                            <div class="sidebar">
+                                <li class="li-sidebar" style="list-style: none;">
+                                    <a asp-action="Index" asp-controller="Lokality" class="a-sidebar" style="padding-left: 0px;"> 
+                                        <i class="fa-solid fa-tower-broadcast navA"></i>
+                                        <span class="sb">Lokality</span>  
+                                    </a>
+                                </li>
+                                
+                                 <ul class="ul-sidebar">
 
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Lokality" asp-fragment="lokality" class="a-sidebar" >
+                                            <i class="fa-solid fa-globe fa-sm navA"></i>
+                                            <span class="sb">Všechny Lokality</span> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="sidebar">
                                 <li class="li-sidebar" style="list-style: none;">
                                     <a asp-action="Index" asp-controller="Pohotovosti" class="a-sidebar" style="padding-left: 0px;"> 
@@ -153,6 +135,53 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="sidebar">
+                                <li class="li-sidebar" style="list-style: none;">
+                                    <a asp-action="Index" asp-controller="Regiony" class="a-sidebar" style="padding-left: 0px;"> 
+                                        <i class="fa-solid fa-map-location navA"></i>
+                                        <span class="sb">Regiony</span>  
+                                    </a>
+                                </li>
+                                
+                                <ul class="ul-sidebar">
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="PrahaStredniCehy" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Praha+ Střední Čechy</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="JizniMorava" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Jižní Morava</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="SeverniMorava" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Severní Morava</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="JizniCechy" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Jižní Čechy</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="SeverniCehy" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Severní Čechy</span> 
+                                        </a>
+                                    </li>
+                                    <li class="li-sidebar">
+                                        <a asp-action="Index" asp-controller="Regiony" asp-fragment="ZapadniCechy" class="a-sidebar" >
+                                            <i class="fa-solid fa-earth-asia navA"></i>
+                                            <span class="sb">Západní Čechy</span> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>                                                        
                         </div>
                     </div>
                 </div>
@@ -228,7 +257,6 @@
             <script src="~/js/Home.js"></script>
             <script src="~/js/upcomingTable.js"></script>
             <script src="~/js/endTable.js"></script>
-            <script src="~/js/chartOdstavky.js"></script>
             <script src="~/js/thrashTable.js"></script>
             <script src="~/js/pohotovostiTable.js"></script>
             <script src="~/js/lokalityTable.js"></script>

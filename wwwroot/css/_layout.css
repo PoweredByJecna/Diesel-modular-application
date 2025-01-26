@@ -192,6 +192,25 @@ thead th, tbody td {
     display: block;
 }
 
+.tables-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    
+}
+
+.section.small {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    min-width: 300px;
+    
+}
+
+
 .section-wrap {
     display: none;
     position: fixed;
@@ -415,39 +434,7 @@ nav input {
     flex-direction: row;
 }
 
-.button-conteiner{
-    display: flex;
-    flex-direction: row-reverse;
-   
-   
-}
-    .button.Edit{
-        width: 25px;
-        height: 30px;
-        margin-left: 5px;
-        background-color:#b5b9bd3d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
-    
- 
-    .hidden-buttons {
-        display: none; /* Skryje další tlačítka */
-        position: absolute; /* Umožní umístění vedle tlačítka */
-        right: 5px;
-
-    
-    }
-    .odd:hover .hidden-buttons,
-    .even:hover .hidden-buttons{
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        transition: 0.3s;
-        margin-right: 45px;
-    }
 .badge {
     display: inline-flex;
     align-items: center;
@@ -735,5 +722,12 @@ background-color: darkgreen   !important;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
+}
+
+.formINFO-D.Register{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 35px 10px 35px;
+
 }
 

@@ -1,4 +1,4 @@
-.zapis{
+.FormConteiner{
     display: flex;
     width: 99%;
     justify-content: center;
@@ -8,13 +8,17 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     position: relative;
 }
-.formzapis{
+.FormConteinerDiv{
     display: flex;
     width: 100%;
-    align-items: center;
-    justify-content: space-around
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-around;
 }
-.input-zapis{
+.FormConteinerDiv div{
+    margin: 10px ;
+}
+.input-FormConteiner{
     border-bottom: 1px solid #ddd;
     border-radius: 0;
 }
@@ -23,4 +27,9 @@
     position: absolute;
     top: 5px;
     left: 5px;
+}
+.lableFormConteiner{
+    font-size: larger;
+    font-weight: 700;
+    color: black;
 }
