@@ -95,7 +95,7 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = true, message = result.Message });
             }
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetTableData(int start = 0, int length = 0)
         {
             var (totalRecords, data) = await _odstavkyService.GetTableDataAsync(start, length);
