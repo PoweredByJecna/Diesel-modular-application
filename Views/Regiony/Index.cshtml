@@ -1,44 +1,35 @@
-@model Diesel_modular_application.Models.TableRegiony
 @{
     ViewData["Title"] = "Regiony Page";
 }
 <body>
+
     <div class="conteiner" id="con">
         <div class="tables-row">
             <div class="FormConteiner" id="PrahaStredniCehy">
                 <div class="logoForm">
-                    <h2 style="padding-right:20px; color: black;">Praha+ Střední Čechy<i class="fa-solid fa-earth-asia"></i></h2>
+                    <h2 style="padding-right:20px; color: black;">Praha+ Střední Čechy<i class="fa-solid fa-earth-asia navB"></i></h2>
                 </div>
                 <div class="FormConteinerDiv">
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p id="psc-firma"><i class="fa-solid fa-building navA"></i>Firma: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
-                        </div>
-                    
+                            <p id="psc-distributor"><i class="fa-solid fa-bolt navA"></i>Distributor: </p>
+                        </div>                
                     </div>
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p id="psc-pocet-odstavek"><i class="fa-solid fa-list-ol navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p id="psc-pocet-lokalit"><i class="fa-solid fa-list-ol navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>
-                    <div class="formINFO-D Register">
-                    
-                        <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Technik: </p>
-                        </div>
-                        <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Technik: </p>
-                        </div>
-                        
+                    <div id="psc-technici" class="formINFO-D Register">                     
                     </div>
 
                 </div>
@@ -55,7 +46,7 @@
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p><i class="fa-solid fa-building navA"></i>Firma: </p>
                         </div>
                         <div>
                             <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
@@ -65,10 +56,10 @@
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>
@@ -97,7 +88,7 @@
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p><i class="fa-solid fa-building navA"></i>Firma: </p>
                         </div>
                         <div>
                             <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
@@ -107,10 +98,10 @@
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>
@@ -139,7 +130,7 @@
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p><i class="fa-solid fa-building navA"></i> Firma: </p>
                         </div>
                         <div>
                             <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
@@ -149,10 +140,10 @@
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>
@@ -180,7 +171,7 @@
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p><i class="fa-solid fa-building navA"></i>Firma: </p>
                         </div>
                         <div>
                             <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
@@ -190,10 +181,10 @@
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>
@@ -221,7 +212,7 @@
                     <div class="formINFO-D Register">
                     
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Firma: </p>
+                            <p><i class="fa-solid fa-building navA"></i>Firma: </p>
                         </div>
                         <div>
                             <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Distributor: </p>
@@ -231,10 +222,10 @@
                     <div class="formINFO-D Register">
                 
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek </p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Odstávek: </p>
                         </div>
                         <div>
-                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit</p>
+                            <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Počet Lokalit: </p>
                         </div>
                         
                     </div>

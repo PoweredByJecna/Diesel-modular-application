@@ -577,6 +577,9 @@ header.dark-mode {
     justify-content:flex-end;
     margin-right: 10px;
 }
+.navB{
+    margin-left: 10px;
+}
 
 .li-sidebar.active {
     background-color: #0057ff;

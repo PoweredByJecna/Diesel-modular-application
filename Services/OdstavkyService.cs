@@ -326,7 +326,7 @@ namespace Diesel_modular_application.Services
             return newOdstavka;
         }
 
-        private string DetermineDistributor(string NazevRegionu)
+        public string DetermineDistributor(string NazevRegionu)
         {
             return NazevRegionu switch
             {

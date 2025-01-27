@@ -391,6 +391,7 @@ menuToggle.addEventListener('click', () => {
         $('#runningTable').DataTable().ajax.reload();
         $('#thrashTable').DataTable().ajax.reload();
         $('#odTable').DataTable().ajax.reload();
+        
 
     }
     
