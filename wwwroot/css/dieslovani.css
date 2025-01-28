@@ -115,10 +115,20 @@ table.dark-mode {
     border-bottom: 1px solid #ddd;
     width: 99%;
 }
-.nav-FRG p{
+.nav-FRG p{ 
     padding: 15px 25px 15px 25px;
     border-bottom: 1px solid #ddd;
     margin: 0px;
+    cursor: pointer;
+    font-weight: 700;
+    background-color: white;
+}
+.nav-FRG p.active {
+    color: white;
+    background-color: #005aa9;
+    font-weight: bold;
+    border-color: #005aa9;
+    transition: 0.3s;
 }
 
 .infowrapper{

@@ -108,8 +108,25 @@ function processRegionData(region, containerIds) {
     } else {
       $(containerIds.technici).append('<p>Žádní technici</p>');
     }
-  }
-  
+}
+
+$(document).ready(function () {
+    $('.nav-FRG p').on('click', function () {
+        // Odebrat 'active' ze všech <p>
+        $('.nav-FRG p').removeClass('active');
+
+        // Přidat 'active' na aktuální <p>
+        $(this).addClass('active');
+
+        // Skryj všechny divy
+        $('.content').hide();
+
+        // Zobraz odpovídající div
+        const targetId = `content-${this.id}`;
+        $(`#${targetId}`).show();
+    });
+});
+
 
 
 const menuToggle = document.getElementById('menu-toggle');
