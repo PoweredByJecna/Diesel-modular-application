@@ -65,6 +65,36 @@ namespace Diesel_modular_application.Controllers
                     data=regionInfo
                 }
             );
-        }   
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRegionDataZapadniCechy()
+        {
+            var regionInfo= await _regionyService.GetRegionDataZapadniCechyAsync();
+            return Json(
+                new{
+                    data=regionInfo
+                }
+            );
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRegionDataSeverniCechy()
+        {
+            var regionInfo= await _regionyService.GetRegionDataSeverniCechyAsync();
+            return Json(
+                new{
+                    data=regionInfo
+                }
+            );
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRegionDataJizniCechy()
+        {
+            var regionInfo= await _regionyService.GetRegionDataJizniCechyAsync();
+            return Json(
+                new{
+                    data=regionInfo
+                }
+            );
+        }        
     }
 }

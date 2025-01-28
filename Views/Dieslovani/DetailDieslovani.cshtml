@@ -1,34 +1,32 @@
-@model Diesel_modular_application.Models.TableDieslovani
 <div class="conteiner" id="con">
-    <div class="tables-row" style="justify-content: space-between;">
-        
+    <div class="tables-row" style="justify-content: space-between; width: 100%;">
         <div class="section small" style="flex: none; width: 30%; display:flex; align-items: center;" >
             <div class="detail diesel">
                 <h1>Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h1>
                 <div class="formINFO-D">
                     <div>
-                        <p><i class="fa-solid fa-key fa-lg fa-sm navA"></i>ID dieslovani: @Model.IdDieslovani</p>
+                        <p id="idDieslovani"><i class="fa-solid fa-key fa-lg fa-sm navA"></i>ID dieslovani: </p>
                     </div>
                     <div>
-                        <p> <i class="fa-solid fa-info fa-lg fa-sm navA"></i> ID odstávky: @Model.Odstavka.IdOdstavky</p>
+                        <p id="iDOdstavky"> <i class="fa-solid fa-info fa-lg fa-sm navA"></i> ID odstávky: </p>
                     </div>
                     <div>
-                        <p><i class="fa-solid fa-tower-broadcast fa-lg fa-sm navA"></i> Lokalita: @Model.Odstavka.Lokality.Lokalita</p>
+                        <p id="lokalita"><i class="fa-solid fa-tower-broadcast fa-lg fa-sm navA"></i> Lokalita: </p>
                     </div>
                     <div>
-                        <p><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Adresa: @Model.Odstavka.Lokality.Adresa </p>
+                        <p id="adresa"><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Adresa: </p>
                     </div>
                     <div>
-                        <p><i class="fa-solid fa-info fa-lg fa-sm navA"></i> Klasifikace: @Model.Odstavka.Lokality.Klasifikace </p>
+                        <p id="klasifikace"><i class="fa-solid fa-info fa-lg fa-sm navA"></i> Klasifikace:  </p>
                     </div>
                     <div>              
-                        <p><i class="fa-solid fa-battery-full fa-lg fa-sm navA"></i> Výdrž baterie: @Model.Odstavka.Lokality.Baterie min</p>
+                        <p id="baterie"><i class="fa-solid fa-battery-full fa-lg fa-sm navA"></i> Výdrž baterie:  min</p>
                     </div>
                     <div>
-                        <p><i class="fa-solid fa-earth-europe fa-lg fa-sm navA"></i> Region: @Model.Odstavka?.Lokality?.Region?.NazevRegionu</p>
+                        <p id="region"><i class="fa-solid fa-earth-europe fa-lg fa-sm navA"></i> Region: </p>
                     </div>
                     <div>
-                        <p> <i class="fa-regular fa-circle-user fa-2xl fa-sm navA"></i> Technik: @Model.Technik?.Jmeno  @Model.Technik?.Prijmeni</p>
+                        <p id="technik"> <i class="fa-regular fa-circle-user fa-2xl fa-sm navA"></i> Technik: </p>
                     </div>
                 </div>
             </div>
@@ -104,12 +102,16 @@
                 </div>
             </div>
         </div>   
+    </div>
 
-
-
-
-        <div class="tables-row" style="width: 100%; justify-content: center;">
-            <div class="table-div odstavkyTable">
+    <div class="tables-row" style="width: 100%; justify-content: center;">
+        <div class="section small" style="width: 95%; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+            <div class="nav-FRG">
+                <p>LOG</p>
+                <p>VAZBY</p>
+                <p>SLUŽBY</p>
+            </div>
+            <div class="table-div odstavkyTable" style="box-shadow: none;">
                 <div class="name">
                     <h2 style="padding-right:20px; color: black;">Odstávka<i class="fa-solid fa-bolt"></i></h2>
                     <div>
@@ -155,8 +157,8 @@
                     </tbody>          
                 </table>   
             </div>
-                
-            
         </div>
+            
+        
     </div>
 </div>

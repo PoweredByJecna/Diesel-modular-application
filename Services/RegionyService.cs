@@ -36,6 +36,24 @@ namespace Diesel_modular_application.Services
             var resultList = await GetData(_IdRegionu);
             return resultList;
         }
+        public async Task<List<object>> GetRegionDataJizniCechyAsync()
+        {
+            var _IdRegionu=5;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
+        public async Task<List<object>> GetRegionDataSeverniCechyAsync()
+        {
+            var _IdRegionu=1;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
+        public async Task<List<object>> GetRegionDataZapadniCechyAsync()
+        {
+            var _IdRegionu=6;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
 
         private bool TechnikHasPohotovost(string idTechnik)
         {

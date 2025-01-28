@@ -273,14 +273,32 @@ namespace Diesel_modular_application.Services
         public async Task<TableDieslovani?> DetailDieslovaniAsync(int id)
         {
             var detail = await _context.DieslovaniS
+            .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+
+            return detail;
+        }
+        public async Task<object> DetailDieslovaniJsonAsync(int id)
+        {
+            var detailDieslovani =  await _context.DieslovaniS
                 .Include(o => o.Odstavka)
                     .ThenInclude(o => o.Lokality)
                         .ThenInclude(o => o.Region)
                 .Include(p => p.Technik)
-                .FirstOrDefaultAsync(o => o.IdDieslovani == id);
+                .Where(o=>o.IdDieslovani==id).FirstOrDefaultAsync();
 
-            return detail;
+            return new 
+            {
+                idDieslovani = detailDieslovani.IdDieslovani,
+                odstavkaId = detailDieslovani.Odstavka?.IdOdstavky,
+                lokalita = detailDieslovani.Odstavka?.Lokality?.Lokalita,
+                adresa = detailDieslovani.Odstavka?.Lokality?.Adresa,
+                klasifikace = detailDieslovani.Odstavka?.Lokality?.Klasifikace,
+                baterie = detailDieslovani.Odstavka?.Lokality?.Baterie,
+                region = detailDieslovani.Odstavka?.Lokality?.Region?.NazevRegionu,
+                technik = detailDieslovani.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý"
+            }; 
         }
+
 
         /// <summary>
         /// Smaže záznam v DieslovaniS

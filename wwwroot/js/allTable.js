@@ -71,8 +71,8 @@ $('#allTable').DataTable({
     { data: 'idDieslovani',
         render: function (data, type, row) {
             return `
-                <a href="/Dieslovani/DetailDieslovani/${data}">
-                    ${data}
+                <a href="/Dieslovani/DetailDieslovani?id=${data}">
+                ${data}
                 </a>
             `;
         }

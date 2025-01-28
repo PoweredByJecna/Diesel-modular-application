@@ -51,7 +51,20 @@ namespace Diesel_modular_application.Controllers
                 return NotFound();
             return View(detail);
         }
-
+        // ----------------------------------------
+        // Detail - načítá data pro dané Dieslovani
+        // ----------------------------------------
+        [HttpGet]
+        public async Task<IActionResult> DetailDieslovaniJson(int id)
+        {
+            var detailDieslovani = await _dieslovaniService.DetailDieslovaniJsonAsync(id);
+            
+            return Json(
+            new
+            {
+                data=detailDieslovani 
+            });
+        }
         // ----------------------------------------
         // Vstup - volá metodu ze servisu
         // ----------------------------------------
