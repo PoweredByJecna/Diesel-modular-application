@@ -39,10 +39,30 @@ namespace Diesel_modular_application.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRegionDataPraha()
         {
-            var regionyInfoPraha= await _regionyService.GetRegionDataPrahaAsync();
+            var regionInfo= await _regionyService.GetRegionDataPrahaAsync();
             return Json(
                 new{
-                    data=regionyInfoPraha
+                    data=regionInfo
+                }
+            );
+        } 
+        [HttpGet]
+        public async Task<IActionResult> GetRegionDataSeverniMorava()
+        {   
+            var regionInfo = await _regionyService.GetRegionDataSeverniMoravaAsync();
+            return Json(
+                new{
+                    data=regionInfo
+                }
+            );
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRegionDataJizniMorava()
+        {   
+            var regionInfo = await _regionyService.GetRegionDataJizniMoravaAsync();
+            return Json(
+                new{
+                    data=regionInfo
                 }
             );
         }   

@@ -74,7 +74,42 @@ data.forEach(item => {
     // Zde vložte `formattedDate` do tabulky
 });
 
-
+function processRegionData(region, containerIds) {
+    // containerIds je objekt s ID prvků, abyste mohl znovu použít i pro jiná umístění
+    // Například:
+    // containerIds = {
+    //   distributor: '#psc-distributor',
+    //   firma: '#psc-firma',
+    //   pocetOdstavek: '#psc-pocet-odstavek',
+    //   pocetLokalit: '#psc-pocet-lokalit',
+    //   technici: '#psc-technici'
+    // }
+  
+    // Do vybraných prvků dáte data
+    $(containerIds.distributor).append(region.distributor);
+    $(containerIds.firma).append(region.firma);
+    $(containerIds.pocetOdstavek).append(region.pocetOdstavek);
+    $(containerIds.pocetLokalit).append(region.pocetLokalit);
+  
+    // Technici
+    $(containerIds.technici).empty();
+    if (region.technici && region.technici.length > 0) {
+      region.technici.forEach(function(tech) {
+        var pohotovostIkona = (tech.maPohotovost === true)
+          ? '<i class="fa-solid fa-circle" style="color: #28a745; margin-left: 10px"></i>'
+          : '<i class="fa-solid fa-circle" style="color: #dc3545; margin-left: 10px"></i>';
+  
+        var pHtml = '<div><p><i class="fa-solid fa-wrench navA"></i> Technik: '
+                    + tech.jmeno
+                    + ' ' + pohotovostIkona
+                    + '</p></div>';
+        $(containerIds.technici).append(pHtml);
+      });
+    } else {
+      $(containerIds.technici).append('<p>Žádní technici</p>');
+    }
+  }
+  
 
 
 const menuToggle = document.getElementById('menu-toggle');

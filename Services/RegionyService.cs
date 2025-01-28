@@ -18,17 +18,35 @@ namespace Diesel_modular_application.Services
             _context=context;
             _odstavkyService = odstavkyService;
         }
-        public bool TechnikHasPohotovost(string idTechnik)
+        public async Task<List<object>> GetRegionDataPrahaAsync()
+        {
+            var _IdRegionu= 4;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
+        public async Task<List<object>> GetRegionDataSeverniMoravaAsync()
+        {
+            var _IdRegionu=3;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
+        public async Task<List<object>> GetRegionDataJizniMoravaAsync()
+        {
+            var _IdRegionu=2;
+            var resultList = await GetData(_IdRegionu);
+            return resultList;
+        }
+
+        private bool TechnikHasPohotovost(string idTechnik)
         {
             var exists = _context.Pohotovts
                 .Any(p => p.IdTechnik == idTechnik);
             return exists; 
         }
-            
-        
-        public async Task<List<object>> GetRegionDataPrahaAsync()
+        private async Task<List<object>> GetData(int _IdRegionu)
         {
-            var _IdRegionu= 4;
+            var dataList = new List<object>();
+            bool _maPohotovost=false;    
 
             var _pocetLokalit = await _context.LokalityS
             .Include(o=>o.Region)
@@ -59,14 +77,13 @@ namespace Diesel_modular_application.Services
 
                 foreach (var t in technikList)
                 {
-                    bool _maPohotovost = TechnikHasPohotovost(t.IdTechnika);
+                    _maPohotovost = TechnikHasPohotovost(t.IdTechnika);
 
                     techniciDto.Add(new {
                     jmeno = $"{t.Jmeno} {t.Prijmeni}",
                     maPohotovost = _maPohotovost
                     });
                 }
-
 
                 var regionData = new 
                 {
@@ -80,8 +97,7 @@ namespace Diesel_modular_application.Services
                 resultList.Add(regionData);
             }
             return resultList.Cast<object>().ToList();
-                
-        }
+        }    
     }
 
 }
