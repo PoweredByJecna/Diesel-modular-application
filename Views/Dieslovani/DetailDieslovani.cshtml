@@ -4,7 +4,7 @@
             <div class="section small FORMS left" style="flex:7">
                 <div class="detail energy">
                     <div class="logoForm">
-                        <h2 style="color: black;">Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                        <h2 class="h2-div">Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h2>
                     </div>
                     <div class="infowrapper">
                         
@@ -71,18 +71,34 @@
                         </div>
                     </div>
                 </div>
+                <div class="detail User">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Technik <i class="fa-regular fa-circle-user fa-lg"></i></h2>
+                    </div>
+                    <div class="formINFO-D form">
+                        <div style="border: none;">
+                            <p id="technik" style="font-weight: 800;"></p>
+                        </div>
+                    </div>                    
+                </div>
                 <div class="detail TASK">
                     <div class="logoForm">
-                        <h2 style="color: black;">TASK<i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                        <h2 class="h2-div">Popis <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                    </div>
+                    <div class="formINFO-D form">
+                        <div style="border: none;">
+                            <p id="popis"></p>
+                        </div>
+
                     </div>                    
                 </div>
             </div>
             <div class="section small FORMS right" style="flex:3" >
                 <div class="detail diesel">
                     <div class="logoForm">
-                        <h2 style="color: black;">Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                        <h2 class="h2-div">Detail Dieslovani <i class="fa-solid fa-circle-info fa-lg"></i></h2>
                     </div>
-                    <div class="formINFO-D">
+                    <div class="formINFO-D info">
                         <div>
                             <p id="idDieslovani"><i class="fa-solid fa-key fa-lg fa-sm navA"></i>ID dieslovani: </p>
                         </div>
@@ -104,10 +120,21 @@
                         <div>
                             <p id="region"><i class="fa-solid fa-earth-europe fa-lg fa-sm navA"></i> Region: </p>
                         </div>
-                        <div>
-                            <p id="technik"> <i class="fa-regular fa-circle-user fa-xl fa-sm navA"></i> Technik: </p>
-                        </div>
                     </div>
+                </div>
+                <div class="detail Stav">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Stav <i class="fa-solid fa-file-contract"></i></h2>
+                    </div>
+                    <div class="formINFO-D form stav">
+                        <div style="border: none;">
+                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
+                                <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                            </span>
+                        </div>
+                    </div>     
+                                       
                 </div>
             </div>                
         </div>   
@@ -123,7 +150,7 @@
                 <div style="display: none;" id="content-log"></div>
                 <div class="table-div odstavkyTable" id="content-vazby">
                     <div class="name">
-                        <h2 style="padding-right:20px; color: black;">Odstávka<i class="fa-solid fa-bolt"></i></h2>    
+                        <h2  style="padding-right:20px; color: black;">Odstávka<i class="fa-solid fa-bolt"></i></h2>    
                         <div>
                             <span class="legenda">
                                 Aktivní :

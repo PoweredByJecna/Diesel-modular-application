@@ -2,11 +2,12 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    padding: 50px 0px 50px 0px;
+    padding: 10px 0px 10px 0px;
     background-color: white;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     position: relative;
+    flex-direction: column;
 }
 .FormConteinerDiv{
     display: flex;
@@ -23,13 +24,16 @@
     border-radius: 0;
 }
 .logoForm{
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
 }
 .lableFormConteiner{
     font-size: larger;
     font-weight: 700;
     color: black;
+}
+.h2-div{
+    color: black;
+    margin-left: 10px;
 }

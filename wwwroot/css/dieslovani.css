@@ -41,7 +41,7 @@ table {
 
 
 .formINFO-D div{
-    margin: 15px;
+    margin: 5px;
     display: flex;
     padding: 10px;
     border-bottom: 1px solid grey;
@@ -67,6 +67,25 @@ table {
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+.detail.User{
+    margin-top: 20px;
+}
+.detail.TASK{
+    margin-top: 20px;
+}
+.detail.Stav{
+    margin-top: 20px;
+}
+
+.formINFO-D.form{
+    display: flex;
+    width: 100%;
+}
+.formINFO-D.info{
+    padding-bottom: 30px;
+}
+
+
 .nav-FRG{
     display: flex;
     flex-direction: row;
@@ -98,7 +117,6 @@ table {
 
 }
 .info{
-    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
     display: flex;

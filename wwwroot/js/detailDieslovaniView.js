@@ -20,6 +20,7 @@ $(document).ready(function () {
                     $('#klasifikace').append(data.klasifikace || "N/A");
                     $('#baterie').append(data.baterie || "N/A");
                     $('#region').append(data.region || "N/A");
+                    $('#popis').append(data.popis || "N/A");
                     $('#technik').append(data.technik || "N/A");
                 } else {
                     $('#dieslovani-detail').html('<p>Data nebyla nalezena.</p>');

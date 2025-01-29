@@ -220,9 +220,11 @@ thead th, tbody td {
 }
 .section.small.FORMS.right{
     flex: 3;
+    justify-content: space-between;
 }
 .section.small.FORMS.left{
     flex: 7;
+    justify-content: space-between;
 }
 
 

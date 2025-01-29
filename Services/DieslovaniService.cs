@@ -295,6 +295,7 @@ namespace Diesel_modular_application.Services
                 klasifikace = detailDieslovani.Odstavka?.Lokality?.Klasifikace,
                 baterie = detailDieslovani.Odstavka?.Lokality?.Baterie,
                 region = detailDieslovani.Odstavka?.Lokality?.Region?.NazevRegionu,
+                popis = detailDieslovani.Odstavka?.Popis,
                 technik = detailDieslovani.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý"
             }; 
         }
