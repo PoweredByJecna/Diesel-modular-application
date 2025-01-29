@@ -6,61 +6,69 @@
 
 <div class="conteiner" id="con">
     <div class="tables-row" style="margin-top: 20px; margin-bottom: 20px;">
-        <div class="table-div odstavkyTable" id="tablepohotovosti">
-            <div class="name">
-                <h2 style="padding-right:20px; color: black;">Pohotovosti <i class="fa-solid fa-table"></i></h2>
-                <div>
-                    <span class="legenda">
-                        Volný :
-                        <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
-                    </span>
-                    <span class="legenda">
-                        Obsazený :
-                        <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
-                    </span> 
-                        <span class="legenda">
-                        Fiktivní technik :
-                        <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
-                    </span>    
+        <div class="section big">
+            <div class="section small"> 
+                <div class="table-div odstavkyTable" id="tablepohotovosti">
+                    <div class="name">
+                        <h2 style="padding-right:20px; color: black;">Pohotovosti <i class="fa-solid fa-table"></i></h2>
+                        <div>
+                            <span class="legenda">
+                                Volný :
+                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                            </span>
+                            <span class="legenda">
+                                Obsazený :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                            </span> 
+                                <span class="legenda">
+                                Fiktivní technik :
+                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                            </span>    
+                        </div>
+                    </div>                
+                    <table id="pohotovostTable">
+                        <thead>
+                            <tr>
+                                <th>Jmeno</th>
+                                <th>Tel</th>
+                                <th>Firma</th>
+                                <th>Začátek</th>
+                                <th>Konec</th>
+                                <th>Obsazenost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>       
                 </div>
-            </div>                
-            <table id="pohotovostTable">
-                <thead>
-                    <tr>
-                        <th>Jmeno</th>
-                        <th>Tel</th>
-                        <th>Firma</th>
-                        <th>Začátek</th>
-                        <th>Konec</th>
-                        <th>Obsazenost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>       
+            </div>
         </div>          
     </div>
     <div class="tables-row">
-        <div class="FormConteiner" id="zapisPohotovosti">
-            <div class="logoForm">
-                <h2 style="padding-right:20px; color: black;">Zapsat pohotovost <i class="fa-solid fa-pen"></i></h2>
-            </div>
-            <div class="FormConteinerDiv">
-                <div>
-                    <label class="lableFormConteiner">Technik:</label>
-                    <input id="TechnikJmeno" type="text" class="input-FormConteiner" value="@User?.Identity?.Name">
-                </div>
-                <div>
-                    <label class="lableFormConteiner">Od:</label>
-                    <input id="odZapis" type="datetime-local"  class="input-FormConteiner" style="border-bottom: 1px solid #ddd;">
+        <div class="section big">
+            <div class="section small"> 
+                <div class="FormConteiner" id="zapisPohotovosti">
+                    <div class="logoForm">
+                        <h2 style="padding-right:20px; color: black;">Zapsat pohotovost <i class="fa-solid fa-pen"></i></h2>
+                    </div>
+                    <div class="FormConteinerDiv">
+                        <div>
+                            <label class="lableFormConteiner">Technik:</label>
+                            <input id="TechnikJmeno" type="text" class="input-FormConteiner" value="@User?.Identity?.Name">
+                        </div>
+                        <div>
+                            <label class="lableFormConteiner">Od:</label>
+                            <input id="odZapis" type="datetime-local"  class="input-FormConteiner" style="border-bottom: 1px solid #ddd;">
 
-                </div>
-                <div>
-                    <label class="lableFormConteiner">Do:</label>
-                    <input id="doZapis" type="datetime-local"  class="input-FormConteiner" style="border-bottom: 1px solid #ddd;">
-                </div>
-                <div>
-                    <button type="button" class="button">Zapsat se</button>
+                        </div>
+                        <div>
+                            <label class="lableFormConteiner">Do:</label>
+                            <input id="doZapis" type="datetime-local"  class="input-FormConteiner" style="border-bottom: 1px solid #ddd;">
+                        </div>
+                        <div>
+                            <button type="button" class="button">Zapsat se</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

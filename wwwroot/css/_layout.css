@@ -192,12 +192,22 @@ thead th, tbody td {
     display: block;
 }
 
+
 .tables-row {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 20px;
-    
+    width: 100%; 
+}
+.tables-row.formRow{
+    gap: 20PX;
+}
+.section.big{
+    width: 97%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap
 }
 
 .section.small {
@@ -207,7 +217,12 @@ thead th, tbody td {
     align-items: center;
     width: 50%;
     min-width: 300px;
-    
+}
+.section.small.FORMS.right{
+    flex: 3;
+}
+.section.small.FORMS.left{
+    flex: 7;
 }
 
 
@@ -223,26 +238,7 @@ thead th, tbody td {
     z-index: 1000;
 }
 
-.section-wrap.show.dark-mode {
-        color: white;
-        background-color: #1e1e1e;
-}
 
-#wrapinput {
-    width: 150px;
-    height: 20px;
-    margin: 10px;
-}
-
-.user-icon.wrap {
-    margin-left: 2px;
-}
-
-.list-wrapdropdown {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-}
 body {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
@@ -253,13 +249,6 @@ body {
     min-height: 100vh;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-body.dark-mode {
-    background-color: grey;
-    color: #e0e0e0;
-}
 
 .Content{
 

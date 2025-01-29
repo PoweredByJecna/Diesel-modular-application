@@ -33,7 +33,7 @@ columns:[
 { data: 'idDieslovani',
     render: function (data, type, row) {
         return `
-            <a href="/Dieslovani/DetailDieslovani/${data}">
+             <a href="/Dieslovani/DetailDieslovani?id=${data}">
                 ${data}
             </a>
         `;

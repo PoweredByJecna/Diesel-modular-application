@@ -37,9 +37,9 @@ $('#upcomingTable').DataTable({
                 data: 'idDieslovani',
                 render: function (data, type, row) {
                     return `
-                        <a href="/Dieslovani/DetailDieslovani/${data}">
-                            ${data}
-                        </a>
+                         <a href="/Dieslovani/DetailDieslovani?id=${data}">
+                ${data}
+                </a>
                     `;
                 }
             },

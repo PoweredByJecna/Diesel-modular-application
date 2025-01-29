@@ -1,6 +1,6 @@
 .FormConteiner{
     display: flex;
-    width: 99%;
+    width: 100%;
     justify-content: center;
     padding: 50px 0px 50px 0px;
     background-color: white;

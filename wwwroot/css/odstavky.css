@@ -63,8 +63,6 @@ input{
 }
 
 
-
-
 .fa-solid.fa-solid.fa-magnifying-glass{
     margin-right: 3px;
     padding: 2px;
@@ -97,7 +95,7 @@ input{
     border-radius: 0px;
     padding-top: 40px;
     padding-bottom: 30px;
-    width: 99%;
+    width: 100%;
     background-color: white;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

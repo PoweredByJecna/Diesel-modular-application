@@ -3,95 +3,103 @@
     <body>
         <div class="conteiner" id="con">
             <div class="tables-row">
-                <div class="table-div odstavkyTable">
-                    <div class="name" id="OdstavkyTable">
-                        <h2 style="padding-right:20px; color: black;">Všechny odstávky <i class="fa-solid fa-bolt"></i></h2>
-                        <div>
-                            <span class="legenda">
-                                Aktivní :
-                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
-                            </span>
-                            <span class="legenda">
-                                Ukončené :
-                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
-                            </span>
-                            <span class="legenda">
-                                Nekativni :
-                                <i class="fa-solid fa-square" style="color: #0055ff28"></i>
-                            </span>
-                            <span class="legenda">
-                                Nepřižazeno :
-                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521)"></i> 
-                            </span>
-                            <span class="legenda">
-                                Čekající :
-                                <i class="fa-solid fa-square" style="color: rgba(255, 255, 0, 0.321)"></i>
-                            </span>
-                             <span class="legenda">
-                                Nediesluje se :
-                                <i class="fa-solid fa-square" style="color:  rgb(0 17 255 / 43%)"></i>
-                            </span>
-                            
+                <div class="section big">
+                    <div class="section small">
+                        <div class="table-div odstavkyTable">
+                            <div class="name" id="OdstavkyTable">
+                                <h2 style="padding-right:20px; color: black;">Všechny odstávky <i class="fa-solid fa-bolt"></i></h2>
+                                <div>
+                                    <span class="legenda">
+                                        Aktivní :
+                                        <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                                    </span>
+                                    <span class="legenda">
+                                        Ukončené :
+                                        <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                                    </span>
+                                    <span class="legenda">
+                                        Nekativni :
+                                        <i class="fa-solid fa-square" style="color: #0055ff28"></i>
+                                    </span>
+                                    <span class="legenda">
+                                        Nepřižazeno :
+                                        <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521)"></i> 
+                                    </span>
+                                    <span class="legenda">
+                                        Čekající :
+                                        <i class="fa-solid fa-square" style="color: rgba(255, 255, 0, 0.321)"></i>
+                                    </span>
+                                    <span class="legenda">
+                                        Nediesluje se :
+                                        <i class="fa-solid fa-square" style="color:  rgb(0 17 255 / 43%)"></i>
+                                    </span>
+                                    
 
+                                </div>
+                            </div>
+                            <table id="odTable" style="margin-bottom: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th>Akce</th>
+                                        <th>Id</th>
+                                        <th>Distributor</th>
+                                        <th>Lokalita</th>
+                                        <th>Klasifikace</th>
+                                        <th>Od</th>
+                                        <th>Do</th>
+                                        <th>Adresa</th>
+                                        <th>Baterie<a> [min]</a></th>
+                                        <th>Popis</th>
+                                        <th>Zásuvka</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">     
+                                </tbody>          
+                            </table>   
                         </div>
                     </div>
-                    <table id="odTable" style="margin-bottom: 15px;">
-                        <thead>
-                            <tr>
-                                <th>Akce</th>
-                                <th>Id</th>
-                                <th>Distributor</th>
-                                <th>Lokalita</th>
-                                <th>Klasifikace</th>
-                                <th>Od</th>
-                                <th>Do</th>
-                                <th>Adresa</th>
-                                <th>Baterie<a> [min]</a></th>
-                                <th>Popis</th>
-                                <th>Zásuvka</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">     
-                        </tbody>          
-                    </table>   
-                </div>
+                </div>     
             </div>
-            <div class="tables-row" style="margin: 20px 0px 20px 0px; justify-content:center;">
-                <div class="FormConteiner" id="handleOdstavka">
-                       <div class="logoForm">
-                            <h2 style="color: black;">Odstávka - ruční založení <i class="fa-solid fa-hand"></i></h2>
-                        </div>
-                    <div class="FormConteinerDiv">
-                        <div style="position: relative;">
-                            <label class="lableFormConteiner">Lokalita:</label>
-                            <input id="lokalita" type="text" class="input-FormConteiner" onkeyup="SuggestLokalita()" autocomplete="off">
-                            <div id="lokality-suggestions" class="lokalita-sugg"style="position: absolute; background: white; border: 1px solid #cbd0dd; display: none;"></div>  
-                        </div>
-                        <div>
-                            <label class="lableFormConteiner">Od:</label>
-                            <input id="od" type="datetime-local"  class="input-FormConteiner"> 
-                        </div>
-                        <div>
-                            <label class="lableFormConteiner" >Do:</label>
-                            <input id="do" type="datetime-local"  class="input-FormConteiner">
-                        </div>
-                        <div>
-                            <label class="lableFormConteiner">Popis:</label>
-                            <textarea id="popis" type="text" class="input-FormConteiner textarea"></textarea>
-                        </div>
-                        <div style="display: grid;">
-                            <label class="lableFormConteiner">DA:</label>
-                            <select id="daOption" onchange="toggleObjednatNa()">
-                                <option value="default">Default</option>
-                                <option value="now">Objednat hned</option>
-                                <option value="later">Objednat na:</option>
-                                    <input id="objednatNA" type="datetime-local" class="input odstavky" style="display: none; margin-top: 5px;" />
-                            </select>
-                        </div>
-                        <button type="button" class="button" onclick="CreateOdstavku()">Vytvořit</button>
+            <div class="tables-row" style="margin: 20px 0px 20px 0px;">
+                <div class="section big">
+                    <div class="section small">
+                        <div class="FormConteiner" id="handleOdstavka">
+                            <div class="logoForm">
+                                    <h2 style="color: black;">Odstávka - ruční založení <i class="fa-solid fa-hand"></i></h2>
+                                </div>
+                            <div class="FormConteinerDiv">
+                                <div style="position: relative;">
+                                    <label class="lableFormConteiner">Lokalita:</label>
+                                    <input id="lokalita" type="text" class="input-FormConteiner" onkeyup="SuggestLokalita()" autocomplete="off">
+                                    <div id="lokality-suggestions" class="lokalita-sugg"style="position: absolute; background: white; border: 1px solid #cbd0dd; display: none;"></div>  
+                                </div>
+                                <div>
+                                    <label class="lableFormConteiner">Od:</label>
+                                    <input id="od" type="datetime-local"  class="input-FormConteiner"> 
+                                </div>
+                                <div>
+                                    <label class="lableFormConteiner" >Do:</label>
+                                    <input id="do" type="datetime-local"  class="input-FormConteiner">
+                                </div>
+                                <div>
+                                    <label class="lableFormConteiner">Popis:</label>
+                                    <textarea id="popis" type="text" class="input-FormConteiner textarea"></textarea>
+                                </div>
+                                <div style="display: grid;">
+                                    <label class="lableFormConteiner">DA:</label>
+                                    <select id="daOption" onchange="toggleObjednatNa()">
+                                        <option value="default">Default</option>
+                                        <option value="now">Objednat hned</option>
+                                        <option value="later">Objednat na:</option>
+                                            <input id="objednatNA" type="datetime-local" class="input odstavky" style="display: none; margin-top: 5px;" />
+                                    </select>
+                                </div>
+                                <button type="button" class="button" onclick="CreateOdstavku()">Vytvořit</button>
 
+                            </div>
+
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
