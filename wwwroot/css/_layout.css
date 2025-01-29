@@ -312,6 +312,16 @@ body {
     padding: 3px;
     font-family: 'Courier New', Courier, monospace;
 }
+.modal-user{
+    position: absolute;
+    display: none;
+    top: 25px;
+    right: 5px;
+    z-index: 1000;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
 
 
 .active-link {

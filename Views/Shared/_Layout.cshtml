@@ -215,14 +215,24 @@
                                 <div class="buttonTest">
                                     <button class="navdiv add" style="color: white; height: 33px;" onclick="sendEmail()">Odeslat</button>
                                 </div>
-
-
-
-
                             }
-                            <div class="navdiv" style="width: 30px; justify-content: center;">
+                            <div class="navdiv" style="width: 30px; justify-content: center; position: relative;" id="user-modal">
                                 <i class="fa-solid fa-user"></i>
+                                <div class="modal-user" id="modal-user">
+                                    <ul style="list-style: none;">
+                                        <li>Profil</li>
+                                        <li>Změnit heslo</li>
+                                        @if(User.IsInRole("Admin"))
+                                        {
+                                            <li>Test</li>
+                                            <li>Přidat uživatele</li>
+                                            <li>Odeslat-test</li>
+                                        }
+                                        <li style="border-top: 1px solid #ddd;">Odhlásit se</li>
+                                    </ul>
+                                </div>
                             </div> 
+
                         </div>
                     </div> 
 
