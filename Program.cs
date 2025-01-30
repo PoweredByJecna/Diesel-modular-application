@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Diesel_modular_application.Services;
 using Diesel_modular_application.Controllers;
 using Diesel_modular_application.KlasifikaceRule;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,7 @@ builder.Services.AddSingleton<EmailService>();
 builder.Services.AddScoped<DieslovaniService>();
 builder.Services.AddScoped<PohotovostiService>();
 builder.Services.AddScoped<RegionyService>();
+builder.Services.AddScoped<UserService>();
 
 
 

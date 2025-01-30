@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using Diesel_modular_application.Models; // kvůli TableDieslovani
+using Diesel_modular_application.Models; 
 using static Diesel_modular_application.Services.OdstavkyService;
 
 

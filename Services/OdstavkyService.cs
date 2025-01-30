@@ -4,7 +4,6 @@ using Diesel_modular_application.Controllers;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using Microsoft.EntityFrameworkCore;
-using static Diesel_modular_application.Services.DieslovaniService;
 
 namespace Diesel_modular_application.Services
 {
