@@ -44,7 +44,7 @@ table {
     margin: 5px;
     display: flex;
     padding: 10px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #ddd;;
     justify-content: flex-start;
     align-items: center;
 }
@@ -87,6 +87,9 @@ table {
 .formINFO-D.form{
     display: flex;
     width: 100%;
+}
+.formINFO-D.form.changepassword{
+    flex-direction: column;
 }
 .formINFO-D.info{
     padding-bottom: 30px;

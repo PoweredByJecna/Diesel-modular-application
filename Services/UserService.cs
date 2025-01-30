@@ -51,7 +51,8 @@ namespace Diesel_modular_application.Services
                 region = Region?.NazevRegionu ?? "Neznámý",
                 jmeno= pohotovost?.Technik.Jmeno,
                 prijmeni=pohotovost?.Technik.Prijmeni,
-                tel=userDetail.PhoneNumber
+                tel=userDetail.PhoneNumber,
+                
             };
         }
 

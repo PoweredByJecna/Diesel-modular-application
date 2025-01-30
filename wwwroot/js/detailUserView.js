@@ -21,6 +21,8 @@ $(document).ready(function () {
                     $('#jmeno').append(data.jmeno || "N/A");
                     $('#prijmeni').append(data.prijmeni || "N/A");
                     $('#tel').append(data.tel || "N/A");
+                    $('#tel').append(data.tel || "N/A");
+
                 } else {
                     $('#user-detail').html('<p>Data nebyla nalezena.</p>');
                 }
