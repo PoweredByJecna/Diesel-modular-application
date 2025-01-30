@@ -86,9 +86,10 @@ $('#runningTable').DataTable({
         },
         { 
             data: null, 
-            render: function(data, type, row) {
-                return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
-            }
+                    render: function(data, type, row) {
+                    return `<a class="userA" href="/User/Index?id=${data.idUser}">
+                    ${data.jmeno} ${data.prijmeni}
+                </a>`;}
         },
         { data: 'vstup', 
             render: function(data) {

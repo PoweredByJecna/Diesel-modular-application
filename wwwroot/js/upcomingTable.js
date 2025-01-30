@@ -87,10 +87,9 @@ $('#upcomingTable').DataTable({
             { 
                 data: null, 
                     render: function(data, type, row) {
-                    return `<a href="/User/Index?id=${data.idUser}" style="text-decoration: none; color: inherit;">
+                    return `<a class="userA" href="/User/Index?id=${data.idUser}">
                     ${data.jmeno} ${data.prijmeni}
-                </a>`;
-}
+                </a>`;}
 
             },
             { data: 'date', 

@@ -753,4 +753,13 @@ background-color: darkgreen   !important;
     padding: 10px 35px 10px 35px;
 
 }
+.infowrapper.user form{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: space-around;
+}
 
+.infowrapper.user form div{
+    padding: 10px;
+}

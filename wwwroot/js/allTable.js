@@ -122,9 +122,10 @@ $('#allTable').DataTable({
     {data: 'nazevFirmy'},
     { 
         data: null, 
-        render: function(data, type, row) {
-            return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
-        }
+                    render: function(data, type, row) {
+                    return `<a class="userA" href="/User/Index?id=${data.idUser}">
+                    ${data.jmeno} ${data.prijmeni}
+                </a>`;}
     },    
     {data: 'nazevRegionu'},
     {data: 'od', 

@@ -21,7 +21,8 @@ $(document).ready(function () {
                     $('#baterie').append(data.baterie || "N/A");
                     $('#region').append(data.region || "N/A");
                     $('#popis').append(data.popis || "N/A");
-                    $('#technik').append(data.technik || "N/A");
+                    $('#technik').append(`<a href="/User/Index?id=${data.idUser}">${data.technik || "N/A"}</a>`);
+
                 } else {
                     $('#dieslovani-detail').html('<p>Data nebyla nalezena.</p>');
                 }

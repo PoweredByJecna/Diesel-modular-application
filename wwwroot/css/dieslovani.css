@@ -185,3 +185,13 @@ table.dataTable.no-footer{
 
 }
 
+.userA{
+    text-decoration: none;
+    color: inherit;
+    font-weight:600; 
+}
+.userA:hover{
+    text-decoration: underline;
+    transition: 0.3s;
+}
+

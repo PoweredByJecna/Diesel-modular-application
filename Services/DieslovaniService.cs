@@ -297,7 +297,9 @@ namespace Diesel_modular_application.Services
                 baterie = detailDieslovani.Odstavka?.Lokality?.Baterie,
                 region = detailDieslovani.Odstavka?.Lokality?.Region?.NazevRegionu,
                 popis = detailDieslovani.Odstavka?.Popis,
-                technik = detailDieslovani.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý"
+                technik = detailDieslovani.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý",
+                idUser= detailDieslovani.Technik.IdUser
+
             }; 
         }
 
@@ -389,7 +391,9 @@ namespace Diesel_modular_application.Services
                     l.Vstup,
                     l.Odstavka.Popis,
                     l.Odstavka.Lokality.Baterie,
-                    l.Odstavka.Lokality.Zasuvka
+                    l.Odstavka.Lokality.Zasuvka,
+                    idUser= l.Technik.IdUser
+
                 })
                 .ToListAsync();
 
@@ -454,7 +458,9 @@ namespace Diesel_modular_application.Services
                     l.Odchod,
                     l.Odstavka.Popis,
                     l.Odstavka.Lokality.Baterie,
-                    l.Odstavka.Lokality.Zasuvka
+                    l.Odstavka.Lokality.Zasuvka,
+                    idUser= l.Technik.IdUser
+
                     
                 })
                 .ToListAsync();
@@ -510,7 +516,8 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Distributor,
                     l.Odstavka.Lokality.Lokalita,
                     l.Odstavka.Lokality.Klasifikace,
-                    l.Odstavka.Lokality.Region.Firma.NazevFirmy
+                    l.Odstavka.Lokality.Region.Firma.NazevFirmy,
+
                 })
                 .ToListAsync();
 
