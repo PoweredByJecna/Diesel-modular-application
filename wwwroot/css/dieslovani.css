@@ -46,6 +46,7 @@ table {
     padding: 10px;
     border-bottom: 1px solid grey;
     justify-content: flex-start;
+    align-items: center;
 }
 .formINFO-D div p{
     margin: 2px;
@@ -55,6 +56,12 @@ table {
     align-items: center;
  
 }
+.Infowrapperspan{
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+}
+    
 
 .detail {
     width: 100%;

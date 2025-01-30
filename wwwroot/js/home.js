@@ -99,7 +99,7 @@ function processRegionData(region, containerIds) {
           ? '<i class="fa-solid fa-circle" style="color: #28a745; margin-left: 10px"></i>'
           : '<i class="fa-solid fa-circle" style="color: #dc3545; margin-left: 10px"></i>';
   
-        var pHtml = '<div><p><i class="fa-solid fa-wrench navA"></i> Technik: '
+        var pHtml = '<div> <span class="Infowrapperspan"><i class="fa-solid fa-wrench navA"></i> Technik: </span><p> '
                     + tech.jmeno
                     + ' ' + pohotovostIkona
                     + '</p></div>';

@@ -760,6 +760,20 @@ background-color: darkgreen   !important;
     justify-content: space-around;
 }
 
-.infowrapper.user form div{
+.infowrapper.user form .c1{
     padding: 10px;
 }
+
+.infowrapper.user form .c1 div{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.infowrapper.user form .c1 div p{
+    margin-left: 50px;
+    margin-right: 0px;
+}
+
+
+
