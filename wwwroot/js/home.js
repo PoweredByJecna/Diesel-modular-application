@@ -110,22 +110,44 @@ function processRegionData(region, containerIds) {
     }
 }
 
-$(document).ready(function () {
-    $('.nav-FRG p').on('click', function () {
+document.querySelectorAll('.nav-FRG p').forEach((tab) => {
+    tab.addEventListener('click', function () {
         // Odebrat 'active' ze všech <p>
-        $('.nav-FRG p').removeClass('active');
-
+        document.querySelectorAll('.nav-FRG p').forEach((p) => p.classList.remove('active'));
+        
         // Přidat 'active' na aktuální <p>
-        $(this).addClass('active');
+        this.classList.add('active');
 
         // Skryj všechny divy
-        $('.content').hide();
-
+        document.querySelectorAll('.content').forEach((content) => content.style.display = 'none');
+        
         // Zobraz odpovídající div
         const targetId = `content-${this.id}`;
-        $(`#${targetId}`).show();
+        document.getElementById(targetId).style.display = 'block';
     });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const userModal = document.getElementById("user-modal");
+    const modalUser = document.getElementById("modal-user");
+
+    userModal.addEventListener("click", function (event) {
+        // Přepíná zobrazení modal-user
+        modalUser.style.display = (modalUser.style.display === "block") ? "none" : "block";
+
+        // Zastaví propagaci, aby modal nezmizel hned po kliknutí
+        event.stopPropagation();
+    });
+
+    // Skryje modal při kliknutí mimo něj
+    document.addEventListener("click", function (event) {
+        if (!userModal.contains(event.target)) {
+            modalUser.style.display = "none";
+        }
+    });
+});
+
 
 
 

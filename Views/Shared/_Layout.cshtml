@@ -194,41 +194,20 @@
                                 <i class="fa-solid fa-bars fa-2xl"></i>
                             </div>
                         </div>
-                        <div class="navbarcontent">
-                            <div class="navdiv settings">
-                                <i class="fa-solid fa-gear"></i>
-                            </div>
-                            <div class="navdiv signout">
-                                <a asp-action="Logout" asp-controller="Logout">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                </a>
-                            </div>   
-                            @if(User.IsInRole("Admin"))
-                            {
-                                <div class="navdiv add">
-                                    <i class="fa-solid fa-plus"></i>
-                                    <a>Add member</a>
-                                </div>
-                                <div class="buttonTest"> 
-                                    <button id="testButton" class="navdiv add" type="button" style="color: white; height: 33px;">Test</button>
-                                </div>
-                                <div class="buttonTest">
-                                    <button class="navdiv add" style="color: white; height: 33px;" onclick="sendEmail()">Odeslat</button>
-                                </div>
-                            }
+                        <div class="navbarcontent">  
                             <div class="navdiv" style="width: 30px; justify-content: center; position: relative;" id="user-modal">
                                 <i class="fa-solid fa-user"></i>
                                 <div class="modal-user" id="modal-user">
                                     <ul style="list-style: none;">
-                                        <li>Profil</li>
-                                        <li>Změnit heslo</li>
+                                        <li><p><i class="fa-regular fa-id-card"></i> Profil</p></li>
+                                        <li><p><i class="fa-solid fa-lock"></i> Změnit heslo</p></li>
                                         @if(User.IsInRole("Admin"))
                                         {
-                                            <li>Test</li>
-                                            <li>Přidat uživatele</li>
-                                            <li>Odeslat-test</li>
+                                            <li><p id="testButton"><i class="fa-solid fa-vial-virus"></i> Test</p></li>
+                                            <li><p><i class="fa-solid fa-user-plus"></i> Přidat uživatele</p></li>
+                                            <li><p onclick="sendEmail()"><i class="fa-solid fa-paper-plane"></i> Odeslat-test</p></li>
                                         }
-                                        <li style="border-top: 1px solid #ddd;">Odhlásit se</li>
+                                        <li style="border-top: 1px solid #ddd; padding-top: 5px;"><p><i class="fa-solid fa-right-from-bracket"></i><a asp-action="Logout" asp-controller="Logout"> Odhlásit se</a></p></li>
                                     </ul>
                                 </div>
                             </div> 

@@ -10,6 +10,7 @@ using Diesel_modular_application.Services; // Pokud váš EmailController bude t
 
 // Propojení s OdstavkyService.Result, pokud to sdílíte
 using static Diesel_modular_application.Services.OdstavkyService;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Diesel_modular_application.Services
 {
@@ -454,6 +455,7 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Popis,
                     l.Odstavka.Lokality.Baterie,
                     l.Odstavka.Lokality.Zasuvka
+                    
                 })
                 .ToListAsync();
 
@@ -619,6 +621,14 @@ namespace Diesel_modular_application.Services
                     return true;
                 }
             }
+        }
+        private string FoundUser(string technikId)
+        {
+           var UserId = _context.Users
+           .Where(o=>o.Id==technikId)
+           .Select(o=>o.Id); 
+           string user = UserId.ToString();
+           return user;
         }
 
         private bool Battery(DateTime od, DateTime do_, int baterie)

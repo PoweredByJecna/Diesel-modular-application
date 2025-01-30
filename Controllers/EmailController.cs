@@ -2,7 +2,7 @@ using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using static Diesel_modular_application.Services.OdstavkyService;
+
 
 
 namespace Diesel_modular_application.Controllers

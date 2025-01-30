@@ -310,19 +310,38 @@ body {
     font-size: medium;
     color: black;
     padding: 3px;
-    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
 }
 .modal-user{
     position: absolute;
     display: none;
-    top: 25px;
+    animation-duration: .3s;
+    top: 45px;
     right: 5px;
+    width: 200px;
     z-index: 1000;
     background-color: white;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-
+.modal-user ul{
+    list-style: none;
+    padding-left: 0px;
+}
+.modal-user ul li{
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+}
+.modal-user ul li p{
+    margin-right: 0px;
+    font-size: small;
+    justify-content: flex-start;
+    align-items: center;
+}
+.modal-user ul li:hover{
+    background-color:#bfc1c59c;
+    transition: 0.3s;
+}
 
 .active-link {
     text-decoration: underline;
