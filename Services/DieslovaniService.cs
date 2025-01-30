@@ -553,6 +553,7 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Popis,
                     l.Odstavka.Lokality.Baterie,
                     l.Odstavka.Lokality.Zasuvka,
+                    idUser= l.Technik.IdUser
                 })
                 .ToListAsync();
 

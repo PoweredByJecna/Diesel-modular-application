@@ -86,9 +86,12 @@ $('#upcomingTable').DataTable({
             },
             { 
                 data: null, 
-                render: function(data, type, row) {
-                    return data.jmeno + ' ' + data.prijmeni; // Combine the two variables into one cell
-                }
+                    render: function(data, type, row) {
+                    return `<a href="/User/Index?id=${data.idUser}" style="text-decoration: none; color: inherit;">
+                    ${data.jmeno} ${data.prijmeni}
+                </a>`;
+}
+
             },
             { data: 'date', 
                 render: function(data) {
