@@ -19,10 +19,16 @@ namespace Diesel_modular_application.Services
             .Where(o => o.Id == IdUSER)
             .FirstOrDefaultAsync();
 
+           
+
             if (userDetail == null)
             {
             return new { error = "Uživatel nenalezen" };
             }
+
+            var role = await _context.UserRoles
+            .Where(o=>o.UserId == userDetail.Id)
+            .FirstOrDefaultAsync();
 
             var pohotovost = await _context.Pohotovts
             .Include(o => o.Technik)
@@ -52,6 +58,8 @@ namespace Diesel_modular_application.Services
                 jmeno= pohotovost?.Technik.Jmeno,
                 prijmeni=pohotovost?.Technik.Prijmeni,
                 tel=userDetail.PhoneNumber,
+                role = role.RoleId,
+    
                 
             };
         }

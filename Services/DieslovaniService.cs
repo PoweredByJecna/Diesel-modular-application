@@ -630,14 +630,7 @@ namespace Diesel_modular_application.Services
                 }
             }
         }
-        private string FoundUser(string technikId)
-        {
-           var UserId = _context.Users
-           .Where(o=>o.Id==technikId)
-           .Select(o=>o.Id); 
-           string user = UserId.ToString();
-           return user;
-        }
+       
 
         private bool Battery(DateTime od, DateTime do_, int baterie)
         {
