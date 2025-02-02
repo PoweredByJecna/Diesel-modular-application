@@ -1,4 +1,5 @@
-﻿using Diesel_modular_application.Models;
+﻿using Diesel_modular_application.Migrations;
+using Diesel_modular_application.Models;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -123,6 +124,9 @@ namespace Diesel_modular_application.Data
             public DbSet<TableRegiony>ReginoS{get;set;}
             public DbSet<TablePohotovosti> Pohotovts{get;set;}
             public DbSet<TableTechnici> TechniS{get;set;}
+            public DbSet<ZdrojTable> Zdrojs{get;set;}
+            public DbSet<DebugLogModel> LogS{get;set;}
+        
  
         }
     }
