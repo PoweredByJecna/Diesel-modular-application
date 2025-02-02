@@ -17,19 +17,20 @@ namespace Diesel_modular_application.Services
     public class DieslovaniService
     {
         private readonly DAdatabase _context;
-
+        private readonly LogService _logservice;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly EmailService _emailService; 
-        // ideálně by i EmailController byl nahrazen EmailService
 
         public DieslovaniService(
             DAdatabase context,
             UserManager<IdentityUser> userManager,
-            EmailService emailService)
+            EmailService emailService,
+            LogService logService)
         {
             _context = context;
             _userManager = userManager;
             _emailService = emailService;
+            _logservice = logService;
         }
 
         /// <summary>
