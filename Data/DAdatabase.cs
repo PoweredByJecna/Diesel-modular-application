@@ -123,6 +123,6 @@ namespace Diesel_modular_application.Data
             public DbSet<TableRegiony>ReginoS{get;set;}
             public DbSet<TablePohotovosti> Pohotovts{get;set;}
             public DbSet<TableTechnici> TechniS{get;set;}
-
+ 
         }
     }

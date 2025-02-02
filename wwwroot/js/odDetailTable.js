@@ -72,7 +72,7 @@ $(document).ready(function () {
                 }
             },
             { data: 'od', render: data => formatDate(data) },
-            { data: 'do', render: data => formatDate(data) },
+            { data: 'do_', render: data => formatDate(data) },
             { data: 'adresa' },
             { data: 'baterie' },
             { data: 'popis' },

@@ -55,10 +55,10 @@ namespace Diesel_modular_application.Services
                 nadrizeny = "Neznámý", 
                 firma = Firma?.Firma?.NazevFirmy ?? "Neznámá",
                 region = Region?.NazevRegionu ?? "Neznámý",
-                jmeno= pohotovost?.Technik.Jmeno,
-                prijmeni=pohotovost?.Technik.Prijmeni,
+                jmeno= pohotovost?.Technik?.Jmeno,
+                prijmeni=pohotovost?.Technik?.Prijmeni,
                 tel=userDetail.PhoneNumber,
-                role = role.RoleId,
+                role = role?.RoleId,
     
                 
             };

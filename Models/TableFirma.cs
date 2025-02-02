@@ -7,8 +7,6 @@ namespace Diesel_modular_application.Models
     {
         [Key]
         public int IDFirmy{get;set;}
-        public string NazevFirmy{get;set;}
-        public virtual ICollection<TableDieslovani> DieslovaniList {get;set;}
-        
+        public string? NazevFirmy{get;set;}       
     }
 }

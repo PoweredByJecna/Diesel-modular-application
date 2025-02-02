@@ -8,18 +8,24 @@ namespace Diesel_modular_application.Models
 
         [Key]
         public int Id { get; set; }
-        public string Lokalita { get; set; }
-        public string Klasifikace { get; set; }
-        public string Adresa { get; set; }
+        public string? Lokalita { get; set; }
+        public string? Klasifikace { get; set; }
+        public string? Adresa { get; set; }
         public int Baterie { get; set; }
         public bool DA { get; set; }
         public bool Zasuvka { get; set; }
 
+
+
         [ForeignKey("Region")]
         public int? RegionID {get;set;}
-        public virtual TableRegiony Region {get;set;}
+        public virtual TableRegiony? Region {get;set;}
 
-        public virtual ICollection<TableOdstavky> OdstavkyList { get; set; }
+        public virtual ICollection<TableOdstavky>? OdstavkyList { get; set; }
+
+        [ForeignKey("Zdroj")]
+        public int? ZdrojId { get; set; }
+        public virtual TableZdroj? Zdroj { get; set; }
       
     }
 }

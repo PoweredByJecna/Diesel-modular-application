@@ -8,10 +8,10 @@ namespace Diesel_modular_application.Models
     {   
         [Key]
         public int IdRegion{get;set;}
-        public string NazevRegionu{get;set;}
+        public string? NazevRegionu{get;set;}
         
         [ForeignKey("Firma")]
         public int ? FirmaID {get;set;}
-        public virtual TableFirma Firma {get;set;}
+        public virtual TableFirma? Firma {get;set;}
     }
 }

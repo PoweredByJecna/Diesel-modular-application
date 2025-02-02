@@ -9,7 +9,7 @@ $('#lokalityTable').DataTable({   // Zobrazí indikátor načítání  // Povole
         }
     },  
     columns: [
-        { data: 'id' },
+        
 { data: 'lokalita',
     render: function (data, type, row) {
         return `<span style="font-weight: 700;">${data}</span>`;
