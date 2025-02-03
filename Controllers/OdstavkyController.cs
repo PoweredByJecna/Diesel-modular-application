@@ -53,9 +53,9 @@ namespace Diesel_modular_application.Controllers
             return View(detail);
         }
         [HttpGet]
-        public async Task<IActionResult?> DetailOdstavkyJson(int id)
+        public async Task<IActionResult> DetailOdstavkyJson(int id)
         {
-            var detailOdstavky = await _odstavkyService.DetailOdstavkyJson(id);
+            var detailOdstavky = await _odstavkyService.DetailOdstavkyJsonAsync(id);
             return Json(new{
                 data=detailOdstavky
             });
