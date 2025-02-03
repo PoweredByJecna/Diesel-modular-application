@@ -14,14 +14,17 @@ namespace Diesel_modular_application.Controllers
     public class DieslovaniController : Controller
     {
         private readonly DieslovaniService _dieslovaniService;
+        private readonly LogService _logService;
         private readonly UserManager<IdentityUser> _userManager;
 
         public DieslovaniController(
             DieslovaniService dieslovaniService,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            LogService logService)
         {
             _dieslovaniService = dieslovaniService;
             _userManager = userManager;
+            _logService=logService;
         }
 
         [Authorize]
@@ -125,7 +128,6 @@ namespace Diesel_modular_application.Controllers
                 // return Json(new { success = true, message = Message });
             }
         }
-
         // ----------------------------------------
         // Převzetí dieslování (Take)
         // ----------------------------------------
@@ -152,7 +154,6 @@ namespace Diesel_modular_application.Controllers
                 });
             }
         }
-
         // ----------------------------------------
         // Tabulky (původně GetTableDataRunningTable atd.)
         // ----------------------------------------
@@ -173,7 +174,9 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-
+        // ----------------------------------------
+        // Tabulky (původně GetTableDataRunningTable atd.)
+        // ----------------------------------------
         [HttpGet]
         public async Task<IActionResult> GetTableDataAllTable(int start = 0, int length = 0)
         {
@@ -190,7 +193,9 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-
+        // ----------------------------------------
+        // Tabulky (původně GetTableDataRunningTable atd.)
+        // ----------------------------------------
         [HttpGet]
         public async Task<IActionResult> GetTableDatathrashTable(int start = 0, int length = 0)
         {
@@ -207,6 +212,9 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
+        // ----------------------------------------
+        // Tabulky (původně GetTableDataRunningTable atd.)
+        // ----------------------------------------
         [HttpGet]
         public async Task<IActionResult> GetTableUpcomingTable(int start = 0, int length = 0)
         {
@@ -223,7 +231,10 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-        [HttpGet]
+        // ----------------------------------------
+        // Tabulky (původně GetTableDataRunningTable atd.)
+        // ----------------------------------------     
+        [HttpGet]   
         public async Task<IActionResult> GetTableDataEndTable(int start = 0, int length = 0)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -239,7 +250,6 @@ namespace Diesel_modular_application.Controllers
                 data = data
             });
         }
-
         // ----------------------------------------
         // Smazání dieslování
         // ----------------------------------------
@@ -257,5 +267,6 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = true, message = Message });
             }
         }
+       
     }
 }

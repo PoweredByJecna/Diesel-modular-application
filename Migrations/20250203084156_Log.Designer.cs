@@ -4,6 +4,7 @@ using Diesel_modular_application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diesel_modular_application.Migrations
 {
     [DbContext(typeof(DAdatabase))]
-    partial class DAdatabaseModelSnapshot : ModelSnapshot
+    [Migration("20250203084156_Log")]
+    partial class Log
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace Diesel_modular_application.Migrations
 
                     b.HasKey("IdLog");
 
-                    b.ToTable("DebugModel", "Data");
+                    b.ToTable("LogS", "Identity");
                 });
 
             modelBuilder.Entity("Diesel_modular_application.Models.TableDieslovani", b =>
@@ -265,7 +268,7 @@ namespace Diesel_modular_application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TableZdroj", "Data");
+                    b.ToTable("Zdrojs", "Identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

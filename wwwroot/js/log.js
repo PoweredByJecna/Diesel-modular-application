@@ -1,28 +1,36 @@
 $(document).ready(function () {
-    // Získání parametru "id" z query stringu
+    // Získání parametru "id" z query stringu (např. ?id=156587)
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
+    
     console.log("ID z URL:", id);
-
+    
     if (id) {
         $.ajax({
-            url: `/DebugLogs/GetLogByEntity?id=${id}`,
+            url: '/Log/GetLogByEntity',
             type: 'GET',
+            data: {
+                entityId: id
+            },
             success: function (response) {
-                // Předpokládáme, že response má strukturu { data: { timeStamp: "...", message: "..." } }
-                const logData = response.data;
-                console.log("Log data:", logData);
-                
-                // Vložíme získané hodnoty do HTML elementů
-                $('#logTimestamp').append(logData.timeStamp);
-                $('#logMessage').append(logData.message);
+                // Očekáváme, že response má strukturu { data: [ { timeStamp: "...", logMessage: "..." }, ... ] }
+                let html = "<ul>";
+                if (response.data && response.data.length > 0) {
+                    response.data.forEach(function (log) {
+                        html += `<li>${log.timeStamp} ${log.logMessage}</li>`;
+                    });
+                } else {
+                    html += "<li>Nebyly nalezeny žádné logy.</li>";
+                }
+                html += "</ul>";
+                $("#logsContainer").html(html);
             },
             error: function () {
-                $('#logContainer').html('<p>Chyba při načítání logovacích dat.</p>');
+                $("#logsContainer").html("<p>Chyba při načítání logů.</p>");
             }
         });
     } else {
-        $('#logContainer').html('<p>ID nebylo nalezeno v URL.</p>');
+        $("#logsContainer").html("<p>ID nebylo nalezeno v URL.</p>");
     }
 });
 

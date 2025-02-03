@@ -40,7 +40,7 @@ namespace Diesel_modular_application.Services
         public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableOdstavky newOdstavka,HandleOdstavkyDieslovaniResult result)
         {
             // Pokud na lokalitě existuje stacionární generátor (DA), není potřeba
-            if (newOdstavka.Lokality.DA == true)
+            if (newOdstavka?.Lokality?.DA == true)
             {
                 Debug.WriteLine("Na lokalitě je DA");
                 result.Success = false;
@@ -49,7 +49,7 @@ namespace Diesel_modular_application.Services
             }
 
             // Pokud není zásuvka, tak dieslování nemá smysl
-            if (newOdstavka.Lokality.Zasuvka == false)
+            if (newOdstavka?.Lokality?.Zasuvka == false)
             {
                 Debug.WriteLine("Na lokalitě není zásuvka");
                 result.Success = false;

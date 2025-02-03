@@ -11,11 +11,13 @@ namespace Diesel_modular_application.Services
     {
         private readonly DAdatabase _context;
         private readonly DieslovaniService _dieslovani; 
+        private readonly LogService _logService;
 
-        public OdstavkyService(DAdatabase context, DieslovaniService dieslovani)
+        public OdstavkyService(DAdatabase context, DieslovaniService dieslovani, LogService logService)
         {
             _context = context;
             _dieslovani = dieslovani;
+            _logService = logService;
 
         }
 
@@ -123,6 +125,9 @@ namespace Diesel_modular_application.Services
                 var od = DateTime.Today.AddHours(hours + 2);
                 var do_ = DateTime.Today.AddHours(hours + 8);
 
+                
+
+
                 // Kontrola
                 result = OdstavkyCheck(lokalitaSearch, od, do_, result);
                 if (!result.Success)
@@ -144,9 +149,11 @@ namespace Diesel_modular_application.Services
                     result.Message = "Chyba při ukládání do databáze";
                     return result;
                 }
-
+                var logZapis= await _logService.ZapisDoLogu(DateTime.Now, "odstávka",newOdstavka.IdOdstavky, $"Vytvřáření odstávky s parametry: Lokalita: {newOdstavka.Lokality.Lokalita}, Klasifikace: {newOdstavka.Lokality.Klasifikace}, Od: {newOdstavka.Od}, Do: {newOdstavka.Do}");
+                
                 // Zavoláme dieslování
                 result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
+
                 return result;
             }
             catch (Exception ex)

@@ -48,6 +48,7 @@ builder.Services.AddScoped<DieslovaniService>();
 builder.Services.AddScoped<PohotovostiService>();
 builder.Services.AddScoped<RegionyService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<LogService>();
 
 
 

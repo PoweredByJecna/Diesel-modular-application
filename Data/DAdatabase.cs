@@ -77,6 +77,15 @@ namespace Diesel_modular_application.Data
                 {
                     entity.ToTable("TableTechnici", schema:"Data");
                 });
+                builder.Entity<TableZdroj>(entity=>
+                {
+                    entity.ToTable("TableZdroj", schema:"Data");
+                });
+                builder.Entity<DebugLogModel>(entity=>
+                {
+                    entity.ToTable("DebugModel", schema:"Data");
+                });
+
                 
 
                 // Přidání vztahu mezi Odstavky a Lokality
@@ -112,7 +121,9 @@ namespace Diesel_modular_application.Data
                     .HasOne(o=>o.Firma)
                     .WithMany()
                     .HasForeignKey(i=>i.FirmaID);
-
+    
+                builder.Entity<TableZdroj>().HasKey(z => z.Id);
+                builder.Entity<DebugLogModel>().HasKey(z=>z.IdLog);
             
 
             }
@@ -124,7 +135,7 @@ namespace Diesel_modular_application.Data
             public DbSet<TableRegiony>ReginoS{get;set;}
             public DbSet<TablePohotovosti> Pohotovts{get;set;}
             public DbSet<TableTechnici> TechniS{get;set;}
-            public DbSet<ZdrojTable> Zdrojs{get;set;}
+            public DbSet<TableZdroj> Zdrojs{get;set;}
             public DbSet<DebugLogModel> LogS{get;set;}
         
  
