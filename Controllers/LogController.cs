@@ -16,9 +16,9 @@ namespace Diesel_modular_application.Controllers
         // Poslani logu pro dieslování do ajax
         // ----------------------------------------
         [HttpGet]
-        public async Task<IActionResult> GetLogByEntity(int id)
+        public async Task<IActionResult> GetLogByEntity(int entityId)
         {   
-            var logDieslovani = await _logService.GetLogByEntityAsync(id);
+            var logDieslovani = await _logService.GetLogByEntityAsync(entityId);
             return Json(new
             {
                 data=logDieslovani

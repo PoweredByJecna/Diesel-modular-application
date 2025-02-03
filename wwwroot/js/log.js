@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Získání parametru "id" z query stringu (např. ?id=156587)
     const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    const id = params.get("id");    
     
     console.log("ID z URL:", id);
     
@@ -15,9 +15,10 @@ $(document).ready(function () {
             success: function (response) {
                 // Očekáváme, že response má strukturu { data: [ { timeStamp: "...", logMessage: "..." }, ... ] }
                 let html = "<ul>";
+                console.log("Data:", response.data);
                 if (response.data && response.data.length > 0) {
                     response.data.forEach(function (log) {
-                        html += `<li>${log.timeStamp} ${log.logMessage}</li>`;
+                        html += '<li>' + log.timeStamp + ' ' + log.logMessage + '</li>';
                     });
                 } else {
                     html += "<li>Nebyly nalezeny žádné logy.</li>";

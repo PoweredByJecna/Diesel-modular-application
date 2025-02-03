@@ -14,14 +14,14 @@ $(document).ready(function () {
                 console.log(response.data);
                 if (data) {
                     $('#uzivatelskeJmeno').append(data.uzivatelskeJmeno);
-                    $('#stav').append(data.stav || "N/A");
-                    $('#nadrizeny').append(data.nadrizeny || "N/A");
-                    $('#firma').append(data.firma || "N/A");
-                    $('#region').append(data.region || "N/A");
-                    $('#jmeno').append(data.jmeno || "N/A");
-                    $('#prijmeni').append(data.prijmeni || "N/A");
-                    $('#tel').append(data.tel || "N/A");
-                    $('#tel').append(data.tel || "N/A");
+                    $('#stav').append(data.stav);
+                    $('#nadrizeny').append(data.nadrizeny);
+                    $('#firma').append(data.firma);
+                    $('#region').append(data.region);
+                    $('#jmeno').append(data.jmeno);
+                    $('#prijmeni').append(data.prijmeni);
+                    $('#tel').append(data.tel);
+                    $('#tel').append(data.tel);
 
                 } else {
                     $('#user-detail').html('<p>Data nebyla nalezena.</p>');

@@ -14,14 +14,14 @@ $(document).ready(function () {
                 console.log(response.data);
                 if (data) {
                     $('#idDieslovani').append(data.idDieslovani);
-                    $('#iDOdstavky').append(data.odstavkaId || "N/A");
-                    $('#lokalita').append(data.lokalita || "N/A");
-                    $('#adresa').append(data.adresa || "N/A");
-                    $('#klasifikace').append(data.klasifikace || "N/A");
-                    $('#baterie').append(data.baterie || "N/A");
-                    $('#region').append(data.region || "N/A");
-                    $('#popis').append(data.popis || "N/A");
-                    $('#technik').append(`<a href="/User/Index?id=${data.idUser}">${data.technik || "N/A"}</a>`);
+                    $('#iDOdstavky').append(data.odstavkaId);
+                    $('#lokalita').append(data.lokalita);
+                    $('#adresa').append(data.adresa);
+                    $('#klasifikace').append(data.klasifikace);
+                    $('#baterie').append(data.baterie);
+                    $('#region').append(data.region);
+                    $('#popis').append(data.popis);
+                    $('#technik').append(`<a href="/User/Index?id=${data.idUser}">${data.technik}</a>`);
 
                 } else {
                     $('#dieslovani-detail').html('<p>Data nebyla nalezena.</p>');
