@@ -34,8 +34,8 @@ document.querySelectorAll('.InputSearching').forEach(input => {
 });
 
 function getDieslovaniIdFromUrl() {
-    const urlParts = window.location.pathname.split('/'); // Rozdělit URL podle "/"
-    return urlParts[urlParts.length - 1]; // Poslední část URL je ID dieslování
+    const urlParts = window.location.pathname.split('/'); 
+    return urlParts[urlParts.length - 1]; 
 }
 
 
@@ -75,23 +75,11 @@ data.forEach(item => {
 });
 
 function processRegionData(region, containerIds) {
-    // containerIds je objekt s ID prvků, abyste mohl znovu použít i pro jiná umístění
-    // Například:
-    // containerIds = {
-    //   distributor: '#psc-distributor',
-    //   firma: '#psc-firma',
-    //   pocetOdstavek: '#psc-pocet-odstavek',
-    //   pocetLokalit: '#psc-pocet-lokalit',
-    //   technici: '#psc-technici'
-    // }
-  
-    // Do vybraných prvků dáte data
     $(containerIds.distributor).append(region.distributor);
     $(containerIds.firma).append(region.firma);
     $(containerIds.pocetOdstavek).append(region.pocetOdstavek);
     $(containerIds.pocetLokalit).append(region.pocetLokalit);
   
-    // Technici
     $(containerIds.technici).empty();
     if (region.technici && region.technici.length > 0) {
       region.technici.forEach(function(tech) {
@@ -110,22 +98,41 @@ function processRegionData(region, containerIds) {
     }
 }
 
-document.querySelectorAll('.nav-FRG p').forEach((tab) => {
-    tab.addEventListener('click', function () {
-        // Odebrat 'active' ze všech <p>
-        document.querySelectorAll('.nav-FRG p').forEach((p) => p.classList.remove('active'));
-        
-        // Přidat 'active' na aktuální <p>
-        this.classList.add('active');
 
-        // Skryj všechny divy
-        document.querySelectorAll('.content').forEach((content) => content.style.display = 'none');
-        
-        // Zobraz odpovídající div
-        const targetId = `content-${this.id}`;
-        document.getElementById(targetId).style.display = 'block';
+  document.addEventListener('DOMContentLoaded', function () {
+    // Výchozí nastavení:
+    // 1) Přidáme "active" na LOG
+    document.getElementById("log").classList.add("active");
+    
+    // 2) Zobrazíme content-log, schováme content-vazby
+    document.getElementById("content-log").style.display = "block";
+    document.getElementById("content-vazby").style.display = "none";
+
+    // Kliknutí na "LOG"
+    document.getElementById("log").addEventListener("click", function () {
+      // LOG je aktivní
+      this.classList.add("active");
+      // VAZBY přestane být aktivní
+      document.getElementById("vazby").classList.remove("active");
+      
+      // Zobrazit content-log, schovat content-vazby
+      document.getElementById("content-log").style.display = "block";
+      document.getElementById("content-vazby").style.display = "none";
     });
-});
+
+    // Kliknutí na "VAZBY"
+    document.getElementById("vazby").addEventListener("click", function () {
+      // VAZBY je aktivní
+      this.classList.add("active");
+      // LOG přestane být aktivní
+      document.getElementById("log").classList.remove("active");
+      
+      // Zobrazit content-vazby, schovat content-log
+      document.getElementById("content-log").style.display = "none";
+      document.getElementById("content-vazby").style.display = "block";
+    });
+  });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
