@@ -119,12 +119,10 @@ namespace Diesel_modular_application.Services
 
                 // Generujeme náhodné časy
                 var hours = RandomNumberGenerator.GetInt32(1, 100);
-                string popis = "test";
                 string distrib = DetermineDistributor(lokalitaSearch.Region.NazevRegionu);
-
                 var od = DateTime.Today.AddHours(hours + 2);
                 var do_ = DateTime.Today.AddHours(hours + 8);
-
+                string popis = $"Odstávka od {distrib}, od: {od}, do: {do_}";
                 
 
 
@@ -149,10 +147,16 @@ namespace Diesel_modular_application.Services
                     result.Message = "Chyba při ukládání do databáze";
                     return result;
                 }
-                var logZapis= await _logService.ZapisDoLogu(DateTime.Now, "odstávka",newOdstavka.IdOdstavky, $"Vytvřáření odstávky s parametry: Lokalita: {newOdstavka.Lokality.Lokalita}, Klasifikace: {newOdstavka.Lokality.Klasifikace}, Od: {newOdstavka.Od}, Do: {newOdstavka.Do}");
-                
-                // Zavoláme dieslování
+                await _logService.ZapisDoLogu(DateTime.Now, "odstávka",newOdstavka.IdOdstavky, $"Vytvřáření odstávky s parametry: Lokalita: {newOdstavka.Lokality.Lokalita}, Klasifikace: {newOdstavka.Lokality.Klasifikace}, Od: {newOdstavka.Od}, Do: {newOdstavka.Do}");
+                await _logService.ZapisDoLogu(DateTime.Now, "Odstávka", newOdstavka.IdOdstavky,$"Baterie: {newOdstavka.Lokality.Baterie}");
                 result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
+                if(result.Success ==false)
+                {
+                    await _logService.ZapisDoLogu(DateTime.Now, "odstávka", newOdstavka.IdOdstavky, result.Message );
+                }
+                else{
+                    await _logService.ZapisDoLogu(DateTime.Now, "Odstávka", newOdstavka.IdOdstavky, result.Message);
+                }
 
                 return result;
             }
@@ -162,6 +166,48 @@ namespace Diesel_modular_application.Services
                 result.Message = $"Neočekávaná chyba: {ex.Message}";
                 return result;
             }
+        }
+        public async Task<TableOdstavky?> DetailOdstavkyAsync(int id)
+        {
+            var detail = await _context.OdstavkyS
+            .FirstOrDefaultAsync(o => o.IdOdstavky == id);
+
+            return detail;
+        }
+        public async Task<object> DetailOdstavkyJson(int id)
+        {
+            var detailOdstavky = await _context.OdstavkyS
+            .Include(o=>o.Lokality)
+            .ThenInclude(o=>o.Region)
+            .Where(o=>o.IdOdstavky==id)
+            .FirstOrDefaultAsync();
+            
+
+            if(detailOdstavky==null)
+            {
+                return new{
+                    error = "Odstavka nenalezena" 
+                };
+            }
+
+            var FindDieslovani = await _context.DieslovaniS
+            .Where(o=>o.IDodstavky==detailOdstavky.IdOdstavky)
+            .FirstOrDefaultAsync();
+
+
+
+            return new
+            {
+                idDieslovani= FindDieslovani?.IdDieslovani,
+                odstavkaId=detailOdstavky.IdOdstavky,
+                lokalita = detailOdstavky?.Lokality?.Lokalita,
+                adresa = detailOdstavky?.Lokality?.Adresa,
+                klasifikace = detailOdstavky.Lokality.Klasifikace,
+                baterie = detailOdstavky.Lokality.Baterie,
+                region = detailOdstavky.Lokality.Region?.NazevRegionu,
+                popis = detailOdstavky.Popis,
+        
+            };
         }
 
 

@@ -20,7 +20,16 @@ $('#odTable').DataTable({
         `;
         }
         },
-        { data: 'idOdstavky' },  // ID
+        { data: 'idOdstavky',
+            render: function(data)
+            {
+                return `
+                    <a href="/Odstavky/DetailOdstavky?id=${data}">
+                    ${data}
+                    </a>
+                 `;
+            }
+        },  // ID
         {
             data: 'distributor',
                 render: function (data, type, row) {

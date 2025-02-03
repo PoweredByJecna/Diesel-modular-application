@@ -44,6 +44,22 @@ namespace Diesel_modular_application.Controllers
             var lokalities = await _odstavkyService.SuggestLokalitaAsync(query);
             return Json(lokalities);
         }
+        [HttpGet]
+        public async Task<IActionResult> DetailOdstavky(int id)
+        {
+            var detail = await _odstavkyService.DetailOdstavkyAsync(id);
+            if (detail == null)
+                return NotFound();
+            return View(detail);
+        }
+        [HttpGet]
+        public async Task<IActionResult?> DetailOdstavkyJson(int id)
+        {
+            var detailOdstavky = await _odstavkyService.DetailOdstavkyJson(id);
+            return Json(new{
+                data=detailOdstavky
+            });
+        }
         [HttpPost]
         public async Task<IActionResult> Create(string lokalita, DateTime od, DateTime DO, string popis)
         {

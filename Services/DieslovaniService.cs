@@ -83,7 +83,7 @@ namespace Diesel_modular_application.Services
 
                     _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
 
-                    result.Message = "Dieslování bylo úspěšně vytvořeno.";
+                    result.Message = $"Dieslování č. {dieslovani.IdDieslovani} bylo úspěšně vytvořeno.";
                 }
             }
             else
@@ -290,16 +290,16 @@ namespace Diesel_modular_application.Services
 
             return new 
             {
-                idDieslovani = detailDieslovani.IdDieslovani,
-                odstavkaId = detailDieslovani.Odstavka?.IdOdstavky,
-                lokalita = detailDieslovani.Odstavka?.Lokality?.Lokalita,
-                adresa = detailDieslovani.Odstavka?.Lokality?.Adresa,
-                klasifikace = detailDieslovani.Odstavka?.Lokality?.Klasifikace,
-                baterie = detailDieslovani.Odstavka?.Lokality?.Baterie,
-                region = detailDieslovani.Odstavka?.Lokality?.Region?.NazevRegionu,
-                popis = detailDieslovani.Odstavka?.Popis,
-                technik = detailDieslovani.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý",
-                idUser= detailDieslovani.Technik.IdUser
+                idDieslovani = detailDieslovani?.IdDieslovani,
+                odstavkaId = detailDieslovani?.Odstavka?.IdOdstavky,
+                lokalita = detailDieslovani?.Odstavka?.Lokality?.Lokalita,
+                adresa = detailDieslovani?.Odstavka?.Lokality?.Adresa,
+                klasifikace = detailDieslovani?.Odstavka?.Lokality?.Klasifikace,
+                baterie = detailDieslovani?.Odstavka?.Lokality?.Baterie,
+                region = detailDieslovani?.Odstavka?.Lokality?.Region?.NazevRegionu,
+                popis = detailDieslovani?.Odstavka?.Popis,
+                technik = detailDieslovani?.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý",
+                idUser= detailDieslovani?.Technik?.IdUser
 
             }; 
         }

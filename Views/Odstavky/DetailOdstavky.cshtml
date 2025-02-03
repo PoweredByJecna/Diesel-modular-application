@@ -1,0 +1,204 @@
+<div class="conteiner" id="con">
+    <div class="tables-row formRow">
+        <div class="section big">
+            <div class="section small FORMS left" style="flex:7">
+                <div class="detail energy">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Detail Odstávky <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                    </div>
+                    <div class="infowrapper">
+                        
+                        <div class="info battery">
+                            <h1>Battery info</h1>
+                            <div style="padding: 10px">
+                                <i class="fa-solid fa-battery-full fa-2xl"></i>
+                            </div>
+                            <div class="formInfo">
+                                <div>
+                                    <p>battery float charge: 100%</p>
+                                </div>
+                                <div>
+                                    <p>Time remains: 125 min</p>
+                                </div>
+                                <div>
+                                    <p>Output voltage: 55V</p>
+                                </div>
+                                <div>
+                                    <p>Output Current: 17A</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info dc">
+                            <h1>DC info</h1>
+                            <div style="padding: 10px">
+                                <i class="fa-solid fa-power-off fa-2xl"></i>
+                            </div>
+                            <div class="formInfo">  
+                                <div>
+                                    <p>L1: 230 V</p>
+                                </div>
+                                <div>    
+                                    <p>L2: 230 V</p>
+                                </div>
+                                <div>
+                                    <p>L3: 230 V</p>
+                                </div>
+                                <div>
+                                    <p>Product model: MB30B</p>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div class="info DA ">
+                            <h1>DA info</h1>
+                            <div style="padding: 10px"> 
+                                <i class="fa-solid fa-gas-pump fa-2xl"></i>
+                            </div>
+                            <div class="formInfo"> 
+                                <div>
+                                    <p>DA-IS-RUNINNG </p>
+                                </div>
+                                <div>
+                                    <p>DA-model: </p>
+                                </div>
+                                <div>
+                                    <p>Spotřeba: </p>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="detail User">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Technik <i class="fa-regular fa-circle-user fa-lg"></i></h2>
+                    </div>
+                    <div class="formINFO-D form">
+                        <div style="border: none;">
+                            <p id="technik" style="font-weight: 800;"></p>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="detail TASK">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Popis <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                    </div>
+                    <div class="formINFO-D form">
+                        <div style="border: none;">
+                            <p id="popis"></p>
+                        </div>
+
+                    </div>                    
+                </div>
+            </div>
+            <div class="section small FORMS right" style="flex:3" >
+                <div class="detail diesel">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Detail Odstávky <i class="fa-solid fa-circle-info fa-lg"></i></h2>
+                    </div>
+                    <div class="formINFO-D info">
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-key fa-lg fa-sm navA"></i>ID dieslovani: </span><p id="idDieslovani"> </p>
+                        </div>
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-info fa-lg fa-sm navA"></i> ID odstávky: </span><p id="iDOdstavky"> </p>
+                        </div>
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-tower-broadcast fa-lg fa-sm navA"></i> Lokalita: </span><p id="lokalita"> </p>
+                        </div>
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-location-dot fa-lg fa-sm navA"></i>Adresa: </span><p id="adresa"> </p>
+                        </div>
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-info fa-lg fa-sm navA"></i> Klasifikace:</span><p id="klasifikace">  </p>
+                        </div>
+                        <div>              
+                            <span class="Infowrapperspan"><i class="fa-solid fa-battery-full fa-lg fa-sm navA"></i> Výdrž baterie: </span><p id="baterie" style="margin-right: 0px;"></p><span>min</span>
+                        </div>
+                        <div>
+                            <span class="Infowrapperspan"><i class="fa-solid fa-earth-europe fa-lg fa-sm navA"></i> Region:</span><p id="region"> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail Stav">
+                    <div class="logoForm">
+                        <h2 class="h2-div">Stav <i class="fa-solid fa-file-contract"></i></h2>
+                    </div>
+                    <div class="formINFO-D form stav">
+                        <div style="border: none;">
+                            <span class="badge badge-phoenix fs-10 badge-phoenix-success" style="background-color: yellow; border-radius: 5px;">
+                                <span class="badge-label" style="color: black; padding: 1px; font-size: small;">Čekající</span>
+                                <i class="fa-solid fa-clock-rotate-left" style="color: Black;"></i>
+                            </span>
+                        </div>
+                    </div>     
+                                       
+                </div>
+            </div>                
+        </div>   
+    </div>
+
+    <div class="tables-row">
+        <div class="section big">
+            <div class="section small"> 
+                <div class="nav-FRG">
+                        <p id="log">LOG</p>
+                        <p id="vazby">VAZBY</p>
+                    </div>
+                <div style="display: none;" id="content-log">
+                    <div class="table-div odstavkyTable" id="logsContainer">
+                        
+                    </div>
+                </div>
+                <div class="table-div odstavkyTable" id="content-vazby">
+                    <div class="name">
+                        <h2  style="padding-right:20px; color: black;">Dieslovani<i class="fa-solid fa-bolt"></i></h2>    
+                        <div>
+                            <span class="legenda">
+                                Aktivní :
+                                <i class="fa-solid fa-square" style="color: rgba(0, 128, 0, 0.371)"></i>
+                            </span>
+                            <span class="legenda">
+                                Ukončené :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 0, 0, 0.382)"></i>
+                            </span>
+                            <span class="legenda">
+                                Nekativni :
+                                <i class="fa-solid fa-square" style="color: #0055ff28"></i>
+                            </span>
+                            <span class="legenda">
+                                Nepřižazeno :
+                                <i class="fa-solid fa-square" style="color:  rgba(255, 166, 0, 0.521"></i> 
+                            </span>
+                            <span class="legenda">
+                                Čekající :
+                                <i class="fa-solid fa-square" style="color: rgba(255, 255, 0, 0.321"></i>
+                            </span>  
+                        </div>
+                    </div>
+                    <table id="DieselDetail" style="margin-bottom: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Akce</th>
+                                <th>Id</th>
+                                <th>Distributor</th>
+                                <th>Lokalita</th>
+                                <th>Klasifikace</th>
+                                <th>Od</th>
+                                <th>Do</th>
+                                <th>Adresa</th>
+                                <th>Baterie<a> [min]</a></th>
+                                <th>Popis</th>
+                                <th>Zásuvka</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">     
+                        </tbody>          
+                    </table>   
+                </div>
+            </div>
+        </div>
+            
+        
+    </div>
+</div>
