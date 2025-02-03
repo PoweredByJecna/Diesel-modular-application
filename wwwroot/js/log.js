@@ -18,7 +18,7 @@ $(document).ready(function () {
                 console.log("Data:", response.data);
                 if (response.data && response.data.length > 0) {
                     response.data.forEach(function (log) {
-                        html += '<li>' + log.timeStamp + ' ' + log.logMessage + '</li>';
+                        html +='<li style=padding:10px;>' +'<a style=font-size:small;>' +' '+  '<i class="fa-regular fa-clock"></i>' + ' '+ '<strong>'+ log.timeStamp + '</strong>'+ '  ' +  '<i class="fa-solid fa-message"></i> ' +' ' + log.logMessage  + ' </a>'+  '</li>' ;
                     });
                 } else {
                     html += "<li>Nebyly nalezeny žádné logy.</li>";

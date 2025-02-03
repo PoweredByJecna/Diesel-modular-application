@@ -37,14 +37,14 @@ namespace Diesel_modular_application.Services
         /// Metoda, která řeší veškerou logiku dieslování pro novou odstávku.
         /// Volána z OdstavkyService (původně přímo z DieslovaniController).
         /// </summary>
-        public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableOdstavky newOdstavka,HandleOdstavkyDieslovaniResult result)
+        public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableOdstavky? newOdstavka,HandleOdstavkyDieslovaniResult result)
         {
             // Pokud na lokalitě existuje stacionární generátor (DA), není potřeba
             if (newOdstavka?.Lokality?.DA == true)
             {
                 Debug.WriteLine("Na lokalitě je DA");
                 result.Success = false;
-                result.Message = "Na lokalitě se nachází stacionární generátor.";
+                result.Message = "Na lokalitě není potřeba dieslovat, nachází se tam stacionární generátor.";
                 return result;
             }
 
@@ -53,16 +53,13 @@ namespace Diesel_modular_application.Services
             {
                 Debug.WriteLine("Na lokalitě není zásuvka");
                 result.Success = false;
-                result.Message = "Na lokalitě není zásuvka.";
+                result.Message = "Na lokalitě se nedá dieslovat, protože tam není zásuvka.";
                 return result;
             }
 
             // Zjistíme, zda je vůbec potřeba diesel
-            if (IsDieselRequired(
-                    newOdstavka.Lokality.Klasifikace,
-                    newOdstavka.Od,
-                    newOdstavka.Do,
-                    newOdstavka.Lokality.Baterie))
+            #pragma warning disable CS8602 // Dereference of a possibly null reference.
+            if (IsDieselRequired(newOdstavka?.Lokality?.Klasifikace,newOdstavka.Od,newOdstavka.Do,newOdstavka.Lokality.Baterie))
             {
                 var technikSearch = await AssignTechnikAsync(newOdstavka);
 
@@ -75,13 +72,12 @@ namespace Diesel_modular_application.Services
                 }
                 else
                 {
-                    // Vytvoříme novou záznam v DieslovaniS
                     var dieslovani = await CreateNewDieslovaniAsync(newOdstavka, technikSearch);
                     result.Dieslovani = dieslovani;
 
                     var EmailResult="DA-ok";
 
-                    _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
+                    await _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
 
                     result.Message = $"Dieslování č. {dieslovani.IdDieslovani} bylo úspěšně vytvořeno.";
                 }
@@ -89,10 +85,12 @@ namespace Diesel_modular_application.Services
             else
             {
                 result.Success = false;
-                result.Message = "Dieslování není potřeba";
+                result.Message = "Dieslování není potřeba z důvodu" + result.Duvod;
                 Debug.WriteLine("Dieslování není potřeba");
                 return result;
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             result.Success = true;
             return result;
@@ -113,11 +111,15 @@ namespace Diesel_modular_application.Services
                 if (dis != null)
                 {
                     dis.Vstup = DateTime.Now;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     dis.Technik.Taken = true;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     _context.DieslovaniS.Update(dis);
 
                     // Značka v odstávce
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var odstavka = await _context.OdstavkyS.FindAsync(dis.Odstavka.IdOdstavky);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     if (odstavka != null)
                     {
                         odstavka.ZadanVstup = true;
@@ -152,8 +154,10 @@ namespace Diesel_modular_application.Services
 
                 if (dis != null)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var odstavka = await _context.OdstavkyS
                         .FindAsync(dis.Odstavka.IdOdstavky);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     if (odstavka != null)
                     {
                         odstavka.ZadanOdchod = true;
@@ -162,16 +166,24 @@ namespace Diesel_modular_application.Services
                     }
 
                     // Zkontrolujeme, zda technik ještě někde "diesluje"
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var anotherDiesel = await _context.DieslovaniS
                         .Include(o => o.Odstavka)
                         .Include(o => o.Technik)
                         .Where(o => o.Technik.IdTechnika == dis.Technik.IdTechnika && o.Odstavka.ZadanOdchod == false)
                         .FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                     if (anotherDiesel == null)
                     {
                         // Pokud nemá jinou rozdělanou zakázku, tak je volný
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         dis.Technik.Taken = false;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     }
 
                     dis.Odchod = DateTime.Now;
@@ -203,7 +215,9 @@ namespace Diesel_modular_application.Services
                     .FirstAsync(d => d.IdDieslovani == idDieslovani);
 
                 // Přepneme stav taken
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 dis.Technik.Taken = !dis.Technik.Taken;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 _context.Update(dis);
                 await _context.SaveChangesAsync();
 
@@ -236,11 +250,13 @@ namespace Diesel_modular_application.Services
                 }
 
                 // Musí mít pohotovost?
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 var pohotovostTechnik = await _context.Pohotovts
                     .Include(t => t.Technik)
                     .Where(p => p.Technik.IdTechnika == technik.IdTechnika)
                     .Select(p => p.Technik)
                     .AnyAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 if (pohotovostTechnik == false)
                 {
@@ -281,12 +297,16 @@ namespace Diesel_modular_application.Services
         }
         public async Task<object> DetailDieslovaniJsonAsync(int id)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var detailDieslovani =  await _context.DieslovaniS
                 .Include(o => o.Odstavka)
                     .ThenInclude(o => o.Lokality)
                         .ThenInclude(o => o.Region)
                 .Include(p => p.Technik)
                 .Where(o=>o.IdDieslovani==id).FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return new 
             {
@@ -326,11 +346,13 @@ namespace Diesel_modular_application.Services
                 if (technik != null)
                 {
                     // Zkontrolujeme, zda technik ještě někde "diesluje"
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var anotherDiesel = await _context.DieslovaniS
                         .Include(o => o.Technik)
                         .Where(o => o.Technik.IdTechnika == technik.IdTechnika)
                         .Where(o => o.IdDieslovani != dieslovani.IdDieslovani)
                         .FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                     if (anotherDiesel != null)
                     {
@@ -348,7 +370,7 @@ namespace Diesel_modular_application.Services
                 await _context.SaveChangesAsync();
 
                 var EmailResult="da-del";
-                 _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
+                await _emailService.SendDieslovaniEmailAsync(dieslovani, EmailResult);
 
                 return (true, "Záznam byl úspěšně smazán.");
             }
@@ -364,16 +386,30 @@ namespace Diesel_modular_application.Services
         public async Task<(int totalRecords, List<object> data)> GetTableDataRunningTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
             // Získáme query s joiny
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
                 .Include(t => t.Technik).ThenInclude(t => t.Firma)
                 .Include(t => t.Technik).ThenInclude(t => t.User)
                 .AsQueryable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            query = await FilteredDataAsync(query, currentUser, isEngineer);
+            query = FilteredData(query, currentUser, isEngineer);
 
             int totalRecords = await query.CountAsync();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniRunningList = await query
                 .Include(o => o.Odstavka)
                 .ThenInclude(o => o.Lokality)
@@ -397,6 +433,8 @@ namespace Diesel_modular_application.Services
 
                 })
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
             return (totalRecords, DieslovaniRunningList.Cast<object>().ToList());
         }
@@ -404,19 +442,21 @@ namespace Diesel_modular_application.Services
         /// <summary>
         /// Obecný filtr pro dotazy - pokud je Engineer, vyfiltruje jen data pro daného uživatele
         /// </summary>
-        private async Task<IQueryable<TableDieslovani>> FilteredDataAsync(
+        private static IQueryable<TableDieslovani> FilteredData(
             IQueryable<TableDieslovani> query,
             IdentityUser? currentUser,
             bool isEngineer)
         {
-            if (currentUser == null) 
+            if (currentUser == null)
                 return query;
 
             if (isEngineer)
             {
                 // Najdeme si userId
                 var userId = currentUser.Id;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 query = query.Where(d => d.Technik.User.Id == userId);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
 
             return query;
@@ -427,16 +467,22 @@ namespace Diesel_modular_application.Services
         /// </summary>
         public async Task<(int totalRecords, List<object> data)> GetTableDataAllTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
                 .Include(t => t.Technik).ThenInclude(t => t.Firma)
                 .Include(t => t.Technik).ThenInclude(t => t.User)
                 .AsQueryable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            query = await FilteredDataAsync(query, currentUser, isEngineer);
+
+            query = FilteredData(query, currentUser, isEngineer);
 
             int totalRecords = await query.CountAsync();
 
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniList = await query
                 .OrderBy(o => o.Odstavka.Od)
                 .Select(l => new
@@ -465,6 +511,8 @@ namespace Diesel_modular_application.Services
                     
                 })
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
             return (totalRecords, DieslovaniList.Cast<object>().ToList());
         }
@@ -475,32 +523,45 @@ namespace Diesel_modular_application.Services
         public async Task<(int totalRecords, List<object> data)> GetTableDatathrashTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
             // Najdeme technika pro currentUser
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var technik = await _context.TechniS
                 .Include(t => t.Firma)
                 .FirstOrDefaultAsync(t => t.IdUser == currentUser.Id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             var firmaId = technik?.Firma?.IDFirmy;
 
             // Které regiony patří do téhle firmy
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var validRegions = await _context.ReginoS
                 .Where(r => r.Firma.IDFirmy == firmaId)
                 .Select(r => r.IdRegion)
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka)
                     .ThenInclude(o => o.Lokality)
                     .ThenInclude(o => o.Region)
                 .Include(t => t.Technik).ThenInclude(t => t.Firma)
                 .AsQueryable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
             if (isEngineer && validRegions.Any())
             {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 query = query.Where(d => validRegions.Contains(d.Odstavka.Lokality.Region.IdRegion));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
             }
 
             int totalRecords = await query.CountAsync();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniList = await query
                 .Include(o => o.Odstavka)
                 .ThenInclude(o => o.Lokality)
@@ -521,6 +582,8 @@ namespace Diesel_modular_application.Services
 
                 })
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
             return (totalRecords, DieslovaniList.Cast<object>().ToList());
         }
@@ -530,16 +593,22 @@ namespace Diesel_modular_application.Services
         /// </summary>
         public async Task<(int totalRecords, List<object> data)> GetTableUpcomingTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
                 .Include(t => t.Technik).ThenInclude(t => t.Firma)
                 .Include(t => t.Technik).ThenInclude(t => t.User)
                 .AsQueryable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            query = await FilteredDataAsync(query, currentUser, isEngineer);
+
+            query = FilteredData(query, currentUser, isEngineer);
 
             int totalRecords = await query.CountAsync();
 
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniList = await query
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality)
                 .Include(t => t.Technik)
@@ -564,6 +633,7 @@ namespace Diesel_modular_application.Services
                     idUser= l.Technik.IdUser
                 })
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return (totalRecords, DieslovaniList.Cast<object>().ToList());
         }
@@ -573,16 +643,22 @@ namespace Diesel_modular_application.Services
         /// </summary>
         public async Task<(int totalRecords, List<object> data)> GetTableDataEndTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
                 .Include(t => t.Technik).ThenInclude(t => t.Firma)
                 .Include(t => t.Technik).ThenInclude(t => t.User)
                 .AsQueryable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            query = await FilteredDataAsync(query, currentUser, isEngineer);
+
+            query = FilteredData(query, currentUser, isEngineer);
 
             int totalRecords = await query.CountAsync();
 
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniList = await query
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality)
                 .Include(t => t.Technik)
@@ -597,6 +673,8 @@ namespace Diesel_modular_application.Services
                     l.Odchod
                 })
                 .ToListAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
             return (totalRecords, DieslovaniList.Cast<object>().ToList());
         }
@@ -604,8 +682,10 @@ namespace Diesel_modular_application.Services
         // --------------------------------------------------------
         // Následují pomocné (soukromé) metody, které dříve byly v controlleru
         // --------------------------------------------------------
-        private bool IsDieselRequired(string klasifikace, DateTime Od, DateTime Do, int baterie)
+        private bool IsDieselRequired(string? klasifikace, DateTime Od, DateTime Do, int baterie)
         {
+            var result = new HandleOdstavkyDieslovaniResult();
+
             var casVypadku = klasifikace.ZiskejCasVypadku();
             var rozdil = (Do - Od).TotalMinutes;
 
@@ -613,7 +693,9 @@ namespace Diesel_modular_application.Services
             // není třeba diesel
             if (casVypadku * 60 > rozdil)
             {
+            
                 Debug.WriteLine($"Lokalita je: {klasifikace} může být {casVypadku}h dole");
+                result.Duvod=$"Lokalita je: {klasifikace} může být {casVypadku}h dole";
                 return false;
             }
             else
@@ -622,11 +704,13 @@ namespace Diesel_modular_application.Services
                 if (Battery(Od, Do, baterie))
                 {
                     Debug.WriteLine($"Baterie vydrží {baterie} min, čas doby odstávky je: {rozdil} min");
+                    result.Duvod=$"Baterie vydrží {baterie} min, čas doby odstávky je: {rozdil} min";
                     return false;
                 }
                 else
                 {
                     Debug.WriteLine($"Dieslovani je potřeba");
+                    result.Duvod="dieslovani je potřeba, baterie nevydřží na baterie nebo má příliš vysokou prioritu";
                     return true;
                 }
             }
@@ -644,16 +728,24 @@ namespace Diesel_modular_application.Services
 
         private async Task<TableTechnici?> AssignTechnikAsync(TableOdstavky newOdstavka)
         {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var firmaVRegionu = await GetFirmaVRegionuAsync(newOdstavka.Lokality.Region.IdRegion);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
             if (firmaVRegionu != null)
             {
                 Debug.WriteLine($"Vybraná firma: {firmaVRegionu.NazevFirmy}");
                 // Najdeme volného technika (který má pohotovost)
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 var technikSearch = await _context.Pohotovts
                     .Include(p => p.Technik.Firma)
                     .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy && p.Technik.Taken == false)
                     .Select(p => p.Technik)
                     .FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
                 // Pokud žádný technik není volný, zkusíme náhradu
                 if (technikSearch == null)
@@ -661,10 +753,14 @@ namespace Diesel_modular_application.Services
                     Debug.WriteLine("Technici jsou obsazeni, nebo nemají pohotovost");
                     
                     // Zkusíme zjistit, zda v regionu má aspoň někdo pohotovost
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     bool nejakyTechnikMaPohotovost = _context.Pohotovts
                         .Include(p => p.Technik.Firma)
                         .Where(p => p.Technik.FirmaId == firmaVRegionu.IDFirmy)
                         .Any();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
                     if (nejakyTechnikMaPohotovost)
                     {
@@ -718,6 +814,8 @@ namespace Diesel_modular_application.Services
 
         private async Task<TableTechnici?> GetHigherPriorityAsync(TableOdstavky newOdstavka)
         {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var dieslovani = await _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality)
                 .Include(o => o.Technik).ThenInclude(o => o.Firma)
@@ -726,6 +824,13 @@ namespace Diesel_modular_application.Services
                     p.Technik.Taken == true
                 )
                 .FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             if (dieslovani == null)
             {
@@ -735,6 +840,7 @@ namespace Diesel_modular_application.Services
             else
             {
                 // Kontrola časové kolize
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (dieslovani.Odstavka.Do < newOdstavka.Od.AddHours(3) ||
                     newOdstavka.Do < dieslovani.Odstavka.Od.AddHours(3))
                 {
@@ -742,8 +848,12 @@ namespace Diesel_modular_application.Services
                 }
                 else
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     int staraVaha = dieslovani.Odstavka.Lokality.Klasifikace.ZiskejVahu();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     int novaVaha = newOdstavka.Lokality.Klasifikace.ZiskejVahu();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                     bool maVyssiPrioritu = novaVaha > staraVaha;
                     bool casovyLimit = dieslovani.Odstavka.Od.Date.AddHours(3) < DateTime.Now;
@@ -774,6 +884,7 @@ namespace Diesel_modular_application.Services
                         return novyTechnik;
                     }
                 }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
         }
 

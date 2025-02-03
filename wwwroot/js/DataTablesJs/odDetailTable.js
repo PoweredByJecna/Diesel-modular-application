@@ -19,6 +19,7 @@ $(document).ready(function () {
                 return json.data;
             }
         },
+      
         columns: [
             {
                 data: null,
@@ -54,22 +55,9 @@ $(document).ready(function () {
             { data: 'lokalita', render: data => `<span style="font-weight: 700;">${data}</span>` },
             {
                 data: 'klasifikace',
-                render: function (data) {
-                    const colorMap = {
-                        'A1': '#c91829',
-                        'A2': 'orange',
-                        'B1': 'yellow',
-                        'B2': 'lightgreen',
-                        'B': 'green',
-                        'C': 'green',
-                        'D1': 'blue'
-                    };
-                    const color = colorMap[data] || 'gray';
-                    return `
-                        <span class="badge badge-phoenix fs-10" style="background-color: ${color}; border-radius: 5px;">
-                            ${data}
-                        </span>`;
-                }
+                render: function (data, type, row) {
+                    return `<span style="font-weight: 700;">${data}</span>`;
+                }   
             },
             { data: 'od', render: data => formatDate(data) },
             { data: 'do_', render: data => formatDate(data) },
