@@ -13,23 +13,19 @@ $(document).ready(function () {
                 const data = response.data;
                 console.log(response.data);
                 if (data) {
-                    $('#idDieslovani').append(data.idDieslovani);
-                    $('#iDOdstavky').append(data.odstavkaId || "N/A");
-                    $('#lokalita').append(data.lokalita || "N/A");
-                    $('#adresa').append(data.adresa || "N/A");
-                    $('#klasifikace').append(data.klasifikace || "N/A");
-                    $('#baterie').append(data.baterie || "N/A");
-                    $('#region').append(data.region || "N/A");
-                    $('#popis').append(data.popis || "N/A");
+                    $('#iDOdstavky').append(data.odstavkaId);
+                    $('#lokalita').append(data.lokalita);
+                    $('#adresa').append(data.adresa);
+                    $('#klasifikace').append(data.klasifikace);
+                    $('#baterie').append(data.baterie);
+                    $('#region').append(data.region);
+                    $('#popis').append(data.popis);
                 } else {
-                    $('#dieslovani-detail').html('<p>Data nebyla nalezena.</p>');
                 }
             },
             error: function () {
-                $('#dieslovani-detail').html('<p>Chyba při načítání dat.</p>');
             }
         });
     } else {
-        $('#dieslovani-detail').html('<p>ID dieslování nebylo poskytnuto.</p>');
     }
 });

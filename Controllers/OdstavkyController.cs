@@ -17,6 +17,7 @@ using System.Diagnostics;
 using AspNetCoreGeneratedDocument;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace Diesel_modular_application.Controllers
 {
@@ -56,7 +57,17 @@ namespace Diesel_modular_application.Controllers
         public async Task<IActionResult> DetailOdstavkyJson(int id)
         {
             var detailOdstavky = await _odstavkyService.DetailOdstavkyJsonAsync(id);
-            return Json(new{
+            if(detailOdstavky==null)
+            {
+                return Json(new{
+                    error="null"
+                });
+                
+            }
+    
+            return Json(
+            new
+            {
                 data=detailOdstavky
             });
         }

@@ -176,7 +176,8 @@ namespace Diesel_modular_application.Services
         public async Task<object> DetailOdstavkyJsonAsync(int id)
         {
             var detailOdstavky = await _context.OdstavkyS
-            .Include(o=>o.Lokality).ThenInclude(O=>O.Region)
+            .Include(o=>o.Lokality)
+            .ThenInclude(o=>o.Region)
             .Where(o=>o.IdOdstavky==id)
             .FirstOrDefaultAsync();
 
@@ -186,14 +187,22 @@ namespace Diesel_modular_application.Services
                     error = "Odstavka nenalezena" 
                 };
             }
+            else if(detailOdstavky.Lokality==null)
+            {
+                return new{
+                    error = "Odstavka nenalezena" 
+                };
+            }
+            else if(detailOdstavky.Lokality.Region==null)
+            {
+                return new{
+                    error = "Odstavka nenalezena" 
+                };
+            }
 
-            var FindDieslovani = await _context.DieslovaniS
-            .Where(o=>o.IDodstavky==detailOdstavky.IdOdstavky)
-            .FirstOrDefaultAsync();
 
             return new
             {
-                idDieslovani= FindDieslovani.IdDieslovani,
                 odstavkaId=detailOdstavky.IdOdstavky,
                 lokalita = detailOdstavky.Lokality.Lokalita,
                 adresa = detailOdstavky.Lokality.Adresa,
