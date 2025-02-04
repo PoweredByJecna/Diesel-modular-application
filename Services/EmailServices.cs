@@ -11,7 +11,7 @@ using static Diesel_modular_application.Services.OdstavkyService;
 
 namespace Diesel_modular_application.Services
 {
-    public class EmailService(IConfiguration config)
+    public class EmailService(IConfiguration config) 
     {
         private readonly IConfiguration _config = config;
 

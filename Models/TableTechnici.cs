@@ -15,11 +15,11 @@ namespace Diesel_modular_application.Models{
 
         [ForeignKey("Firma")]
         public int FirmaId{get;set;}
-        public virtual TableFirma? Firma {get;set;}
+        public virtual TableFirma Firma {get;set;}
 
         [ForeignKey("user")]
         public string IdUser{get;set;}
-        public virtual IdentityUser? User {get;set;}
+        public virtual IdentityUser User {get;set;}
         public virtual ICollection<TableDieslovani>? DieslovaniList {get;set;}
     }
 

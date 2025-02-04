@@ -20,11 +20,11 @@ namespace Diesel_modular_application.Models
 
         [ForeignKey("Region")]
         public int RegionID {get;set;}
-        public TableRegiony? Region {get;set;}
+        public TableRegiony Region {get;set;}
         public virtual ICollection<TableOdstavky>? OdstavkyList { get; set; }
         [ForeignKey("Zdroj")]
-        public int? ZdrojId { get; set; }
-        public virtual TableZdroj? Zdroj { get; set; }
+        public int ZdrojId { get; set; }
+        public virtual TableZdroj Zdroj { get; set; }
       
     }
 }

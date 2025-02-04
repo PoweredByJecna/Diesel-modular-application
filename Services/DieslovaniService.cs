@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.KlasifikaceRule;
 using Diesel_modular_application.Models;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +12,7 @@ using static Diesel_modular_application.Services.OdstavkyService;
 
 namespace Diesel_modular_application.Services
 {
-    public class DieslovaniService(
-        DAdatabase context,
-        UserManager<IdentityUser> userManager,
-        EmailService emailService,
-        LogService logService)
+    public class DieslovaniService(DAdatabase context,UserManager<IdentityUser> userManager,EmailService emailService,LogService logService) : IDieslovaniService
     {
         private readonly DAdatabase _context = context;
         private readonly LogService _logservice = logService;
@@ -224,7 +221,7 @@ namespace Diesel_modular_application.Services
                 // Musí mít pohotovost?
                 var pohotovostTechnik = await _context.Pohotovts
                     .Include(t => t.Technik)
-                    .Where(p => p.Technik.IdTechnika == technik.IdTechnika)
+                    .Where(p => technik != null && p.Technik != null && p.Technik.IdTechnika == technik.IdTechnika)
                     .Select(p => p.Technik)
                     .AnyAsync();
 
