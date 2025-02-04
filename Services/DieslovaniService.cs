@@ -458,16 +458,45 @@ namespace Diesel_modular_application.Services
                 query = query.Where(d => d.Technik.User.Id == userId);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
-
             return query;
         }
+        public async Task<List<object>>GetTableDataOdDetailOdstavkyAsync(int idodstavky)
+        {
+                var detailDieselovani = await _context.DieslovaniS
+                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+                .Include(t => t.Technik).ThenInclude(t => t.Firma)
+                .Include(t => t.Technik).ThenInclude(t => t.User)
+                .Where(o=>o.IDodstavky==idodstavky)
+                .Select(l=> new{
+                    l.IdDieslovani,
+                    l.Odstavka.Distributor,
+                    l.Odstavka.Lokality.Lokalita,
+                    l.Odstavka.Lokality.Klasifikace,
+                    l.Odstavka.Lokality.Adresa,
+                    l.Technik.Firma.NazevFirmy,
+                    l.Technik.Jmeno,
+                    l.Technik.Prijmeni,
+                    l.Odstavka.ZadanVstup,
+                    l.Odstavka.ZadanOdchod,
+                    l.Technik.IdTechnika,
+                    l.Odstavka.Lokality.Region.NazevRegionu,
+                    l.Odstavka.Od,
+                    l.Odstavka.Do,
+                    l.Vstup,
+                    l.Odchod,
+                    l.Odstavka.Popis,
+                    l.Odstavka.Lokality.Baterie,
+                    l.Odstavka.Lokality.Zasuvka,
+                    idUser= l.Technik.IdUser
+                }).ToListAsync();
 
+                return detailDieselovani.Cast<object>().ToList();
+        }
         /// <summary>
         /// Např. pro tabulku "GetTableDataAllTable"
         /// </summary>
         public async Task<(int totalRecords, List<object> data)> GetTableDataAllTableAsync(IdentityUser? currentUser, bool isEngineer)
         {
-
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             var query = _context.DieslovaniS
                 .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
@@ -475,13 +504,8 @@ namespace Diesel_modular_application.Services
                 .Include(t => t.Technik).ThenInclude(t => t.User)
                 .AsQueryable();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-
-
             query = FilteredData(query, currentUser, isEngineer);
-
             int totalRecords = await query.CountAsync();
-
-
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             var DieslovaniList = await query
                 .OrderBy(o => o.Odstavka.Od)
@@ -507,8 +531,6 @@ namespace Diesel_modular_application.Services
                     l.Odstavka.Lokality.Baterie,
                     l.Odstavka.Lokality.Zasuvka,
                     idUser= l.Technik.IdUser
-
-                    
                 })
                 .ToListAsync();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

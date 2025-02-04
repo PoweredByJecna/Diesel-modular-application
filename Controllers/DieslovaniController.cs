@@ -108,7 +108,19 @@ namespace Diesel_modular_application.Controllers
                 return Json(new { success = true, message = Message });
             }
         }
+        // ----------------------------------------
+        // Načtení dieslovani, které je svázané s odstaávkou
+        // ----------------------------------------
+        [HttpGet]
+        public async Task<IActionResult> GetTableDataDieselDetail(int idOdstavky)
+        {
+            var detailDieslovani = await _dieslovaniService.GetTableDataOdDetailOdstavkyAsync(idOdstavky);
 
+            return Json(new {
+                data=detailDieslovani
+            });
+
+        }
         // ----------------------------------------
         // Dočasný odchod/obnovení (TemporaryLeave)
         // ----------------------------------------
