@@ -19,9 +19,99 @@ namespace Diesel_modular_application.Services
         private readonly UserManager<IdentityUser> _userManager = userManager;
         private readonly EmailService _emailService = emailService;
 
+
+        //--------------------------------------
+        // Metoda pro načtení z databaze
+        // -------------------------------------
+        private IQueryable<TableDieslovani> GetDieslovaniQuery()
+        {
+            return _context.DieslovaniS
+                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
+                .Include(t => t.Technik).ThenInclude(t => t.Firma)
+                .Include(t => t.Technik).ThenInclude(t => t.User)
+                .AsQueryable();
+        }
+        //--------------------------------------
+        // Metoda pro načtení dat do tabulky
+        // -------------------------------------
+        private async Task<List<object>> GetDieslovaniDataAsync(IQueryable<TableDieslovani> query)
+        {
+            var dieslovanList = await query
+                .OrderBy(o => o.Odstavka.Od)
+                .Select(l => new
+                {
+                    l.IdDieslovani,
+                    l.Odstavka.Distributor,
+                    l.Odstavka.Lokality.Lokalita,
+                    l.Odstavka.Lokality.Klasifikace,
+                    l.Odstavka.Lokality.Adresa,
+                    l.Technik.Firma.NazevFirmy,
+                    l.Technik.Jmeno,
+                    l.Technik.Prijmeni,
+                    l.Odstavka.ZadanVstup,
+                    l.Odstavka.ZadanOdchod,
+                    l.Technik.IdTechnika,
+                    l.Odstavka.Lokality.Region.NazevRegionu,
+                    l.Odstavka.Od,
+                    l.Odstavka.Do,
+                    l.Vstup,
+                    l.Odchod,
+                    l.Odstavka.Popis,
+                    l.Odstavka.Lokality.Baterie,
+                    l.Odstavka.Lokality.Zasuvka,
+                    idUser= l.Technik.IdUser
+                })
+                .ToListAsync();
+
+            return dieslovanList.Cast<object>().ToList();
+        }
+        //--------------------------------------
+        // Metoda pro načtení dat do tabulk AllTable
+        // -------------------------------------
+        public async Task<(int totalRecords, List<object> data)> GetTableDataAllTableAsync(IdentityUser? currentUser, bool isEngineer)
+        {
+            var query = GetDieslovaniQuery();
+            query = FilteredData(query, currentUser, isEngineer);
+            int totalRecords = await query.CountAsync();
+            var data = await GetDieslovaniDataAsync(query);
+            return (totalRecords, data);
+        }
+        //--------------------------------------
+        // Metoda pro načtení dat do tabulky RunningTable
+        // -------------------------------------
+        public async Task<(int totalRecords, List<object> data)> GetTableDataRunningTableAsync(IdentityUser? currentUser, bool isEngineer)
+        {
+            var query = GetDieslovaniQuery()
+                .Where(i => i.Odstavka.ZadanVstup == true);
+            query = FilteredData(query, currentUser, isEngineer);
+            int totalRecords = await query.CountAsync();
+            var data = await GetDieslovaniDataAsync(query);
+            return (totalRecords, data);
+        }
+        //--------------------------------------
+        // Metoda pro načtení dat do tabulky EndTable
+        // -------------------------------------
+        public async Task<(int totalRecords, List<object> data)> GetTableDataEndTableAsync(IdentityUser? currentUser, bool isEngineer)
+        {
+            var query = GetDieslovaniQuery()
+                .Where(o => o.Odstavka.ZadanOdchod == true && o.Odstavka.ZadanVstup == false);
+            query = FilteredData(query, currentUser, isEngineer);
+            int totalRecords = await query.CountAsync();
+            var data = await GetDieslovaniDataAsync(query);
+            return (totalRecords, data);
+        }
+        //--------------------------------------
+        // Metoda pro načtení dat do tabulky DetailTable
+        // -------------------------------------
+        public async Task<List<object>> GetTableDataOdDetailOdstavkyAsync(int idodstavky)
+        {
+            var query = GetDieslovaniQuery()
+                .Where(o=>o.IDodstavky==idodstavky);
+            var data = await GetDieslovaniDataAsync(query);
+            return data;
+        }
         // ------------------------------------------------------------------
         // Metoda, která řeší veškerou logiku dieslování pro novou odstávku.
-        // Volána z OdstavkyService (původně přímo z DieslovaniController).
         // ------------------------------------------------------------------
         public async Task<HandleOdstavkyDieslovaniResult> HandleOdstavkyDieslovani(TableOdstavky? newOdstavka,HandleOdstavkyDieslovaniResult result)
         {
@@ -270,18 +360,17 @@ namespace Diesel_modular_application.Services
                     .ThenInclude(o => o.Lokality)
                     .ThenInclude(o => o.Region)
                 .Include(p => p.Technik)
-                .Where(o=>o.IdDieslovani==id).FirstOrDefaultAsync();
+                .Where(o=>o.IDodstavky==id).FirstOrDefaultAsync();
             return new 
             {
-                idDieslovani = detailDieslovani?.IdDieslovani,
-                odstavkaId = detailDieslovani?.Odstavka?.IdOdstavky,
-                lokalita = detailDieslovani?.Odstavka?.Lokality?.Lokalita,
-                adresa = detailDieslovani?.Odstavka?.Lokality?.Adresa,
-                klasifikace = detailDieslovani?.Odstavka?.Lokality?.Klasifikace,
-                baterie = detailDieslovani?.Odstavka?.Lokality?.Baterie,
-                region = detailDieslovani?.Odstavka?.Lokality?.Region?.NazevRegionu,
-                popis = detailDieslovani?.Odstavka?.Popis,
-                technik = detailDieslovani?.Technik != null ? $"{detailDieslovani.Technik.Jmeno} {detailDieslovani.Technik.Prijmeni}" : "Neznámý",
+                idDieslovani = detailDieslovani.IdDieslovani,
+                odstavkaId = detailDieslovani.Odstavka.IdOdstavky,
+                lokalita = detailDieslovani.Odstavka.Lokality.Lokalita,
+                adresa = detailDieslovani.Odstavka.Lokality.Adresa,
+                klasifikace = detailDieslovani.Odstavka.Lokality.Klasifikace,
+                baterie = detailDieslovani.Odstavka.Lokality.Baterie,
+                region = detailDieslovani.Odstavka.Lokality.Region.NazevRegionu,
+                popis = detailDieslovani.Odstavka.Popis,
                 idUser= detailDieslovani?.Technik?.IdUser
 
             }; 
@@ -346,37 +435,7 @@ namespace Diesel_modular_application.Services
         /// <summary>
         /// Vrátí data pro tabulku (running) - původně GetTableDataRunningTable
         /// </summary>
-        public async Task<(int totalRecords, List<object> data)> GetTableDataRunningTableAsync(IdentityUser? currentUser, bool isEngineer)
-        {
-            var query = _context.DieslovaniS
-                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-                .Include(t => t.Technik).ThenInclude(t => t.Firma)
-                .Include(t => t.Technik).ThenInclude(t => t.User)
-                .AsQueryable();
-            query = FilteredData(query, currentUser, isEngineer);
-
-            int totalRecords = await query.CountAsync();
-
-            var DieslovaniRunningList = await query
-                .Where(i => i.Odstavka.ZadanVstup == true)
-                .OrderBy(o => o.Odstavka.Od)
-                .Select(l => new
-                {
-                    id = l.IdDieslovani,
-                    distributor =l.Odstavka.Distributor,
-                    Lokalita = l.Odstavka != null && l.Odstavka.Lokality != null ? l.Odstavka.Lokality.Lokalita : "Unknown",
-                    klasifikace = l.Odstavka != null && l.Odstavka.Lokality != null && l.Odstavka.Lokality.Klasifikace != null ? l.Odstavka.Lokality.Klasifikace : "Unknown",
-                    jmeno = l.Technik.Jmeno,
-                    prijmeni =l.Technik.Prijmeni,
-                    vstup = l.Vstup,
-                    popis = l.Odstavka != null ? l.Odstavka.Popis : null,
-                    Baterie = l.Odstavka != null && l.Odstavka.Lokality != null ? l.Odstavka.Lokality.Baterie : (int?)null,
-                    Zasuvka = l.Odstavka != null && l.Odstavka.Lokality != null ? l.Odstavka.Lokality.Zasuvka : (bool?)null,
-                    idUser= l.Technik.IdUser
-                })
-                .ToListAsync();
-            return (totalRecords, DieslovaniRunningList.Cast<object>().ToList());
-        }
+       
 
         /// <summary>
         /// Obecný filtr pro dotazy - pokud je Engineer, vyfiltruje jen data pro daného uživatele
@@ -397,81 +456,10 @@ namespace Diesel_modular_application.Services
             }
             return query;
         }
-        public async Task<List<object>>GetTableDataOdDetailOdstavkyAsync(int idodstavky)
-        {
-                var detailDieselovani = await _context.DieslovaniS
-                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-                .Include(t => t.Technik).ThenInclude(t => t.Firma)
-                .Include(t => t.Technik).ThenInclude(t => t.User)
-                .Where(o=>o.IDodstavky==idodstavky)
-                .Select(l=> new{
-                    l.IdDieslovani,
-                    Distributor = l.Odstavka != null ? l.Odstavka.Distributor : null,
-                    l.Odstavka.Lokality.Lokalita,
-                    l.Odstavka.Lokality.Klasifikace,
-                    l.Odstavka.Lokality.Adresa,
-                    l.Technik.Firma.NazevFirmy,
-                    l.Technik.Jmeno,
-                    l.Technik.Prijmeni,
-                    l.Odstavka.ZadanVstup,
-                    l.Odstavka.ZadanOdchod,
-                    l.Technik.IdTechnika,
-                    l.Odstavka.Lokality.Region.NazevRegionu,
-                    l.Odstavka.Od,
-                    l.Odstavka.Do,
-                    l.Vstup,
-                    l.Odchod,
-                    l.Odstavka.Popis,
-                    l.Odstavka.Lokality.Baterie,
-                    l.Odstavka.Lokality.Zasuvka,
-                    idUser= l.Technik.IdUser
-                }).ToListAsync();
-
-                return detailDieselovani.Cast<object>().ToList();
-        }
         /// <summary>
         /// Např. pro tabulku "GetTableDataAllTable"
         /// </summary>
-        public async Task<(int totalRecords, List<object> data)> GetTableDataAllTableAsync(IdentityUser? currentUser, bool isEngineer)
-        {
-            var query = _context.DieslovaniS
-                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-                .Include(t => t.Technik).ThenInclude(t => t.Firma)
-                .Include(t => t.Technik).ThenInclude(t => t.User)
-                .AsQueryable();
-            query = FilteredData(query, currentUser, isEngineer);
-            int totalRecords = await query.CountAsync();
-            var DieslovaniList = await query
-                .OrderBy(o => o.Odstavka.Od)
-                .Select(l => new
-                {
-                    l.IdDieslovani,
-                    l.Odstavka.Distributor,
-                    l.Odstavka.Lokality.Lokalita,
-                    l.Odstavka.Lokality.Klasifikace,
-                    l.Odstavka.Lokality.Adresa,
-                    l.Technik.Firma.NazevFirmy,
-                    l.Technik.Jmeno,
-                    l.Technik.Prijmeni,
-                    l.Odstavka.ZadanVstup,
-                    l.Odstavka.ZadanOdchod,
-                    l.Technik.IdTechnika,
-                    l.Odstavka.Lokality.Region.NazevRegionu,
-                    l.Odstavka.Od,
-                    l.Odstavka.Do,
-                    l.Vstup,
-                    l.Odchod,
-                    l.Odstavka.Popis,
-                    l.Odstavka.Lokality.Baterie,
-                    l.Odstavka.Lokality.Zasuvka,
-                    idUser= l.Technik.IdUser
-                })
-                .ToListAsync();
-
-
-            return (totalRecords, DieslovaniList.Cast<object>().ToList());
-        }
-
+       
         /// <summary>
         /// Např. pro tabulku GetTableDatathrashTable
         /// </summary>
@@ -574,32 +562,7 @@ namespace Diesel_modular_application.Services
         /// <summary>
         /// Např. pro tabulku GetTableDataEndTable
         /// </summary>
-        public async Task<(int totalRecords, List<object> data)> GetTableDataEndTableAsync(IdentityUser? currentUser, bool isEngineer)
-        {
-            var query = _context.DieslovaniS
-                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality).ThenInclude(o => o.Region)
-                .Include(t => t.Technik).ThenInclude(t => t.Firma)
-                .Include(t => t.Technik).ThenInclude(t => t.User)
-                .AsQueryable();
-            query = FilteredData(query, currentUser, isEngineer);
-
-            int totalRecords = await query.CountAsync();
-            var DieslovaniList = await query
-                .Include(o => o.Odstavka).ThenInclude(o => o.Lokality)
-                .Include(t => t.Technik)
-                .Where(o => o.Odstavka.ZadanOdchod == true && o.Odstavka.ZadanVstup == false)
-                .OrderBy(o => o.Odstavka.Od)
-                .Select(l => new
-                {
-                    l.IdDieslovani,
-                    l.Odstavka.Distributor,
-                    l.Odstavka.Lokality.Lokalita,
-                    l.Odstavka.Lokality.Klasifikace,
-                    l.Odchod
-                })
-                .ToListAsync();
-            return (totalRecords, DieslovaniList.Cast<object>().ToList());
-        }
+       
 
         // --------------------------------------------------------
         // Následují pomocné (soukromé) metody, které dříve byly v controlleru

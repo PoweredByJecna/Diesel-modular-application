@@ -8,10 +8,10 @@ namespace Diesel_modular_application.Services
     public class OdstavkyService
     {
         private readonly DAdatabase _context;
-        private readonly DieslovaniService _dieslovani; 
+        private readonly IDieslovaniService _dieslovani; 
         private readonly LogService _logService;
 
-        public OdstavkyService(DAdatabase context, DieslovaniService dieslovani, LogService logService)
+        public OdstavkyService(DAdatabase context, IDieslovaniService dieslovani, LogService logService)
         {
             _context = context;
             _dieslovani = dieslovani;

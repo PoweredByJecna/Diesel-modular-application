@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Diesel_modular_application.Controllers
 {
     public class DieslovaniController(
-        DieslovaniService dieslovaniService,
+        IDieslovaniService dieslovaniService,
         UserManager<IdentityUser> userManager,
         LogService logService) : Controller
     {
-        private readonly DieslovaniService _dieslovaniService = dieslovaniService;
+
+        private readonly IDieslovaniService _dieslovaniService = dieslovaniService;
+
         private readonly LogService _logService = logService;
         private readonly UserManager<IdentityUser> _userManager = userManager;
 
