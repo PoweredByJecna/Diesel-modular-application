@@ -5,16 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Diesel_modular_application.Controllers
 {
 
-    public class LoginController : Controller
+    public class LoginController(SignInManager<IdentityUser> signInManager, ILogger<LoginController> logger) : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LoginController> _logger;
-
-        public LoginController(SignInManager<IdentityUser> signInManager, ILogger<LoginController> logger)
-        {
-            _signInManager = signInManager;
-            _logger = logger;
-        }
+        private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+        private readonly ILogger<LoginController> _logger = logger;
 
         [HttpGet]
         public IActionResult Index(Login login)

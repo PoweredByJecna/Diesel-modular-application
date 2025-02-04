@@ -1,25 +1,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 
 namespace Diesel_modular_application.Controllers
 {
-    public class PohotovostiController : Controller
+    public class PohotovostiController(
+        PohotovostiService pohotovostiService,
+        UserManager<IdentityUser> userManager) : Controller
     {
-        private readonly PohotovostiService _pohotovostiService;
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public PohotovostiController(
-            PohotovostiService pohotovostiService,
-            UserManager<IdentityUser> userManager)
-        {
-            _pohotovostiService = pohotovostiService;
-            _userManager = userManager;
-        }
+        private readonly PohotovostiService _pohotovostiService = pohotovostiService;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
         // ------------------------
         // 1) IndexAsync
@@ -37,7 +29,6 @@ namespace Diesel_modular_application.Controllers
         [HttpPost]
         public async Task<IActionResult> Zapis(TablePohotovosti pohotovosti)
         {
-            // Zjistíme aktuálního uživatele
             var currentUser = await _userManager.GetUserAsync(User);
 
             var (Success, Message) = 
@@ -45,14 +36,11 @@ namespace Diesel_modular_application.Controllers
 
             if (!Success)
             {
-                // Můžete například přidat TempData["Error"] = Message; 
-                // a přesměrovat, nebo vrátit JSON... 
-                // Zde ukázka přesměrování s ViewBag/TempData
+              
                 TempData["Error"] = Message;
                 return Redirect("/Odstavky/Index");
             }
 
-            // Po úspěšném zapsání se vrátíme na /Odstavky/Index
             TempData["Message"] = Message;
             return Redirect("/Odstavky/Index");
         }
@@ -71,7 +59,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
     }

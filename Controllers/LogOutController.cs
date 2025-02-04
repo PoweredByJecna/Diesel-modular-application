@@ -1,27 +1,13 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Diesel_modular_application.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Diesel_modular_application.Controllers;
 
 
 namespace Diesel_modular_application.Controllers
 { 
-public class LogOutController:Controller
+public class LogOutController(SignInManager<IdentityUser> signInManager, ILogger<LogOutController> logger) : Controller
 {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LogOutController> _logger;
-
-        public LogOutController(SignInManager<IdentityUser> signInManager, ILogger<LogOutController> logger)
-        {
-            _signInManager = signInManager;
-            _logger = logger;
-        }
+        private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+        private readonly ILogger<LogOutController> _logger = logger;
 
         public async Task<IActionResult> Logout(string returnUrl = null)
         {

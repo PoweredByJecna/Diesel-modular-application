@@ -1,34 +1,25 @@
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Diesel_modular_application.Data;
-using Diesel_modular_application.KlasifikaceRule;
-using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Diesel_modular_application.Controllers
 {
-    public class DieslovaniController : Controller
+    public class DieslovaniController(
+        DieslovaniService dieslovaniService,
+        UserManager<IdentityUser> userManager,
+        LogService logService) : Controller
     {
-        private readonly DieslovaniService _dieslovaniService;
-        private readonly LogService _logService;
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public DieslovaniController(
-            DieslovaniService dieslovaniService,
-            UserManager<IdentityUser> userManager,
-            LogService logService)
-        {
-            _dieslovaniService = dieslovaniService;
-            _userManager = userManager;
-            _logService=logService;
-        }
+        private readonly DieslovaniService _dieslovaniService = dieslovaniService;
+        private readonly LogService _logService = logService;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
         [Authorize]
         [HttpGet]
+        // -------------------------------
+        // Pohled
+        // -------------------------------
         public async Task<IActionResult> IndexAsync()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -183,7 +174,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         // ----------------------------------------
@@ -202,7 +193,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         // ----------------------------------------
@@ -221,7 +212,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         // ----------------------------------------
@@ -240,7 +231,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         // ----------------------------------------
@@ -259,7 +250,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         // ----------------------------------------

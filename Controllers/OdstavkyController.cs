@@ -1,38 +1,15 @@
-using System.Security.AccessControl;
-using System.Security.Cryptography;
 using Diesel_modular_application.Data;
-using Diesel_modular_application.Models;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Session;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Diesel_modular_application.KlasifikaceRule;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Diesel_modular_application.Services;
-using System.Diagnostics;
-using AspNetCoreGeneratedDocument;
-using Humanizer;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
-using System.Runtime.InteropServices.JavaScript;
+
 
 namespace Diesel_modular_application.Controllers
 {
-    public class OdstavkyController : Controller
+    public class OdstavkyController(DAdatabase context, OdstavkyService odstavkyService) : Controller
     {
-        private readonly DAdatabase _context;
-        private readonly OdstavkyService _odstavkyService;
-
-
-
-        public OdstavkyController(DAdatabase context, OdstavkyService odstavkyService)
-        {
-            _context = context;
-            _odstavkyService = odstavkyService;
-        }
+        private readonly DAdatabase _context = context;
+        private readonly OdstavkyService _odstavkyService = odstavkyService;
 
         [Authorize]
         public IActionResult Index()
@@ -133,7 +110,7 @@ namespace Diesel_modular_application.Controllers
                 draw = HttpContext.Request.Query["draw"].FirstOrDefault(),
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
-                data = data
+                data
             });
         }
         [HttpGet]

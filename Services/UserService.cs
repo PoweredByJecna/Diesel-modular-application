@@ -5,14 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diesel_modular_application.Services
 {
-    public class UserService
+    public class UserService(DAdatabase context)
     {
-        private readonly DAdatabase _context;
+        private readonly DAdatabase _context = context;
 
-        public UserService(DAdatabase context)
-        {
-            _context=context;
-        }
         public async Task<object> DetailUserJsonAsync(string IdUSER)
         {
             var userDetail = await _context.Users

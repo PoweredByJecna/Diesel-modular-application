@@ -7,13 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diesel_modular_application.Data
 {
-        public class DAdatabase : IdentityDbContext
+        public class DAdatabase(DbContextOptions<DAdatabase> options) : IdentityDbContext(options)
         {
-            public DAdatabase(DbContextOptions<DAdatabase> options)
-                : base(options)
-            {
-            }
-            protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
             {
                 base.OnModelCreating(builder);
 

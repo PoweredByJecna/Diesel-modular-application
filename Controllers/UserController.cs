@@ -1,17 +1,11 @@
-using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diesel_modular_application.Controllers
 {
-    public class UserController: Controller
+    public class UserController(UserService service) : Controller
     {
-        private readonly UserService _service;
-
-        public UserController (UserService service)
-        {
-            _service=service;
-        }
+        private readonly UserService _service = service;
 
         public IActionResult Index()
         {

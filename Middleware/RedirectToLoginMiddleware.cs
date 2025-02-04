@@ -1,13 +1,8 @@
 ﻿namespace Diesel_modular_application.Models
 {
-    public class RedirectToLoginMiddleware
+    public class RedirectToLoginMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-
-        public RedirectToLoginMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+        private readonly RequestDelegate _next = next;
 
         public async Task InvokeAsync(HttpContext context)
         {

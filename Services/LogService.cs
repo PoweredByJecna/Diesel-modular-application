@@ -8,14 +8,10 @@ namespace Diesel_modular_application.Services
     {
         Task LogAsync(DebugLogModel logEntry);
     }
-    public class LogService
+    public class LogService(DAdatabase context)
     {
-        private readonly DAdatabase _context;
-     
-        public LogService (DAdatabase context)
-        {
-            _context=context;
-        }
+        private readonly DAdatabase _context = context;
+
         public async Task<object> GetLogByEntityAsync(int id)
         {
             var log = await _context.LogS

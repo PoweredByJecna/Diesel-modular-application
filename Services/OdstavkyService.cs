@@ -1,11 +1,8 @@
 using System.Diagnostics;
 using System.Security.Cryptography;
-using Diesel_modular_application.Controllers;
 using Diesel_modular_application.Data;
 using Diesel_modular_application.Models;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
-
 namespace Diesel_modular_application.Services
 {
     public class OdstavkyService
@@ -19,38 +16,31 @@ namespace Diesel_modular_application.Services
             _context = context;
             _dieslovani = dieslovani;
             _logService = logService;
-
         }
-
-     
 
         public async Task<List<string>> SuggestLokalitaAsync(string query)
         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var lokalities = await _context.LokalityS
                 .Where(l => l.Lokalita.Contains(query))
                 .Select(l => l.Lokalita)
                 .Take(10)
                 .ToListAsync();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             return lokalities;
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
         }
 
-        public async Task<HandleOdstavkyDieslovaniResult> CreateOdstavkaAsync(string lokalita, DateTime od, DateTime do_, string popis)
+        public async Task<HandleOdstavkyDieslovaniResult> CreateOdstavkaAsync(string lokalita, DateTime od, DateTime @do, string popis)
         {
             var result = new HandleOdstavkyDieslovaniResult();
 
             try
             {
                 // Najdeme danou lokalitu
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
                 var lokalitaSearch = await _context.LokalityS
                     .Include(l => l.Region)
                     .ThenInclude(r => r.Firma)
                     .FirstOrDefaultAsync(l => l.Lokalita == lokalita);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
 
                 if (lokalitaSearch == null)
                 {
@@ -60,7 +50,7 @@ namespace Diesel_modular_application.Services
                 }
 
                 // Kontrola termínů a existence odstávky
-                result = OdstavkyCheck(lokalitaSearch, od, do_, result);
+                result = OdstavkyCheck(lokalitaSearch, od, @do, result);
                 if (!result.Success)
                     return result;
 
@@ -70,7 +60,7 @@ namespace Diesel_modular_application.Services
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 // Vytvoříme novou odstávku
-                var newOdstavka = CreateNewOdstavka(lokalitaSearch, distrib, od, do_, popis);
+                var newOdstavka = CreateNewOdstavka(lokalitaSearch, distrib, od, @do, popis);
 
                 try
                 {
@@ -167,7 +157,7 @@ namespace Diesel_modular_application.Services
                     await _logService.ZapisDoLogu(DateTime.Now.Date, "Odstávka", id,$"Baterie: {newOdstavka?.Lokality?.Baterie} min");
                     
                     result = await _dieslovani.HandleOdstavkyDieslovani(newOdstavka, result);
-                    if(result.Success ==false)
+                    if(!result.Success)
                     {
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                         await _logService.ZapisDoLogu(DateTime.Now.Date, "odstávka", newOdstavka.IdOdstavky, result.Message );
@@ -197,15 +187,12 @@ namespace Diesel_modular_application.Services
         }
         public async Task<object> DetailOdstavkyJsonAsync(int id)
         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var detailOdstavky = await _context.OdstavkyS
             .Include(o=>o.Lokality)
             .ThenInclude(o=>o.Region)
             .Where(o=>o.IdOdstavky==id)
             .FirstOrDefaultAsync();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
-            if(detailOdstavky==null)
+            if (detailOdstavky==null)
             {
                 return new{
                     error = "Odstavka nenalezena" 
@@ -290,9 +277,6 @@ namespace Diesel_modular_application.Services
             // Pokud chceme prostě vypsat vše, tak je length = totalRecords
             if (length == 0) 
                 length = totalRecords;
-
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var odstavkyList = await _context.OdstavkyS
                 .Include(o => o.Lokality)
                 .OrderBy(o => o.Od)
@@ -318,18 +302,13 @@ namespace Diesel_modular_application.Services
                         .FirstOrDefault()
                 })
                 .ToListAsync();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
             return (totalRecords, odstavkyList.Cast<object>().ToList());
         }
 
 
         public async Task<List<object>> GetTableDataOdDetailAsync(int dieslovaniId)
         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
             var odstavkaList = await _context.DieslovaniS
                 .Include(o => o.Odstavka)
                     .ThenInclude(o => o.Lokality)
@@ -348,15 +327,11 @@ namespace Diesel_modular_application.Services
                     zasuvka = o.Odstavka.Lokality.Zasuvka
                 })
                 .ToListAsync();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
             return odstavkaList.Cast<object>().ToList();
         }
 
 
-        private bool ISvalidDateRange(DateTime od, DateTime Do)
+        private static bool IsValidDateRange(DateTime od, DateTime Do)
         {
             return od.Date >= DateTime.Today && od < Do;
         }
@@ -364,11 +339,8 @@ namespace Diesel_modular_application.Services
 
         private bool ExistingOdstavka(int lokalitaSearchId, DateTime od)
         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var existingOdstavka = _context.OdstavkyS
                 .FirstOrDefault(o => o.Od.Date == od.Date && o.Lokality.Id == lokalitaSearchId);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
             if (existingOdstavka == null)
             {
                 return true; 
@@ -390,7 +362,7 @@ namespace Diesel_modular_application.Services
                 return result;
             }
 
-            if (!ISvalidDateRange(od, do_))
+            if (!IsValidDateRange(od, do_))
             {
                 result.Success = false;
                 result.Message = "Špatně zadané datum.";
@@ -414,7 +386,7 @@ namespace Diesel_modular_application.Services
                 Popis = popis,
                 LokalitaId = lokalitaSearch.Id
             };
-            if(lokalitaSearch.Region!=null && lokalitaSearch.Region.Firma!=null && lokalitaSearch!=null)
+            if(lokalitaSearch != null && lokalitaSearch.Region != null && lokalitaSearch.Region.Firma != null)
             {
                 Debug.WriteLine($"Vytváří se odstávka s parametry: {distrib}, {lokalitaSearch.Region.Firma.NazevFirmy}, {od}, {do_}, {popis}, {lokalitaSearch.Id}");
 
@@ -434,6 +406,10 @@ namespace Diesel_modular_application.Services
         }
 
 
+        /// <summary>
+        /// Represents the result of handling an odstávka (outage) and its associated dieslování (dieseling).
+        /// Contains information about the success of the operation, messages, and related entities.
+        /// </summary>
         public class HandleOdstavkyDieslovaniResult
         {
             public bool Success { get; set; }

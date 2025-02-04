@@ -5,16 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diesel_modular_application.Services
 {
-    public class PohotovostiService
+    public class PohotovostiService(DAdatabase context, UserManager<IdentityUser> userManager)
     {
-        private readonly DAdatabase _context;
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public PohotovostiService(DAdatabase context, UserManager<IdentityUser> userManager)
-        {
-            _context = context;
-            _userManager = userManager;
-        }
+        private readonly DAdatabase _context = context;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
 
         /// <summary>
         /// Metoda, která získá seznam všech pohotovostí (pro zobrazení v Index).
@@ -148,7 +142,7 @@ namespace Diesel_modular_application.Services
                 {
                     l.Technik.Jmeno,
                     l.Technik.Prijmeni,
-                    PhoneNumber = l.Technik.User.PhoneNumber,
+                    l.Technik.User.PhoneNumber,
                     Firma = l.Technik.Firma.NazevFirmy,
                     l.Zacatek,
                     l.Konec,

@@ -14,7 +14,7 @@ namespace Diesel_modular_application.Models
         public DateTime Konec {get;set;}
 
         [ForeignKey("user")]
-        public string? IdUser{get;set;}
+        public string IdUser{get;set;}
         public virtual IdentityUser? User {get;set;}
 
         [ForeignKey("Technik")]

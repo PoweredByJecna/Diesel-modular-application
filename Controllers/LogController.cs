@@ -1,16 +1,11 @@
-using Diesel_modular_application.Data;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diesel_modular_application.Controllers
 {
-    public class LogController:Controller
+    public class LogController(LogService logService) : Controller
     {
-        private readonly LogService _logService;
-        public LogController(LogService logService)
-        {
-            _logService=logService;
-        }
+        private readonly LogService _logService = logService;
 
         // ----------------------------------------
         // Poslani logu pro dieslování do ajax

@@ -8,16 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diesel_modular_application.Services
 {
-    public class RegionyService
+    public class RegionyService(DAdatabase context, OdstavkyService odstavkyService)
     {
-        private readonly DAdatabase _context;
-        private readonly OdstavkyService _odstavkyService;
+        private readonly DAdatabase _context = context;
+        private readonly OdstavkyService _odstavkyService = odstavkyService;
 
-        public RegionyService(DAdatabase context, OdstavkyService odstavkyService)
-        {
-            _context=context;
-            _odstavkyService = odstavkyService;
-        }
         public async Task<List<object>> GetRegionDataPrahaAsync()
         {
             var _IdRegionu= 4;

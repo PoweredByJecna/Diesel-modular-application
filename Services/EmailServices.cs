@@ -11,14 +11,9 @@ using static Diesel_modular_application.Services.OdstavkyService;
 
 namespace Diesel_modular_application.Services
 {
-    public class EmailService
+    public class EmailService(IConfiguration config)
     {
-        private readonly IConfiguration _config;
-
-        public EmailService(IConfiguration config)
-        {
-            _config = config;
-        }
+        private readonly IConfiguration _config = config;
 
         /// <summary>
         /// Veřejná metoda, která bere dieslování a sama sestaví e‑mail

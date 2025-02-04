@@ -1,39 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
-using Diesel_modular_application.Models;
-using Microsoft.AspNetCore.Authentication;
+﻿using Diesel_modular_application.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
+
 
 
 namespace Diesel_modular_application.Data
 {
-    public class RegisterController : Controller
+    public class RegisterController(UserManager<IdentityUser> userManager, IUserStore<IdentityUser> userStore, SignInManager<IdentityUser> signInManager, ILogger<RegisterController> logger) : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly ILogger<RegisterController> _logger;
-
-        public RegisterController(UserManager<IdentityUser> userManager, IUserStore<IdentityUser> userStore, SignInManager<IdentityUser> signInManager, ILogger<RegisterController> logger)
-        {
-            _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _userStore = userStore;
-        }
+        private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly IUserStore<IdentityUser> _userStore = userStore;
+        private readonly ILogger<RegisterController> _logger = logger;
 
         public string ReturnUrl { get; set; }
 
@@ -64,7 +43,7 @@ namespace Diesel_modular_application.Data
                     var callbackUrl = Url.Action(
                         action: "Index",
                         controller: "Register",
-                        values: new { area = "Identity", userId = userId, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId, returnUrl },
                         protocol: Request.Scheme);
 
                     return RedirectToAction("RegisterConfirmation", new { userName = model.Input.UserName, returnUrl });

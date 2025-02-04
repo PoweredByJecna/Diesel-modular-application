@@ -16,8 +16,7 @@
 
 }
 
-
-@media(max-width:1200px)
+@media (max-width:1200px)
 {
 
 
@@ -29,10 +28,7 @@
         width: 100% !important;
         padding: 10px 0px 0px;
     }
-    
-    .table-div.odstavkyTable{
-        width: 100% !important;
-    }
+
     
    .login-section
    {
@@ -201,7 +197,7 @@ thead th, tbody td {
     width: 100%; 
 }
 .tables-row.formRow{
-    gap: 20PX;
+    gap: 20px;
 }
 .section.big{
     width: 97%;

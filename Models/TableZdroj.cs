@@ -7,6 +7,6 @@ public class TableZdroj
 {
     [Key]
     public int Id { get; set; }
-    public string? Nazev { get; set; } 
+    public string Nazev { get; set; } 
     public double Odber { get; set; }   
 }

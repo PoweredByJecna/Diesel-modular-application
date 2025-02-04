@@ -11,7 +11,7 @@ namespace Diesel_modular_application.Models
         public string? NazevRegionu{get;set;}
         
         [ForeignKey("Firma")]
-        public int ? FirmaID {get;set;}
+        public int  FirmaID {get;set;}
         public virtual TableFirma? Firma {get;set;}
     }
 }

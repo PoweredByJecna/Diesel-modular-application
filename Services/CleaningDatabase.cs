@@ -9,17 +9,12 @@ using Diesel_modular_application.Data;
 
 namespace Diesel_modular_application.Services
 {
-    public class CleaningDatabase: IHostedService, IDisposable
+    public class CleaningDatabase(IServiceScopeFactory scopeFactory) : IHostedService, IDisposable
     {  
     
         
-        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IServiceScopeFactory _scopeFactory = scopeFactory;
         private Timer _Timer;
-
-        public CleaningDatabase(IServiceScopeFactory scopeFactory)
-        {
-            _scopeFactory = scopeFactory;
-        }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {

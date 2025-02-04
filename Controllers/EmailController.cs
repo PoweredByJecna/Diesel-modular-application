@@ -1,7 +1,6 @@
 using Diesel_modular_application.Models;
 using Diesel_modular_application.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 
 
@@ -9,14 +8,9 @@ namespace Diesel_modular_application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmailController : ControllerBase
+    public class EmailController(EmailService emailService) : ControllerBase
     {
-        private readonly EmailService _emailService;
-
-        public EmailController(EmailService emailService)
-        {
-            _emailService = emailService;
-        }
+        private readonly EmailService _emailService = emailService;
 
         [HttpPost("send")]
         public async Task<IActionResult> SendEmail([FromBody] TableDieslovani dieslovani,string emailResult)
